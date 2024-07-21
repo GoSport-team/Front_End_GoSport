@@ -1,4 +1,5 @@
 export const conversationsData = [
+  //datos quemados de los usuarios 
   {
     img: "/img/team-1.jpeg",
     name: "Sophie B.",
