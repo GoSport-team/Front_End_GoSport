@@ -7,7 +7,7 @@ import {
   RectangleStackIcon,
   
 } from "@heroicons/react/24/solid";
-import { Home,Profile, Tables, Notifications } from "@/pages/dashboard";
+import { Home, Tables, Notifications, Profile } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import Fotos from "./pages/dashboard/fotos";
 import { element } from "prop-types";
@@ -30,7 +30,7 @@ export const routes = [
         icon: <UserCircleIcon {...icon} />,
         name: "perfil",
         path: "/perfil",
-        element: <Profile />,
+        element:<Profile/>
       },
       {
         icon: <InformationCircleIcon {...icon}/>,
