@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Formulario from './subirfoto'; // Asegúrate de que la ruta sea correcta
 
 export function Fotos() {
   const [photos, setPhotos] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null); // Estado para la imagen seleccionada
   const [showConfirmDelete, setShowConfirmDelete] = useState(false); // Estado para mostrar confirmación de eliminación
   const [photoToDelete, setPhotoToDelete] = useState(null); // Estado para la foto a eliminar
+  const [showUploadModal, setShowUploadModal] = useState(false); // Estado para mostrar el modal de subida
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -45,7 +47,7 @@ export function Fotos() {
   };
 
   const handleUploadPhoto = () => {
-    navigate('/subirfoto');
+    setShowUploadModal(true);
   };
 
   const handleImageClick = (imageUrl) => {
@@ -54,6 +56,15 @@ export function Fotos() {
 
   const handleCloseModal = () => {
     setSelectedImage(null); // Cierra el modal
+  };
+
+  const handleCloseUploadModal = () => {
+    setShowUploadModal(false);
+  };
+
+  const handlePhotoUpload = (newPhoto) => {
+    setPhotos([...photos, newPhoto]);
+    setShowUploadModal(false);
   };
 
   return (
@@ -102,6 +113,8 @@ export function Fotos() {
             <img
               src={selectedImage}
               alt="Ampliada"
+              width={500}
+              height={500}
               className="max-w-full max-h-screen object-contain"
             />
           </div>
@@ -128,6 +141,21 @@ export function Fotos() {
                 Confirmar
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {showUploadModal && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="fixed inset-0 bg-black opacity-50"></div>
+          <div className="bg-gray-200 p-6 rounded-lg shadow-lg z-10 w-full max-w-md mx-auto">
+            <Formulario onUpload={handlePhotoUpload} />
+            <button
+              onClick={handleCloseUploadModal}
+              className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-700 transition duration-300"
+            >
+              Cerrar
+            </button>
           </div>
         </div>
       )}
