@@ -22,16 +22,22 @@
     "react-apexcharts": "1.4.1",
     "react-dom": "18.2.0",
 <<<<<<< HEAD
+<<<<<<< HEAD
     "react-router-dom": "^6.17.0"
 =======
 <<<<<<< HEAD
     "react-router-dom": "^6.17.0"
 =======
+=======
+>>>>>>> c9740b963d572ed24b884dedfc1540fc6f0119f1
     "react-hook-form": "^7.52.1",
-    "react-router-dom": "6.17.0",
+    "react-router-dom": "^6.17.0",
     "react-toastify": "^10.0.5"
+<<<<<<< HEAD
 >>>>>>> editarCuenta
 >>>>>>> f44847f9fbe42d2361005b7129b7f0c2dc1c77d9
+=======
+>>>>>>> c9740b963d572ed24b884dedfc1540fc6f0119f1
   },
   "devDependencies": {
     "@types/react": "18.2.31",
