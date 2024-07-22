@@ -10,6 +10,7 @@ import {
 import { Home,Profile, Tables, Notifications } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import Fotos from "./pages/dashboard/fotos";
+import { element } from "prop-types";
 
 const icon = {
   className: "w-5 h-5 text-inherit",
