@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-export const DatosEquiposInscripcion = ({ id }) => {
+import { useParams } from "react-router-dom";
+export const DatosEquiposInscripcion = () => {
  
+  const id = useParams()
   const [jugadores, setJugadores] = useState()
   const [idEquipo, setIdEquipo] = useState()
   const [equipo, setEquipo] = useState()

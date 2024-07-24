@@ -33,7 +33,7 @@ export default function CardCampeonato() {
         <p className="">Fecha de inicio {campeonato.fechaIniciio}</p>
         <p className="espacio">Fecha de finalizacion {campeonato.fechaFin}</p>
 
-        <Link href={`/jugador/dashboard/${campeonato._id}`} className="inscribirme ">
+        <Link to={`/jugador/dashboard/${campeonato._id}`} className="inscribirme ">
           Inscribirme
         </Link>
       </div>

@@ -7,20 +7,19 @@ export const Carrusel = () => {
         {
           title: "Imagen 1",
           description: "Escribe el texto que aparecerá sobre la imagen número 1.",
-          link: "https://www.migueltroyano.com",
-          image: "src/assets/carrusel/01.jpg",
+        
+          image: "/public/img/carrusel/01.jpg",
         },
         {
           title: "Imagen 2",
           description: "Escribe el texto que aparecerá sobre la imagen número 2.",
-          link: "https://www.migueltroyano.com",
-          image: "src/assets/carrusel/02.png",
+          
+          image: "/public/img/carrusel/02.png",
         },
         {
           title: "Imagen 3",
           description: "Escribe el texto que aparecerá sobre la imagen número 3.",
-          link: "https://www.migueltroyano.com",
-          image: "src/assets/carrusel/03.jpg",
+          image: "/public/img/carrusel/03.jpg",
         },
       ];
     

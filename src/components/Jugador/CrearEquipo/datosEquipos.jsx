@@ -14,7 +14,9 @@ export const DatosEquipos = () => {
   const [contactoUno, setContactoUno] = useState()
   const [contactoDos, setContactoDos] = useState()
   const [user, setUser] = useState()
+  const [id, setId] = useState(1)
   const token = Cookies.get('token')
+  console.log(token)
   const handleImage =async (e) => {
     const file = e.target.files[0]
     setImage(URL.createObjectURL(file)) 
@@ -102,8 +104,11 @@ export const DatosEquipos = () => {
         }).then((result) => {
           if (result.isConfirmed) {
             Swal.fire("Jugador guardado correctamente", "", "success");
+            setId(id+1)
             setJugadores(prev => [...prev,
-               {nombreJugador:response.data.nombres,
+               {
+              
+                nombreJugador:response.data.nombres,
                 ficha:formValues[0],
                 dorsal:formValues[1]
                }
@@ -122,6 +127,7 @@ export const DatosEquipos = () => {
       }
     }
   }
+  console.log(jugadores)
   return (
         <div className="flex justify-center ">
             <form action="" onSubmit={submit}>
@@ -149,20 +155,20 @@ export const DatosEquipos = () => {
                       </label>
                       <input
                         placeholder="Principal"
-                        className="mr-6 h-9 rounded-lg w-72"
+                        className="mr-6 h-9 rounded-lg w-72 text-center"
                         id="city"
                         type="text"
                         value={user && user.telefono }
                       />
                     </div>
 
-                    <div className="flex-1">
+                    <div className="">
                       <label className="text-black" htmlFor="state">
 
                       </label>
                       <input
                         placeholder="Secundario"
-                        className="mr-6 h-9 rounded-lg w-72"
+                        className="mr-6 h-9 rounded-lg w-72 text-center"
                         id="state"
                         type="text"
                         onChange={e=> setContactoDos(e.target.value)}
@@ -177,7 +183,7 @@ export const DatosEquipos = () => {
           <div className="bg-gray-200 mt-10 p-5 rounded-xl">
             <div className='flex justify-center items-center'>
               <label className="font-bold text-2xl mr-5">Busca tus compañeros</label>
-              <input type="search" className="h-10 w-80 rounded-md" onChange={e => setJugador(e.target.value)} placeholder='Busca por su numero de cedula' />
+              <input type="search" className="h-10 w-80 rounded-md text-center" onChange={e => setJugador(e.target.value)} placeholder='Busca por su numero de cedula' />
               <button className='mt-2.5 px-12 py-5 text-xs uppercase tracking-wider font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none ml-[70px] hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5' onClick={() => searchJugador(jugador)}>Buscar</button>
             </div>
             <table className="w-full border-separate mt-8">
@@ -191,11 +197,11 @@ export const DatosEquipos = () => {
               </thead>
               <tbody>
                 {jugadores && jugadores.map((jugador, indice)=>(
-              <tr key={indice}>
-            <td className="whill">{indice}</td>
-            <td>{jugador.nombreJugador}</td>
-            <td>{jugador.ficha}</td>
-            <td>{jugador.dorsal}</td>
+              <tr className="border-separate text-center text-lg font-medium"  key={indice}>
+            <td className="border rounded-md p-1 bg-white">{indice+1}</td>
+            <td className=" border rounded-md p-1 bg-white">{jugador.nombreJugador}</td>
+            <td className=" border rounded-md p-1 bg-white">{jugador.ficha}</td>
+            <td className=" border rounded-md p-1 bg-white">{jugador.dorsal}</td>
             </tr>
                 ))}
               </tbody>
