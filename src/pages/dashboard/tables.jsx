@@ -9,7 +9,7 @@ import {
   Progress,
 } from "@material-tailwind/react";
 
-import routes from "@/routes";
+import {routes} from "@/routes";
 
 import { useState, useEffect } from 'react';
 import axios from "axios";

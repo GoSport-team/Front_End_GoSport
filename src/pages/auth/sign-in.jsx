@@ -60,9 +60,12 @@ export function SignIn() {
             }
             containerProps={{ className: "-ml-2.5" }}
           />
-          <Button className="mt-6" fullWidth>
+         <Link 
+            to="/dashboard" 
+            className="mt-6 block w-full bg-blue-500 text-white py-2 px-4 rounded text-center hover:bg-blue-700"
+        >
             Sign In
-          </Button>
+        </Link>
 
           <div className="flex items-center justify-between gap-2 mt-6">
             <Checkbox

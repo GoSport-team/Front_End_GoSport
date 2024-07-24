@@ -16,7 +16,7 @@ const icon = {
   className: "w-5 h-5 text-inherit",
 };
 
-export const routes = [
+ export const routes = [
   {
     layout: "dashboard",
     pages: [
@@ -40,8 +40,8 @@ export const routes = [
       },
       {
         icon: <TableCellsIcon {...icon} />,
-        name: "tables",
-        path: "/tables",
+        name: "campeonatos",
+        path: "/campeonatos",
         element: <Tables />,
       },
       {
@@ -51,7 +51,8 @@ export const routes = [
         element: <Notifications />,
       },
     ],
-  },
+  }]
+ export  const routeAuth=[
   {
     title: "auth pages",
     layout: "auth",
@@ -71,5 +72,3 @@ export const routes = [
     ],
   },
 ];
-
-export default routes;
