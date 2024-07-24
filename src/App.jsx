@@ -3,6 +3,7 @@ import { Dashboard, Auth } from "@/layouts";
 import CreateCampeonato from "./pages/campeonatos/view"
 import Subirfoto from "./pages/dashboard/subirfoto";
 import Landing from "./pages/landing/landing";
+import { DatosEquiposInscripcion } from "./components/Jugador/InscribirEquipo/DatosEquiposInscripcion";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/dashboard/tables/view" element={<CreateCampeonato />} />
       <Route path="/subirfoto" element={<Subirfoto/>} />
       <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
+      <Route path="/dashjugador" element={<DatosEquiposInscripcion/>}/>
     </Routes>
   );
 }
