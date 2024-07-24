@@ -12,13 +12,280 @@ import {
   PlusIcon,
   PencilIcon,
 } from "@heroicons/react/24/solid";
-import { Link } from "react-router-dom";
-import { ProfileInfoCard } from "@/widgets/cards";
-import { platformSettingsData, conversationsData, projectsData } from "@/data";
+import ModalFoto from "../../widgets/componentes/perfil/modalVistaPreviaImagen";
+import ModalTwo from "../../widgets/componentes/perfil/modalVistaPreviaImagen2";
+import { useState, useRef, useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';       
+import axios from "axios";
 
-export function Profile() {
+
+export const Profile= () =>{
+  const { handleSubmit, control,watch , formState: { errors } } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+        correo: '',
+        confirmCorreo: '',
+        contrasena: '',
+        confirmContrasena: '',
+    }
+});
+const updateUsers = watch(); 
+
+
+// Imagenes perfil
+const [file, setFile] = useState(null); // Imagen
+const [imagen, setImagen] = useState(null); // URL de la imagen
+const funcionalidadInput = useRef(null);//Referencia del input para los iconos
+
+const [imagePreview, setImagePreview] = useState(null); // Guarda la URL de la imagen para verla previamente 
+const [modalFotoOpen, setModalFotoOpen] = useState(false);//controlar el modal previa vista
+
+//Avisos
+const notify = (message)=> toast(message);
+const [accion, setAccion]= useState(null);
+// Funciones de Modal Perfil cerrar
+const handleCloseModal = () => {
+setModalFotoOpen(false);
+setFile(null);
+setImagePreview(null);
+};
+
+// Funcion Post
+const savePost = async () => {
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  try {
+    // Enviar la solicitud POST para subir la imagen
+    const respuesta = await fetch('http://localhost:3001/usuarios/669a8daf34ceeaee51c0746b/foto', {
+      method: 'POST',
+      body: formData
+    });
+
+    // Verificar el estado de la respuesta
+    if (!respuesta.ok) {
+      throw new Error('Error al subir la imagen');
+    }
+
+    // Obtener los datos de la respuesta
+    const data = await respuesta.json();
+    console.log(data);
+
+    // Asegurarse de que `data.url` y `data.public_id` están definidos
+    if (data.url) {
+      setImagen(data.url);
+    } else {
+      console.error('No se recibió URL de la imagen');
+    }
+
+    if (data.public_id) {
+      localStorage.setItem('public_id', data.public_id);
+      console.log('Public_id Guardado', data.public_id);
+    } else {
+      console.error('No se recibió Public_id');
+    }
+
+    // Actualizar la URL de la imagen en la base de datos
+    await axios.put(`http://localhost:3001/usuarios/669a8daf34ceeaee51c0746b`, {
+      url_foto: data.url
+    });
+
+    // Notificar al usuario
+    notify("Imagen agregada exitosamente");
+    setModalFotoOpen(false);
+
+  } catch (error) {
+    console.error('Error en la operación de imagen:', error);
+    notify("Hubo un error al agregar la imagen");
+  }
+};
+
+
+
+
+// Funcion Update
+const saveUpdate = async () => {
+if (!file) {
+    return;
+}
+const formData = new FormData();
+formData.append('file', file);
+//formData.append("public_id", localStorage.getItem('public_id'));
+
+const respuesta = await fetch('http://localhost:3001/usuarios/669a8daf34ceeaee51c0746b/pati', {
+    method: 'PATCH',
+    body: formData
+});
+
+const data = await respuesta.json();
+setImagen(data.url);
+
+if (data.public_id) {
+  localStorage.setItem('public_id', data.public_id);
+  console.log('Public_id Guardado', data.public_id);
+} else { 
+  console.error('No se recibió Public_id');
+}
+
+// Guarda la URL en la base de datos
+await axios.put(`http://localhost:3001/usuarios/669a8daf34ceeaee51c0746b`, {
+    url_foto: data.url
+});
+notify(accion === 'update' ? "Imagen actualizada exitosamente" : "Imagen agregada exitosamente");
+
+setModalFotoOpen(false);
+};
+// Funcion DELETE
+const handleDelete = async () => {
+try {
+    const publicId = localStorage.getItem('public_id');
+    if (!publicId) {
+        throw new Error('No public_id found in localStorage');
+    }
+    console.log('Public ID:', publicId);
+    const deleteResponse = await fetch('http://localhost:3001/usuarios/669a8daf34ceeaee51c0746b/eli', {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ public_id: publicId })
+    });
+    const deleteData = await deleteResponse.json();
+
+    if (deleteData.error) {
+        throw new Error(deleteData.error);
+    }
+
+    console.log('Imagen eliminada de Cloudinary:', deleteData);
+
+    await axios.put(`http://localhost:3001/usuarios/669a8daf34ceeaee51c0746b`, {
+        url_foto: ''
+    });
+
+    // Limpiar localStorage y establecer la imagen predeterminada
+    localStorage.removeItem('public_id');
+    setImagen('/sinfoto.png');
+
+    console.log('Imagen eliminada exitosamente');
+} catch (error) {
+    console.error('Error eliminando la imagen:', error);
+}
+notify("Imagen eliminada exitosamente")
+};
+
+// Funcion donde se guarda el input
+const input = () => {
+funcionalidadInput.current.click();
+};
+
+//Para mostrar la imagen
+const ImagePreviewMuestra = (e) => {
+const image = e.target.files[0];
+if (image) {
+    setFile(image);
+    const urlImagePreview = URL.createObjectURL(image);
+    setImagePreview(urlImagePreview);
+    setModalFotoOpen(true);
+   
+}
+};
+
+// CONSUMO API GET
+const [user, setUser] = useState([]);
+useEffect(() => {
+const consumo = async () => {
+    try {
+        const respuesta = await axios.get('http://localhost:3001/usuarios');
+        const data = respuesta.data;
+        setUser(data);
+
+        // Obtener el usuario actual
+        const organizador = data.find(user => user.rol === "organizador"&& user._id==="669a8daf34ceeaee51c0746b");
+        if (organizador) {
+            // Establecer la imagen del usuario
+            if (organizador.url_foto) {
+                setImagen(organizador.url_foto);
+            } else {
+                setImagen('/sinfoto.png');
+            }
+        }
+    } catch (error) {
+        console.error(error);
+    }
+};
+consumo();
+}, []);
+
+// CONSUMO API PATCH
+const [updateUser, setUpdateUser] = useState({ nombres: '', telefono: '', correo: '', contrasena: ''});
+
+const handleChangePutDb = (e) => {
+const { name, value } = e.target;
+setUpdateUser(prevState => ({
+    ...prevState,
+    [name]: value
+}));
+};
+
+
+const handleBoton = async (e) => {  
+const emailConfirmed = updateUsers.confirmCorreo && updateUsers.confirmCorreo === updateUser.correo;
+const passwordConfirmed = updateUsers.confirmContrasena && updateUsers.confirmContrasena === updateUser.contrasena;
+
+const updatedFields = {};
+if (updateUser.nombres) updatedFields.nombres = updateUser.nombres;
+if (updateUser.telefono) updatedFields.telefono = updateUser.telefono;
+
+//correo
+if (updateUser.correo && updateUsers.confirmCorreo) {
+if (emailConfirmed) {
+updatedFields.correo = updateUser.correo;
+} else {
+alert('Los correos no coinciden');
+return;
+}
+} else if (updateUser.correo || updateUsers.confirmCorreo) {
+alert('Debe ingresar y confirmar su correo electrónico');
+return;
+}
+//contraseña
+if (updateUser.contrasena && updateUsers.confirmContrasena) {
+if (updateUser.contrasena.length < 6) {
+alert('La contraseña debe tener al menos 6 caracteres');
+return;
+}
+if (passwordConfirmed) {
+updatedFields.contrasena = updateUser.contrasena;
+} else {
+alert('Las contraseñas no coinciden');
+return;
+}
+} else if (updateUser.contrasena || updateUsers.confirmContrasena) {
+alert('Debe ingresar y confirmar su contraseña');
+return;
+}
+
+//Actualzar en la DB
+if (Object.keys(updatedFields).length > 0) {
+try {
+await axios.patch('http://localhost:3001/usuarios/669a8daf34ceeaee51c0746b', updatedFields);
+alert('Usuario Actualizado');
+window.location.reload();
+} catch (error) {
+console.log('Complete todos los campos');
+}
+} else {
+alert('No hay cambios para actualizar.');
+}
+};
+
   return (
     <>
+    <ToastContainer/>
      <div className="">
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover bg-center">
         <div className="absolute inset-0 h-full w-full bg-gray-900/75" />
@@ -26,122 +293,263 @@ export function Profile() {
 
       <div className=" flex flex-row w-100p">
       <Card className="  w-2/3 -mt-16 mb-6  lg:mx-4 border border-blue-gray-100">
-      <CardBody className="p-5">
-      <Typography variant="h5" className="mb-6 mt-2">
-            Editar Perfil
-      </Typography>
-      <form className="space-y-4">
-              <div className="flex gap-6">
-                <div className="flex-1">
-                  <label className="">
-                    <Typography
-                        variant="small"
-                        className="block mb-2 text-sm font-medium text-gray-700"
-                      >
-                       Nombre
-                      </Typography>
-                      </label>
-                  <input
-                    type="text"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    placeholder="//consumo name"
-                  />
-                </div>
-                <div className="flex-1">
-                  <label className="block mb-2 text-sm font-medium text-gray-700"><Typography
-                        variant="small"
-                        className="block mb-2 text-sm font-medium text-gray-700"
-                      >
-                       Telefono
-                      </Typography></label>
-                  <input
-                    type="tel"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    placeholder="//concumo sel"
-                    pattern="[0-9]{10}"  
-                  />
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <label className="block mb-1 text-sm font-medium text-gray-700"><Typography
-                        variant="small"
-                        className="block mb-2 text-sm font-medium text-gray-700"
-                      >
-                       Correo
-                      </Typography></label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    placeholder="/cooreo"
-                  />
-                </div>
-                <div className="flex-1">
-                  <label className="block mb-1 text-sm font-medium text-gray-700"><Typography
-                        variant="small"
-                        className="block mb-2 text-sm font-medium text-gray-700"
-                      >
-                       Confirmar correo
-                      </Typography></label>
-                  <input
-                    type="email"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    placeholder="Confirmar"
-                  />
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <label className="block mb-1 text-sm font-medium text-gray-700"><Typography
-                        variant="small"
-                        className="block mb-2 text-sm font-medium text-gray-700"
-                      >
-                       contraseña
-                      </Typography></label>
-                  <input
-                    type="password"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    placeholder="*******"
-                  />
-                </div>
-                <div className="flex-1">
-                  <label className="block mb-1 text-sm font-medium text-gray-700"><Typography
-                        variant="small"
-                        className="block mb-2 text-sm font-medium text-gray-700"
-                      >
-                       Confirmar contraseña
-                      </Typography></label>
-                  <input
-                    type="password"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                    placeholder="Confirmar"
-                  />
-                </div>
-              </div>
-             
+            <CardBody className="p-5">
+            <Typography variant="h5" className="mb-6 mt-2">
+                  Editar Perfil
+            </Typography>
+        {
+          user.filter(user=> user.rol==="organizador"&& user._id === '669a8daf34ceeaee51c0746b').map((organizador)=>(
             
-              <Button variant="gradient" fullWidth>
-                Actualizar cambios
-              </Button>
-            </form>
-      </CardBody>
-      </Card>
+            <form className="space-y-4" key={organizador._id} onSubmit={handleSubmit(handleBoton)}>
+                    <div className="flex gap-6">
+                      <div className="flex-1">
+                        <label className="">
+                          <Typography
+                              variant="small"
+                              className="block mb-2 text-sm font-medium text-gray-700"
+                            >
+                             Nombre
+                            </Typography>
+                            </label>
+                        <input
+                          type="text"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                          placeholder={organizador.nombres} 
+                          name="nombres"
+                          value={updateUser.nombres}
+                          onChange={handleChangePutDb}
+                        />
+                      </div>
+                      <div className="flex-1">
+                        <label className="block mb-2 text-sm font-medium text-gray-700"><Typography
+                              variant="small"
+                              className="block mb-2 text-sm font-medium text-gray-700"
+                            >
+                             Telefono
+                            </Typography></label>
+                        <input
+                          type="tel"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                          placeholder={organizador.telefono}
+                          pattern="[0-9]{10}"  
+                          name="telefono"
+                          value={updateUser.telefono}
+                          onChange={handleChangePutDb}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-4">
+                      <div className="flex-1">
+                        <label className="block mb-1 text-sm font-medium text-gray-700"><Typography
+                              variant="small"
+                              className="block mb-2 text-sm font-medium text-gray-700">
+                             Correo
+                            </Typography></label>
+                            <Controller
+                            name="correo"
+                            control={control}
+                            render={({field})=>(
+                              <input
+                              type="email"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                              placeholder="Correo"
+                              {...field}
+                              value={updateUser.correo}
+                              onChange={(e)=>{
+                                handleChangePutDb(e);
+                                field.onChange(e);
+                            }}
+                            />
+                            )}
+                            />
+                       
+                      </div>
+                      <div className="flex-1">
+                        <label className="block mb-1 text-sm font-medium text-gray-700"><Typography
+                              variant="small"
+                              className="block mb-2 text-sm font-medium text-gray-700"
+                            >
+                             Confirmar correo
+                            </Typography></label>
+                            <Controller
+                              name='confirmCorreo'
+                              control={control}  
+                              render={({field})=>(
+                                    <div className="w-full relative flex items-center justify-center flex-row">
+                                      <input
+                                        type="email"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none pr-10" 
+                                        placeholder="Confirmar"
+                                        {...field}
+                                        value={updateUser.confirmCorreo}
+                                        onChange={(e) => {
+                                          handleChangePutDb(e);
+                                          field.onChange(e);
+                                        }}
+                                      />
+                                      {updateUser.confirmCorreo && (
+                                        <div className="absolute inset-y-0 right-0 flex items-center pr-3"> 
+                                          {!errors.confirmCorreo && updateUser.confirmCorreo === updateUser.correo ? (
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className='text-green-500' viewBox="0 0 24 24">
+                                              <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
+                                            </svg>
+                                          ) : (
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className='text-red-500' viewBox="0 0 24 24">
+                                              <path d="M11.953 2C6.465 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.493 2 11.953 2zM13 17h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                                            </svg>
+                                          )}
+                                        </div>
+                                      )}
+                                    </div>
+                              )}    
+                              
+                            />
+                           
+                      
+                      </div>
+                    </div>
+                    <div className="flex gap-4">
+                      <div className="flex-1">
+                        <label className="block mb-1 text-sm font-medium text-gray-700"><Typography
+                              variant="small"
+                              className="block mb-2 text-sm font-medium text-gray-700"
+                            >
+                             contraseña
+                            </Typography></label>
+                            <Controller
+                            name="contrasena"
+                            control={control}
+                            render={({field})=>(
+                              <input
+                          type="password"
+                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                          placeholder="Contraseña"
+                          {...field}
+                            value={updateUser.contrasena}
+                            onChange={(e) => {
+                                handleChangePutDb(e);
+                                field.onChange(e);
+                            }}
+                        />
+                            )}
+                            />
+                        
+                      </div>
+                      <div className="flex-1">
+                        <label className="block mb-1 text-sm font-medium text-gray-700"><Typography
+                              variant="small"
+                              className="block mb-2 text-sm font-medium text-gray-700"
+                            >
+                             Confirmar contraseña
+                            </Typography></label>
+                            <Controller
+                            name="confirmContrasena"
+                            control={control}
+                            render={({field})=>(
+                              <div className="w-full relative flex items-center justify-center flex-row">
+                              <input
+                                type="password"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none pr-10" 
+                                placeholder="Confirmar"
+                                {...field}
+                                value={updateUser.confirmContrasena}
+                                onChange={(e) => {
+                                  handleChangePutDb(e);
+                                  field.onChange(e);
+                                }}
+                              />
+                              {updateUser.confirmContrasena && (
+                                <div className="absolute inset-y-0 right-0 flex items-center pr-3"> 
+                                  {!errors.confirmContrasena && updateUser.confirmContrasena === updateUser.contrasena ? (
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className='text-green-500' viewBox="0 0 24 24">
+                                      <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
+                                    </svg>
+                                  ) : (
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className='text-red-500' viewBox="0 0 24 24">
+                                      <path d="M11.953 2C6.465 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.493 2 11.953 2zM13 17h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                                    </svg>
+                                  )}
+                                </div>
+                              )}
+                            </div>
+                            )}
+                            />
+                     
+                      </div>
+                    </div>
+                   
+                  
+                    <Button type="submit" variant="gradient" fullWidth>
+                      Actualizar cambios
+                    </Button>
+                  </form>
+
+          ))
+        }
+       </CardBody>
+       </Card>
       <div className="felx justify-center items-center w-2/6"> 
       <div className=" max-w-md mx-auto -mt-16 mb-6 lg:mx-4 ">
         <Card className="relative overflow-visible pt-2">
           <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <Tooltip content="Delete" placement="left">
-              <TrashIcon className="w-6 h-6  text-red-500 absolute -left-4 -bottom-4 transform -translate-y-1/2 cursor-pointer" />
+          <div>
+            
+          </div>
+            <Tooltip  content="Delete" placement="left" >
+              <button   className="absolute z-40 bottom-0 left-0 bg-white rounded-full p-1 border-0 w-10 h-10 flex items-center justify-center cursor-pointer" onClick={handleDelete}>
+              <TrashIcon className="w-6 h-6  text-red-500 cursor-pointer" />
+              </button>
+              
             </Tooltip>
-            <Avatar
-              src="https://via.placeholder.com/100"
-              alt="Profile Image"
-              size="xl"
-              className="border-4 border-white shadow-lg w-32 h-32"
-            />
-            <Tooltip content="Add" placement="right">
-              <PlusIcon className="w-6 h-6 text-green-500 absolute -right-4 -bottom-4 transform -translate-y-1/2 cursor-pointer" />
-            </Tooltip>
+            <div className="relative">
+     {
+      setImagen &&(
+        <Avatar
+        src={imagen}
+        size="xl"
+        className="border-4 border-white shadow-lg w-32 h-32"
+      />
+      )
+     }
+     <form className='' onSubmit={(e)=> e.preventDefault()}>
+                  <input
+                  className='hidden'
+                  ref={funcionalidadInput}  
+                  type='file'
+                  onChange={ImagePreviewMuestra}
+                  />                 
+                  <button className="hidden" onClick={savePost}>Enviar</button>  
+                </form>
+
+    </div>
+    <div className="relative">
+      {imagen !== '/sinfoto.png' && (
+        <Tooltip content="Update" placement="right">
+          <button 
+            onClick={() => {
+              setAccion('update');
+              input();
+            }} 
+            className="absolute bottom-0 right-0 bg-white rounded-full p-1 border-0 w-10 h-10 flex items-center justify-center"
+          >
+            <PencilIcon className="w-6 h-6 text-green-500" />
+          </button>
+        </Tooltip>
+      )}
+      {imagen === '/sinfoto.png' && (
+        <Tooltip content="Add" placement="right">
+          <button 
+            onClick={() => {
+              setAccion('add');
+              input();
+            }} 
+            className="absolute bottom-1 right-1 bg-white rounded-full p-1 border-0 w-10 h-10 flex items-center justify-center"
+          >
+            <PlusIcon className="w-6 h-6 text-green-500" />
+          </button>
+        </Tooltip>
+      )}
+    </div>
           </div>
           <CardBody className="flex flex-col items-center">
             <Typography variant="h5" className="mt-16 mb-1 text-center font-normal text-black-600">
@@ -156,8 +564,19 @@ export function Profile() {
       </div>
      
     </div>
-
-     
+      
+      <ModalTwo
+       isOpen={modalFotoOpen && accion === 'add'}
+       onClose={handleCloseModal}
+       onSave={savePost}
+       imagePreview={imagePreview}
+      />
+     <ModalTwo                                                                                    
+       isOpen={modalFotoOpen && accion === 'update'}
+       onClose={handleCloseModal}
+       onSave={saveUpdate}
+       imagePreview={imagePreview}
+      />
     </div>
      
 
@@ -168,4 +587,3 @@ export function Profile() {
   );
 }
 
-export default Profile;
