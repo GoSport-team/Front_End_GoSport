@@ -17,33 +17,63 @@ import { Link } from "react-router-dom";
 
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { authorsTableData, projectsTableData } from "@/data";
-
+import DeleteCampeonatoModal from '../../widgets/componentes/campeonato/modalEliminarCampeonato'
+import ViewCampeonatoModal from '../../widgets/componentes/campeonato/modalVerCampeonato'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { createLogger } from "vite";
 export function Tables() {
 
   const [tasks, setTasks] = useState([]);
+  const [selectedCampeonato, setSelectedCampeonato] = useState(null);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const[modalView, setModalView]= useState(false)
+    const[idView, setIdView]= useState(null)
+    const[campeonato, setCampeonato]= useState([])
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const response = await axios.get('http://localhost:3001/campeonato');
         console.log(response.data);
-        if (response.data && Array.isArray(response.data.campeonatos)) {
-          setTasks(response.data.campeonatos);
-        } else {
-          console.error('Fetch tasks returned unexpected data:', response.data);
-        }
+          setTasks(response.data);
       } catch (error) {
         console.error('Error fetching tasks:', error);
       }
     };
     fetchTasks();
   }, []);
+ 
+    const deleteTasks = async () => {
+      try {
+        const response = await axios.delete(`http://localhost:3001/campeonato/${selectedCampeonato}`);
+        console.log(response)
+        setIsModalOpen(false);
+        toast('Campeonato eliminado exitosamente');
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+        toast.error('Error al eliminar el campeonato. Inténtalo de nuevo.');
+      }
+    };
+    const viewCampeonato=async(id)=>{
+try{
+  const response = await axios.delete(`http://localhost:3001/campeonato/${id}`);
+  console.log(response.data)
+   setCampeonato(response.data)
+        setModalView(true)  
+}catch(error){
+  console.error('Error fetching tasks:', error);
+  toast.error('Error al abrir el campeonato. Inténtalo de nuevo.');
+}
+
+    }
+    
 
   return (
     <div className="mt-10 mb-8 flex flex-col">
 
       <div className="flex justify-start">
-          <button class="flex items-center justify-center bg-blue-500 text-white gap-1 px-5 py-3 cursor-pointer text-gray-800 font-semibold tracking-widest rounded-md hover:bg-blue-400 duration-300 hover:gap-2 hover:translate-x-3 mb-6"
+          <button class="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800  text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3"
         >
           <Link to="/dashboard/tables/view" >
             Crear Campeonato
@@ -87,7 +117,7 @@ export function Tables() {
               tasks.map(task => (
                 <tr key={task._id} class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                   <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {task.nombreDiciplinas}
+                    {task.nombreDisciplinas}
                   </td>
                   <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {task.nombreCampeonato}
@@ -96,16 +126,39 @@ export function Tables() {
                     {task.tipoCampeonato}
                   </td>
                   <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex flex-row gap-x-4">
-                    <img src="\public\img\Campeonato\ver.png" alt="img" class="w-7 object-contain" />
-                    <img src="\public\img\Campeonato\edit.png" alt="img" class="w-7 object-contain" />
-                    <img src="\public\img\Campeonato\delete.png" alt="img" class="w-7 object-contain" />
+                    <img src="\public\img\Campeonato\ver.png" alt="img" class="w-7 object-contain"
+                    onClick={() => viewCampeonato(task._id)}
+                     />
+                    <img src="\public\img\Campeonato\edit.png" alt="img" class="w-7 object-contain"
+                     />
+                    <img src="\public\img\Campeonato\delete.png" alt="img" class="w-7 object-contain"
+                    onClick={() => {
+                      setSelectedCampeonato(task._id);
+                      setIsModalOpen(true);
+                  }} />
                   </td>
+                  <button class="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800  text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3">
+            Publicar
+          </button>
                 </tr>
               ))
             }
           </tbody>
         </table>
       </div>
+      <DeleteCampeonatoModal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                onDelete={deleteTasks}
+                campeonatoName={selectedCampeonato ? selectedCampeonato.nombreCampeonato : ''}
+            />
+            <ToastContainer />
+            <ViewCampeonatoModal
+                isOpen={modalView}
+                onClose={() => setModalView(false)}
+                campeonato={campeonato}
+            />
+            <ToastContainer />
     </div>
   );
 }
