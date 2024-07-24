@@ -13,12 +13,12 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { registroUser } from "../../lib/api";
 
-export function SignUp() {
-  const [selectedOption, setSelectedOption] = useState(" ");
+export const SignUp=()=> {
+  const [selectedOption, setSelectedOption] = useState(null);
 
-  const handleChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setSelectedOption(event.target.value);
+  // };
   
   const {
     register,
@@ -173,20 +173,22 @@ export function SignUp() {
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Seleccione su jornada
             </Typography>
-           
-           <Select
-            id="select"
-            value={selectedOption}
-            {...register("jornada", {
-              required: "Este campo es obligatorio",
-            })}
-            onChange={handleChange}>
-              <Option value=""></Option>
-              <Option value="mañana">mañana</Option>
-              <Option value="tarde">tarde</Option>
-              <Option value="noche">noche</Option>
+            <Select
+                id="select"
+                value={selectedOption}
+                  className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                {...register("jornada", {
+                  required: "Este campo es obligatorio",
+                })}
+                onChange={((event)=>{setSelectedOption(event.target.value) })}
+              >
+                <Option value="">Selecciona tu jornada</Option>
+                <Option value="Mañana">Mañana</Option>
+                <Option value="Tarde">Tarde</Option>
+                <Option value="Noche">Noche</Option>
+              </Select>
 
-           </Select>
+              
            {errors.jornada && <span>{errors.jornada.message}</span>}
           </div>
           <div className="mb-1 flex flex-col gap-6">
@@ -261,4 +263,3 @@ export function SignUp() {
     </section>
   );
 }
-export default SignUp;

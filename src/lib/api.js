@@ -70,8 +70,10 @@ export const registroUser = async ({
       ficha,
       jornada
     });
+    console.log(response.data)
     return response.data;
   } catch (error) {
+    console.log(error)
     throw new Error(
       error.response.data.message || "Error al registrar usuario"
     );
