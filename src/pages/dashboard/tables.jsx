@@ -19,16 +19,17 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { authorsTableData, projectsTableData } from "@/data";
 import DeleteCampeonatoModal from '../../widgets/componentes/campeonato/modalEliminarCampeonato'
 import ViewCampeonatoModal from '../../widgets/componentes/campeonato/modalVerCampeonato'
+import UpdateCampeonato from '../../widgets/componentes/campeonato/modalActualizar'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { createLogger } from "vite";
 export function Tables() {
 
   const [tasks, setTasks] = useState([]);
   const [selectedCampeonato, setSelectedCampeonato] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const[modalView, setModalView]= useState(false)
-    const[idView, setIdView]= useState(null)
+    const[idUpdate, setIdUpdate]= useState(null)
+    const [modalUpdate, setModalUpdate]= useState(false)
     const[campeonato, setCampeonato]= useState([])
 
   useEffect(() => {
@@ -55,18 +56,21 @@ export function Tables() {
         toast.error('Error al eliminar el campeonato. Inténtalo de nuevo.');
       }
     };
+
     const viewCampeonato=async(id)=>{
-try{
-  const response = await axios.delete(`http://localhost:3001/campeonato/${id}`);
-  console.log(response.data)
+      try{
+  const response = await axios.get(`http://localhost:3001/campeonato/${id}`);
+  console.log(response)
    setCampeonato(response.data)
-        setModalView(true)  
-}catch(error){
+       
+
+    }catch(error){
   console.error('Error fetching tasks:', error);
   toast.error('Error al abrir el campeonato. Inténtalo de nuevo.');
-}
+      }
 
     }
+    
     
 
   return (
@@ -127,9 +131,16 @@ try{
                   </td>
                   <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex flex-row gap-x-4">
                     <img src="\public\img\Campeonato\ver.png" alt="img" class="w-7 object-contain"
-                    onClick={() => viewCampeonato(task._id)}
+                    onClick={() => {viewCampeonato(task._id)
+                      setModalView(true)  
+                    }}
                      />
                     <img src="\public\img\Campeonato\edit.png" alt="img" class="w-7 object-contain"
+                     onClick={() =>{
+                       setIdUpdate(task._id)
+                       viewCampeonato(task._id)
+                      setModalUpdate(true)
+                     }}
                      />
                     <img src="\public\img\Campeonato\delete.png" alt="img" class="w-7 object-contain"
                     onClick={() => {
@@ -158,7 +169,12 @@ try{
                 onClose={() => setModalView(false)}
                 campeonato={campeonato}
             />
-            <ToastContainer />
+            <UpdateCampeonato
+            isOpen={modalUpdate}
+             onClose={()=>setModalUpdate(false)} 
+             campeonato={campeonato}
+              onUpdate={idUpdate}
+            />
     </div>
   );
 }

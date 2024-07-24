@@ -92,11 +92,11 @@ const CreateCampeonato = () => {
             setAñoCreacion('');
 
         } catch (error) {
-            console.error('Error al crear el campeonato:', error);
-            if (error.response) {
-                console.error('Detalles del error:', error.response.data);
-            }
-            setError('Error al crear el campeonato. Inténtalo de nuevo.');
+            if (error.response && error.response.status === 401) {
+                toast.error('No se puede crear más de un interfichas o intercentros por año');
+              } else {
+                toast.error('Error al crear el campeonato. Inténtalo de nuevo.');
+              }
         }
     };
 

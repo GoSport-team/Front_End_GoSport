@@ -61,7 +61,7 @@ export function SignIn() {
             containerProps={{ className: "-ml-2.5" }}
           />
          <Link 
-            to="/dashboard" 
+            to="/dashboard/campeonatos" 
             className="mt-6 block w-full bg-blue-500 text-white py-2 px-4 rounded text-center hover:bg-blue-700"
         >
             Sign In
