@@ -171,6 +171,26 @@ export function SignUp() {
           </div>
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
+              Seleccione su jornada
+            </Typography>
+           
+           <Select
+            id="select"
+            value={selectedOption}
+            {...register("jornada", {
+              required: "Este campo es obligatorio",
+            })}
+            onChange={handleChange}>
+              <Option value=""></Option>
+              <Option value="mañana">mañana</Option>
+              <Option value="tarde">tarde</Option>
+              <Option value="noche">noche</Option>
+
+           </Select>
+           {errors.jornada && <span>{errors.jornada.message}</span>}
+          </div>
+          <div className="mb-1 flex flex-col gap-6">
+            <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Tu correo
             </Typography>
             <Input
@@ -188,11 +208,6 @@ export function SignUp() {
             />
             {errors.correo && <span>{errors.correo.message}</span>}
           </div>
-          <div className="mb-1 flex flex-col gap-6">
-            <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
-             Seleccione su jornada
-            </Typography>
-             </div> 
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
              Contraseña

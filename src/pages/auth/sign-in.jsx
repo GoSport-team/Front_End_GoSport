@@ -78,7 +78,7 @@ export const SignIn= ()=> {
            
            
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
-              Password
+              Contraseña
             </Typography>
             <div className="relative">
             <Input
@@ -99,8 +99,8 @@ export const SignIn= ()=> {
           </div>
           
           <Button type="submit" className="mt-6" fullWidth>
-            Sign In
-          </Button>
+            Iniciar sesion
+        </Button>
 
           <div className="flex items-center justify-end gap-2 mt-6">
            
