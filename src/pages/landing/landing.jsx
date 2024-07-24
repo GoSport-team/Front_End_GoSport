@@ -1,8 +1,9 @@
+import Cronograma from '@/widgets/componentes/Cronograma';
 import { Link } from 'react-router-dom';
 
 export default function Landing() {
     return (
-        <>
+        <> 
             <nav className="bg-gray-800 p-4">
                 <div className="containerPrincipal flex items-center justify-between">
                     <div className="logo flex items-center">
