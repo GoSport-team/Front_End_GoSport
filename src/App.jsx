@@ -3,6 +3,7 @@ import { Dashboard, Auth } from "@/layouts";
 import CreateCampeonato from "./pages/campeonatos/view"
 import Subirfoto from "./pages/dashboard/subirfoto";
 import Landing from "./pages/landing/landing";
+import { DatosEquiposInscripcion } from "./components/Jugador/InscribirEquipo/DatosEquiposInscripcion";
 
 function App() {
   return (
