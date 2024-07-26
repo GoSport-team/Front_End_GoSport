@@ -12,7 +12,11 @@ import { Check } from "react-feather";
 import Cookies from "js-cookie";
 import { useState } from "react";
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 export const SignIn= ()=> {
+  const notify = (message) => toast(message);
   const {
     register,
     handleSubmit,
@@ -36,19 +40,19 @@ export const SignIn= ()=> {
           Navigate("/campeonatos/view");
         } else {
           setError("rol", { type: "manual", message: "Rol desconocido" });
+          notify("Verifique sus credenciales")
         }
       }, 1000);
     } catch (error) {
-      if (error.response && error.response.status === 403) {
-        alert("Credenciales inválidas. Verifica tus datos e intenta de nuevo.");
-      } else {
-        alert("Error al iniciar sesión. Inténtalo de nuevo más tarde.");
-      }
+     
+        console.log("Ingrese usuario y contraseña");
+      
     }
   };
 
   return (
     <section className="flex items-center justify-center gap-4">
+      <ToastContainer/>
       <div className="w-100p h-100p flex items-center flex-col justify-center gap-3 lg:w-3/5">
         <div className="text-center">
           <Typography variant="h2" className="font-bold mb-4">Iniciar Sesion</Typography>
@@ -59,7 +63,7 @@ export const SignIn= ()=> {
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Correo
             </Typography>
-            <div className="relative">
+            <div className="relative flex flex-row">
             <Input
               size="lg"
               placeholder="name@mail.com"
@@ -80,7 +84,7 @@ export const SignIn= ()=> {
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Contraseña
             </Typography>
-            <div className="relative">
+            <div className="relative flex flex-row">
             <Input
               type="password"
               size="lg"
