@@ -1,3 +1,4 @@
+import Cronograma from '@/widgets/componentes/Cronograma';
 import { Link } from 'react-router-dom';
 import { useEffect } from "react";
 import Aos from "aos";
@@ -13,7 +14,7 @@ export default function Landing() {
         Aos.init({ duration: 1000 });
       }, []);
     return (
-        <>
+        <> 
             <nav className="bg-gray-800 p-4">
                 <div className="containerPrincipal flex items-center justify-between">
                     <div className="logo flex items-center">
