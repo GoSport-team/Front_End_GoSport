@@ -182,9 +182,9 @@ export function SignUp() {
             })}
             onChange={handleChange}>
               <Option value=""></Option>
-              <Option value="mañana">mañana</Option>
-              <Option value="tarde">tarde</Option>
-              <Option value="noche">noche</Option>
+              <Option value="Mañana">Mañana</Option>
+              <Option value="Tarde">Tarde</Option>
+              <Option value="Noche">Noche</Option>
 
            </Select>
            {errors.jornada && <span>{errors.jornada.message}</span>}
@@ -247,7 +247,7 @@ export function SignUp() {
             {errors.contrasena && <span>{errors.contrasena.message}</span>}
           </div>
 
-          <Button type="submit" className="mt-6" fullWidth>
+          <Button type="onsubmit" className="mt-6" fullWidth>
             REGISTRARSE
           </Button>
 
