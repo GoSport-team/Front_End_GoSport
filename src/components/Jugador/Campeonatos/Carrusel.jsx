@@ -65,7 +65,7 @@ export const Carrusel = () => {
         <li key={index} style={{ opacity: currentSlide === index ? 1 : 0 }}>
           <img
 
-          className="w-full imgCarrusel "
+          className="w-full imgCarrusel rounded-lg  "
             src={slide.image}
             alt={slide.title}
             layout="fill"

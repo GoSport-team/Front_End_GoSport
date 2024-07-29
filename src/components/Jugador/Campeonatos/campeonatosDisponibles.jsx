@@ -1,15 +1,36 @@
 import { Link } from 'react-router-dom'
 import CardCampeonato from './cardCampeonato'
 import { Carrusel } from './Carrusel'
+import { NavBarJugador } from '../NavBar/NavBarJugador'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import Cookies from 'js-cookie'
 
 export default function CampeonatosDisponibles() {
-  return (
+  const [user, setUser] = useState()
+  const token = Cookies.get('token')
+  useEffect(()=>{
+    const obtenerUser =async ()=>{
+      const response = await axios.get('http://localhost:3001/usuarios/perfil',{
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      })
+      setUser(response.data)
+    }
+    obtenerUser()
+  },[])
 
+
+  return (
     <>
+    {user?
+    <div>
+    <NavBarJugador cedula={user.identificacion}/>
     <Carrusel/>
     <section className='contenedorBienvenida'>
         <h1 className='text-center text-2xl ml-28 mr-28 ' >
-        “Estimado [nombre del jugador], bienvenido al área de inscripciones. 🏆 
+        “Estimado [{user.nombres}], bienvenido al área de inscripciones. 🏆 
         Aquí podrás elegir los campeonatos en los que deseas participar. 
         No olvides que cada torneo es una oportunidad para demostrar 
         tu habilidad en la cancha. ¡Éxito!”
@@ -26,6 +47,9 @@ export default function CampeonatosDisponibles() {
         
         </article>
       </section>
+      </div>
+      :<h1>Esqueleton</h1>
+      }
     </>
   )
 }
