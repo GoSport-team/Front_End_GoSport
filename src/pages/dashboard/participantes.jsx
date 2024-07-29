@@ -1,7 +1,16 @@
 import React from 'react'
-
-export const Participantes = () => {
+import {
+  Card,
+  CardBody,
+  Avatar,
+  Typography,
+  Tooltip,
+  Button,
+  Spinner,
+} from "@material-tailwind/react";
+import Participantes from '@/widgets/componentes/Participantes';
+export const Participante = () => {
   return (
-    <div>participantes</div>
+    <div></div>
   )
 }

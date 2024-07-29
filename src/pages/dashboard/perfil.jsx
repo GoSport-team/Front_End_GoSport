@@ -28,7 +28,7 @@ export const Profile= () =>{
   const [usuarioId, setUsuario]= useState([])
   useEffect(() => {
     const Obtener = async () => {
-       // Iniciar la carga
+  
       try {
         const response = await axios.get('http://localhost:3001/usuarios/perfil', {
           headers: {
