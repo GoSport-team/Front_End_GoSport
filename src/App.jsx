@@ -1,7 +1,7 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Dashboard, Auth } from "@/layouts";
 import CreateCampeonato from "./pages/campeonatos/Crear"
-import Subirfoto from "./pages/dashboard/subirfoto";
+//import Subirfoto from "./pages/dashboard/subirfoto";
 import Landing from "./pages/landing/landing";
 import CampeonatosDisponibles from "./components/Jugador/Campeonatos/campeonatosDisponibles";
 import { DatosEquipos } from "./components/Jugador/CrearEquipo/datosEquipos";
