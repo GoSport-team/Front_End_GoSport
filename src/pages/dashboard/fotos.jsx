@@ -1,19 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function Fotos() {
   const [photos, setPhotos] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null); // Estado para la imagen seleccionada
-  const [showConfirmDelete, setShowConfirmDelete] = useState(false); // Estado para mostrar confirmación de eliminación
-  const [photoToDelete, setPhotoToDelete] = useState(null); // Estado para la foto a eliminar
-  const [showUploadModal, setShowUploadModal] = useState(false); // Estado para mostrar el modal de subida
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [photoToDelete, setPhotoToDelete] = useState(null);
+  const [showUploadModal, setShowUploadModal] = useState(false);
   const [formData, setFormData] = useState({
     Nombre: '',
     Descripcion: ''
   });
   const [selectedFile, setSelectedFile] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
-  const [uploadMessage, setUploadMessage] = useState(''); // Estado para mensaje de subida
+  const [uploadMessage, setUploadMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -27,12 +29,13 @@ export function Fotos() {
       .then(data => setPhotos(data))
       .catch(error => {
         console.error('Error fetching photos:', error);
+        toast.error('Error fetching photos');
       });
   }, []);
 
   const handleDelete = (photoId) => {
     setPhotoToDelete(photoId);
-    setShowConfirmDelete(true); // Muestra la confirmación de eliminación
+    setShowConfirmDelete(true);
   };
 
   const handleConfirmDelete = () => {
@@ -45,33 +48,33 @@ export function Fotos() {
         }
         setPhotos(photos.filter(photo => photo._id !== photoToDelete));
         setShowConfirmDelete(false);
-        alert('Foto eliminada');
+        toast.success('Foto eliminada');
       })
       .catch(error => {
         console.error('Error deleting photo:', error);
+        toast.error('Error deleting photo');
       });
   };
 
   const handleUploadPhoto = () => {
     if (photos.length >= 6) {
-      setUploadMessage('Solo puedes subir hasta 6 imágenes.');
-      setTimeout(() => setUploadMessage(''), 5000); // Oculta el mensaje después de 5 segundos
+      toast.error('Solo puedes subir hasta 6 imágenes.');
     } else {
       setShowUploadModal(true);
     }
   };
 
   const handleImageClick = (imageUrl) => {
-    setSelectedImage(imageUrl); // Abre el modal y muestra la imagen seleccionada
+    setSelectedImage(imageUrl);
   };
 
   const handleCloseModal = () => {
-    setSelectedImage(null); // Cierra el modal de imagen seleccionada
+    setSelectedImage(null);
   };
 
   const handleCloseUploadModal = () => {
     setShowUploadModal(false);
-    setUploadMessage(''); // Limpia el mensaje de subida al cerrar el modal
+    setUploadMessage('');
   };
 
   const handleInputChange = (e) => {
@@ -112,10 +115,12 @@ export function Fotos() {
         });
         setSelectedFile(null);
         setShowConfirm(false);
-        setShowUploadModal(false); // Cierra el modal al completar la subida
+        setShowUploadModal(false);
+        toast.success('Foto subida con éxito');
       })
       .catch(error => {
         console.error('Error uploading photo:', error);
+        toast.error('Error uploading photo');
       });
   };
 
@@ -277,6 +282,8 @@ export function Fotos() {
           </div>
         </div>
       )}
+
+      <ToastContainer />
     </main>
   );
 }
