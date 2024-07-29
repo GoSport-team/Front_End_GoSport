@@ -2,7 +2,10 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { Dashboard, Auth } from "@/layouts";
 import CreateCampeonato from "./pages/campeonatos/view"
 import Landing from "./pages/landing/landing";
+import CampeonatosDisponibles from "./components/Jugador/Campeonatos/campeonatosDisponibles";
+import { DatosEquipos } from "./components/Jugador/CrearEquipo/datosEquipos";
 import { DatosEquiposInscripcion } from "./components/Jugador/InscribirEquipo/DatosEquiposInscripcion";
+import { VerEquipo } from "./components/Jugador/VerEquipo/VerEquipo";
 
 function App() {
   return (
@@ -13,7 +16,10 @@ function App() {
       <Route path="/dashboard/tables/view" element={<CreateCampeonato />} />
       
       <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
-      <Route path="/dashjugador" element={<DatosEquiposInscripcion/>}/>
+      <Route path="/jugador/dashboard" element={<CampeonatosDisponibles/>}/>
+      <Route path="/jugador/dashboard/crearequipo" element={<DatosEquipos/>}/>
+      <Route path="/jugador/dashboard/:id" element={<DatosEquiposInscripcion/>}/>
+      <Route path="/jugador/dashboard/verequipo/:cedula" element={<VerEquipo/>} />
     </Routes>
   );
 }
