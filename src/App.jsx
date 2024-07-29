@@ -5,8 +5,7 @@ import CreateCampeonato from "./pages/campeonatos/Crear"
 import Landing from "./pages/landing/landing";
 import CampeonatosDisponibles from "./components/Jugador/Campeonatos/campeonatosDisponibles";
 import { DatosEquipos } from "./components/Jugador/CrearEquipo/datosEquipos";
-import { DatosEquiposInscripcion } from "./components/Jugador/InscribirEquipo/DatosEquiposInscripcion";
-import { Participantes } from "./pages/campeonatos/Participantes";
+import { DatosEquiposInscripcion } from "./components/Jugador/InscribirEquipo/DatosEquiposInscripcion"; 
 import { VerEquipo } from "./components/Jugador/VerEquipo/VerEquipo";
 
 function App() {
@@ -19,7 +18,6 @@ function App() {
       
       <Route path="*" element={<Navigate to="/dashboard/home" replace />} />
       <Route path="/dashjugador" element={<DatosEquiposInscripcion/>}/>
-      <Route path="/participantes" element={<Participantes/>}/>
       <Route path="/jugador/dashboard" element={<CampeonatosDisponibles/>}/>
       <Route path="/jugador/dashboard/crearequipo" element={<DatosEquipos/>}/>
       <Route path="/jugador/dashboard/:id" element={<DatosEquiposInscripcion/>}/>
