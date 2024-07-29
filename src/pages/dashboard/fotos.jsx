@@ -8,6 +8,7 @@ export function Fotos() {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false); // Estado para mostrar confirmación de eliminación
   const [photoToDelete, setPhotoToDelete] = useState(null); // Estado para la foto a eliminar
   const [showUploadModal, setShowUploadModal] = useState(false); // Estado para mostrar el modal de subida
+  const [estadoPhoto, setEstadoPhoto] = useState(false)
   const navigate = useNavigate();
 
   useEffect(() => {
