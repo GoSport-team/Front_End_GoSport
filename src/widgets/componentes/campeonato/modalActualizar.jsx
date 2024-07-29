@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 Modal.setAppElement('#root');
 
 const UpdateCampeonatoModal = ({ isOpen, onClose, campeonato, onUpdate }) => {
+ 
     const [formData, setFormData] = useState({
         nombreDisciplinas: '',
         nombreCampeonato: '',
