@@ -40,21 +40,20 @@ export const DatosEquipos = () => {
   console.log(user)
   const submit = async (e) => {
     e.preventDefault()
-    const formData = new FormData();
-    formData.append("imageAgregar", file)
-
-    const respuesta = await fetch('/api/post', {
-      method: 'POST',
-      body: formData
-    })
-
-    const dataImage = await respuesta.json()
-
-    setEstadoImg(dataImage.url)
+    
     if (jugadores.length < 4) {
-      console.log("Numero de jugadores no alcanzado")
+      Swal.fire({
+        icon: "error",
+        title: "Jugador ya existe en un equipo",
+      })
     } else {
-      console.log(user.jornada)
+      const formData = new FormData();
+      formData.append("file", file)
+      console.log(user.idenfiticacion)
+      const respuestaa = await axios.post(`http://localhost:3001/inscripcionEquipos/${user._id}/logoEquipo`,formData)
+     
+      setEstadoImg(respuestaa.data.url)
+      console.log(respuestaa.data.url)
       const response = await axios.post('http://localhost:3001/inscripcionEquipos', {
         nombreEquipo: nombreEquipo,
         nombreCapitan: user.nombres,
@@ -62,7 +61,7 @@ export const DatosEquipos = () => {
         contactoDos: contactoDos,
         jornada: "Mañana",
         cedula: user.identificacion,
-        imgLogo: "imgshsshshs",
+        imgLogo: respuestaa.data.url,
         estado: true,
         participantes: jugadores
       })
@@ -119,7 +118,7 @@ export const DatosEquipos = () => {
           })
          }
 
-         const existeJugador = jugadores.filter((item)=> item.nombreJugador == response.data.nombres)
+         const existeJugador = jugadores.filter((item)=> item._id == response.data._id)
          if(existeJugador.length > 0){
          return Swal.fire({
            icon: "error",
