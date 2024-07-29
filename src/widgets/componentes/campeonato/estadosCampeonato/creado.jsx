@@ -1,9 +1,10 @@
 import React from 'react'
 
-export const Creado = ({ tasks, viewCampeonato, setModalView, setIdUpdate, setModalUpdate, setSelectedCampeonato, setIsModalOpen }) => {
+export const Creado = ({ tasks, viewCampeonato, setModalView, setIdUpdate, setModalUpdate, setSelectedCampeonato, setIsModalOpen, handleSubmit }) => {
    
   return (
    <>
+   <form onSubmit={handleSubmit}>
    <tbody>
             {
               tasks.map(task => (
@@ -36,13 +37,14 @@ export const Creado = ({ tasks, viewCampeonato, setModalView, setIdUpdate, setMo
                       setIsModalOpen(true);
                   }} />
                   </td>
-                  <button class="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800  text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3">
+                  <button type='submit'  class="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800  text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3">
             Publicar
           </button>
                 </tr>
               ))
             }
           </tbody>
+          </form>
    </>
   )
 }

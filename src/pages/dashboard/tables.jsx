@@ -10,11 +10,9 @@ import {
 } from "@material-tailwind/react";
 
 import {routes} from "@/routes";
-
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import { Link } from "react-router-dom";
-
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { authorsTableData, projectsTableData } from "@/data";
 import DeleteCampeonatoModal from '../../widgets/componentes/campeonato/modalEliminarCampeonato'
@@ -23,6 +21,7 @@ import UpdateCampeonato from '../../widgets/componentes/campeonato/modalActualiz
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Creado } from "@/widgets/componentes/campeonato/estadosCampeonato/creado";
+
 export function Tables() {
 
   const [tasks, setTasks] = useState([]);
@@ -32,12 +31,13 @@ export function Tables() {
     const[idUpdate, setIdUpdate]= useState(null)
     const [modalUpdate, setModalUpdate]= useState(false)
     const[campeonato, setCampeonato]= useState([])
+    const[creado, setCreado]=useState(false)
+    const [estado, setEstado]= useState('')
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const response = await axios.get('http://localhost:3001/campeonato');
-        console.log(response.data);
           setTasks(response.data);
       } catch (error) {
         console.error('Error fetching tasks:', error);
@@ -61,16 +61,31 @@ export function Tables() {
     const viewCampeonato=async(id)=>{
       try{
   const response = await axios.get(`http://localhost:3001/campeonato/${id}`);
-  console.log(response)
+  console.log(response.data)
    setCampeonato(response.data)
-       
-
     }catch(error){
   console.error('Error fetching tasks:', error);
   toast.error('Error al abrir el campeonato. Inténtalo de nuevo.');
       }
 
     }
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+          await axios.patch(`http://localhost:3001/campeonato/${campeonato._id}`,estado );
+          toast.success('Campeonato actualizado exitosamente');
+      } catch (error) {
+          console.error('Error public campeonato:', error);
+          toast.error('Error al publicar el campeonato. Inténtalo de nuevo.');
+      }
+    };
+
+   useEffect(() => {
+    if (campeonato.estadoCampeonato === "Creado") {
+      setCreado(true);
+      setEstado("Inscripcion");
+    }
+  }, [campeonato]);
     
     
 
@@ -117,13 +132,26 @@ export function Tables() {
 
             </tr>
           </thead>
-          <Creado  tasks={tasks}
-            viewCampeonato={viewCampeonato}
-            setModalView={setModalView}
-            setIdUpdate={setIdUpdate}
-            setModalUpdate={setModalUpdate}
-            setSelectedCampeonato={setSelectedCampeonato}
-            setIsModalOpen={setIsModalOpen}/>
+          <tbody>
+            {creado ? (
+              <Creado
+                tasks={tasks}
+                viewCampeonato={viewCampeonato}
+                setModalView={setModalView}
+                setIdUpdate={setIdUpdate}
+                setModalUpdate={setModalUpdate}
+                setSelectedCampeonato={setSelectedCampeonato}
+                setIsModalOpen={setIsModalOpen}
+                handleSubmit={handleSubmit}
+              />
+            ) : (
+              <tr>
+                <td colSpan="4" className="text-center">
+                  <h1>No hay campeonatos creados</h1>
+                </td>
+              </tr>
+            )}
+          </tbody>
         </table>
       </div>
       <DeleteCampeonatoModal
