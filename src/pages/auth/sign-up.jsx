@@ -16,10 +16,6 @@ import { registroUser } from "../../lib/api";
 export function SignUp() {
   const [selectedOption, setSelectedOption] = useState(" ");
 
-  const handleChange = (event) => {
-    setSelectedOption(event.target.value);
-  };
-  
   const {
     register,
     handleSubmit,
@@ -40,8 +36,9 @@ export function SignUp() {
       alert(errorMessage);
     }
   };
-  
-
+  const change =(e)=>{
+   setSelectedOption(e)
+  }
   
   return (
     <section className="ml-2 mr-2 flex">
@@ -176,11 +173,9 @@ export function SignUp() {
            
            <Select
             id="select"
-            value={selectedOption}
-            {...register("jornada", {
-              required: "Este campo es obligatorio",
-            })}
-            onChange={handleChange}>
+            onChange={change}
+            
+            >
               <Option value=""></Option>
               <Option value="Mañana">Mañana</Option>
               <Option value="Tarde">Tarde</Option>
