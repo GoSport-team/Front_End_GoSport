@@ -5,10 +5,10 @@ import {
   Typography,
   Tooltip,
   Button,
+  Spinner,
 } from "@material-tailwind/react";
 import {
   TrashIcon,
-  ChatBubbleLeftEllipsisIcon,
   PlusIcon,
   PencilIcon,
 } from "@heroicons/react/24/solid";
@@ -23,32 +23,36 @@ import axios from "axios";
 
 export const Profile= () =>{
   const token = Cookies.get('token')
+  const [loading, setLoading] = useState(true); // Estado de carga
 
   const [usuarioId, setUsuario]= useState([])
-  useEffect(()=>{
-    const Obtener = async()=>{
-      const response = await axios.get('http://localhost:3001/usuarios/perfil',
-        {
-          headers:{
-            Authorization : `Bearer ${token}`
+  useEffect(() => {
+    const Obtener = async () => {
+       // Iniciar la carga
+      try {
+        const response = await axios.get('http://localhost:3001/usuarios/perfil', {
+          headers: {
+            Authorization: `Bearer ${token}`
           }
-        })
-      setUsuario(response.data)
-      console.log(response.data)
-      if (response) {
-        // Establecer la imagen del usuario
-        if (response.url_foto) {
-            setImagen(response.url_foto);
+        });
+        
+        setUsuario(response.data);
+        if (response.data.url_foto) {
+          setImagen(response.data.url_foto);
+          setLoading(true);
+          console.log(response.data.url_foto);
         } else {
-            setImagen('/sinfoto.png');
+          setImagen('/sinfoto.png');
+          setLoading(false)
         }
-    }
-
-    }
-    
-    Obtener()
-  },[])
-
+      } catch (error) {
+        console.error('Error al obtener el perfil:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    Obtener();
+  }, [token]);
   const { handleSubmit, control,watch , formState: { errors } } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -85,7 +89,7 @@ const savePost = async () => {
 
   const formData = new FormData();
   formData.append('file', file);
-
+  setLoading(true);
   try {
     // Enviar la solicitud POST para subir la imagen
     const respuesta = await fetch(`http://localhost:3001/usuarios/${UserID}/foto`, {
@@ -129,6 +133,9 @@ const savePost = async () => {
     console.error('Error en la operación de imagen:', error);
     notify("Hubo un error al agregar la imagen");
   }
+  finally{
+    setLoading(false)
+  }
 };
 
 
@@ -142,8 +149,9 @@ if (!file) {
 const formData = new FormData();
 formData.append('file', file);
 //formData.append("public_id", localStorage.getItem('public_id'));
-
-const respuesta = await fetch(`http://localhost:3001/usuarios/${UserID}/pati`, {
+setLoading(true)
+try{
+  const respuesta = await fetch(`http://localhost:3001/usuarios/${UserID}/pati`, {
     method: 'PATCH',
     body: formData
 });
@@ -165,14 +173,25 @@ await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
 notify(accion === 'update' ? "Imagen actualizada exitosamente" : "Imagen agregada exitosamente");
 
 setModalFotoOpen(false);
+
+}
+catch(error){
+  console.log('Error con la imagen', error)
+}
+finally{
+  setLoading(false)
+}
+
 };
 // Funcion DELETE
 const handleDelete = async () => {
 try {
     const publicId = localStorage.getItem('public_id');
+    setLoading(true)
     if (!publicId) {
         throw new Error('No public_id found in localStorage');
     }
+    
     console.log('Public ID:', publicId);
     const deleteResponse = await fetch(`http://localhost:3001/usuarios/${UserID}/eli`, {
         method: 'DELETE',
@@ -196,12 +215,14 @@ try {
     // Limpiar localStorage y establecer la imagen predeterminada
     localStorage.removeItem('public_id');
     setImagen('/sinfoto.png');
-
+    notify("Imagen eliminada exitosamente")
     console.log('Imagen eliminada exitosamente');
 } catch (error) {
     console.error('Error eliminando la imagen:', error);
 }
-notify("Imagen eliminada exitosamente")
+finally{
+  setLoading(false)
+}
 };
 
 // Funcion donde se guarda el input
@@ -290,7 +311,14 @@ alert('No hay cambios para actualizar.');
   return (
     <>
     <ToastContainer/>
-     <div className="">
+    <div className="">
+      {loading ? (
+        <div className="flex justify-center items-center h-72">
+          <Spinner />
+        </div>
+      ) : (
+        <div className="relative mt-8 h-72">
+      
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover bg-center">
         <div className="absolute inset-0 h-full w-full bg-gray-900/75" />
       </div>
@@ -590,7 +618,9 @@ alert('No hay cambios para actualizar.');
       />
     </div>
      
-
+      )}
+    </div>
+     
     
 
      
