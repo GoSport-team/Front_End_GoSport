@@ -10,6 +10,7 @@ import {
 import { Home, Tables, Notifications, Profile } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import Fotos from "./pages/dashboard/fotos";
+import { Participante } from "@/pages/dashboard";
 import { element } from "prop-types";
 
 const icon = {
@@ -50,6 +51,11 @@ const icon = {
         path: "/notifications",
         element: <Notifications />,
       },
+      {
+        name: "participantes",
+        path: "/participantes", 
+        element:<Participante/>
+      }
     ],
   }]
  export  const routeAuth=[
