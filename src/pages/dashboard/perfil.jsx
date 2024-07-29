@@ -12,7 +12,7 @@ import {
   PlusIcon,
   PencilIcon,
 } from "@heroicons/react/24/solid";
-import ModalFoto from "../../widgets/componentes/perfil/modalVistaPreviaImagen";
+import Cookies from "js-cookie";
 import ModalTwo from "../../widgets/componentes/perfil/modalVistaPreviaImagen2";
 import { useState, useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -22,6 +22,33 @@ import axios from "axios";
 
 
 export const Profile= () =>{
+  const token = Cookies.get('token')
+
+  const [usuarioId, setUsuario]= useState([])
+  useEffect(()=>{
+    const Obtener = async()=>{
+      const response = await axios.get('http://localhost:3001/usuarios/perfil',
+        {
+          headers:{
+            Authorization : `Bearer ${token}`
+          }
+        })
+      setUsuario(response.data)
+      console.log(response.data)
+      if (response) {
+        // Establecer la imagen del usuario
+        if (response.url_foto) {
+            setImagen(response.url_foto);
+        } else {
+            setImagen('/sinfoto.png');
+        }
+    }
+
+    }
+    
+    Obtener()
+  },[])
+
   const { handleSubmit, control,watch , formState: { errors } } = useForm({
     mode: 'onChange',
     defaultValues: {
@@ -61,7 +88,7 @@ const savePost = async () => {
 
   try {
     // Enviar la solicitud POST para subir la imagen
-    const respuesta = await fetch('http://localhost:3001/usuarios/669a8daf34ceeaee51c0746b/foto', {
+    const respuesta = await fetch(`http://localhost:3001/usuarios/${UserID}/foto`, {
       method: 'POST',
       body: formData
     });
@@ -90,7 +117,7 @@ const savePost = async () => {
     }
 
     // Actualizar la URL de la imagen en la base de datos
-    await axios.put(`http://localhost:3001/usuarios/669a8daf34ceeaee51c0746b`, {
+    await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
       url_foto: data.url
     });
 
@@ -116,7 +143,7 @@ const formData = new FormData();
 formData.append('file', file);
 //formData.append("public_id", localStorage.getItem('public_id'));
 
-const respuesta = await fetch('http://localhost:3001/usuarios/669a8daf34ceeaee51c0746b/pati', {
+const respuesta = await fetch(`http://localhost:3001/usuarios/${UserID}/pati`, {
     method: 'PATCH',
     body: formData
 });
@@ -132,7 +159,7 @@ if (data.public_id) {
 }
 
 // Guarda la URL en la base de datos
-await axios.put(`http://localhost:3001/usuarios/669a8daf34ceeaee51c0746b`, {
+await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
     url_foto: data.url
 });
 notify(accion === 'update' ? "Imagen actualizada exitosamente" : "Imagen agregada exitosamente");
@@ -147,7 +174,7 @@ try {
         throw new Error('No public_id found in localStorage');
     }
     console.log('Public ID:', publicId);
-    const deleteResponse = await fetch('http://localhost:3001/usuarios/669a8daf34ceeaee51c0746b/eli', {
+    const deleteResponse = await fetch(`http://localhost:3001/usuarios/${UserID}/eli`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json'
@@ -162,7 +189,7 @@ try {
 
     console.log('Imagen eliminada de Cloudinary:', deleteData);
 
-    await axios.put(`http://localhost:3001/usuarios/669a8daf34ceeaee51c0746b`, {
+    await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
         url_foto: ''
     });
 
@@ -194,33 +221,9 @@ if (image) {
 }
 };
 
-// CONSUMO API GET
-const [user, setUser] = useState([]);
-useEffect(() => {
-const consumo = async () => {
-    try {
-        const respuesta = await axios.get('http://localhost:3001/usuarios');
-        const data = respuesta.data;
-        setUser(data);
-
-        // Obtener el usuario actual
-        const organizador = data.find(user => user.rol === "organizador"&& user._id==="669a8daf34ceeaee51c0746b");
-        if (organizador) {
-            // Establecer la imagen del usuario
-            if (organizador.url_foto) {
-                setImagen(organizador.url_foto);
-            } else {
-                setImagen('/sinfoto.png');
-            }
-        }
-    } catch (error) {
-        console.error(error);
-    }
-};
-consumo();
-}, []);
 
 // CONSUMO API PATCH
+let UserID = usuarioId._id;
 const [updateUser, setUpdateUser] = useState({ nombres: '', telefono: '', correo: '', contrasena: ''});
 
 const handleChangePutDb = (e) => {
@@ -230,6 +233,7 @@ setUpdateUser(prevState => ({
     [name]: value
 }));
 };
+
 
 
 const handleBoton = async (e) => {  
@@ -272,7 +276,7 @@ return;
 //Actualzar en la DB
 if (Object.keys(updatedFields).length > 0) {
 try {
-await axios.patch('http://localhost:3001/usuarios/669a8daf34ceeaee51c0746b', updatedFields);
+await axios.patch(`http://localhost:3001/usuarios/${UserID}`, updatedFields);
 alert('Usuario Actualizado');
 window.location.reload();
 } catch (error) {
@@ -298,9 +302,9 @@ alert('No hay cambios para actualizar.');
                   Editar Perfil
             </Typography>
         {
-          user.filter(user=> user.rol==="organizador"&& user._id === '669a8daf34ceeaee51c0746b').map((organizador)=>(
+          usuarioId? 
             
-            <form className="space-y-4" key={organizador._id} onSubmit={handleSubmit(handleBoton)}>
+            <form className="space-y-4" key={usuarioId._id} onSubmit={handleSubmit(handleBoton)}>
                     <div className="flex gap-6">
                       <div className="flex-1">
                         <label className="">
@@ -314,9 +318,9 @@ alert('No hay cambios para actualizar.');
                         <input
                           type="text"
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                          placeholder={organizador.nombres} 
+                          placeholder={usuarioId.nombres} 
                           name="nombres"
-                          value={updateUser.nombres}
+                          
                           onChange={handleChangePutDb}
                         />
                       </div>
@@ -330,7 +334,7 @@ alert('No hay cambios para actualizar.');
                         <input
                           type="tel"
                           className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                          placeholder={organizador.telefono}
+                          placeholder={usuarioId.telefono}
                           pattern="[0-9]{10}"  
                           name="telefono"
                           value={updateUser.telefono}
@@ -484,7 +488,9 @@ alert('No hay cambios para actualizar.');
                     </Button>
                   </form>
 
-          ))
+        :<h1>
+          Cargando datos
+        </h1>
         }
        </CardBody>
        </Card>
@@ -553,10 +559,15 @@ alert('No hay cambios para actualizar.');
           </div>
           <CardBody className="flex flex-col items-center">
             <Typography variant="h5" className="mt-16 mb-1 text-center font-normal text-black-600">
-              Mark Davis, 35
+            {
+              usuarioId? 
+              <p>{usuarioId.nombres}</p>
+              : 
+              <p>Cargando datos</p>
+             }
             </Typography>
             <Typography variant="subtitle1" color="textSecondary" className="text-center">
-              Organizador
+           Organizador
             </Typography>
           </CardBody>
         </Card>

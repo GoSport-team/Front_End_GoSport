@@ -1,5 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const baseURL = "http://localhost:3001";
 
@@ -35,15 +37,35 @@ api.interceptors.request.use(
 // };
 
 export const loginUser = async (correo, contrasena) => {
+  const notify = (message) => toast(message);
+  if (!correo || !contrasena) {
+    notify('Ingrese usuario y contraseña');
+    throw new Error('Ingrese usuario y contraseña');
+  }
+
   try {
-    const response = await api.post("/auth/login", {
+    const response = await api.post('/auth/login', {
       correo: correo,
       contrasena: contrasena,
     });
-    Cookies.set("token", response.data.token, { path: "/" });
+    Cookies.set('token', response.data.token, { path: '/' });
     return response.data;
   } catch (error) {
-    throw new Error(error.response.data.message || "Error al iniciar sesión");
+    if (error.response) {
+      if (error.response.status === 403) {
+        notify('Credenciales inválidas. Verifica tus datos e intenta de nuevo.');
+        throw new Error('Credenciales inválidas. Verifica tus datos e intenta de nuevo.');
+      } else if (error.response.status === 400) {
+        notify('Ingrese usuario y contraseña');
+        throw new Error('Ingrese usuario y contraseña');
+      } else {
+        notify('Error al iniciar sesión. Por favor, inténtelo de nuevo.');
+        throw new Error(error.response.data.message || 'Error al iniciar sesión');
+      }
+    } else {
+      notify('Error de conexión. Por favor, inténtelo de nuevo.');
+      throw new Error('Error de conexión. Por favor, inténtelo de nuevo.');
+    }
   }
 };
 
