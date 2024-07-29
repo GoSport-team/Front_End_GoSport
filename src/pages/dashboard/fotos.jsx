@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Formulario from './subirfoto'; // Asegúrate de que la ruta sea correcta
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export function Fotos() {
   const [photos, setPhotos] = useState([]);
-  const [selectedImage, setSelectedImage] = useState(null); // Estado para la imagen seleccionada
-  const [showConfirmDelete, setShowConfirmDelete] = useState(false); // Estado para mostrar confirmación de eliminación
-  const [photoToDelete, setPhotoToDelete] = useState(null); // Estado para la foto a eliminar
-  const [showUploadModal, setShowUploadModal] = useState(false); // Estado para mostrar el modal de subida
-  const [estadoPhoto, setEstadoPhoto] = useState(false)
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [photoToDelete, setPhotoToDelete] = useState(null);
+  const [showUploadModal, setShowUploadModal] = useState(false);
+  const [formData, setFormData] = useState({
+    Nombre: '',
+    Descripcion: ''
+  });
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,12 +29,13 @@ export function Fotos() {
       .then(data => setPhotos(data))
       .catch(error => {
         console.error('Error fetching photos:', error);
+        toast.error('Error fetching photos');
       });
   }, []);
 
   const handleDelete = (photoId) => {
     setPhotoToDelete(photoId);
-    setShowConfirmDelete(true); // Muestra la confirmación de eliminación
+    setShowConfirmDelete(true);
   };
 
   const handleConfirmDelete = () => {
@@ -40,32 +48,80 @@ export function Fotos() {
         }
         setPhotos(photos.filter(photo => photo._id !== photoToDelete));
         setShowConfirmDelete(false);
-        alert('Foto eliminada');
+        toast.success('Foto eliminada');
       })
       .catch(error => {
         console.error('Error deleting photo:', error);
+        toast.error('Error deleting photo');
       });
   };
 
   const handleUploadPhoto = () => {
-    setShowUploadModal(true);
+    if (photos.length >= 6) {
+      toast.error('Solo puedes subir hasta 6 imágenes.');
+    } else {
+      setShowUploadModal(true);
+    }
   };
 
   const handleImageClick = (imageUrl) => {
-    setSelectedImage(imageUrl); // Abre el modal y muestra la imagen seleccionada
+    setSelectedImage(imageUrl);
   };
 
   const handleCloseModal = () => {
-    setSelectedImage(null); // Cierra el modal
+    setSelectedImage(null);
   };
 
   const handleCloseUploadModal = () => {
     setShowUploadModal(false);
+    setUploadMessage('');
   };
 
-  const handlePhotoUpload = (newPhoto) => {
-    setPhotos([...photos, newPhoto]);
-    setShowUploadModal(false);
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
+  };
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setShowConfirm(true);
+  };
+
+  const handleConfirmUpload = () => {
+    const data = new FormData();
+    data.append('Nombre', formData.Nombre);
+    data.append('Descripcion', formData.Descripcion);
+    if (selectedFile) {
+      data.append('image', selectedFile);
+    }
+
+    fetch('http://localhost:3001/photo', {
+      method: 'POST',
+      body: data
+    })
+      .then(response => response.json())
+      .then(data => {
+        setPhotos([...photos, data.photo]);
+        setFormData({
+          Nombre: '',
+          Descripcion: ''
+        });
+        setSelectedFile(null);
+        setShowConfirm(false);
+        setShowUploadModal(false);
+        toast.success('Foto subida con éxito');
+      })
+      .catch(error => {
+        console.error('Error uploading photo:', error);
+        toast.error('Error uploading photo');
+      });
   };
 
   return (
@@ -76,6 +132,11 @@ export function Fotos() {
             Subir foto
           </button>
         </div>
+        {uploadMessage && (
+          <div className="bg-red-500 text-white px-4 py-2 rounded mb-4">
+            {uploadMessage}
+          </div>
+        )}
         <div className="flex justify-center items-center bg-gray-700 bg-opacity-50 rounded-lg p-3 w-full max-w-full">
           <div className="grid grid-cols-3 gap-6 w-full">
             {photos.map(photo => (
@@ -114,9 +175,8 @@ export function Fotos() {
             <img
               src={selectedImage}
               alt="Ampliada"
-              width={500}
-              height={500}
-              className="max-w-full max-h-screen object-contain"
+              width={400}
+              height={300}
             />
           </div>
         </div>
@@ -148,18 +208,82 @@ export function Fotos() {
 
       {showUploadModal && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
-          <div className="fixed inset-0 bg-black opacity-50"></div>
-          <div className="bg-gray-200 p-6 rounded-lg shadow-lg z-10 w-full max-w-md mx-auto">
-            <Formulario onUpload={handlePhotoUpload} />
+          <div className="fixed inset-0 bg-black opacity-50" onClick={handleCloseUploadModal}></div>
+          <div className="bg-gray-200 p-6 rounded-lg shadow-lg z-10 w-full max-w-md mx-auto relative">
             <button
               onClick={handleCloseUploadModal}
-              className="mt-4 px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-700 transition duration-300"
+              className="absolute top-2 right-2 text-white bg-gray-800 hover:bg-gray-600 p-2 rounded-full"
             >
-              Cerrar
+              X
             </button>
+            <form onSubmit={handleSubmit} className="flex flex-col items-center">
+              <input
+                type="text"
+                name="Nombre"
+                value={formData.Nombre}
+                onChange={handleInputChange}
+                placeholder="Nombre"
+                required
+                className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg"
+              />
+              <input
+                type="text"
+                name="Descripcion"
+                value={formData.Descripcion}
+                onChange={handleInputChange}
+                placeholder="Descripción"
+                required
+                className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg"
+              />
+              <input
+                type="file"
+                name="image"
+                onChange={handleFileChange}
+                required
+                className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg"
+              />
+              {selectedFile && (
+                <div className="text-center mb-4">
+                  <img
+                    src={URL.createObjectURL(selectedFile)}
+                    alt="Vista previa"
+                    className="max-h-48 border border-gray-300 rounded-lg"
+                  />
+                </div>
+              )}
+              <button type="submit" className="w-full px-4 py-2 bg-gradient-to-tr from-gray-900 to-gray-800 text-white hover:bg-gradient-to-tr hover:from-gray-800 hover:to-gray-700 rounded-lg transition duration-300">
+                Subir Foto
+              </button>
+            </form>
+
+            {showConfirm && (
+              <div className="fixed inset-0 flex items-center justify-center z-50">
+                <div className="fixed inset-0 bg-black opacity-50"></div>
+                <div className="bg-gray-200 p-6 rounded-lg shadow-lg z-10 w-full max-w-md mx-auto">
+                  <h2 className="text-xl font-semibold mb-4">Confirmación de subida</h2>
+                  <p className="mb-4">¿Estás seguro de que quieres subir esta foto?</p>
+                  <div className="flex justify-end">
+                    <button
+                      onClick={() => setShowConfirm(false)}
+                      className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-700 transition duration-300 mr-2"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      onClick={handleConfirmUpload}
+                      className="px-4 py-2 bg-gradient-to-tr from-gray-900 to-gray-800 text-white hover:bg-gradient-to-tr hover:from-gray-800 hover:to-gray-700 rounded-lg"
+                    >
+                      Confirmar
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
+
+      <ToastContainer />
     </main>
   );
 }

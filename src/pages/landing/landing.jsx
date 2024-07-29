@@ -9,12 +9,13 @@ import {
 } from "@material-tailwind/react";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaEnvelope, FaPhone, FaHome  } from 'react-icons/fa';
 
+
 export default function Landing() {
     useEffect(() => {
         Aos.init({ duration: 1000 });
       }, []);
     return (
-        <> 
+      <> 
             <nav className="bg-gray-800 p-4">
                 <div className="containerPrincipal flex items-center justify-between">
                     <div className="logo flex items-center">
