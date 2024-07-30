@@ -31,8 +31,7 @@ export function Tables() {
     const[idUpdate, setIdUpdate]= useState(null)
     const [modalUpdate, setModalUpdate]= useState(false)
     const[campeonato, setCampeonato]= useState([])
-    const[creado, setCreado]=useState(true)
- 
+  
 
   useEffect(() => {
     const fetchTasks = async () => {

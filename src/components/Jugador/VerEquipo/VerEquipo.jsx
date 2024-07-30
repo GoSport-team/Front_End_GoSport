@@ -4,12 +4,12 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 export const VerEquipo = () => {
-    const cedula = useParams()
+    const {cedula} = useParams()
     const [equipo, setEquipo] = useState(null)
     useEffect(() => {
         const obtnenerEquipo = async () => {
             const response = await axios.get(`http://localhost:3001/inscripcionEquipos/${cedula}`)
-
+            console.log(response.data)
             if (response.data == 'EQUIPO NO ENCONTRADO') {
                return setEquipo(null)
             }

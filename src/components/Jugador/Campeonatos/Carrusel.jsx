@@ -1,6 +1,20 @@
 import { useEffect, useState } from "react";
 import './styleCarrusel.css'
+import axios from "axios";
 export const Carrusel = () => {
+const [photo, setPhoto] = useState()
+
+  useEffect(()=>{
+    const obtenerImg =async()=>{
+      const response =await axios.get('http://localhost:3001/photo')
+      setPhoto(response.data)
+    }
+
+    obtenerImg()
+  },[])
+
+  console.log(photo)
+
     const [currentSlide, setCurrentSlide] = useState(0);
     
     const slides = [
@@ -61,12 +75,12 @@ export const Carrusel = () => {
       ))}
     </ul>
     <ul id="slider">
-      {slides.map((slide, index) => (
+       {photo && photo.map((slide, index) => (
         <li key={index} style={{ opacity: currentSlide === index ? 1 : 0 }}>
           <img
 
           className="w-full imgCarrusel rounded-lg  "
-            src={slide.image}
+            src={slide.ImageUrl}
             alt={slide.title}
             layout="fill"
             

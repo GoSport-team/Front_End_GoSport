@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Card,
     CardHeader,
@@ -10,11 +10,45 @@ import {
     Progress,
   } from "@material-tailwind/react";
 import Participantes from '@/widgets/componentes/Participantes/index'
+import axios from 'axios';
+
 export const Participante= () => {
+  const [equipoInscripto, setEquipoInscripto]= useState([])
+useEffect(()=>{
+  const fetchData=async()=>{
+    try{
+      const idCampeonato= localStorage.getItem('ID')
+      const data = await axios.get('http://localhost:3001/equipoInscripto',{
+        headers:{
+          id: idCampeonato} 
+      })
+      setEquipoInscripto(data.data)
+     
+    }catch(error){
+      console.log(error)
+
+    }
+  }
+  fetchData()
+},[])
   return (
    <>
-<Participantes/>
-<div className="flex justify-center space-x-4 mb-4">
+   <div className="p-4">
+   {equipoInscripto && equipoInscripto.length > 0 ? (
+  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-2">
+        {equipoInscripto.map((equipo) => (
+          <div key={equipo.id} className="flex justify-center items-center">
+          <Participantes equipo={equipo} />
+        </div>
+        ))}
+      </div>
+      ) : (
+        <p className="text-red-600 text-4xl font-bold text-center">
+          No hay equipos inscritos
+        </p> 
+      )}
+    </div>
+    <div className="flex justify-center space-x-4 mx-6 my-4">
     <button
       className="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3"
     >

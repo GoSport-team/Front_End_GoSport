@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 import ViewJugadores from './View'
 
-export default function Participantes() {
+export default function Participantes({equipo}) {
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
