@@ -442,12 +442,14 @@ alert('No hay cambios para actualizar.');
                     </div>
                     <div className="flex gap-4">
                       <div className="flex-1">
-                        <label className="block mb-1 text-sm font-medium text-gray-700"><Typography
+                        <label className="block mb-1 text-sm font-medium text-gray-700">
+                          <Typography
                               variant="small"
                               className="block mb-2 text-sm font-medium text-gray-700"
                             >
                              contraseña
-                            </Typography></label>
+                            </Typography>
+                            </label>
                             <Controller
                             name="contrasena"
                             control={control}

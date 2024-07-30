@@ -10,20 +10,29 @@ import {
 import { Link } from "react-router-dom";
 
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { registroUser } from "../../lib/api";
 
 export function SignUp() {
   const [selectedOption, setSelectedOption] = useState(" ");
-
   const {
     register,
     handleSubmit,
     formState: { errors },
+    watch,
+    control,
     reset,
-  } = useForm();
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      contrasena: '',
+      confirmContrasena: '',
+    }
+  });
 
   const onSubmit = async (data) => {
+    // Eliminar la confirmación de la contraseña del objeto de datos
+    delete data.confirmContrasena;
     data.finFicha = new Date(data.finFicha).toISOString();
     try {
       const response = await registroUser(data);
@@ -36,9 +45,14 @@ export function SignUp() {
       alert(errorMessage);
     }
   };
-  const change =(e)=>{
-   setSelectedOption(e)
+
+  const change = (e) => {
+    setSelectedOption(e)
   }
+
+  // Obteniendo las contraseñas para validación
+  const contrasena = watch("contrasena");
+  const confirmContrasena = watch("confirmContrasena");
   
   return (
     <section className="ml-2 mr-2 flex">
@@ -203,43 +217,74 @@ export function SignUp() {
             />
             {errors.correo && <span>{errors.correo.message}</span>}
           </div>
+
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
              Contraseña
             </Typography>
-            <Input
-            type="password"
-            id="contrasena"
-              size="lg"
-              placeholder="*****"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("contrasena", {
-                required: "Este campo es obligatorio",
-              })}
-            />
-            {errors.contrasena && <span>{errors.contrasena.message}</span>}
+            <Controller
+             name="contrasena"
+            control={control}
+            render={({ field }) => (
+              <div className="relative">
+                <Input
+                  type="password"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none pr-10"
+                  placeholder="Contraseña"
+                  labelProps={{
+                    className: "before:content-none after:content-none",
+                  }}
+                  {...field}
+                  value={field.value}
+                  onChange={(e) => {
+                    field.onChange(e);
+                  }}
+                />
+              </div>
+            )}
+          />
           </div>
+
           <div className="mb-1 flex flex-col gap-6">
             <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
               Confirmar contraseña
             </Typography>
-            <Input
-            type="password"
-              size="lg"
-              id="contrasena"
-              placeholder="****"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("contrasena", {
-                required: "Este campo es obligatorio",
-              })}
-            />
-            {errors.contrasena && <span>{errors.contrasena.message}</span>}
+            <Controller
+                            name="confirmContrasena"
+                            control={control}
+                            render={({field})=>(
+                              <div className=" relative">
+                              <Input
+                                type="password"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none pr-10" 
+                                placeholder="Confirmar"
+                                labelProps={{
+                                  className: "before:content-none after:content-none",
+                                }}
+                                {...field}
+                                value={field.value}
+                                onChange={(e) => {
+                                  field.onChange(e);
+                                }}
+                              />
+                <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                    {!errors.confirmContrasena && confirmContrasena && (
+                      contrasena === confirmContrasena ? (
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className='text-green-500' viewBox="0 0 24 24">
+                                      <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
+                                    </svg>
+                                  ) : (
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className='text-red-500' viewBox="0 0 24 24">
+                                      <path d="M11.953 2C6.465 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.493 2 11.953 2zM13 17h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                                    </svg>
+                                  )
+                              
+                              )}
+                                 </div>
+                                 </div>
+                            )}
+                            />
           </div>
 
           <Button type="onsubmit" className="mt-6" fullWidth>
