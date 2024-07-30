@@ -8,7 +8,8 @@ import {
  Typography
 } from "@material-tailwind/react";
 import { FaFacebookF, FaInstagram, FaWhatsapp, FaEnvelope, FaPhone, FaHome  } from 'react-icons/fa';
-
+import Participantes from '@/widgets/componentes/Participantes';
+import Resultados from '@/widgets/componentes/Resultados';
 
 export default function Landing() {
     useEffect(() => {
@@ -168,6 +169,7 @@ export default function Landing() {
 
 
           {/* EQUIPO Aprendiz */}
+
           <section class=" mt-5 flex justify-center flex-col w-full" id="section_dow">
             <div class="flex flex-col ">
               <h1 class="mt-3 text-center text-3xl font-bold text-black">Equipo Bienestar al Aprendiz</h1>
