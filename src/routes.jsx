@@ -10,9 +10,8 @@ import {
 import { Home, Tables, Notifications, Profile } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import Fotos from "./pages/dashboard/fotos";
-import { Participante } from "@/pages/dashboard";
 import { element } from "prop-types";
-
+import { Participante } from "@/pages/dashboard";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -51,11 +50,7 @@ const icon = {
         path: "/notifications",
         element: <Notifications />,
       },
-      {
-        name: "participantes",
-        path: "/participantes", 
-        element:<Participante/>
-      }
+      
     ],
   }]
  export  const routeAuth=[
@@ -78,3 +73,18 @@ const icon = {
     ],
   },
 ];
+export  const routeCampeonato=[
+  {
+    title: "campeonato pages",
+    layout: "campeonato",
+    pages: [
+      {
+      
+        name: "participante",
+        path: "/participante",
+        element: <Participante/>
+      }
+    ],
+  },
+];
+
