@@ -1,41 +1,17 @@
 'use client'
+import React,{useEffect, useState} from 'react';
 
-import React from 'react';
+export default function Participantes({equipo, modal, setShowConfirmModalEliminar,setIdInscripto, estadoSorteo}) {
+    console.log(estadoSorteo)
+    const [eliminar, setEliminar]= useState(estadoSorteo)
 
-<<<<<<< HEAD
-import ViewJugadores from './View'
-import axios from 'axios';
-
-export default function Participantes({equipo}) {
-const [showConfirmModal, setShowConfirmModal]= useState(false)
-const [isModalOpen, setIsModalOpen] = useState(false);
-    const id= equipo._id
-  
-    const eliminarEquipo=async()=>{
-        try{
-const equipoEliminado = await axios.delete(`http://localhost:3001/equipoInscripto/${id}`)
-console.log(equipoEliminado)
-         } catch(error){
-            console.log(error)
-         }
-        }
-        const handleEliminarClick = () => {
-            setShowConfirmModal(true); 
-          };
-          const handleConfirmEliminar = () => {
-           eliminarEquipo()
-            setShowConfirmModal(false);
-          };
-          const handleCancelEliminar = () => {
-            setShowConfirmModal(false); 
-          };
-=======
-
-
-export default function Participantes({equipo,  modal}) {
->>>>>>> 08a82c163f00acc8a491e082c5970256064f7f9a
-
-
+   console.log(eliminar)
+   
+    
+  const  handleEliminarClick=()=>{
+    setShowConfirmModalEliminar(true)
+    setIdInscripto(equipo._id)
+  }
     return (
         <div className="relative">
              <div className='flex justify-center items-center m-3'>
@@ -126,48 +102,30 @@ export default function Participantes({equipo,  modal}) {
                             </button>
 
                         </div>
-<<<<<<< HEAD
-                            <button
-                               onClick={handleEliminarClick}
-                                  className="m-2 bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded"
-                                >
-                                Eliminar
-                            </button>
-                        <ViewJugadores isOpen={isModalOpen} onClose={closeModal} equipo={equipo.Equipo} />
-=======
+                           { eliminar && (
+
+                           
+                            <div>
+                             <button
+                             onClick={handleEliminarClick}
+                                className="m-2 bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded"
+                              >
+                              Eliminar
+                          </button>
+                          </div>
+                           
+                           )}
                      
                        
                         
                         
->>>>>>> 08a82c163f00acc8a491e082c5970256064f7f9a
 
                     </div>
 
                 </div>
         )}
             </div>
-            {showConfirmModal && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-lg font-bold">Confirmación</h3>
-            <p className="mt-2">¿Está seguro de que desea sortear los equipos?</p>
-            <div className="flex justify-end mt-4">
-              <button
-                onClick={handleConfirmEliminar}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
-              >
-                OK
-              </button>
-              <button
-                onClick={handleCancelEliminar}
-                className="px-4 py-2 bg-red-500 text-white rounded-md"
-              >
-                Cancelar
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
+            
         </div>
     )
 }
