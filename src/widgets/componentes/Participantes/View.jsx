@@ -9,7 +9,7 @@ export default function ViewJugadores({ isOpen, onClose, equipo }) {
         <div className=" absolute p-4  inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
             {equipo &&(
 
-                <div key={equipo._id} className="bg-white mt-6 mb-6  pt-5 pb-5 flex flex-col rounded-lg shadow-lg w-[50vw] z-50">
+                <div key={equipo._id} className="bg-white flex flex-col rounded-lg shadow-lg w-[50vw] z-50">
                     <div className='flex justify-end mr-5'>
                     <button
                     className=" left-0 text-gray-600 hover:text-gray-900 text-2xl font-bold w-10 h-10 flex items-center justify-center rounded-full bg-gray-200"
@@ -29,7 +29,7 @@ export default function ViewJugadores({ isOpen, onClose, equipo }) {
                     <span className="text-md ">{equipo.nombreCapitan}</span>
                 </div>
 
-                <div className="relative overflow-x-auto shadow-md sm:rounded-lg mt-11">
+                <div className=" pl-10 pr-10 w-full  relative overflow-x-auto shadow-md sm:rounded-lg mt-11">
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
