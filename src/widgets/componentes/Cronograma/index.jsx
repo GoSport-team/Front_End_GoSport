@@ -3,10 +3,10 @@ import React from 'react'
 
 
 
-export default function Cronograma() {
+export default function CronogramaDesing() {
 
   return (
-    <div className='w-[30vw] mt-8 flex flex-row rounded-md border-2 border-gray-300 shadow-lg'>
+    <div className='w-[35vw] mt-8 flex flex-row rounded-md border-2 border-gray-300 shadow-lg'>
       <div className='w-1/2 p-6 flex flex-col gap-y-6'>
         <div className='flex flex-row items-center justify-center'>
           <img className='object-contain w-20' src="\public\img\Cronograma\Colombia.jpg" alt="Colombia" />

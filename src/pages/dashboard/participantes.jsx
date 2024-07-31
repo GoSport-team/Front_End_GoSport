@@ -21,6 +21,7 @@
     const [nombreFase, setNombreFase]= useState("Fase 1")
     const [idFases, setIdFase]= useState()
     const [error, setError] = useState("");
+    
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedEquipo, setSelectedEquipo] = useState(null);
   

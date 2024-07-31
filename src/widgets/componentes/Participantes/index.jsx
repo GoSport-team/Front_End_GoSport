@@ -4,7 +4,7 @@ import React from 'react';
 
 
 
-export default function Participantes({equipo,  modal}) {
+export default function Participantes({equipo, modal}) {
 
 
     return (
