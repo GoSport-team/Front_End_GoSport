@@ -3,10 +3,31 @@
 import React, { useState } from 'react';
 
 import ViewJugadores from './View'
+import axios from 'axios';
 
 export default function Participantes({equipo}) {
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
+const [showConfirmModal, setShowConfirmModal]= useState(false)
+const [isModalOpen, setIsModalOpen] = useState(false);
+    const id= equipo._id
+  
+    const eliminarEquipo=async()=>{
+        try{
+const equipoEliminado = await axios.delete(`http://localhost:3001/equipoInscripto/${id}`)
+console.log(equipoEliminado)
+         } catch(error){
+            console.log(error)
+         }
+        }
+        const handleEliminarClick = () => {
+            setShowConfirmModal(true); 
+          };
+          const handleConfirmEliminar = () => {
+           eliminarEquipo()
+            setShowConfirmModal(false);
+          };
+          const handleCancelEliminar = () => {
+            setShowConfirmModal(false); 
+          };
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);
@@ -99,7 +120,14 @@ export default function Participantes({equipo}) {
                                 >
                                 Ver Jugadores
                             </button>
+
                         </div>
+                            <button
+                               onClick={handleEliminarClick}
+                                  className="m-2 bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded"
+                                >
+                                Eliminar
+                            </button>
                         <ViewJugadores isOpen={isModalOpen} onClose={closeModal} equipo={equipo.Equipo} />
 
                     </div>
@@ -107,6 +135,28 @@ export default function Participantes({equipo}) {
                 </div>
         )}
             </div>
+            {showConfirmModal && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg">
+            <h3 className="text-lg font-bold">Confirmación</h3>
+            <p className="mt-2">¿Está seguro de que desea sortear los equipos?</p>
+            <div className="flex justify-end mt-4">
+              <button
+                onClick={handleConfirmEliminar}
+                className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
+              >
+                OK
+              </button>
+              <button
+                onClick={handleCancelEliminar}
+                className="px-4 py-2 bg-red-500 text-white rounded-md"
+              >
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
         </div>
     )
 }
