@@ -146,17 +146,19 @@ export default function Resultados() {
                                                     src="\public\img\Resultados\Dourmut.png" alt="img" />
                                                 <h1 className="text-center my-2">Borussia Dortmund</h1>
                                                 <div className="flex items-center justify-evenly my-4">
-                                                    <div>
+                                                    <div onClick={openSecondModal}>
                                                         <img className="object-contain w-14" src="\public\img\Resultados\gol.png" alt="img" />
                                                     </div>
-                                                    <div>
+                                                    <div onClick={openThirdModal}>
                                                         <img className="object-contain w-14" src="\public\img\Resultados\amarilla.png" alt="img" />
                                                     </div>
-                                                    <div>
+                                                    <div onClick={openFourthModal}>
                                                         <img className="object-contain w-14" src="\public\img\Resultados\roja.png" alt="img" />
                                                     </div>
+                                                    
                                                 </div>
                                             </div>
+                                            
                                         </div>
 
                                         <div class="relative overflow-x-auto w-[45vh] mt-4">
@@ -166,6 +168,7 @@ export default function Resultados() {
                                                 <p>Ronaldo</p>
                                             </div>
                                         </div>
+                                        
                                     </section>
                                     <div className="p-4 bg-gray-100 flex justify-end">
                                         <button class="cursor-pointer group relative flex gap-1.5 px-8 py-3 bg-black bg-opacity-80 text-[#f1f1f1] rounded-3xl hover:bg-opacity-70 transition font-semibold shadow-md">
