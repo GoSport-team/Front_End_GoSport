@@ -3,13 +3,16 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { Link } from "react-router-dom";
 export default function CardCampeonato() {
-  const [campeonatos, setCampenatos] = useState()
+  const [campeonatos, setCampenatos] = useState(null)
   const token = Cookies.get('token')
   useEffect(()=>{
     const obtenerCampeonatos =async()=>{
     const response = await axios.get('http://localhost:3001/campeonato')
-    console.log(response)
-    setCampenatos(response.data)
+    if(response == undefined){
+      setCampenatos(null)
+    }else{
+      setCampenatos(response.data)
+    }
     }
     obtenerCampeonatos()
   },[])
@@ -19,22 +22,34 @@ export default function CardCampeonato() {
     <>
   
         {campeonatos && campeonatos.map((campeonato)=>(
-    <article className="cardCampeonato w-max p-10 flex bg-[rgba(63,63,63,0.2)] rounded-md" key={campeonato._id}>
+    <article className="w-max pt-5 pl-3 pr-3 pb-5 flex gap-2 bg-[rgba(63,63,63,0.2)] rounded-md" key={campeonato._id}>
 
-      <div className="column text-left w-44 border pt-5 h-28 rounded-sm">
-        <h1 className="font-bold">{campeonato.nombreCampeonato}</h1>
-        <p className="text-xl">
+      <div className=" column text-left border-2 p-5 rounded-lg flex flex-col justify-between">
+        <h1 className="font-medium flex gap-3 text-lg"> <p className="font-bold  text-xl">Nombre:</p> {campeonato.nombreCampeonato}</h1>
+        <p className="text-xl flex gap-3 font-medium">
+          <p className="font-bold text-xl">
+          Descripcion:
+          </p>
          {campeonato.descripcion}
          </p>
+         <p className="flex gap-3 font-medium text-lg">
+          <p className="font-bold text-xl">Estado Campeonato: </p>
+          {campeonato.estadoCampeonato}</p>
       </div>
 
-      <div className="text-left w-72 border pt-5 text-lg h-28 rounded-sm">
-        <h1 className="">Categoria {campeonato.nombreDiciplinas}</h1>
-        <p className="">Fecha de inicio {campeonato.fechaIniciio}</p>
-        <p className="espacio">Fecha de finalizacion {campeonato.fechaFin}</p>
+      <div className=" text-left flex flex-col border-2  p-5 text-lg rounded-lg">
+        <h1 className="flex gap-3 text-lg font-medium">
+          <p className="font-bold text-xl">Categoria:</p>
+           {campeonato.nombreDisciplinas}</h1>
+        <p className="flex gap-3 text-lg font-medium">
+          <p className="text-xl font-bold">Fecha de inicio:</p>
+           {campeonato.fechaInicio}</p>
+        <p className="flex gap-3 text-lg font-medium">
+          <p className="font-xl font-bold">Fecha de finalizacion</p>
+           {campeonato.fechaFin}</p>
 
         <Link to={`/jugador/dashboard/${campeonato._id}`} className="inscribirme ">
-          Inscribirme
+          <button className="mt-2.5 px-7 py-4 text-xs uppercase font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer  hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5">Inscribirme</button>
         </Link>
       </div>
     </article>
