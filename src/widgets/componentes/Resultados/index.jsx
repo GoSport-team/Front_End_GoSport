@@ -98,7 +98,6 @@ export default function Resultados() {
                                     </div>
                                 </div>
                             ))}
-
                             <Modal
                                 isOpen={modalIsOpen}
                                 onRequestClose={closeModal}
@@ -160,15 +159,13 @@ export default function Resultados() {
                                             </div>
                                             
                                         </div>
-
                                         <div class="relative overflow-x-auto w-[45vh] mt-4">
                                             <div className='flex flex-row gap-x-4 content-center'>
                                                 <img className='object-contain w-4'
                                                     src="\public\img\Resultados\balon.png" alt="img" />
                                                 <p>Ronaldo</p>
                                             </div>
-                                        </div>
-                                        
+                                        </div>ñ 
                                     </section>
                                     <div className="p-4 bg-gray-100 flex justify-end">
                                         <button class="cursor-pointer group relative flex gap-1.5 px-8 py-3 bg-black bg-opacity-80 text-[#f1f1f1] rounded-3xl hover:bg-opacity-70 transition font-semibold shadow-md">
