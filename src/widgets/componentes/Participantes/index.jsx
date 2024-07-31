@@ -1,18 +1,9 @@
 'use client'
 import React,{useEffect, useState} from 'react';
 
-<<<<<<< HEAD
-import React from 'react';
-
-
-
-export default function Participantes({equipo, modal}) {
-
-=======
 export default function Participantes({equipo, modal, setShowConfirmModalEliminar,setIdInscripto, estadoSorteo}) {
     console.log(estadoSorteo)
     const [eliminar, setEliminar]= useState(estadoSorteo)
->>>>>>> 6bcae731100a0d5dadd43ac8269cb8e34d9facad
 
    console.log(eliminar)
    
