@@ -1,7 +1,8 @@
 'use client'
 
-import React, { useState } from 'react';
+import React from 'react';
 
+<<<<<<< HEAD
 import ViewJugadores from './View'
 import axios from 'axios';
 
@@ -28,12 +29,15 @@ console.log(equipoEliminado)
           const handleCancelEliminar = () => {
             setShowConfirmModal(false); 
           };
+=======
 
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
+
+export default function Participantes({equipo,  modal}) {
+>>>>>>> 08a82c163f00acc8a491e082c5970256064f7f9a
+
 
     return (
-        <div className="relative z-10">
+        <div className="relative">
              <div className='flex justify-center items-center m-3'>
              {equipo && (
                  <div key={equipo.Equipo._id} className="product-card w-[300px] rounded-md shadow-xl overflow-hidden relative cursor-pointer z-10 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
@@ -115,13 +119,14 @@ console.log(equipoEliminado)
 
                         <div className="btn">
                             <button
-                                onClick={openModal}
+                                onClick={modal}
                                 className="uppercase font-semibold text-xs px-2 whitespace-nowrap py-1 rounded-full bg-white text-gray-800"
                                 >
                                 Ver Jugadores
                             </button>
 
                         </div>
+<<<<<<< HEAD
                             <button
                                onClick={handleEliminarClick}
                                   className="m-2 bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded"
@@ -129,6 +134,12 @@ console.log(equipoEliminado)
                                 Eliminar
                             </button>
                         <ViewJugadores isOpen={isModalOpen} onClose={closeModal} equipo={equipo.Equipo} />
+=======
+                     
+                       
+                        
+                        
+>>>>>>> 08a82c163f00acc8a491e082c5970256064f7f9a
 
                     </div>
 

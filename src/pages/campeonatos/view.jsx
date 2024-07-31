@@ -18,7 +18,9 @@
         const [error, setError] = useState(null);
         const [modalidades, setModalidad] = useState([]);
         const [sedes, setSedes] = useState([]);
-        const [disciplinas,setDisciplinas]= useState([])
+        const [disciplinas,setDisciplinas]= useState([]);
+        const estado = true;
+        const nombre = 'Fase 1'
         const notify = (message) => toast(message);
 
         useEffect(() => {
@@ -72,10 +74,14 @@
                 finInscripcion,
                 añoCreacion,
             };
-
+            const faseData = {
+                estado,
+                nombre,  }    
             try {
                 const response = await axios.post('http://localhost:3001/campeonato/', campeonatoData);
+                const reponseFase = await axios.post('http://localhost:3001/fase/',faseData)
                 console.log('Respuesta del servidor:', response.data);
+                console.log('Respuesta: ', reponseFase.data)
                 notify("Campeonato creado exitosamente");
 
                 // Restablecer campos del formulario
