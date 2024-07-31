@@ -11,6 +11,7 @@ import { FaFacebookF, FaInstagram, FaWhatsapp, FaEnvelope, FaPhone, FaHome  } fr
 import Participantes from '@/widgets/componentes/Participantes';
 import Resultados from '@/widgets/componentes/Resultados';
 
+
 export default function Landing() {
     useEffect(() => {
         Aos.init({ duration: 1000 });

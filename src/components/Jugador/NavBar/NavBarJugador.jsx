@@ -10,7 +10,7 @@ export const NavBarJugador = ({cedula}) => {
             <Link to={`verequipo/${cedula}`}>
             <h1>Ver Equipo</h1>
             </Link>
-            <h1>Cuenta</h1>
+          
         </div>
     </nav>
   )

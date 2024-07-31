@@ -76,9 +76,9 @@ export const VerEquipo = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {equipo && equipo.participantes.map((equipo) => (
+                            {equipo && equipo.participantes.map((equipo,index) => (
                                 <tr className="border-separate text-center text-lg font-medium">
-                                    <td className="border rounded-md p-1 bg-white"></td>
+                                    <td className="border rounded-md p-1 bg-white">{index+1}</td>
                                     <td className="border rounded-md p-1 bg-white">{equipo.nombreJugador}</td>
                                     <td className="border rounded-md p-1 bg-white">{equipo.ficha}</td>
                                     <td className="border rounded-md p-1 bg-white">{equipo.dorsal}</td>
