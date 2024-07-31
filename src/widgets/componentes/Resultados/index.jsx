@@ -165,7 +165,7 @@ export default function Resultados() {
                                                     src="\public\img\Resultados\balon.png" alt="img" />
                                                 <p>Ronaldo</p>
                                             </div>
-                                        </div>ñ 
+                                        </div> 
                                     </section>
                                     <div className="p-4 bg-gray-100 flex justify-end">
                                         <button class="cursor-pointer group relative flex gap-1.5 px-8 py-3 bg-black bg-opacity-80 text-[#f1f1f1] rounded-3xl hover:bg-opacity-70 transition font-semibold shadow-md">
@@ -379,7 +379,7 @@ export default function Resultados() {
                                         &times;
                                     </button>
 
-
+                                    
                                     <section>
                                         <div
                                             class="flex bg-white items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-8"
