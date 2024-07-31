@@ -1,18 +1,14 @@
 'use client'
 
-import React, { useState } from 'react';
+import React from 'react';
 
-import ViewJugadores from './View'
 
-export default function Participantes({equipo}) {
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+export default function Participantes({equipo,  modal}) {
 
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
 
     return (
-        <div className="relative z-10">
+        <div className="relative">
              <div className='flex justify-center items-center m-3'>
              {equipo && (
                  <div key={equipo.Equipo._id} className="product-card w-[300px] rounded-md shadow-xl overflow-hidden relative cursor-pointer z-10 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
@@ -94,13 +90,16 @@ export default function Participantes({equipo}) {
 
                         <div className="btn">
                             <button
-                                onClick={openModal}
+                                onClick={modal}
                                 className="uppercase font-semibold text-xs px-2 whitespace-nowrap py-1 rounded-full bg-white text-gray-800"
                                 >
                                 Ver Jugadores
                             </button>
                         </div>
-                        <ViewJugadores isOpen={isModalOpen} onClose={closeModal} equipo={equipo.Equipo} />
+                     
+                       
+                        
+                        
 
                     </div>
 
