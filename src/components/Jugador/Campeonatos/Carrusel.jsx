@@ -49,8 +49,9 @@ const [photo, setPhoto] = useState()
         setCurrentSlide(index);
       };
   
+
   return (
-    <section id="container-slider">
+    <section id="container-slider" className=" p-5">
     <button
       className="arrowPrev"
       onClick={() => handleSlideChange((currentSlide - 1 + slides.length) % slides.length)}
@@ -74,12 +75,12 @@ const [photo, setPhoto] = useState()
         </li>
       ))}
     </ul>
-    <ul id="slider">
+    <ul id="slider" className=" ">
        {photo && photo.map((slide, index) => (
         <li key={index} style={{ opacity: currentSlide === index ? 1 : 0 }}>
           <img
 
-          className="w-full imgCarrusel rounded-lg  "
+          className="w-full imgCarrusel rounded-lg object-fill  "
             src={slide.ImageUrl}
             alt={slide.title}
             layout="fill"

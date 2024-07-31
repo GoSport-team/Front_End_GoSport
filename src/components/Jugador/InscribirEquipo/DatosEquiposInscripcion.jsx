@@ -39,7 +39,7 @@ export const DatosEquiposInscripcion = () => {
   const inscribirEquipo = async ()=>{
     try {   
       const response = await axios.post(`http://localhost:3001/equipoInscripto`,{
-        equipo:equipo,
+        Equipo:equipo,
         idCampeonato:id
       })
   
