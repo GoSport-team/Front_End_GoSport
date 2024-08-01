@@ -1,10 +1,10 @@
 import React,{useState, useEffect} from 'react'
 import { Link } from "react-router-dom";
-export const Inscripto = ({tasks}) => {
-    const[inscripto, setInscripto]= useState()
+export const Ejecucion = ({tasks}) => {
+    const[ejecucion, setEjecucion]= useState()
     useEffect(()=>{
-      if(tasks.estadoCampeonato==='Inscripcion'){
-          setInscripto(true)
+      if(tasks.estadoCampeonato==='Ejecucion'){
+          setEjecucion(true)
         }
        })
        const handleClick=()=>{
@@ -12,11 +12,11 @@ export const Inscripto = ({tasks}) => {
        }
   return (
     <>
-{inscripto &&(
+{ejecucion &&(
     <div>
         <button onClick={handleClick}
         className="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3">
-            <Link to="/campe/participante"> Ver Participantes</Link>
+            <Link to="/campe/participante">Agregar Resultados</Link>
         </button>
     </div>
 )}

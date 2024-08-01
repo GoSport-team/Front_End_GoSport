@@ -21,10 +21,21 @@ export const Participante = () => {
   const [estadoAgregar, setEstadoAgregar]=useState(true)
   const [isLoading, setIsLoading] = useState(true); 
 const [agregarEquipo, setAgregarEquipo]= useState(false)
+const [estadoCam, setEstadoCam]=useState('Ejecucion')
+
+const handleSubmit = async () => {
+  try {
+      await axios.patch(`http://localhost:3001/campeonato/${IdCampeonato}`,
+        {estadoCampeonato: estadoCam}
+       );
+  } catch (error) {
+      console.error('Error public campeonato:', error);
+  }
+};
 useEffect(()=>{
   const condicion =()=>{
 
-    if (data.length >= 3) {
+    if (equipoInscripto.length >= 3) {
     setEstadoBoton(true)
             } else {
      setEstadoBoton(false) 
@@ -32,7 +43,7 @@ useEffect(()=>{
   }
   condicion()
 
-},[data])
+},[equipoInscripto])
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -91,6 +102,7 @@ useEffect(()=>{
 
   const handleConfirmSortear = () => {
     sortearEquipos();
+    handleSubmit()
     setShowConfirmModal(false);
     setEstadoBoton(false)
   };
