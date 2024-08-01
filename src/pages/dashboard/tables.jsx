@@ -22,6 +22,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Creado } from "@/widgets/componentes/campeonato/estadosCampeonato/creado";
 import { Inscripto } from "@/widgets/componentes/campeonato/estadosCampeonato/inscripto";
+import { Ejecucion } from "@/widgets/componentes/campeonato/estadosCampeonato/ejecucion";
 export function Tables() {
 
   const [tasks, setTasks] = useState([]);
@@ -119,6 +120,8 @@ export function Tables() {
               <Inscripto
                 tasks={task} 
               />
+              <Ejecucion
+              tasks={task} />
           
             </td>
           </tr>
