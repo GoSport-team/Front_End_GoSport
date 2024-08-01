@@ -29,8 +29,8 @@ export default function CampeonatosDisponibles() {
     <NavBarJugador cedula={user.identificacion}/>
     <Carrusel/>
     <section className='contenedorBienvenida'>
-        <h1 className='text-center text-2xl ml-28 mr-28 ' >
-        “Estimado [{user.nombres}], bienvenido al área de inscripciones. 🏆 
+        <h1 className='text-center text-2xl ml-28 mr-28 flex ' >
+        “Estimado <p className='text-3xl font-bold w-80'>{user.nombres}</p>, bienvenido al área de inscripciones. 🏆 
         Aquí podrás elegir los campeonatos en los que deseas participar. 
         No olvides que cada torneo es una oportunidad para demostrar 
         tu habilidad en la cancha. ¡Éxito!”
@@ -42,7 +42,7 @@ export default function CampeonatosDisponibles() {
           Crear Equipo
         </button>
         </Link>
-       <article className='contenedorCards flex gap-72 mt-28 p-18 justify-evenly flex-wrap p-5'>
+       <article className='contenedorCards flex gap-10 mt-20 p-18 justify-around flex-wrap p-5'>
         <CardCampeonato/>
         
         </article>

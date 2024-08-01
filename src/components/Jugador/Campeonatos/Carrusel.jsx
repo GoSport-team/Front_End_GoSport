@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import './styleCarrusel.css'
 import axios from "axios";
 export const Carrusel = () => {
-const [photo, setPhoto] = useState()
+const [photo, setPhoto] = useState([])
 
   useEffect(()=>{
     const obtenerImg =async()=>{
@@ -12,8 +12,6 @@ const [photo, setPhoto] = useState()
 
     obtenerImg()
   },[])
-
-  console.log(photo)
 
     const [currentSlide, setCurrentSlide] = useState(0);
     
@@ -39,11 +37,11 @@ const [photo, setPhoto] = useState()
     
       useEffect(() => {
         const intervalId = setInterval(() => {
-          setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-        }, 5000);
+          setCurrentSlide((prev) => (prev === photo.length - 1 ? 0 : prev + 1));
+        }, 4000);
     
         return () => clearInterval(intervalId);
-      }, [slides.length]);
+      }, [photo.length]);
     
       const handleSlideChange = (index) => {
         setCurrentSlide(index);
@@ -65,7 +63,7 @@ const [photo, setPhoto] = useState()
       <i className=""></i>
     </button>
     <ul className="listslider">
-      {slides.map((slide, index) => (
+      {photo && photo.map((slide, index) => (
         <li key={index}>
           <a
             itlist={`itList_${index}`}
@@ -80,7 +78,7 @@ const [photo, setPhoto] = useState()
         <li key={index} style={{ opacity: currentSlide === index ? 1 : 0 }}>
           <img
 
-          className="w-full imgCarrusel rounded-lg object-fill  "
+          className="w-full imgCarrusel rounded-lg object-fill"
             src={slide.ImageUrl}
             alt={slide.title}
             layout="fill"

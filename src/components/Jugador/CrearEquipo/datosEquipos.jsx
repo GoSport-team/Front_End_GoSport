@@ -65,6 +65,7 @@ export const DatosEquipos = () => {
         estado: true,
         participantes: jugadores
       })
+      
       setMensaje(response.data.msg)
       Swal.fire({
         icon: "success",
@@ -161,6 +162,28 @@ export const DatosEquipos = () => {
       }
     }
   }
+
+  const eliminarJugador=(indice)=> {
+    
+    if (jugadores && jugadores.length > indice) {
+      Swal.fire({
+        title: "Deseas eliminar este jugador",
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        confirmButtonColor: "#04ff00",
+        cancelButtonColor: "#d33",
+        text: `Nombre ${jugadores[indice].nombreJugador} \n `,
+      }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire("Jugador borrado correctamente", "", "success");
+            console.log(indice)
+          jugadores.splice(indice, 1);
+          setJugadores(jugadores)
+          }
+      });
+    }
+  }
+  
   console.log(jugadores)
   return (
     <div className="flex justify-center ">
@@ -229,7 +252,8 @@ export const DatosEquipos = () => {
             <tbody>
               {jugadores && jugadores.map((jugador, indice) => (
                 <tr className="border-separate text-center text-lg font-medium" key={indice}>
-                  <td className="border rounded-md p-1 bg-white">{indice + 1}</td>
+                  <td className="border rounded-md p-1 bg-white hover:cursor-pointer" 
+                  onClick={()=>eliminarJugador(indice)}>{indice + 1}</td>
                   <td className=" border rounded-md p-1 bg-white">{jugador.nombreJugador}</td>
                   <td className=" border rounded-md p-1 bg-white">{jugador.ficha}</td>
                   <td className=" border rounded-md p-1 bg-white">{jugador.dorsal}</td>

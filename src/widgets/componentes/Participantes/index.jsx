@@ -1,11 +1,17 @@
 'use client'
+import React,{useEffect, useState} from 'react';
 
-import React from 'react';
+export default function Participantes({equipo, modal, setShowConfirmModalEliminar,setIdInscripto, estadoSorteo}) {
+    console.log(estadoSorteo)
+    const [eliminar, setEliminar]= useState(estadoSorteo)
 
-
-
-export default function Participantes({ equipo, modal }) {
-
+   console.log(eliminar)
+   
+    
+  const  handleEliminarClick=()=>{
+    setShowConfirmModalEliminar(true)
+    setIdInscripto(equipo._id)
+  }
     return (
         <div className="relative">
             <div className='flex justify-center items-center m-3'>
@@ -94,7 +100,21 @@ export default function Participantes({ equipo, modal }) {
                                 >
                                     Ver Jugadores
                                 </button>
-                            </div>
+    
+                        </div>
+                           { eliminar && (
+
+                           
+                            <div>
+                             <button
+                             onClick={handleEliminarClick}
+                                className="m-2 bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded"
+                              >
+                              Eliminar
+                          </button>
+                          </div>
+                           
+                           )}
 
 
 
@@ -105,6 +125,7 @@ export default function Participantes({ equipo, modal }) {
                     </div>
                 )}
             </div>
+            
         </div>
     )
 }
