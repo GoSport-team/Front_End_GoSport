@@ -9,6 +9,7 @@ import Cookies from 'js-cookie'
 export default function CampeonatosDisponibles() {
   const [user, setUser] = useState()
   const token = Cookies.get('token')
+  const [equipo, setEquipo] = useState(null)
   useEffect(()=>{
     const obtenerUser =async ()=>{
       const response = await axios.get('http://localhost:3001/usuarios/perfil',{
@@ -21,6 +22,22 @@ export default function CampeonatosDisponibles() {
     obtenerUser()
   },[])
 
+    useEffect(() => {
+        const obtnenerEquipo = async () => {
+          if(user){
+            console.log(user)
+            const response = await axios.get(`http://localhost:3001/equipoInscripto/cedula/${user.identificacion}`)
+            console.log(response)
+            if (response.data.msg) {
+               return setEquipo(null)
+            }
+            setEquipo(response.data)
+          }
+        }
+        obtnenerEquipo()
+    }, [user])
+
+    console.log(equipo)
 
   return (
     <>
@@ -43,7 +60,9 @@ export default function CampeonatosDisponibles() {
         </button>
         </Link>
        <article className='contenedorCards flex gap-10 mt-20 p-18 justify-around flex-wrap p-5'>
-        <CardCampeonato/>
+        {user && (
+        <CardCampeonato cedula={user.identificacion}/>
+        )}
         
         </article>
       </section>

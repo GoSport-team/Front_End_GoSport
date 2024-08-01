@@ -37,13 +37,26 @@ export const DatosEquiposInscripcion = () => {
      
     }
   const inscribirEquipo = async ()=>{
-    try {   
+    try {  
+      
+      const validarRegistroEquipo = await axios.get(`http://localhost:3001/equipoInscripto/cedula/${id}`,{
+        headers:{
+          cedulaJugador:idEquipo
+        }
+      })
+
+      if(validarRegistroEquipo.data.msg == "Equipo no inscrito"){  
       const response = await axios.post(`http://localhost:3001/equipoInscripto`,{
         Equipo:equipo,
         idCampeonato:id
       })
-  
      Swal.fire(response.data.msg,"","success")
+    }else{
+      Swal.fire({
+        icon: "error",
+        title: validarRegistroEquipo.data.msg,
+      })
+    }
     } catch (error) {
       console.log(error)
       Swal.fire({
@@ -51,14 +64,15 @@ export const DatosEquiposInscripcion = () => {
         title: "Error al guardar el equipo",
       })
     }
-
-  }
+  
+  
+}
   
   return (
     <div className="flex flex-col items-center justify-center ">
        <div className="flex items-center mt-10">
       <label htmlFor="" className="text-2xl font-bold mr-5">Busca a tu equipo</label>
-      <input onChange={e=>setIdEquipo(e.target.value)} type="text"  className="bg-gray-200 h-12 w-96" placeholder="Busca tu equipo con tu numero de identificacion"/>
+      <input onChange={e=>setIdEquipo(e.target.value)} type="text"  className="bg-gray-200 h-12 w-96 text-center" placeholder="Busca tu equipo con tu numero de identificacion"/>
       <button 
       className="mt-2.5 px-12 py-5 text-xs uppercase tracking-wider font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none ml-[70px] hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5"
       onClick={()=>searchEquipo()}>Buscar</button>
@@ -102,7 +116,7 @@ export const DatosEquiposInscripcion = () => {
                 type="text"
               />
             </div>
-        <div class=" border border-black">
+        <div class="">
           <img src={equipo.imgLogo} className=" w-44 h-44 top-52" alt="Logo Del Equipo" />
         </div>
           </div>
@@ -121,9 +135,9 @@ export const DatosEquiposInscripcion = () => {
         </tr>
       </thead>
       <tbody>
-      {equipo && equipo.participantes.map((equipo)=>(
+      {equipo && equipo.participantes.map((equipo,indice)=>(
       <tr className="border-separate text-center text-lg font-medium">
-    <td className="border rounded-md p-1 bg-white"></td>
+    <td className="border rounded-md p-1 bg-white">{indice+1}</td>
     <td className="border rounded-md p-1 bg-white">{equipo.nombreJugador}</td>
     <td className="border rounded-md p-1 bg-white">{equipo.ficha}</td>
     <td className="border rounded-md p-1 bg-white">{equipo.dorsal}</td>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Cookies from "js-cookie";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export const DatosEquipos = () => {
   const [image, setImage] = useState()
   const [estadoImg, setEstadoImg] = useState()
@@ -16,9 +16,9 @@ export const DatosEquipos = () => {
   const [contactoDos, setContactoDos] = useState()
   const [user, setUser] = useState()
   const [id, setId] = useState(1)
+  const [equipo, setEquipo] = useState(null)
   const token = Cookies.get('token')
   const navigate = useNavigate()
-  console.log(token)
 
   const handleImage = async (e) => {
     const file = e.target.files[0]
@@ -37,7 +37,21 @@ export const DatosEquipos = () => {
     obtenerUser()
   }, [])
 
-  console.log(user)
+  useEffect(() => {
+      const obtnenerEquipo = async () => {
+        if(user){
+          console.log(user.identificacion)
+          const response = await axios.get(`http://localhost:3001/inscripcionEquipos/${user.identificacion}`)
+          console.log(response.data)
+          if (response.data == "EQUIPO NO ENCONTRADO") {
+             return setEquipo(null)
+          }
+          setEquipo(response.data)
+      }
+    }
+      obtnenerEquipo()
+  }, [user])
+
   const submit = async (e) => {
     e.preventDefault()
     
@@ -49,17 +63,15 @@ export const DatosEquipos = () => {
     } else {
       const formData = new FormData();
       formData.append("file", file)
-      console.log(user.idenfiticacion)
       const respuestaa = await axios.post(`http://localhost:3001/inscripcionEquipos/${user._id}/logoEquipo`,formData)
      
       setEstadoImg(respuestaa.data.url)
-      console.log(respuestaa.data.url)
       const response = await axios.post('http://localhost:3001/inscripcionEquipos', {
         nombreEquipo: nombreEquipo,
         nombreCapitan: user.nombres,
         contactoUno: user.telefono,
         contactoDos: contactoDos,
-        jornada: "Mañana",
+        jornada: user.jornada,
         cedula: user.identificacion,
         imgLogo: respuestaa.data.url,
         estado: true,
@@ -111,8 +123,6 @@ export const DatosEquipos = () => {
         if(jugadores.length >= 1){
          const dorsalExiste = jugadores.filter((item) => item.dorsal == dorsalNum)
          if(dorsalExiste.length > 0){
-          console.log(dorsalExiste)
-           console.log(dorsalNum)
           return Swal.fire({
             icon: "error",
             title: "El numero de dorsal ya esta ocupado",
@@ -183,10 +193,17 @@ export const DatosEquipos = () => {
       });
     }
   }
-  
-  console.log(jugadores)
   return (
     <div className="flex justify-center ">
+      {equipo ?
+      <div className=""> 
+      <h1 className="mt-20 text-3xl font-bold bg-red-400 p-5 text-white rounded-lg">Ya Tienes Creado Un Equipo No Puedes Crear Mas</h1>
+     <Link to={'/jugador/dashboard'}>
+      <button className="bg-black text-white mt-5 h-14  w-full rounded-lg text-2xl">Atras</button>
+     </Link>
+      </div>
+      :
+      
       <form action="" onSubmit={submit}>
         <div className="bg-gray-200 mt-20 rounded-lg p-5">
           <h2 className="text-xl font-bold ml-5">Planilla Inscripcion Equipo</h2>
@@ -266,6 +283,7 @@ export const DatosEquipos = () => {
           <button className="mt-2.5 px-12 py-5 text-xs uppercase tracking-wider font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none ml-[70px] hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5" type="submit"> Inscribir </button>
         </div>
       </form>
+}
     </div>
 
   )
