@@ -51,12 +51,7 @@ const icon = {
         path: "/notifications",
         element: <Notifications />,
       },
-      {
-        icon: <InformationCircleIcon {...icon}/>,
-        name: "Cronograma",
-        path: "/cronograma",
-        element: <Cronograma/>
-      },
+      
       
     ],
   }]
@@ -90,7 +85,13 @@ export  const routeCampeonato=[
         name: "participante",
         path: "/participante",
         element: <Participante/>
-      }
+      },
+      {
+        icon: <InformationCircleIcon {...icon}/>,
+        name: "Cronograma",
+        path: "/cronograma",
+        element: <Cronograma/>
+      },
     ],
   },
 ];
