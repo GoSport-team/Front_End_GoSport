@@ -11,7 +11,7 @@ import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
 export default function CronogramaDesing({ primerEquipo, segundoEquipo, imagenEquipo1, imagenEquipo2, horaDeJuego, FechaDeJuego }) {
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [modalIsOpen, setModalIsOpen] = useState(false);                                                    
 
   const openModal = () => {
     setModalIsOpen(true);
@@ -50,6 +50,7 @@ export default function CronogramaDesing({ primerEquipo, segundoEquipo, imagenEq
             <h4 className='ml-4 text-xl font-semibold text-gray-700'>Portugal</h4>
           </div>
         </div>
+        
         <div className='w-1/2 p-6 flex flex-col'>
           <div className='mb-6'>
             <h3 className='text-2xl font-bold text-gray-800'>Detalles</h3>
@@ -65,7 +66,7 @@ export default function CronogramaDesing({ primerEquipo, segundoEquipo, imagenEq
             </div>
           </div>
           <div className='mt-6 flex justify-between'>
-            <button onClick={openModal} className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600'>Ver Calendario</button>
+            <button onClick={openModal} className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600'>Resulatdos</button>
             <button className='px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400'>Editar</button>
           </div>
         </div>
@@ -276,10 +277,9 @@ export default function CronogramaDesing({ primerEquipo, segundoEquipo, imagenEq
             </div>
 
           </div>
-
         </div>
         <div className='mt-6 flex justify-around'>
-          <button className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600'>Ver Calendario</button>
+          <button onClick={openModal} className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600'>Ver Calendario</button>
           <button className='px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400'>Editar</button>
           <button className='px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400'>Planillero</button>
         </div>
