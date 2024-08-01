@@ -6,48 +6,47 @@ import { ModalInscribirCampeonato } from '@/widgets/componentes/campeonato/modal
 import { EliminarEquipo } from "@/widgets/componentes/Participantes/eliminarEquipo";
 
 export const Participante = () => {
-  const sorteo= localStorage.getItem('sorteo')
   const IdCampeonato = localStorage.getItem('ID');
   const [equipoInscripto, setEquipoInscripto] = useState([]);
-  const [estadoBoton, setEstadoBoton] = useState(sorteo);
+  const [estadoBoton, setEstadoBoton] = useState(true);
   const [estadoFase, setEStadoFase] = useState(false);
   const [nombreFase, setNombreFase] = useState("Fase 1");
   const [idFases, setIdFase] = useState();
   const [error, setError] = useState("");
   const [showConfirmModal, setShowConfirmModal] = useState(false); 
-  const [agregarEquipo, setAgregarEquipo]= useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEquipo, setSelectedEquipo] = useState(null);
   const [showConfirmModalEliminar, setShowConfirmModalEliminar]= useState(false)
   const [idInscripto,setIdInscripto]= useState('')
   const [estadoAgregar, setEstadoAgregar]=useState(true)
+  const [isLoading, setIsLoading] = useState(true); 
+const [agregarEquipo, setAgregarEquipo]= useState(false)
+useEffect(()=>{
+  const condicion =()=>{
 
-    console.log(estadoBoton)
+    if (data.length >= 3) {
+    setEstadoBoton(true)
+            } else {
+     setEstadoBoton(false) 
+    }
+  }
+  condicion()
 
-
+},[data])
   useEffect(() => {
     const fetchData = async () => {
       try {
+        setIsLoading(true)
         const { data } = await axios.get('http://localhost:3001/equipoInscripto', {
           headers: {
             id: IdCampeonato,
           },
         });
-        
         setEquipoInscripto(data);
-        useEffect(() => {
-          if ( data.length >= 3) {
-            localStorage.setItem('sorteo', JSON.stringify(true));
-            setEstadoAgregar(true)
-          } else {
-            localStorage.setItem('sorteo', JSON.stringify(false));
-            setAgregarEquipo(true)
-            
-          }
-        }, [data]);
-      
       } catch (error) {
         console.log(error);
+      }finally{
+        setIsLoading(false)
       }
     };
     fetchData();
@@ -56,6 +55,7 @@ export const Participante = () => {
  
   const sortearEquipos = async () => {
     try {
+      
       localStorage.setItem('estadoFase', estadoFase);
       const fase = await axios.post('http://localhost:3001/fase', { estado: estadoFase, nombre: nombreFase, idCampeonato: IdCampeonato });
       const idFase = fase.data._id;
@@ -68,12 +68,15 @@ export const Participante = () => {
       const equiposSorteados = await axios.post('http://localhost:3001/vs', { dataVs });
       console.log(equiposSorteados);
       if (equiposSorteados.data) {
-        localStorage.setItem('sorteo', JSON.stringify(false));
-        setEstadoAgregar(false)
+        setIsLoading(true);
+      }else{
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
       setError("Error al sortear. Intente nuevamente.");
+    }finally {
+      setIsLoading(false); 
     }
   };
     const openModal = (equipo) => {
@@ -89,22 +92,30 @@ export const Participante = () => {
   const handleConfirmSortear = () => {
     sortearEquipos();
     setShowConfirmModal(false);
+    setEstadoBoton(false)
   };
 
   const handleCancelSortear = () => {
     setShowConfirmModal(false); 
   };
-
+  const handleAgregarEquipo = (nuevoEquipo) => {
+    setEquipoInscripto([...equipoInscripto, nuevoEquipo]);
+  };
 
   return (
     <>
     <section>
+    {isLoading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+          <div className="text-white">Cargando ...</div>
+        </div>
+      )}
       <div className="p-4">
         {equipoInscripto && equipoInscripto.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0">
             {equipoInscripto.map((equipo) => (
               <div key={equipo._id} className="flex justify-center items-center z-0">
-               <Participantes equipo={equipo} modal={() => openModal(equipo.Equipo)}  setShowConfirmModalEliminar={setShowConfirmModalEliminar} setIdInscripto={setIdInscripto} estadoSorteo={sorteo}/>
+               <Participantes equipo={equipo.Equipo} id={equipo._id} modal={() => openModal(equipo.Equipo)}  setShowConfirmModalEliminar={setShowConfirmModalEliminar} setIdInscripto={setIdInscripto} />
               </div>
             ))}
           </div>
@@ -115,7 +126,8 @@ export const Participante = () => {
         )}{
           showConfirmModalEliminar&&(
 
-            <EliminarEquipo  showConfirmModal={showConfirmModalEliminar}  id={idInscripto} setShowConfirmModalEliminar={setShowConfirmModalEliminar}/>
+            <EliminarEquipo  showConfirmModal={showConfirmModalEliminar}  id={idInscripto} setShowConfirmModalEliminar={setShowConfirmModalEliminar}
+            setIsLoadingPar={setIsLoading}/>
           )
         }
  {selectedEquipo && (
@@ -128,18 +140,17 @@ export const Participante = () => {
     
       <div className="flex justify-center space-x-4 mx-6 my-4">
         {agregarEquipo &&(
-        <ModalInscribirCampeonato setAgregarEquipo={setAgregarEquipo}/>
+        <ModalInscribirCampeonato setAgregarEquipo={setAgregarEquipo} onAgregarEquipo={handleAgregarEquipo} />
       )}
         
           <div className="flex space-x-4">
-            {estadoAgregar&&(
+           
         <button
         onClick={()=>setAgregarEquipo(true)}
         className="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3"
         >
           Agregar Equipo
         </button>
-        )}
         { estadoBoton && (
           <button
           onClick={()=>handleSortearClick()}

@@ -1,9 +1,11 @@
+import { ArrowTrendingUpIcon } from '@heroicons/react/24/outline';
 import axios from 'axios'
 import React, { useState } from 'react'
 import Swal from "sweetalert2";
-export const ModalInscribirCampeonato = ({setAgregarEquipo}) => {
+export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo}) => {
     const [idEquipo, setIdEquipo]=useState('')
     const [equipo, setEquipo]= useState()
+    const [isLoading, setIsLoading] = useState(false); 
     const idCampeonato = localStorage.getItem('ID')
     const searchEquipo = async ()=>{
         try {
@@ -30,28 +32,44 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo}) => {
             text: `Revisa tu numero de cedula ${idEquipo}`
           })
         }
+        finally{
+          setIsLoading(false)
+        }
        
       }
       const inscribirEquipo = async ()=>{
-        try {   
+        try {  
+          setIsLoading(true) 
           const response = await axios.post(`http://localhost:3001/equipoInscripto`,{
             Equipo:equipo,
             idCampeonato:idCampeonato
           })
-      
+          onAgregarEquipo(equipo);
          Swal.fire(response.data.msg,"","success")
-         setAgregarEquipo(false)
+        
+         if(equipo){
+          setAgregarEquipo(false)
+          setIsLoading(true)
+         }
+        
         } catch (error) {
           console.log(error)
           Swal.fire({
             icon: "error",
             title: "Error al guardar el equipo",
           })
+        }finally{
+          setIsLoading(false)
         }
     
       }
   return (
     <>
+     {isLoading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+          <div className="text-white">Cargando Inscripción...</div>
+        </div>
+      )}
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
             <h3 className="text-lg font-bold mb-4">Ingrese el número de cédula del capitán</h3>
@@ -96,7 +114,6 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo}) => {
          
           </div>
         </div>
-
     </>
   )
 }

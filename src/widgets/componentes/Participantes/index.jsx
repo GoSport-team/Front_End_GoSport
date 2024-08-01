@@ -1,22 +1,17 @@
 'use client'
 import React,{useEffect, useState} from 'react';
 
-export default function Participantes({equipo, modal, setShowConfirmModalEliminar,setIdInscripto, estadoSorteo}) {
-    console.log(estadoSorteo)
-    const [eliminar, setEliminar]= useState(estadoSorteo)
-
-   console.log(eliminar)
-   
+export default function Participantes({equipo,id, modal, setShowConfirmModalEliminar,setIdInscripto}) {
     
   const  handleEliminarClick=()=>{
     setShowConfirmModalEliminar(true)
-    setIdInscripto(equipo._id)
+    setIdInscripto(id)
   }
     return (
         <div className="relative">
             <div className='flex justify-center items-center m-3'>
                 {equipo && (
-                    <div key={equipo.Equipo._id} className="product-card w-[300px] rounded-md shadow-xl overflow-hidden relative cursor-pointer z-10 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
+                    <div key={equipo._id} className="product-card w-[300px] rounded-md shadow-xl overflow-hidden relative cursor-pointer z-10 py-8 px-6 bg-white flex flex-col items-center justify-center gap-3 transition-all duration-300 group">
                         <div className="absolute -left-[40%] top-0 group-hover:rotate-12 transition-all duration-300 group-hover:scale-150">
                             <div className="flex gap-1 ">
                                 <svg
@@ -40,13 +35,13 @@ export default function Participantes({equipo, modal, setShowConfirmModalElimina
                         <div className="absolute rounded-full bg-gray-500 z-20 left-1/2 top-[44%] h-[110%] w-[110%] -translate-x-1/2 group-hover:top-[58%] transition-all duration-300"></div>
                         <div className="para uppercase text-center leading-none z-40">
                             <p className="text-black font-semibold text-xs font-serif">Equipo</p>
-                            <p className="font-bold text-xl tracking-wider text-gray-500">{equipo.Equipo.nombreEquipo}</p>
+                            <p className="font-bold text-xl tracking-wider text-gray-500">{equipo.nombreEquipo}</p>
                         </div>
 
 
                         <div className="img w-[180px] aspect-square bg-gray-100 z-40 rounded-md ">
                             <img className='h-full object-cover rounded-md opacity-80'
-                                src={equipo.Equipo.imgLogo} alt="img" />
+                                src={equipo.imgLogo} alt="img" />
                         </div>
 
                         <div className="btm-_container z-40  justify-between items-end gap-6">
@@ -67,7 +62,7 @@ export default function Participantes({equipo, modal, setShowConfirmModalElimina
                                             ></path>
                                         </svg>
                                     </div>
-                                    <p className="font-semibold text-xs text-white">{equipo.Equipo.contactoUno}</p>
+                                    <p className="font-semibold text-xs text-white">{equipo.contactoUno}</p>
                                 </div>
 
                             </div>
@@ -88,7 +83,7 @@ export default function Participantes({equipo, modal, setShowConfirmModalElimina
                                             ></path>
                                         </svg>
                                     </div>
-                                    <p className="font-semibold text-xs text-white">{equipo.Equipo.contactoDos}</p>
+                                    <p className="font-semibold text-xs text-white">{equipo.contactoDos}</p>
                                 </div>
 
                             </div>
@@ -102,8 +97,6 @@ export default function Participantes({equipo, modal, setShowConfirmModalElimina
                                 </button>
     
                         </div>
-                           { eliminar && (
-
                            
                             <div>
                              <button
@@ -113,8 +106,6 @@ export default function Participantes({equipo, modal, setShowConfirmModalElimina
                               Eliminar
                           </button>
                           </div>
-                           
-                           )}
 
 
 
