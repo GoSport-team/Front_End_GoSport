@@ -1,20 +1,7 @@
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-  Avatar,
-  Chip,
-  Tooltip,
-  Progress,
-} from "@material-tailwind/react";
 
-import {routes} from "@/routes";
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import { authorsTableData, projectsTableData } from "@/data";
 import DeleteCampeonatoModal from '../../widgets/componentes/campeonato/modalEliminarCampeonato'
 import ViewCampeonatoModal from '../../widgets/componentes/campeonato/modalVerCampeonato'
 import UpdateCampeonato from '../../widgets/componentes/campeonato/modalActualizar'
