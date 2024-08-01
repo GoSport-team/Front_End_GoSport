@@ -35,6 +35,7 @@ export const Participante = () => {
         });
         
         setEquipoInscripto(data);
+        console.log(setAgregarEquipo(data))
         useEffect(() => {
           if ( data.length >= 3) {
             localStorage.setItem('sorteo', JSON.stringify(true));
