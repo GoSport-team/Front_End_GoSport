@@ -7,8 +7,40 @@ Modal.setAppElement('#root');
 import 'tailwindcss/tailwind.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import axios from "axios";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';     
+export default function CronogramaDesing({ primerEquipo, segundoEquipo, imagenEquipo1, imagenEquipo2,idVs, patchFechaHora, guardarEdicion}) {
 
-export default function CronogramaDesing({ primerEquipo, segundoEquipo, imagenEquipo1, imagenEquipo2, horaDeJuego, FechaDeJuego }) {
+
+  useEffect(() => {
+    const fetchFechaHora = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/vs/${idVs}`);
+        const { fecha, hora } = response.data;
+        setFecha(fecha || '');
+        setHora(hora || '');
+      } catch (error) {
+        console.error("Error al obtener fecha y hora:", error);
+      }
+    };
+
+    fetchFechaHora();
+  }, [idVs]);
+
+  const handleConfirmarCmabios = () =>{
+    guardarEdicion(true, idVs);
+    patchFechaHora({fecha,hora})
+  }
+  const [fecha, setFecha] = useState('');
+  const [hora, setHora] = useState('');
+
+  const handleFecha = (e) =>{
+    setFecha(e.target.value)
+  }
+  const handleHora =(e)=>{
+    setHora(e.target.value)
+  }
 
   const [modalIsOpen, setModalIsOpen] = useState(false);                                                    
 
@@ -38,15 +70,21 @@ export default function CronogramaDesing({ primerEquipo, segundoEquipo, imagenEq
 
   return (
     <>
-      <div className='w-[35vw] mt-8 flex flex-row rounded-md border-2 border-gray-300 shadow-lg'>
-        <div className='w-1/2 p-6 flex flex-col gap-y-6'>
-          <div className='flex flex-row items-center justify-center'>
-            <img className='object-contain w-20' src="\public\img\Cronograma\Colombia.jpg" alt="Colombia" />
-            <h4 className='ml-4 text-xl font-semibold text-gray-700'>Colombia</h4>
+      <div className='w-[35vw] h-72 mt-8 flex flex-row rounded-md border-2 border-gray-300 shadow-lg'>
+        <div className='w-1/2 h-full p-6 flex flex-col items-center gap-6'>
+          <div className='w-full flex flex-row '>
+            <img className='w-2/4 object-contain h-24 rounded-3xl ' src={imagenEquipo1} />
+            <div className='w-full flex justify-center items-center'>
+            <h4 className='text-xl font-semibold text-gray-700'>{primerEquipo}</h4>
+            </div>
+           
           </div>
-          <div className='flex flex-row items-center justify-center'>
-            <img className='object-contain w-20' src="\public\img\Cronograma\portugal.png" alt="Portugal" />
-            <h4 className='ml-4 text-xl font-semibold text-gray-700'>Portugal</h4>
+          <div className='w-full flex flex-row gap-4'>
+            <img className='w-2/4 object-contain h-24 rounded-3xl' src={imagenEquipo2} />
+            <div className='w-full flex justify-center items-center'>
+            <h4 className=' text-xl font-semibold text-gray-700'>{segundoEquipo}</h4>
+            </div>
+           
           </div>
         </div>
         
@@ -57,16 +95,16 @@ export default function CronogramaDesing({ primerEquipo, segundoEquipo, imagenEq
           <div className='flex flex-col gap-y-6'>
             <div className='flex items-center gap-x-10'>
               <label className='text-lg font-medium text-gray-600'>Hora</label>
-              <input type="time" className='p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' />
+              <input type="time" value={hora} onChange={handleHora} className='p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' />
             </div>
             <div className='flex items-center gap-x-10'>
-              <label className='text-lg font-medium text-gray-600'>Fecha</label>
-              <input type="date" className='p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' />
+              <label  className='text-lg font-medium text-gray-600'>Fecha</label>
+              <input type="date" value={fecha} onChange={handleFecha} className='p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' />
             </div>
           </div>
           <div className='mt-6 flex justify-between'>
             <button onClick={openModal} className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600'>Resulatdos</button>
-            <button className='px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400'>Editar</button>
+            <button onClick={handleConfirmarCmabios} className='px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400'>Editar</button>
           </div>
         </div>
       </div>
@@ -248,42 +286,7 @@ export default function CronogramaDesing({ primerEquipo, segundoEquipo, imagenEq
           </section>
         </div>
       </Modal>
-      <section className='w-[35vw] mt-8  flex flex-col border-2 border-gray-300 shadow-lg '>
-        <div className='flex flex-row '>
-          <div className='w-1/2 p-6 flex flex-col  gap-y-6'>
-            <div className='flex flex-row items-center justify-center'>
-              <img className='object-contain w-20' src={imagenEquipo1} />
-              <h4 className='ml-4 text-xl font-semibold text-gray-700'>{primerEquipo}</h4>
-            </div>
-            <div className='flex flex-row items-center justify-center'>
-              <img className='object-contain w-20' src={imagenEquipo2} alt="Portugal" />
-              <h4 className='ml-4 text-xl font-semibold text-gray-700'>{segundoEquipo}</h4>
-            </div>
-          </div>
-          <div className='w-1/2 p-6 flex flex-col'>
-            <div className='mb-6'>
-              <h3 className='text-2xl font-bold text-gray-800'>Detalles</h3>
-            </div>
-            <div className='flex flex-col gap-y-6'>
-              <div className='flex items-center gap-x-10'>
-                <label className='text-lg font-medium text-gray-600'>Hora</label>
-                <input type="time" value={horaDeJuego} className='p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' />
-              </div>
-              <div className='flex items-center gap-x-10'>
-                <label className='text-lg font-medium text-gray-600'>Fecha</label>
-                <input type="date" value={FechaDeJuego} className='p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500' />
-              </div>
-            </div>
-
-          </div>
-        </div>
-        <div className='mt-6 flex justify-around'>
-          <button onClick={openModal} className='px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600'>Ver Calendario</button>
-          <button className='px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400'>Editar</button>
-          <button className='px-4 py-2 bg-gray-300 text-gray-700 rounded-md hover:bg-gray-400'>Planillero</button>
-        </div>
-      </section>
-
+     
     </>
   )
 }

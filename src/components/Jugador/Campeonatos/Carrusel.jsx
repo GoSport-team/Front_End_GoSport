@@ -52,13 +52,13 @@ const [photo, setPhoto] = useState([])
     <section id="container-slider" className=" p-5">
     <button
       className="arrowPrev"
-      onClick={() => handleSlideChange((currentSlide - 1 + slides.length) % slides.length)}
+      onClick={() => handleSlideChange((currentSlide - 1 + photo.length) % photo.length)}
     >
       <i className=""></i>
     </button>
     <button
       className="arrowNext"
-      onClick={() => handleSlideChange((currentSlide + 1) % slides.length)}
+      onClick={() => handleSlideChange((currentSlide + 1) % photo.length)}
     >
       <i className=""></i>
     </button>

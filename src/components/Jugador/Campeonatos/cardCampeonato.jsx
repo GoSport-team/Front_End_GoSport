@@ -2,8 +2,10 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { Link } from "react-router-dom";
-export default function CardCampeonato() {
+import Swal from "sweetalert2";
+export default function CardCampeonato({cedula}) {
   const [campeonatos, setCampenatos] = useState(null)
+  const [validarInscripcion, setValidarInscripcion] = useState()
   const token = Cookies.get('token')
   useEffect(()=>{
     const obtenerCampeonatos =async()=>{
@@ -11,18 +13,57 @@ export default function CardCampeonato() {
     if(response == undefined){
       setCampenatos(null)
     }else{
-      setCampenatos(response.data)
+      const campeonatosFiltradosCreado = response.data.filter(campeonato => campeonato.estadoCampeonato !== 'Creado');
+      const campeonatosFiltradosEjecucion = campeonatosFiltradosCreado.filter(campeonato => campeonato.estadoCampeonato !== 'Ejecucion');
+      setCampenatos(campeonatosFiltradosEjecucion)
     }
     }
     obtenerCampeonatos()
   },[])
 
-  console.log(campeonatos)
+
+  useEffect(()=>{
+    const validarInscripcion = async ()=>{
+      const responseValidador = await axios.get(`http://localhost:3001/equipoInscripto/validarInscripcion`,{
+        headers:{
+          cedulaJugador:cedula
+        }
+      })
+
+      setValidarInscripcion(responseValidador.data.msg)
+      
+    }
+
+    validarInscripcion()
+  },[])
+  const mensajeInscrito =()=>{
+    Swal.fire({
+      title: "Estado Inscrito",
+      text:"Ya te encuentras Registrado a un campeonato, espera a que inicie y podras ver el avance del campeonato en la App Movil GoSport",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#04ff00",
+      timer:8000,
+      showClass: {
+        popup: `
+          animate__animated
+          animate__fadeInUp
+          animate__faster
+        `
+      },
+      hideClass: {
+        popup: `
+          animate__animated
+          animate__fadeOutDown
+          animate__faster
+        `
+      }
+    });
+  }
   return (
     <>
   
         {campeonatos && campeonatos.map((campeonato)=>(
-    <article className="w-max pt-5 pl-3 pr-3 pb-5 flex gap-2 bg-[rgba(63,63,63,0.2)] rounded-md" key={campeonato._id}>
+          <article className="w-max pt-5 pl-3 pr-3 pb-5 flex gap-2 bg-[rgba(63,63,63,0.2)] rounded-md" key={campeonato._id}>
 
       <div className=" column text-left border-2 p-5 rounded-lg flex flex-col justify-between">
         <h1 className="font-medium flex gap-3 text-lg"> <p className="font-bold  text-xl">Nombre:</p> {campeonato.nombreCampeonato}</h1>
@@ -48,9 +89,18 @@ export default function CardCampeonato() {
           <p className="font-xl font-bold">Fecha de finalizacion</p>
            {campeonato.fechaFin}</p>
 
+      {validarInscripcion?
+       <button 
+       onClick={()=>mensajeInscrito()}
+       className="mt-2.5 px-7 py-4 text-xs uppercase font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer  hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5">
+         Ya estas Inscrito
+         </button>
+     :
         <Link to={`/jugador/dashboard/${campeonato._id}`} className="inscribirme ">
-          <button className="mt-2.5 px-7 py-4 text-xs uppercase font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer  hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5">Inscribirme</button>
+          <button className="mt-2.5 px-7 py-4 text-xs uppercase font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer  hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5">
+            Inscribirme</button>
         </Link>
+      }
       </div>
     </article>
         ))}
