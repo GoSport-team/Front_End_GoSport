@@ -1,20 +1,7 @@
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Typography,
-  Avatar,
-  Chip,
-  Tooltip,
-  Progress,
-} from "@material-tailwind/react";
 
-import {routes} from "@/routes";
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import { authorsTableData, projectsTableData } from "@/data";
 import DeleteCampeonatoModal from '../../widgets/componentes/campeonato/modalEliminarCampeonato'
 import ViewCampeonatoModal from '../../widgets/componentes/campeonato/modalVerCampeonato'
 import UpdateCampeonato from '../../widgets/componentes/campeonato/modalActualizar'
@@ -22,6 +9,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Creado } from "@/widgets/componentes/campeonato/estadosCampeonato/creado";
 import { Inscripto } from "@/widgets/componentes/campeonato/estadosCampeonato/inscripto";
+import { Ejecucion } from "@/widgets/componentes/campeonato/estadosCampeonato/ejecucion";
 export function Tables() {
 
   const [tasks, setTasks] = useState([]);
@@ -75,6 +63,7 @@ export function Tables() {
     
 
   return (
+    <>
     <div className="mt-10 mb-8 flex flex-col">
     <div className="flex justify-start">
       <button className="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3">
@@ -119,6 +108,8 @@ export function Tables() {
               <Inscripto
                 tasks={task} 
               />
+              <Ejecucion
+              tasks={task} />
           
             </td>
           </tr>
@@ -153,7 +144,9 @@ export function Tables() {
       onUpdate={idUpdate}
     />
   </div>
-  );
+    </>
+      );
+
 }
 
 export default Tables;

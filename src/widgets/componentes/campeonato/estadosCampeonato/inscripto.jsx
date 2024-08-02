@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 export const Inscripto = ({tasks}) => {
     const[inscripto, setInscripto]= useState()
     useEffect(()=>{
-      if(tasks.estadoCampeonato==='Inscripto'){
-       
+      if(tasks.estadoCampeonato==='Inscripcion'){
           setInscripto(true)
         }
        })

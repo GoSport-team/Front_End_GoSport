@@ -12,6 +12,7 @@ import { SignIn, SignUp } from "@/pages/auth";
 import Fotos from "./pages/dashboard/fotos";
 import { element } from "prop-types";
 import { Participante } from "@/pages/dashboard";
+import Cronograma from "./pages/dashboard/cronograma";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -51,6 +52,7 @@ const icon = {
         element: <Notifications />,
       },
       
+      
     ],
   }]
  export  const routeAuth=[
@@ -83,7 +85,13 @@ export  const routeCampeonato=[
         name: "participante",
         path: "/participante",
         element: <Participante/>
-      }
+      },
+      {
+        icon: <InformationCircleIcon {...icon}/>,
+        name: "Cronograma",
+        path: "/cronograma",
+        element: <Cronograma/>
+      },
     ],
   },
 ];

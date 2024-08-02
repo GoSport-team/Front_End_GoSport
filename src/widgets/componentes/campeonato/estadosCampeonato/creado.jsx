@@ -8,7 +8,7 @@ export const Creado = ({ tasks, viewCampeonato, setModalView, setIdUpdate, setMo
   const[creado, setCreado]= useState()
  useEffect(()=>{
   if(tasks.estadoCampeonato=='Creado'){
-    setEstado('Inscripto')
+    setEstado('Inscripcion')
     setCreado(true)
   }
  })
