@@ -10,7 +10,7 @@ export const Participante = () => {
   const IdCampeonato = localStorage.getItem('ID');
   const [equipoInscripto, setEquipoInscripto] = useState([]);
   const [estadoBoton, setEstadoBoton] = useState(true);
-  const [estadoFase, setEStadoFase] = useState(false);
+  const [estadoFase, setEStadoFase] = useState(true);
   const [nombreFase, setNombreFase] = useState("Fase 1");
   const [idFases, setIdFase] = useState();
   const [error, setError] = useState("");

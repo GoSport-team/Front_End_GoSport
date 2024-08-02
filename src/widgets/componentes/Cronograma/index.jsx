@@ -8,7 +8,6 @@ import 'tailwindcss/tailwind.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 
-
 export default function CronogramaDesing({ primerEquipo, segundoEquipo, imagenEquipo1, imagenEquipo2, horaDeJuego, FechaDeJuego }) {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);                                                    
