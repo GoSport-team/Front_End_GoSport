@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 export default function CardCampeonato({cedula}) {
   const [campeonatos, setCampenatos] = useState(null)
   const [validarInscripcion, setValidarInscripcion] = useState()
@@ -35,8 +36,29 @@ export default function CardCampeonato({cedula}) {
 
     validarInscripcion()
   },[])
-  
-  console.log(validarInscripcion)
+  const mensajeInscrito =()=>{
+    Swal.fire({
+      title: "Estado Inscrito",
+      text:"Ya te encuentras Registrado a un campeonato, espera a que inicie y podras ver el avance del campeonato en la App Movil GoSport",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#04ff00",
+      timer:8000,
+      showClass: {
+        popup: `
+          animate__animated
+          animate__fadeInUp
+          animate__faster
+        `
+      },
+      hideClass: {
+        popup: `
+          animate__animated
+          animate__fadeOutDown
+          animate__faster
+        `
+      }
+    });
+  }
   return (
     <>
   
@@ -68,11 +90,12 @@ export default function CardCampeonato({cedula}) {
            {campeonato.fechaFin}</p>
 
       {validarInscripcion?
-       <Link to={``} className="inscribirme ">
        <button 
+       onClick={()=>mensajeInscrito()}
        className="mt-2.5 px-7 py-4 text-xs uppercase font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer  hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5">
-         Ya estas Inscrito</button>
-     </Link>:
+         Ya estas Inscrito
+         </button>
+     :
         <Link to={`/jugador/dashboard/${campeonato._id}`} className="inscribirme ">
           <button className="mt-2.5 px-7 py-4 text-xs uppercase font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer  hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5">
             Inscribirme</button>
