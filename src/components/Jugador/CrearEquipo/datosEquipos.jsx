@@ -264,16 +264,18 @@ export const DatosEquipos = () => {
                 <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">Nombre </th>
                 <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">Ficha </th>
                 <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border th3">N° Dorsal </th>
+                <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">Eliminar</th>
               </tr>
             </thead>
             <tbody>
               {jugadores && jugadores.map((jugador, indice) => (
                 <tr className="border-separate text-center text-lg font-medium" key={indice}>
                   <td className="border rounded-md p-1 bg-white hover:cursor-pointer" 
-                  onClick={()=>eliminarJugador(indice)}>{indice + 1}</td>
+                 >{indice + 1}</td>
                   <td className=" border rounded-md p-1 bg-white">{jugador.nombreJugador}</td>
                   <td className=" border rounded-md p-1 bg-white">{jugador.ficha}</td>
                   <td className=" border rounded-md p-1 bg-white">{jugador.dorsal}</td>
+                  <td  onClick={()=>eliminarJugador(indice)} className=" border rounded-md p-1 bg-white flex items-center justify-center"><img className="" src="/public/img/carrusel/eliminar.svg" alt="" /></td>
                 </tr>
               ))}
             </tbody>

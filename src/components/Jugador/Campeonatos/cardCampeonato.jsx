@@ -6,6 +6,7 @@ import Swal from "sweetalert2";
 export default function CardCampeonato({cedula}) {
   const [campeonatos, setCampenatos] = useState(null)
   const [validarInscripcion, setValidarInscripcion] = useState()
+  const [data, setData] = useState()
   const token = Cookies.get('token')
   useEffect(()=>{
     const obtenerCampeonatos =async()=>{
@@ -31,6 +32,7 @@ export default function CardCampeonato({cedula}) {
       })
 
       setValidarInscripcion(responseValidador.data.msg)
+      setData(responseValidador.data.data)
       
     }
 
@@ -59,6 +61,9 @@ export default function CardCampeonato({cedula}) {
       }
     });
   }
+
+  console.log(validarInscripcion)
+  console.log(data)
   return (
     <>
   
@@ -89,7 +94,7 @@ export default function CardCampeonato({cedula}) {
           <p className="font-xl font-bold">Fecha de finalizacion</p>
            {campeonato.fechaFin}</p>
 
-      {validarInscripcion?
+      {validarInscripcion == 'Equipo ya esta Inscrito en un campeonato'?
        <button 
        onClick={()=>mensajeInscrito()}
        className="mt-2.5 px-7 py-4 text-xs uppercase font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer  hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5">
