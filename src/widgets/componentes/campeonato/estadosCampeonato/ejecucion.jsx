@@ -1,7 +1,26 @@
+import axios from 'axios';
 import React,{useState, useEffect} from 'react'
 import { Link } from "react-router-dom";
 export const Ejecucion = ({tasks}) => {
     const[ejecucion, setEjecucion]= useState()
+    const[fase, setFase]= useState([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const { data } = await axios.get('http://localhost:3001/fase/fase', {
+              headers: {
+                id: tasks._id
+              },
+            });
+            setFase(data);
+          } catch (error) {
+            console.log(error);
+          }
+        };
+        fetchData();
+      }, [tasks]);
+      console.log(fase)
     useEffect(()=>{
       if(tasks.estadoCampeonato==='Ejecucion'){
           setEjecucion(true)
@@ -9,6 +28,7 @@ export const Ejecucion = ({tasks}) => {
        })
        const handleClick=()=>{
         localStorage.setItem('ID', tasks._id);
+            localStorage.setItem('IdFase', fase._id);
        }
   return (
     <>
@@ -16,7 +36,7 @@ export const Ejecucion = ({tasks}) => {
     <div>
         <button onClick={handleClick}
         className="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3">
-            <Link to="/campe/cronograma">Agregar Resultados</Link>
+            <Link  to="/campe/cronograma">Agregar Resultados</Link>
         </button>
     </div>
 )}

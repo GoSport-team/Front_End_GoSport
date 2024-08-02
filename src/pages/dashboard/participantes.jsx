@@ -1,6 +1,7 @@
 import VerJugadores from "../../widgets/componentes/Participantes/View";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { Link } from "react-router-dom";
 import Participantes from '@/widgets/componentes/Participantes/index';
 import { ModalInscribirCampeonato } from '@/widgets/componentes/campeonato/modalInscribirCampeonato';
 import { EliminarEquipo } from "@/widgets/componentes/Participantes/eliminarEquipo";
@@ -167,7 +168,7 @@ useEffect(()=>{
           <button
           onClick={()=>handleSortearClick()}
           className="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3" 
-          > Sortear
+          >   Sorteo
           </button>
         )}
 
@@ -188,7 +189,7 @@ useEffect(()=>{
                 onClick={handleConfirmSortear}
                 className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
               >
-                OK
+                <Link to="/campe/cronograma"    >Ok</Link>
               </button>
               <button
                 onClick={handleCancelSortear}
