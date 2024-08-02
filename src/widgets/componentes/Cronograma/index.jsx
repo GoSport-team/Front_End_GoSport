@@ -8,7 +8,8 @@ import 'tailwindcss/tailwind.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import axios from "axios";
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';     
 export default function CronogramaDesing({ primerEquipo, segundoEquipo, imagenEquipo1, imagenEquipo2,idVs, patchFechaHora, guardarEdicion}) {
 
   useEffect(() => {
