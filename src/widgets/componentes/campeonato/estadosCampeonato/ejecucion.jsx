@@ -20,7 +20,7 @@ export const Ejecucion = ({tasks}) => {
         };
         fetchData();
       }, [tasks]);
-      console.log(fase)
+
     useEffect(()=>{
       if(tasks.estadoCampeonato==='Ejecucion'){
           setEjecucion(true)

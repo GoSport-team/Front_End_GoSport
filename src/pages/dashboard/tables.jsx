@@ -31,7 +31,7 @@ export function Tables() {
       }
     };
     fetchTasks();
-  }, []);
+  },[tasks]);
  
     const deleteTasks = async () => {
       try {

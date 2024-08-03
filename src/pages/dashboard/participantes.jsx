@@ -48,7 +48,6 @@ useEffect(()=>{
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setIsLoading(true)
         const { data } = await axios.get('http://localhost:3001/equipoInscripto', {
           headers: {
             id: IdCampeonato,
@@ -58,11 +57,11 @@ useEffect(()=>{
       } catch (error) {
         console.log(error);
       }finally{
-        setIsLoading(false)
+      
       }
     };
     fetchData();
-  }, [IdCampeonato]);
+  },[equipoInscripto]);
 
  
   const sortearEquipos = async () => {
@@ -78,7 +77,6 @@ useEffect(()=>{
       };
       localStorage.setItem('IdFase', idFase);
       const equiposSorteados = await axios.post('http://localhost:3001/vs', { dataVs });
-      console.log(equiposSorteados);
       if (equiposSorteados.data) {
         setIsLoading(true);
       }else{
@@ -102,6 +100,8 @@ useEffect(()=>{
   };
 
   const handleConfirmSortear = () => {
+    localStorage.setItem('IdFase', idFases);
+    localStorage.setItem('ID', IdCampeonato)
     sortearEquipos();
     handleSubmit()
     setShowConfirmModal(false);
@@ -118,11 +118,7 @@ useEffect(()=>{
   return (
     <>
     <section>
-    {isLoading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-          <div className="text-white">Cargando ...</div>
-        </div>
-      )}
+   
       <div className="p-4">
         {equipoInscripto && equipoInscripto.length > 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0">
@@ -189,7 +185,7 @@ useEffect(()=>{
                 onClick={handleConfirmSortear}
                 className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
               >
-                <Link to="/campe/cronograma"    >Ok</Link>
+                <Link to="/campe/cronograma" >Ok</Link>
               </button>
               <button
                 onClick={handleCancelSortear}
