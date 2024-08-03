@@ -11,7 +11,6 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';     
 export default function CronogramaDesing({  patchFechaHora, guardarEdicion, datosVss}) {
-
 const idVs = datosVss._id
 const [equipo1, setEquipo1]= useState([])
 const [equipo2, setEquipo2]= useState([])
@@ -26,6 +25,8 @@ useEffect(()=>{
         const { fecha, hora } = response.data;
         setFecha(fecha || '');
         setHora(hora || '');
+        console.log(response.data);
+
       } catch (error) {
         console.error("Error al obtener fecha y hora:", error);
       }
@@ -34,21 +35,39 @@ useEffect(()=>{
     fetchFechaHora();
   }, [idVs]);
 
-  const handleConfirmarCmabios = () =>{
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/vs/${idVs}`);
+        setDatos(response.datos)
+        console.log("Resultados", response.data);
+
+      } catch (error) {
+        console.error("Error al obtener Datos", error);
+      }
+    };
+
+    fetchData();
+  }, [idVs]);
+
+
+
+  const handleConfirmarCmabios = () => {
     guardarEdicion(true, idVs);
-    patchFechaHora({fecha,hora})
+    patchFechaHora({ fecha, hora })
   }
   const [fecha, setFecha] = useState('');
   const [hora, setHora] = useState('');
 
-  const handleFecha = (e) =>{
+  const handleFecha = (e) => {
     setFecha(e.target.value)
   }
-  const handleHora =(e)=>{
+  const handleHora = (e) => {
     setHora(e.target.value)
   }
 
-  const [modalIsOpen, setModalIsOpen] = useState(false);                                                    
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openModal = () => {
     setModalIsOpen(true);
