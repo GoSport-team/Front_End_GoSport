@@ -51,16 +51,16 @@ export const SignIn= ()=> {
   };
 
   return (
-    <section className="flex items-center justify-center gap-4">
+    <section className="flex flex-row h-screen">
       <ToastContainer/>
       <div className="w-100p h-100p flex items-center flex-col justify-center gap-3 lg:w-3/5">
         <div className="text-center">
-          <Typography variant="h2" className="font-bold mb-4">Iniciar Sesion</Typography>
+          <Typography variant="h2" className="font-bold mb-4  ">Iniciar Sesion</Typography>
           <Typography variant="paragraph" color="blue-gray" className="text-lg font-normal">Ingrese su correo y contraseña, campos obligatorios </Typography>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="mt-8 mb-2 mx-auto w-80 max-w-screen-lg lg:w-1/2">
           <div className="mb-1 flex flex-col gap-6">
-            <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
+            <Typography variant="small" color="blue-gray" className="-mb-3 text-lg font-medium">
               Correo
             </Typography>
             <div className="relative flex flex-row">
@@ -81,7 +81,7 @@ export const SignIn= ()=> {
             </div>
            
            
-            <Typography variant="small" color="blue-gray" className="-mb-3 font-medium">
+            <Typography variant="small" color="blue-gray" className="-mb-3 text-lg font-medium">
               Contraseña
             </Typography>
             <div className="relative flex flex-row">
@@ -102,7 +102,7 @@ export const SignIn= ()=> {
             </div>
           </div>
           
-          <Button type="submit" className="mt-6" fullWidth>
+          <Button type="submit" className="mt-6 text-base" fullWidth>
             Iniciar sesion
         </Button>
 
@@ -122,10 +122,10 @@ export const SignIn= ()=> {
         </form>
 
       </div>
-      <div className="w-2/5  hidden lg:block">
+      <div className="w-2/5 h-screen">
         <img
-          src="/img/pattern.png"
-          className="h-50p w-50p object-cover rounded-3xl"
+          src="/public/img/IniciarSesio/ini.jpg"
+          className="w-full h-full object-cover rounded-3xl"
         />
       </div>
 

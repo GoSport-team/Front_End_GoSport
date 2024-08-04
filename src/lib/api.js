@@ -80,7 +80,10 @@ export const registroUser = async ({
   ficha,
   jornada
 }) => {
+  const notify = (message) => toast(message);
+
   try {
+    
     const response = await api.post("/auth/register", {
       correo,
       contrasena,
@@ -92,13 +95,26 @@ export const registroUser = async ({
       ficha,
       jornada
     });
-    console.log(response.data)
-    return response.data;
+   
+    return response;
   } catch (error) {
-    console.log(error)
-    throw new Error(
-      error.response.data.message || "Error al registrar usuario"
-    );
+
+    console.log(error.response)
+    if (error.response) {
+
+      if (error.response.status === 409 && error.response.data.includes('Este correo e identificion ya tiene cuenta')) {
+        notify('Este correo e identificion ya tiene cuenta')
+        throw new Error("Este correo e identificion ya tiene cuenta");
+      } else if (error.response.status === 409 && error.response.data.includes("Esta identifiacion ya tiene cuenta")) {
+        notify('Esta identifiacion ya tiene cuenta')
+        throw new Error("Identificación ya tiene cuenta");
+      }else if(error.response.status === 409 && error.response.data.includes("Este correo ya tiene cuenta")){
+        notify('Este correo ya tiene cuenta')
+        throw new ("Este correo ya tiene cuenta")
+      }
+    } else {
+      throw new Error("Error de conexión. Por favor, inténtelo de nuevo.");
+    }
   }
 };
 
