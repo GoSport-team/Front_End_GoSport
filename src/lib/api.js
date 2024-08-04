@@ -102,15 +102,15 @@ export const registroUser = async ({
     console.log(error.response)
     if (error.response) {
 
-      if (error.response.status === 409 && error.response.data.includes('Este correo e identificion ya tiene cuenta')) {
-        notify('Este correo e identificion ya tiene cuenta')
-        throw new Error("Este correo e identificion ya tiene cuenta");
-      } else if (error.response.status === 409 && error.response.data.includes("Esta identifiacion ya tiene cuenta")) {
-        notify('Esta identifiacion ya tiene cuenta')
-        throw new Error("Identificación ya tiene cuenta");
-      }else if(error.response.status === 409 && error.response.data.includes("Este correo ya tiene cuenta")){
-        notify('Este correo ya tiene cuenta')
-        throw new ("Este correo ya tiene cuenta")
+      if (error.response.status === 409 && error.response.data.includes('Este correo e identificación ya existen')) {
+        notify('Este correo e identificación ya existen')
+        throw new Error("Este correo e identificación ya existen");
+      } else if (error.response.status === 409 && error.response.data.includes("Esta identificación ya existe")) {
+        notify('Esta identificación ya existe')
+        throw new Error("Esta identificación ya existe");
+      }else if(error.response.status === 409 && error.response.data.includes("Este correo ya existe")){
+        notify('Este correo ya existe')
+        throw new ("Este correo ya existe")
       }
     } else {
       throw new Error("Error de conexión. Por favor, inténtelo de nuevo.");
