@@ -88,7 +88,7 @@ export  const routeCampeonato=[
       },
       {
         icon: <InformationCircleIcon {...icon}/>,
-        name: "Cronograma",
+        name: "cronograma",
         path: "/cronograma",
         element: <Cronograma/>
       },

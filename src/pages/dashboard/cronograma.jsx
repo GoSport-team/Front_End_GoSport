@@ -23,7 +23,6 @@ export default function Cronograma() {
   //console.log(datosVss)
   
     const IdFasee = localStorage.getItem('IdFase');
-  
     useEffect(()=>{
       const GetDatosVs = async()=>{
         try{
@@ -33,20 +32,17 @@ export default function Cronograma() {
             }
           });
           setDatosVs(Vs.data)
-          console.log(Vs.data)
-          console.log(Vs.data)
-          console.log(IdFasee)
         }catch(error){
           console.log(error)
         }
       }
       GetDatosVs();
-    },[])
-
+    },[datosVss])
     const hanlde = (estado,idVs)=>{
       setConfirmarCambios(estado)
       setIdVs(idVs)
     }
+  
     
   return (
     <>
@@ -57,14 +53,9 @@ export default function Cronograma() {
              { datosVss && datosVss.map((versus)=>(
              <div  key={versus._id} className="flex justify-center items-center z-0">
                <CronogramaDesing
-               primerEquipo={versus.equipo1.informacion.team1.Equipo.nombreEquipo}
-               imagenEquipo1={versus.equipo1.informacion.team1.Equipo.imgLogo}
-               segundoEquipo={versus.equipo2.informacion.team2.Equipo.nombreEquipo}
-               imagenEquipo2={versus.equipo2.informacion.team2.Equipo.imgLogo}
-               idVs={versus._id}
                patchFechaHora={setFechaHora}
-
                guardarEdicion={hanlde}
+               datosVss={versus}
                ></CronogramaDesing>
 
              </div>

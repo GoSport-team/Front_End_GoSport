@@ -1,4 +1,4 @@
-import { ArrowTrendingUpIcon } from '@heroicons/react/24/outline';
+
 import axios from 'axios'
 import React, { useState } from 'react'
 import Swal from "sweetalert2";

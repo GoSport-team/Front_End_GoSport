@@ -37,7 +37,7 @@ export default function CampeonatosDisponibles() {
         obtnenerEquipo()
     }, [user])
 
-    console.log(equipo)
+    
 
   return (
     <>

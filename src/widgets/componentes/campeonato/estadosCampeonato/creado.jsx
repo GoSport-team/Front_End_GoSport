@@ -4,14 +4,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const Creado = ({ tasks, viewCampeonato, setModalView, setIdUpdate, setModalUpdate, setSelectedCampeonato, setIsModalOpen }) => {
-  const [estado, setEstado]= useState('')
+  const [estado, setEstado]= useState('Inscripcion')
   const[creado, setCreado]= useState()
  useEffect(()=>{
   if(tasks.estadoCampeonato=='Creado'){
-    setEstado('Inscripcion')
     setCreado(true)
   }
- })
+ },[])
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {

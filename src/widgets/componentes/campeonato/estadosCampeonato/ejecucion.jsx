@@ -20,7 +20,7 @@ export const Ejecucion = ({tasks}) => {
         };
         fetchData();
       }, [tasks]);
-      console.log(fase)
+
     useEffect(()=>{
       if(tasks.estadoCampeonato==='Ejecucion'){
           setEjecucion(true)
@@ -29,6 +29,7 @@ export const Ejecucion = ({tasks}) => {
        const handleClick=()=>{
         localStorage.setItem('ID', tasks._id);
             localStorage.setItem('IdFase', fase._id);
+            localStorage.setItem('estadoFase',fase.estado)
        }
   return (
     <>
