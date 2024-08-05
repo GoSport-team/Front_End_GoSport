@@ -11,6 +11,7 @@ export default function CronogramaDesing({  patchFechaHora, guardarEdicion, dato
 const idVs = datosVss._id
 const [equipo1, setEquipo1]= useState([])
 const [equipo2, setEquipo2]= useState([])
+
 useEffect(()=>{
   setEquipo1(datosVss.equipo1.informacion.team1.Equipo)
   setEquipo2(datosVss.equipo2.informacion.team2.Equipo)
@@ -161,6 +162,7 @@ useEffect(()=>{
   togglePlayerRows={togglePlayerRows} 
   showPlayersTable2={showPlayersTable2} 
   togglePlayerRowsTable2={togglePlayerRowsTable2} 
+  
 />
 </>
   )
