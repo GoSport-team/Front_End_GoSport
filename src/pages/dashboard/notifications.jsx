@@ -7,6 +7,7 @@ import {
   CardBody,
 } from "@material-tailwind/react";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
+import Planillero from "@/widgets/componentes/Planillero";
 export function Notifications() {
   const [showAlerts, setShowAlerts] = React.useState({
     blue: true,
@@ -23,8 +24,10 @@ export function Notifications() {
   const alerts = ["gray", "green", "orange", "red"];
   //Cronograma Borrar
   return (
-    <div className="mx-auto my-20 flex max-w-screen-lg flex-col gap-8">
-      <Card>
+    <div className="">
+
+      <Planillero />     
+      {/* <Card>
         <Typography className="mt-4 text-center "variant="h5" color="blue-gray">NOTIFICACIONES  </Typography>
         <CardHeader
           color="transparent"
@@ -80,7 +83,7 @@ export function Notifications() {
             </Alert>
           ))}
         </CardBody>
-      </Card>
+      </Card> */}
     </div>
   );
 }
