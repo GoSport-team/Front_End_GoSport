@@ -1,28 +1,32 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 export const DatosEquiposInscripcion = () => {
  
-  const {id} = useParams()
+  const {id, cedula} = useParams()
   const [jugadores, setJugadores] = useState()
-  const [idEquipo, setIdEquipo] = useState()
   const [equipo, setEquipo] = useState()
+  const navigate = useNavigate();
+  console.log(cedula)
+  useEffect(()=>{
     const searchEquipo = async ()=>{
       try {
-        const response = await axios.get(`http://localhost:3001/inscripcionEquipos/${idEquipo}`)
+        const response = await axios.get(`http://localhost:3001/inscripcionEquipos/${cedula}`)
         console.log(response)
         if(response.data == "EQUIPO NO ENCONTRADO"){
           Swal.fire({
             icon: "error",
             title: "equipo no registrado",
-            text: `Revisa tu numero de cedula ${idEquipo}`
+            text: `Debes de crear un equipo primero`
           })
         }else{
           Swal.fire({
             icon: "success",
             title: "Equipo Encontrado",
-            text: `Nombre ${response.data.nombreEquipo}`
+            text: `Nombre ${response.data.nombreEquipo}`,
+            confirmButtonText: "OK",
+        confirmButtonColor: "#0837C0",
           })
           setEquipo(response.data)
         }
@@ -31,17 +35,19 @@ export const DatosEquiposInscripcion = () => {
         Swal.fire({
           icon: "error",
           title: "equipo no registrado",
-          text: `Revisa tu numero de cedula ${idEquipo}`
+          text: `Revisa tu numero de cedula ${cedula}`
         })
-      }
-     
+      }  
     }
+
+    searchEquipo()
+  },[])
   const inscribirEquipo = async ()=>{
     try {  
       
       const validarRegistroEquipo = await axios.get(`http://localhost:3001/equipoInscripto/cedula/${id}`,{
         headers:{
-          cedulaJugador:idEquipo
+          cedulaJugador:cedula
         }
       })
 
@@ -50,11 +56,21 @@ export const DatosEquiposInscripcion = () => {
         Equipo:equipo,
         idCampeonato:id
       })
-     Swal.fire(response.data.msg,"","success")
+     Swal.fire({
+        title:response.data.msg,
+        icon:"success",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#0837C0",
+      })
+      setTimeout(() => {
+        navigate('/jugador/dashboard')
+    }, 1000);
     }else{
       Swal.fire({
         icon: "error",
         title: validarRegistroEquipo.data.msg,
+        confirmButtonText: "OK",
+        confirmButtonColor: "#E42245",
       })
     }
     } catch (error) {
@@ -62,6 +78,8 @@ export const DatosEquiposInscripcion = () => {
       Swal.fire({
         icon: "error",
         title: "Error al guardar el equipo",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#E42245",
       })
     }
   
@@ -70,13 +88,6 @@ export const DatosEquiposInscripcion = () => {
   
   return (
     <div className="flex flex-col items-center justify-center ">
-       <div className="flex items-center mt-10">
-      <label htmlFor="" className="text-2xl font-bold mr-5">Busca a tu equipo</label>
-      <input onChange={e=>setIdEquipo(e.target.value)} type="text"  className="bg-gray-200 h-12 w-96 text-center" placeholder="Busca tu equipo con tu numero de identificacion"/>
-      <button 
-      className="mt-2.5 px-12 py-5 text-xs uppercase tracking-wider font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none ml-[70px] hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5"
-      onClick={()=>searchEquipo()}>Buscar</button>
-      </div>
      
     <form action="">
     {equipo ?

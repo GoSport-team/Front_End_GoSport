@@ -101,7 +101,7 @@ export default function CardCampeonato({cedula}) {
          Ya estas Inscrito
          </button>
      :
-        <Link to={`/jugador/dashboard/${campeonato._id}`} className="inscribirme ">
+        <Link to={`/jugador/dashboard/${campeonato._id}/${cedula}`} className="inscribirme ">
           <button className="mt-2.5 px-7 py-4 text-xs uppercase font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer  hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5">
             Inscribirme</button>
         </Link>

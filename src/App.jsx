@@ -19,7 +19,7 @@ function App() {
       <Route path="/dashjugador" element={<DatosEquiposInscripcion/>}/>
       <Route path="/jugador/dashboard" element={<CampeonatosDisponibles/>}/>
       <Route path="/jugador/dashboard/crearequipo" element={<DatosEquipos/>}/>
-      <Route path="/jugador/dashboard/:id" element={<DatosEquiposInscripcion/>}/>
+      <Route path="/jugador/dashboard/:id/:cedula/" element={<DatosEquiposInscripcion/>}/>
       <Route path="/jugador/dashboard/verequipo/:cedula" element={<VerEquipo/>} />
     </Routes>
   );

@@ -47,7 +47,7 @@ export default function CampeonatosDisponibles() {
     <Carrusel/>
     <section className='contenedorBienvenida'>
         <h1 className='text-center text-2xl ml-28 mr-28 flex ' >
-        “Estimado <p className='text-3xl font-bold w-80'>{user.nombres}</p>, bienvenido al área de inscripciones. 🏆 
+        “Estimado<p className='text-3xl font-bold min-w-max pl-3 '>{user.nombres}</p>, bienvenido al área de inscripciones. 🏆 
         Aquí podrás elegir los campeonatos en los que deseas participar. 
         No olvides que cada torneo es una oportunidad para demostrar 
         tu habilidad en la cancha. ¡Éxito!”

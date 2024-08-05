@@ -18,7 +18,7 @@ export const DatosEquipos = () => {
   const [id, setId] = useState(1)
   const [equipo, setEquipo] = useState(null)
   const token = Cookies.get('token')
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleImage = async (e) => {
     const file = e.target.files[0]
@@ -59,6 +59,8 @@ export const DatosEquipos = () => {
       Swal.fire({
         icon: "error",
         title: "Jugador ya existe en un equipo",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#E42245",
       })
     } else {
       const formData = new FormData();
@@ -71,9 +73,10 @@ export const DatosEquipos = () => {
         nombreCapitan: user.nombres,
         contactoUno: user.telefono,
         contactoDos: contactoDos,
-        jornada: user.jornada,
+        jornada: "Tarde",
         cedula: user.identificacion,
         imgLogo: respuestaa.data.url,
+        idLogo: respuestaa.data.public_id,
         estado: true,
         participantes: jugadores
       })
@@ -81,8 +84,14 @@ export const DatosEquipos = () => {
       setMensaje(response.data.msg)
       Swal.fire({
         icon: "success",
-        title: response.data.msg
+        title: response.data.msg,
+        confirmButtonText: "OK",
+        confirmButtonColor: "#0837C0",
       })
+
+      setTimeout(() => {
+        navigate('/jugador/dashboard')
+    }, 700);
 
     }
   }
@@ -103,7 +112,8 @@ export const DatosEquipos = () => {
       console.log(response.data)
       const { value: formValues } = await Swal.fire({
         title: "Deseas agregar a este jugador",
-
+        confirmButtonText: "OK",
+        confirmButtonColor: "#0837C0",
         html: `
           <h1>${response.data.nombres}</h1>
           <h1>Ficha</h1>
@@ -126,6 +136,8 @@ export const DatosEquipos = () => {
           return Swal.fire({
             icon: "error",
             title: "El numero de dorsal ya esta ocupado",
+            confirmButtonText: "OK",
+            confirmButtonColor: "#E42245",
           })
          }
 
@@ -134,6 +146,8 @@ export const DatosEquipos = () => {
          return Swal.fire({
            icon: "error",
            title: `El jugador ${response.data.nombres} ya hace parte de un equipo`,
+           confirmButtonText: "OK",
+          confirmButtonColor: "#E42245",
          })
         }
         }
@@ -148,7 +162,12 @@ export const DatosEquipos = () => {
           Dorsal ${JSON.stringify(formValues[1])}`,
         }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire("Jugador guardado correctamente", "", "success");
+            Swal.fire({
+              title:"Jugador guardado correctamente",
+              icon:"success",
+              confirmButtonText: "OK",
+        confirmButtonColor: "#0837C0",
+            });
             setId(id + 1)
             setJugadores(prev => [...prev,
             {
@@ -167,7 +186,9 @@ export const DatosEquipos = () => {
         Swal.fire({
           icon: "error",
           title: "Jugador no registrado",
-          text: `identificacion no encontrada ${idenfiticacion}`
+          text: `identificacion no encontrada ${idenfiticacion}`,
+          confirmButtonText: "Ok",
+        confirmButtonColor: "#0837C0",
         })
       }
     }
@@ -175,6 +196,13 @@ export const DatosEquipos = () => {
 
   const eliminarJugador=(indice)=> {
     
+    if(jugadores[indice].nombreJugador == user.nombres){
+      return  Swal.fire({
+        title: "Este jugador no se puede borrar por que es el capitan",
+        confirmButtonText: "OK",
+        confirmButtonColor: "#E42245",
+      });
+    }
     if (jugadores && jugadores.length > indice) {
       Swal.fire({
         title: "Deseas eliminar este jugador",
@@ -185,7 +213,12 @@ export const DatosEquipos = () => {
         text: `Nombre ${jugadores[indice].nombreJugador} \n `,
       }).then((result) => {
           if (result.isConfirmed) {
-            Swal.fire("Jugador borrado correctamente", "", "success");
+            Swal.fire({
+              title:"Jugador borrado correctamente",
+              icon:"success",
+              confirmButtonText: "OK",
+        confirmButtonColor: "#0837C0",
+            });
             console.log(indice)
           jugadores.splice(indice, 1);
           setJugadores(jugadores)
@@ -197,7 +230,7 @@ export const DatosEquipos = () => {
     <div className="flex justify-center ">
       {equipo ?
       <div className=""> 
-      <h1 className="mt-20 text-3xl font-bold bg-red-400 p-5 text-white rounded-lg">Ya Tienes Creado Un Equipo No Puedes Crear Mas</h1>
+      <h1 className="mt-20 text-3xl font-bold bg-red-400 p-5 text-white rounded-lg">Ya tienes creado un equipo no puedes crear mas</h1>
      <Link to={'/jugador/dashboard'}>
       <button className="bg-black text-white mt-5 h-14  w-full rounded-lg text-2xl">Atras</button>
      </Link>
@@ -270,12 +303,12 @@ export const DatosEquipos = () => {
             <tbody>
               {jugadores && jugadores.map((jugador, indice) => (
                 <tr className="border-separate text-center text-lg font-medium" key={indice}>
-                  <td className="border rounded-md p-1 bg-white hover:cursor-pointer" 
+                  <td className="border rounded-md p-1 bg-white " 
                  >{indice + 1}</td>
                   <td className=" border rounded-md p-1 bg-white">{jugador.nombreJugador}</td>
                   <td className=" border rounded-md p-1 bg-white">{jugador.ficha}</td>
                   <td className=" border rounded-md p-1 bg-white">{jugador.dorsal}</td>
-                  <td  onClick={()=>eliminarJugador(indice)} className=" border rounded-md p-1 bg-white flex items-center justify-center"><img className="" src="/public/img/carrusel/eliminar.svg" alt="" /></td>
+                  <td  onClick={()=>eliminarJugador(indice)} className=" hover:cursor-pointer border rounded-md p-1 bg-white flex items-center justify-center"><img className="" src="/public/img/carrusel/eliminar.svg" alt="" /></td>
                 </tr>
               ))}
             </tbody>
