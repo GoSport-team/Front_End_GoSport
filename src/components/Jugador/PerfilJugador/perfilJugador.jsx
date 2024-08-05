@@ -32,7 +32,7 @@ export const PerfilJugador = () =>{
       try {
         const response = await axios.get('http://localhost:3001/usuarios/perfil', {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Jugadors ${token}`
           }
         });
         
@@ -86,7 +86,6 @@ setImagePreview(null);
 // Funcion Post
 const savePost = async () => {
   if (!file) return;
-
   const formData = new FormData();
   formData.append('file', file);
   setLoading(true);
@@ -97,32 +96,23 @@ const savePost = async () => {
       body: formData
     });
 
-    // Verificar el estado de la respuesta
     if (!respuesta.ok) {
       throw new Error('Error al subir la imagen');
     }
 
-    // Obtener los datos de la respuesta
     const data = await respuesta.json();
-    console.log(data);
+    setImagen(data.url);
 
-    // Asegurarse de que `data.url` y `data.public_id` están definidos
     if (data.url) {
       setImagen(data.url);
     } else {
       console.error('No se recibió URL de la imagen');
     }
 
-    if (data.public_id) {
-      localStorage.setItem('public_id', data.public_id);
-      console.log('Public_id Guardado', data.public_id);
-    } else {
-      console.error('No se recibió Public_id');
-    }
-
     // Actualizar la URL de la imagen en la base de datos
     await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
-      url_foto: data.url
+      url_foto: data.url,
+      public_id:data.public_id
     });
 
     // Notificar al usuario
@@ -148,7 +138,6 @@ if (!file) {
 }
 const formData = new FormData();
 formData.append('file', file);
-//formData.append("public_id", localStorage.getItem('public_id'));
 setLoading(true)
 try{
   const respuesta = await fetch(`http://localhost:3001/usuarios/${UserID}/pati`, {
@@ -159,16 +148,16 @@ try{
 const data = await respuesta.json();
 setImagen(data.url);
 
-if (data.public_id) {
-  localStorage.setItem('public_id', data.public_id);
-  console.log('Public_id Guardado', data.public_id);
+if (data.url) {
+  setImagen(data.url)
 } else { 
   console.error('No se recibió Public_id');
 }
 
 // Guarda la URL en la base de datos
 await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
-    url_foto: data.url
+    url_foto: data.url,
+    public_id: data.public_id,
 });
 notify(accion === 'update' ? "Imagen actualizada exitosamente" : "Imagen agregada exitosamente");
 
@@ -186,37 +175,28 @@ finally{
 // Funcion DELETE
 const handleDelete = async () => {
 try {
-    const publicId = localStorage.getItem('public_id');
-    setLoading(true)
-    if (!publicId) {
-        throw new Error('No public_id found in localStorage');
-    }
     
-    console.log('Public ID:', publicId);
-    const deleteResponse = await fetch(`http://localhost:3001/usuarios/${UserID}/eli`, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ public_id: publicId })
-    });
-    const deleteData = await deleteResponse.json();
-
-    if (deleteData.error) {
-        throw new Error(deleteData.error);
+  const response = await fetch(`http://localhost:3001/usuarios/${UserID}/eli`,{
+    method:'DELETE',
+    headers: {
+      'Authorization': `Jugadors ${token}`
     }
-
-    console.log('Imagen eliminada de Cloudinary:', deleteData);
-
-    await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
-        url_foto: ''
-    });
-
-    // Limpiar localStorage y establecer la imagen predeterminada
-    localStorage.removeItem('public_id');
-    setImagen('/sinfoto.png');
-    notify("Imagen eliminada exitosamente")
-    console.log('Imagen eliminada exitosamente');
+  });
+  
+    const data = response.json();
+    console.log(data)
+    if (!usuarioId.public_id) {
+      notify('Nay foto por eliminar');
+      }else{
+        await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
+          url_foto: '',
+          public_id: null
+        });
+    
+        setImagen('/sinfoto.png');
+        // Notificar al usuario
+        notify("Imagen eliminada exitosamente");
+      }
 } catch (error) {
     console.error('Error eliminando la imagen:', error);
 }
@@ -310,221 +290,199 @@ alert('No hay cambios para actualizar.');
 
   return (
     <>
-    <ToastContainer/>
     <div className="">
-      {loading ? (
-        <div className="flex justify-center items-center h-72">
-          <Spinner />
-        </div>
-      ) : (
-        <div className="relative mt-8 h-72">
-      
+  {loading ? (
+    <div className="flex justify-center items-center h-72">
+      <Spinner />
+    </div>
+  ) : (
+    <div className="relative mt-8 h-auto lg:h-72">
       <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover bg-center">
-        <div className="absolute inset-0 h-full w-full bg-gray-900/75" />
+        <div className="absolute inset-0 h-full w-full bg-black-900/75" />
       </div>
 
-      <div className=" flex flex-row w-100p">
-      <Card className="  w-2/3 -mt-16 mb-6  lg:mx-4 border border-blue-gray-100">
+      <div className="flex flex-col-reverse lg:w-full lg:flex-row w-full gap-4 mt-8">
+        <div className="flex-1 lg:w-4/5 border  border-blue-gray-100">
+          <Card className="w-full">
             <CardBody className="p-5">
-            <Typography variant="h5" className="mb-6 mt-2">
-                  Editar Perfil
-            </Typography>
-        {
-          usuarioId? 
-            
-            <form className="space-y-4" key={usuarioId._id} onSubmit={handleSubmit(handleBoton)}>
-                    <div className="flex gap-6">
-                      <div className="flex-1">
-                        <label className="">
-                          <Typography
-                              variant="small"
-                              className="block mb-2 text-sm font-medium text-gray-700"
-                            >
-                             Nombre
-                            </Typography>
-                            </label>
-                        <input
-                          type="text"
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                          placeholder={usuarioId.nombres} 
-                          name="nombres"
-                          
-                          onChange={handleChangePutDb}
-                        />
-                      </div>
-                      <div className="flex-1">
-                        <label className="block mb-2 text-sm font-medium text-gray-700"><Typography
-                              variant="small"
-                              className="block mb-2 text-sm font-medium text-gray-700"
-                            >
-                             Telefono
-                            </Typography></label>
-                        <input
-                          type="tel"
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                          placeholder={usuarioId.telefono}
-                          pattern="[0-9]{10}"  
-                          name="telefono"
-                          value={updateUser.telefono}
-                          onChange={handleChangePutDb}
-                        />
-                      </div>
+              <Typography variant="h5" className="mb-6 mt-2">
+                Editar Perfil
+              </Typography>
+              {usuarioId ? (
+                <form className="space-y-4" key={usuarioId._id} onSubmit={handleSubmit(handleBoton)}>
+                  <div className="flex flex-col lg:flex-row gap-4">
+                    <div className="flex-1">
+                      <label className="">
+                        <Typography variant="small" className="block mb-2 text-sm font-medium text-gray-700">
+                          Nombre
+                        </Typography>
+                      </label>
+                      <input
+                        type="text"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        placeholder={usuarioId.nombres}
+                        name="nombres"
+                        onChange={handleChangePutDb}
+                      />
                     </div>
-                    <div className="flex gap-4">
-                      <div className="flex-1">
-                        <label className="block mb-1 text-sm font-medium text-gray-700"><Typography
-                              variant="small"
-                              className="block mb-2 text-sm font-medium text-gray-700">
-                             Correo
-                            </Typography></label>
-                            <Controller
-                            name="correo"
-                            control={control}
-                            render={({field})=>(
-                              <input
+                    <div className="flex-1">
+                      <label className="block mb-2 text-sm font-medium text-gray-700">
+                        <Typography variant="small" className="block mb-2 text-sm font-medium text-gray-700">
+                          Telefono
+                        </Typography>
+                      </label>
+                      <input
+                        type="tel"
+                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                        placeholder={usuarioId.telefono}
+                        pattern="[0-9]{10}"
+                        name="telefono"
+                        value={updateUser.telefono}
+                        onChange={handleChangePutDb}
+                      />
+                    </div>
+                  </div>
+                  <div className="flex flex-col lg:flex-row gap-4">
+                    <div className="flex-1">
+                      <label className="block mb-1 text-sm font-medium text-gray-700">
+                        <Typography variant="small" className="block mb-2 text-sm font-medium text-gray-700">
+                          Correo
+                        </Typography>
+                      </label>
+                      <Controller
+                        name="correo"
+                        control={control}
+                        render={({ field }) => (
+                          <input
+                            type="email"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            placeholder="Correo"
+                            {...field}
+                            value={updateUser.correo}
+                            onChange={(e) => {
+                              handleChangePutDb(e);
+                              field.onChange(e);
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <label className="block mb-1 text-sm font-medium text-gray-700">
+                        <Typography variant="small" className="block mb-2 text-sm font-medium text-gray-700">
+                          Confirmar correo
+                        </Typography>
+                      </label>
+                      <Controller
+                        name="confirmCorreo"
+                        control={control}
+                        render={({ field }) => (
+                          <div className="w-full relative flex items-center justify-center flex-row">
+                            <input
                               type="email"
-                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                              placeholder="Correo"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none pr-10"
+                              placeholder="Confirmar"
                               {...field}
-                              value={updateUser.correo}
-                              onChange={(e)=>{
+                              value={updateUser.confirmCorreo}
+                              onChange={(e) => {
                                 handleChangePutDb(e);
                                 field.onChange(e);
-                            }}
+                              }}
                             />
+                            {updateUser.confirmCorreo && (
+                              <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                                {!errors.confirmCorreo && updateUser.confirmCorreo === updateUser.correo ? (
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="text-green-500" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
+                                  </svg>
+                                ) : (
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="text-red-500" viewBox="0 0 24 24">
+                                    <path d="M11.953 2C6.465 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.493 2 11.953 2zM13 17h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                                  </svg>
+                                )}
+                              </div>
                             )}
-                            />
-                       
-                      </div>
-                      <div className="flex-1">
-                        <label className="block mb-1 text-sm font-medium text-gray-700"><Typography
-                              variant="small"
-                              className="block mb-2 text-sm font-medium text-gray-700"
-                            >
-                             Confirmar correo
-                            </Typography></label>
-                            <Controller
-                              name='confirmCorreo'
-                              control={control}  
-                              render={({field})=>(
-                                    <div className="w-full relative flex items-center justify-center flex-row">
-                                      <input
-                                        type="email"
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none pr-10" 
-                                        placeholder="Confirmar"
-                                        {...field}
-                                        value={updateUser.confirmCorreo}
-                                        onChange={(e) => {
-                                          handleChangePutDb(e);
-                                          field.onChange(e);
-                                        }}
-                                      />
-                                      {updateUser.confirmCorreo && (
-                                        <div className="absolute inset-y-0 right-0 flex items-center pr-3"> 
-                                          {!errors.confirmCorreo && updateUser.confirmCorreo === updateUser.correo ? (
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className='text-green-500' viewBox="0 0 24 24">
-                                              <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
-                                            </svg>
-                                          ) : (
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className='text-red-500' viewBox="0 0 24 24">
-                                              <path d="M11.953 2C6.465 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.493 2 11.953 2zM13 17h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
-                                            </svg>
-                                          )}
-                                        </div>
-                                      )}
-                                    </div>
-                              )}    
-                              
-                            />
-                           
-                      
-                      </div>
+                          </div>
+                        )}
+                      />
                     </div>
-                    <div className="flex gap-4">
-                      <div className="flex-1">
-                        <label className="block mb-1 text-sm font-medium text-gray-700">
-                          <Typography
-                              variant="small"
-                              className="block mb-2 text-sm font-medium text-gray-700"
-                            >
-                             contraseña
-                            </Typography>
-                            </label>
-                            <Controller
-                            name="contrasena"
-                            control={control}
-                            render={({field})=>(
-                              <input
-                          type="password"
-                          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                          placeholder="Contraseña"
-                          {...field}
+                  </div>
+                  <div className="flex flex-col lg:flex-row gap-4">
+                    <div className="flex-1">
+                      <label className="block mb-1 text-sm font-medium text-gray-700">
+                        <Typography variant="small" className="block mb-2 text-sm font-medium text-gray-700">
+                          Contraseña
+                        </Typography>
+                      </label>
+                      <Controller
+                        name="contrasena"
+                        control={control}
+                        render={({ field }) => (
+                          <input
+                            type="password"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                            placeholder="Contraseña"
+                            {...field}
                             value={updateUser.contrasena}
                             onChange={(e) => {
+                              handleChangePutDb(e);
+                              field.onChange(e);
+                            }}
+                          />
+                        )}
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <label className="block mb-1 text-sm font-medium text-gray-700">
+                        <Typography variant="small" className="block mb-2 text-sm font-medium text-gray-700">
+                          Confirmar contraseña
+                        </Typography>
+                      </label>
+                      <Controller
+                        name="confirmContrasena"
+                        control={control}
+                        render={({ field }) => (
+                          <div className="w-full relative flex items-center justify-center flex-row">
+                            <input
+                              type="password"
+                              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none pr-10"
+                              placeholder="Confirmar"
+                              {...field}
+                              value={updateUser.confirmContrasena}
+                              onChange={(e) => {
                                 handleChangePutDb(e);
                                 field.onChange(e);
-                            }}
-                        />
-                            )}
+                              }}
                             />
-                        
-                      </div>
-                      <div className="flex-1">
-                        <label className="block mb-1 text-sm font-medium text-gray-700"><Typography
-                              variant="small"
-                              className="block mb-2 text-sm font-medium text-gray-700"
-                            >
-                             Confirmar contraseña
-                            </Typography></label>
-                            <Controller
-                            name="confirmContrasena"
-                            control={control}
-                            render={({field})=>(
-                              <div className="w-full relative flex items-center justify-center flex-row">
-                              <input
-                                type="password"
-                                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none pr-10" 
-                                placeholder="Confirmar"
-                                {...field}
-                                value={updateUser.confirmContrasena}
-                                onChange={(e) => {
-                                  handleChangePutDb(e);
-                                  field.onChange(e);
-                                }}
-                              />
-                              {updateUser.confirmContrasena && (
-                                <div className="absolute inset-y-0 right-0 flex items-center pr-3"> 
-                                  {!errors.confirmContrasena && updateUser.confirmContrasena === updateUser.contrasena ? (
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className='text-green-500' viewBox="0 0 24 24">
-                                      <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
-                                    </svg>
-                                  ) : (
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className='text-red-500' viewBox="0 0 24 24">
-                                      <path d="M11.953 2C6.465 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.493 2 11.953 2zM13 17h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
-                                    </svg>
-                                  )}
-                                </div>
-                              )}
-                            </div>
+                            {updateUser.confirmContrasena && (
+                              <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                                {!errors.confirmContrasena && updateUser.confirmContrasena === updateUser.contrasena ? (
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="text-green-500" viewBox="0 0 24 24">
+                                    <path d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.514 2 12 2zm-1.999 14.413-3.713-3.705L7.7 11.292l2.299 2.295 5.294-5.294 1.414 1.414-6.706 6.706z"></path>
+                                  </svg>
+                                ) : (
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" className="text-red-500" viewBox="0 0 24 24">
+                                    <path d="M11.953 2C6.465 2 2 6.486 2 12s4.486 10 10 10 10-4.486 10-10S17.493 2 11.953 2zM13 17h-2v-2h2v2zm0-4h-2V7h2v6z"></path>
+                                  </svg>
+                                )}
+                              </div>
                             )}
-                            />
-                     
-                      </div>
+                          </div>
+                        )}
+                      />
                     </div>
-                   
-                  
-                    <Button type="submit" variant="gradient" fullWidth>
-                      Actualizar cambios
-                    </Button>
-                  </form>
-
-        :<h1>
-          Cargando datos
-        </h1>
-        }
-       </CardBody>
-       </Card>
-      <div className="felx justify-center items-center w-2/6"> 
+                  </div>
+                  <Button type="submit" variant="gradient" fullWidth>
+                    Actualizar cambios
+                  </Button>
+                </form>
+              ) : (
+                <h1>Cargando datos</h1>
+              )}
+            </CardBody>
+          </Card>
+        </div>
+        <div className=" relative lg:w-2/6  w-4/5"> 
       <div className=" max-w-md mx-auto -mt-16 mb-6 lg:mx-4 ">
         <Card className="relative overflow-visible pt-2">
           <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -597,7 +555,7 @@ alert('No hay cambios para actualizar.');
              }
             </Typography>
             <Typography variant="subtitle1" color="textSecondary" className="text-center">
-           Organizador
+           Jugador
             </Typography>
           </CardBody>
         </Card>
@@ -606,13 +564,15 @@ alert('No hay cambios para actualizar.');
      
     </div>
       
+      
       <ModalJuagdor
        isOpen={modalFotoOpen && accion === 'add'}
        onClose={handleCloseModal}
        onSave={savePost}
        imagePreview={imagePreview}
       />
-     <ModalJuagdor                                                 isOpen={modalFotoOpen && accion === 'update'}
+     <ModalJuagdor                                                                                    
+       isOpen={modalFotoOpen && accion === 'update'}
        onClose={handleCloseModal}
        onSave={saveUpdate}
        imagePreview={imagePreview}
@@ -621,11 +581,7 @@ alert('No hay cambios para actualizar.');
      
       )}
     </div>
-     
-    
-
-     
-</>
+    </>
   );
 }
 
