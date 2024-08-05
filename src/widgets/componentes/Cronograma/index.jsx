@@ -7,10 +7,12 @@ import 'tailwindcss/tailwind.css';
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';     
+import ModalCrear from '../Planillero/ModalCrear';
 export default function CronogramaDesing({  patchFechaHora, guardarEdicion, datosVss}) {
 const idVs = datosVss._id
 const [equipo1, setEquipo1]= useState([])
-const [equipo2, setEquipo2]= useState([])
+  const [equipo2, setEquipo2] = useState([])
+  const [usuarioCreado, setUsuarioCreado] = useState(false); // Estado para verificar si el usuario ha sido creado
 useEffect(()=>{
   setEquipo1(datosVss.equipo1.informacion.team1.Equipo)
   setEquipo2(datosVss.equipo2.informacion.team2.Equipo)
@@ -46,7 +48,23 @@ useEffect(()=>{
     fetchData();
   }, [idVs]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/vs/${idVs}`);
+        setDatos(response.datos);
+        console.log("Resultados", response.data);
+      } catch (error) {
+        console.error("Error al obtener Datos", error);
+      }
+    };
 
+    fetchData();
+  }, [usuarioCreado]);
+
+  const handleUsuarioCreado = () => {
+    setUsuarioCreado(true);
+  };
 
   const handleConfirmarCmabios = () => {
     guardarEdicion(true, idVs);
@@ -62,6 +80,7 @@ useEffect(()=>{
     setHora(e.target.value)
   }
 
+  const [openPlan, setModalPlanOpen] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
   const openModal = () => {
@@ -69,6 +88,13 @@ useEffect(()=>{
   };
   const closeModal = () => {
     setModalIsOpen(false);
+  };
+
+  const openModalPlan = () => {
+    setModalPlanOpen(true);
+  };
+  const onRequestClose = () => {
+    setModalPlanOpen(false);
   };
 
   const [showPlayers, setShowPlayers] = useState(false);
@@ -87,6 +113,7 @@ useEffect(()=>{
   const toggleModal = () => {
     setShowModal(!showModal);
   };
+
 
   return (
     <>
@@ -133,7 +160,22 @@ useEffect(()=>{
           </div>
         </div>
       </div>
-      <div className='flex flex-col md:flex-row justify-center md:justify-start space-y-4 md:space-y-0 md:space-x-4 mt-4 md:mt-6'>
+            <div className='flex flex-col md:flex-row justify-center md:justify-start space-y-4 md:space-y-0 md:space-x-4 mt-4 md:mt-6'>
+              {usuarioCreado ? (
+                <button
+                  onClick={toggleModal}
+                  className="inline-flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 w-full md:w-auto"
+                >
+                  Ver Usuario
+                </button>
+              ) : (
+                <button
+                  onClick={openModalPlan}
+                  className="inline-flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 w-full md:w-auto"
+                >
+                  Planillero
+                </button>
+              )}
         <button 
           onClick={openModal} 
           className="inline-flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 w-full md:w-auto"
@@ -153,15 +195,23 @@ useEffect(()=>{
 
 <MostrarJugadores 
   datosVss={datosVss} 
-  modalIsOpen={modalIsOpen}  
-  closeModal={closeModal} 
+  modalIsOpen={modalIsOpen}
+  closeModal={closeModal}
   showPlayers={showPlayers} 
   equipo1={equipo1} 
   equipo2={equipo2} 
   togglePlayerRows={togglePlayerRows} 
   showPlayersTable2={showPlayersTable2} 
   togglePlayerRowsTable2={togglePlayerRowsTable2} 
-/>
+      />
+
+      <ModalCrear
+        openPlan={openPlan}
+        onRequestClose={onRequestClose}
+        onUsuarioCreado={handleUsuarioCreado} // Pasamos la función al modal para actualizar el estado
+      />
+      
+      
 </>
   )
 }
