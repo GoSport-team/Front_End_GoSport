@@ -1,10 +1,54 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
 import Modal from 'react-modal';
 Modal.setAppElement('#root');
 export const MostrarJugadores = ({datosVss, modalIsOpen, closeModal, equipo1, equipo2, showPlayersTable2, showPlayers, togglePlayerRows, togglePlayerRowsTable2}) => {
-  return (
+    const [countGol1, setCountGol1]= useState(0)
+    const [countGol2, setCountGol2]= useState(0)
+    const [amarilla1, setAmarilla1]= useState(0)
+    const [amarilla2, setAmarilla2]= useState(0)
+    const [roja1, setRoja1]= useState(0)
+    const [roja2, setRoja2]= useState(0)
+
+    const gol1=()=>{
+ setCountGol1(countGol1+1)
+  }
+  const gol2=()=>{
+    setCountGol2(countGol2+ 1)
+  }
+  const menosGol1=()=>{
+    setCountGol1(countGol1-1)
+  }
+  const menosGol2=()=>{
+    setCountGol2(countGol2-1)
+  }
+  const countAmarilla1=()=>{
+    setAmarilla1(amarilla1+1)
+     }
+     const countAmarilla2=()=>{
+       setAmarilla2(amarilla2+ 1)
+     }
+     const menosAmarilla1=()=>{
+       setAmarilla1(amarilla1-1)
+     }
+     const menosAmarilla2=()=>{
+setAmarilla2(amarilla2-1)
+     }
+     const countRoja1=()=>{
+        setRoja1(roja1+1)
+         }
+         const countRoja2=()=>{
+           setRoja2(roja2+ 1)
+         }
+         const menosRoja1=()=>{
+           setRoja1(roja1-1)
+         }
+         const menosRoja2=()=>{
+    setRoja2(roja2-1)
+         }
+
+    return (
    <>
          <Modal
     isOpen={modalIsOpen}
@@ -34,10 +78,31 @@ export const MostrarJugadores = ({datosVss, modalIsOpen, closeModal, equipo1, eq
                             <h1 className="my-2">{equipo1.nombreEquipo}</h1>
                         </div>
                     </div>
-                    <div className='grid place-content-center text-4xl p-4'>
-                        0
-                    </div>
+                   
+                   
+                    <div className="flex flex-row items-center p-6 ">
+      <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center">
+          <div className="w-10 h-10 bg-yellow-400 rounded-md flex items-center justify-center">
+            <div className="text-xl font-bold text-black">{amarilla1}</div>
+          </div>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="w-10 h-10 bg-red-400 rounded-md flex items-center justify-center">
+            <div className="text-xl font-bold text-black">{roja1}</div>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col items-center m-4 w-16">
+        <h1 className="text-xl mb-2">Goles</h1>
+        <div className="text-6xl font-bold">{countGol1}</div>
+      </div>
+    </div>
+
+
                 </div>
+            
+              
 
                 <div className="relative overflow-x-auto mt-5">
                     <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -59,31 +124,31 @@ export const MostrarJugadores = ({datosVss, modalIsOpen, closeModal, equipo1, eq
                                     </th>
                                     <td className="px-6 py-4">{jugador.dorsal}</td>
                                     <td className="px-6 py-4">
-                                        <td>
+                                        <td onClick={gol1}>
 
-                                    <img src="/public/img/cronograma/mas.png" alt="" className="w-4 h-4" />
+                                    <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
                                         </td>
-                                        <td>
-                                    <img src="/public/img/cronograma/signo-menos.png" alt="" className="w-4 h-4" />
+                                        <td onClick={menosGol1}>
+                                    <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
                                         </td>
                                     </td>
                                    
                                     <td className="px-6 py-4">
-                                        <td>
+                                        <td onClick={countAmarilla1}>
 
-                                    <img src="/public/img/cronograma/mas.png" alt="" className="w-4 h-4" />
+                                    <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
                                         </td>
-                                        <td>
-                                    <img src="/public/img/cronograma/signo-menos.png" alt="" className="w-4 h-4" />
+                                        <td onClick={menosAmarilla1}>
+                                    <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6"/>
                                         </td>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <td>
+                                        <td onClick={countRoja1}>
 
-                                    <img src="/public/img/cronograma/mas.png" alt="" className="w-4 h-4" />
+                                    <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
                                         </td>
-                                        <td>
-                                    <img src="/public/img/cronograma/signo-menos.png" alt="" className="w-4 h-4" />
+                                        <td onClick={menosRoja1}>
+                                    <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
                                         </td>
                                     </td>
                                 </tr>
@@ -105,9 +170,31 @@ export const MostrarJugadores = ({datosVss, modalIsOpen, closeModal, equipo1, eq
                     </div>
                 </div>
             </div>
+            <div className="flex justify-center  p-4">
+  <h1 className="text-2xl md:text-3xl font-semibold">vs</h1>
+</div>
 
             <div className="flex flex-col w-1/2">
                 <div className='flex content-center justify-center gap-x-5'>
+                <div className="flex flex-row items-center p-6 ">
+                <div className="flex flex-col items-center m-4 w-16">
+        <h1 className="text-xl mb-2">Goles</h1>
+        <div className="text-6xl font-bold">{countGol2}</div>
+      </div>
+      <div className="flex flex-col justify-center items-center">
+        <div className="flex flex-col items-center">
+          <div className="w-10 h-10 bg-yellow-400 rounded-md flex items-center justify-center">
+            <div className="text-xl font-bold text-black">{amarilla2}</div>
+          </div>
+        </div>
+        <div className="flex flex-col items-center">
+          <div className="w-10 h-10 bg-red-400 rounded-md flex items-center justify-center">
+            <div className="text-xl font-bold text-black">{roja2}</div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
                     <div className='grid place-content-center'>
                         <div>
                             <img className="object-contain w-32 drop-shadow-lg"
@@ -117,9 +204,7 @@ export const MostrarJugadores = ({datosVss, modalIsOpen, closeModal, equipo1, eq
                             <h1 className="my-2">{equipo2.nombreEquipo}</h1>
                         </div>
                     </div>
-                    <div className='grid place-content-center text-4xl p-4'>
-                        0
-                    </div>
+                   
                 </div>
 
                 <div className="relative overflow-x-auto mt-5">
@@ -142,13 +227,31 @@ export const MostrarJugadores = ({datosVss, modalIsOpen, closeModal, equipo1, eq
                                     </th>
                                     <td className="px-6 py-4">{jugador.dorsal}</td>
                                     <td className="px-6 py-4">
-                                    <img src="/public/img/cronograma/mas.png" alt="" className="w-4 h-4" />
+                                        <td onClick={gol2}>
+
+                                    <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
+                                        </td>
+                                        <td onClick={menosGol2}>
+                                    <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
+                                        </td>
                                     </td>
                                     <td className="px-6 py-4">
-                                    <img src="/public/img/cronograma/mas.png" alt="" className="w-4 h-4" />
+                                        <td onClick={countAmarilla2}>
+
+                                    <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
+                                        </td>
+                                        <td onClick={menosAmarilla2}>
+                                    <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
+                                        </td>
                                     </td>
                                     <td className="px-6 py-4">
-                                    <img src="/public/img/cronograma/mas.png" alt="" className="w-4 h-4" />
+                                        <td onClick={countRoja2}>
+
+                                    <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
+                                        </td>
+                                        <td onClick={menosRoja2}>
+                                    <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
+                                        </td>
                                     </td>
                                 </tr>
                                 )):(

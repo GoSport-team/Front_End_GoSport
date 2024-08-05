@@ -13,6 +13,8 @@ const idVs = datosVss._id
 const [equipo1, setEquipo1]= useState([])
   const [equipo2, setEquipo2] = useState([])
   const [usuarioCreado, setUsuarioCreado] = useState(false); // Estado para verificar si el usuario ha sido creado
+
+
 useEffect(()=>{
   setEquipo1(datosVss.equipo1.informacion.team1.Equipo)
   setEquipo2(datosVss.equipo2.informacion.team2.Equipo)
@@ -212,6 +214,7 @@ useEffect(()=>{
       />
       
       
+  
 </>
   )
 }
