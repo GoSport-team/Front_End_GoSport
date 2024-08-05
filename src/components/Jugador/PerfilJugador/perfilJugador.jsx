@@ -13,7 +13,7 @@ import {
   PencilIcon,
 } from "@heroicons/react/24/solid";
 import Cookies from "js-cookie";
-import ModalTwo from "../../widgets/componentes/perfil/modalVistaPreviaImagen2";
+import ModalJuagdor from "./modalJuagdor/modalVistaPreviaImagenJuagdor";
 import { useState, useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
@@ -21,7 +21,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 
 
-export const Profile= () =>{
+export const PerfilJugador = () =>{
   const token = Cookies.get('token')
   const [loading, setLoading] = useState(true); // Estado de carga
 
@@ -32,7 +32,7 @@ export const Profile= () =>{
       try {
         const response = await axios.get('http://localhost:3001/usuarios/perfil', {
           headers: {
-            Authorization: `Bearer ${token}`
+            Authorization: `Jugadors ${token}`
           }
         });
         
@@ -86,7 +86,6 @@ setImagePreview(null);
 // Funcion Post
 const savePost = async () => {
   if (!file) return;
-
   const formData = new FormData();
   formData.append('file', file);
   setLoading(true);
@@ -101,32 +100,34 @@ const savePost = async () => {
       throw new Error('Error al subir la imagen');
     }
 
-
     const data = await respuesta.json();
-    console.log(data);
+    setImagen(data.url);
 
     if (data.url) {
       setImagen(data.url);
     } else {
       console.error('No se recibió URL de la imagen');
     }
-    console.log(data.publicId)
 
-
+    // Actualizar la URL de la imagen en la base de datos
     await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
       url_foto: data.url,
-      public_id: data.public_id
+      public_id:data.public_id
     });
+
+    // Notificar al usuario
     notify("Imagen agregada exitosamente");
     setModalFotoOpen(false);
 
   } catch (error) {
     console.error('Error en la operación de imagen:', error);
     notify("Hubo un error al agregar la imagen");
-  } finally {
-    setLoading(false);
+  }
+  finally{
+    setLoading(false)
   }
 };
+
 
 
 
@@ -137,29 +138,26 @@ if (!file) {
 }
 const formData = new FormData();
 formData.append('file', file);
-//formData.append("public_id", localStorage.getItem('public_id'));
 setLoading(true)
 try{
   const respuesta = await fetch(`http://localhost:3001/usuarios/${UserID}/pati`, {
     method: 'PATCH',
     body: formData
 });
-if (!respuesta.ok) {
-  throw new Error('Error al subir la imagen');
-}
+
 const data = await respuesta.json();
 setImagen(data.url);
 
 if (data.url) {
-  setImagen(data.url);
-} else {
-  console.error('No se recibió URL de la imagen');
+  setImagen(data.url)
+} else { 
+  console.error('No se recibió Public_id');
 }
 
 // Guarda la URL en la base de datos
 await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
     url_foto: data.url,
-    public_id: data.public_id
+    public_id: data.public_id,
 });
 notify(accion === 'update' ? "Imagen actualizada exitosamente" : "Imagen agregada exitosamente");
 
@@ -177,11 +175,11 @@ finally{
 // Funcion DELETE
 const handleDelete = async () => {
 try {
-
+    
   const response = await fetch(`http://localhost:3001/usuarios/${UserID}/eli`,{
     method:'DELETE',
     headers: {
-      'Authorization': `Bearer ${token}`
+      'Authorization': `Jugadors ${token}`
     }
   });
   
@@ -196,12 +194,10 @@ try {
         });
     
         setImagen('/sinfoto.png');
-
         // Notificar al usuario
         notify("Imagen eliminada exitosamente");
       }
-   
-   } catch (error) {
+} catch (error) {
     console.error('Error eliminando la imagen:', error);
 }
 finally{
@@ -280,22 +276,20 @@ return;
 
 //Actualzar en la DB
 if (Object.keys(updatedFields).length > 0) {
-
 try {
 await axios.patch(`http://localhost:3001/usuarios/${UserID}`, updatedFields);
-notify('Usuario Actualizado');
+alert('Usuario Actualizado');
 window.location.reload();
 } catch (error) {
 console.log('Complete todos los campos');
 }
 } else {
-notify('No hay cambios para actualizar.');
+alert('No hay cambios para actualizar.');
 }
 };
 
   return (
     <>
-    <ToastContainer/>
     <div className="">
   {loading ? (
     <div className="flex justify-center items-center h-72">
@@ -561,7 +555,7 @@ notify('No hay cambios para actualizar.');
              }
             </Typography>
             <Typography variant="subtitle1" color="textSecondary" className="text-center">
-           Organizador
+           Jugador
             </Typography>
           </CardBody>
         </Card>
@@ -570,13 +564,14 @@ notify('No hay cambios para actualizar.');
      
     </div>
       
-      <ModalTwo
+      
+      <ModalJuagdor
        isOpen={modalFotoOpen && accion === 'add'}
        onClose={handleCloseModal}
        onSave={savePost}
        imagePreview={imagePreview}
       />
-     <ModalTwo                                                                                    
+     <ModalJuagdor                                                                                    
        isOpen={modalFotoOpen && accion === 'update'}
        onClose={handleCloseModal}
        onSave={saveUpdate}
@@ -586,9 +581,7 @@ notify('No hay cambios para actualizar.');
      
       )}
     </div>
-
-
-</>
+    </>
   );
 }
 

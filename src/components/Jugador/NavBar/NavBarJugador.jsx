@@ -10,6 +10,11 @@ export const NavBarJugador = ({cedula}) => {
             <Link to={`verequipo/${cedula}`}>
             <h1>Ver Equipo</h1>
             </Link>
+
+            <Link to={'perfilJugador/'}>
+            <hi>Perfil</hi>
+            </Link>
+
           
         </div>
     </nav>
