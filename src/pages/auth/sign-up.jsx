@@ -12,7 +12,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { registroUser } from "../../lib/api";
+import { registroUser } from "../../services/api";
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 export function SignUp() {
 

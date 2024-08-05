@@ -7,7 +7,7 @@
 } from "@material-tailwind/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { loginUser } from "../../lib/api";
+import { loginUser } from "../../services/api";
 import { Check } from "react-feather";
 import Cookies from "js-cookie";
 import { useState } from "react";

@@ -13,7 +13,7 @@ import {
   PencilIcon,
 } from "@heroicons/react/24/solid";
 import Cookies from "js-cookie";
-import ModalTwo from "../../widgets/componentes/perfil/modalVistaPreviaImagen2";
+import ModalJuagdor from "./modalJuagdor/modalVistaPreviaImagenJuagdor";
 import { useState, useRef, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
@@ -21,7 +21,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from "axios";
 
 
-export const Profile= () =>{
+export const PerfilJugador = () =>{
   const token = Cookies.get('token')
   const [loading, setLoading] = useState(true); // Estado de carga
 
@@ -97,36 +97,47 @@ const savePost = async () => {
       body: formData
     });
 
+    // Verificar el estado de la respuesta
     if (!respuesta.ok) {
       throw new Error('Error al subir la imagen');
     }
 
-
+    // Obtener los datos de la respuesta
     const data = await respuesta.json();
     console.log(data);
 
+    // Asegurarse de que `data.url` y `data.public_id` están definidos
     if (data.url) {
       setImagen(data.url);
     } else {
       console.error('No se recibió URL de la imagen');
     }
-    console.log(data.publicId)
 
+    if (data.public_id) {
+      localStorage.setItem('public_id', data.public_id);
+      console.log('Public_id Guardado', data.public_id);
+    } else {
+      console.error('No se recibió Public_id');
+    }
 
+    // Actualizar la URL de la imagen en la base de datos
     await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
-      url_foto: data.url,
-      public_id: data.public_id
+      url_foto: data.url
     });
+
+    // Notificar al usuario
     notify("Imagen agregada exitosamente");
     setModalFotoOpen(false);
 
   } catch (error) {
     console.error('Error en la operación de imagen:', error);
     notify("Hubo un error al agregar la imagen");
-  } finally {
-    setLoading(false);
+  }
+  finally{
+    setLoading(false)
   }
 };
+
 
 
 
@@ -144,22 +155,20 @@ try{
     method: 'PATCH',
     body: formData
 });
-if (!respuesta.ok) {
-  throw new Error('Error al subir la imagen');
-}
+
 const data = await respuesta.json();
 setImagen(data.url);
 
-if (data.url) {
-  setImagen(data.url);
-} else {
-  console.error('No se recibió URL de la imagen');
+if (data.public_id) {
+  localStorage.setItem('public_id', data.public_id);
+  console.log('Public_id Guardado', data.public_id);
+} else { 
+  console.error('No se recibió Public_id');
 }
 
 // Guarda la URL en la base de datos
 await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
-    url_foto: data.url,
-    public_id: data.public_id
+    url_foto: data.url
 });
 notify(accion === 'update' ? "Imagen actualizada exitosamente" : "Imagen agregada exitosamente");
 
@@ -177,30 +186,38 @@ finally{
 // Funcion DELETE
 const handleDelete = async () => {
 try {
-
-  const response = await fetch(`http://localhost:3001/usuarios/${UserID}/eli`,{
-    method:'DELETE',
-    headers: {
-      'Authorization': `Bearer ${token}`
+    const publicId = localStorage.getItem('public_id');
+    setLoading(true)
+    if (!publicId) {
+        throw new Error('No public_id found in localStorage');
     }
-  });
-  
-    const data = response.json();
-    console.log(data)
-    if (!usuarioId.public_id) {
-      notify('Nay foto por eliminar');
-      }else{
-        await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
-          url_foto: '',
-          public_id: null
-        });
     
-        setImagen('/sinfoto.png');
-        // Notificar al usuario
-        notify("Imagen eliminada exitosamente");
-      }
-   
-   } catch (error) {
+    console.log('Public ID:', publicId);
+    const deleteResponse = await fetch(`http://localhost:3001/usuarios/${UserID}/eli`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ public_id: publicId })
+    });
+    const deleteData = await deleteResponse.json();
+
+    if (deleteData.error) {
+        throw new Error(deleteData.error);
+    }
+
+    console.log('Imagen eliminada de Cloudinary:', deleteData);
+
+    await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
+        url_foto: ''
+    });
+
+    // Limpiar localStorage y establecer la imagen predeterminada
+    localStorage.removeItem('public_id');
+    setImagen('/sinfoto.png');
+    notify("Imagen eliminada exitosamente")
+    console.log('Imagen eliminada exitosamente');
+} catch (error) {
     console.error('Error eliminando la imagen:', error);
 }
 finally{
@@ -589,14 +606,13 @@ alert('No hay cambios para actualizar.');
      
     </div>
       
-      <ModalTwo
+      <ModalJuagdor
        isOpen={modalFotoOpen && accion === 'add'}
        onClose={handleCloseModal}
        onSave={savePost}
        imagePreview={imagePreview}
       />
-     <ModalTwo                                                                                    
-       isOpen={modalFotoOpen && accion === 'update'}
+     <ModalJuagdor                                                 isOpen={modalFotoOpen && accion === 'update'}
        onClose={handleCloseModal}
        onSave={saveUpdate}
        imagePreview={imagePreview}
