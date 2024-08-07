@@ -182,7 +182,6 @@ export const DatosEquipos = () => {
       }
     } catch (error) {
       console.log(error)
-      if (error) {
         Swal.fire({
           icon: "error",
           title: "Jugador no registrado",
@@ -190,7 +189,6 @@ export const DatosEquipos = () => {
           confirmButtonText: "Ok",
         confirmButtonColor: "#0837C0",
         })
-      }
     }
   }
 
