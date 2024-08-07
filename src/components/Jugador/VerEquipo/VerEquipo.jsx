@@ -19,6 +19,7 @@ export const VerEquipo = () => {
         nombreEquipo: '',
         contactoDos:''
     })
+    const [validarInscripcion, setValidarInscripcion] = useState()
     const handleImage = async (e) => {
         const file = e.target.files[0]
         setImage(
@@ -29,6 +30,20 @@ export const VerEquipo = () => {
             })
 
     }
+
+    useEffect(()=>{
+        const validarInscripcion = async ()=>{
+          const responseValidador = await axios.get(`http://localhost:3001/equipoInscripto/validarInscripcion`,{
+            headers:{
+              cedulaJugador:cedula
+            }
+          })
+    
+          setValidarInscripcion(responseValidador.data.msg)
+        }
+    
+        validarInscripcion()
+      },[])
     
     useEffect(() => {
         const obtenerUser = async () => {
@@ -341,6 +356,9 @@ export const VerEquipo = () => {
                             </div>
                             <div className="flex flex-col justify-center items-center">
                                 <img src={image.img} className=" w-44 h-44 top-52" alt="Logo Del Equipo" />
+                                {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ?
+
+                                
                                 <div className='flex gap-5'>
                                     {
                                         image.tipo == 'Cloudinary' ?
@@ -373,11 +391,13 @@ export const VerEquipo = () => {
                                             </label>
                                     }
                                 </div>
+                                :''}
                             </div>
                         </div>
                     </div>
                     : <h1 className='text-2xl font-bold mt-10'>No tienes equipos creados todavia</h1>}
                 <div className="w-full bg-gray-200  p-5 rounded-xl">
+                    {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ?
                     <div className='flex justify-center items-center'>
                         <label className="font-bold text-2xl mr-5">Busca tus compañeros</label>
                         <input type="search" className="h-10 w-80 rounded-md text-center" onChange={e => setJugador(e.target.value)} placeholder='Busca por su numero de cedula' />
@@ -385,6 +405,7 @@ export const VerEquipo = () => {
                             type="button"
                             onClick={() => searchJugador(jugador)} >Buscar</button>
                     </div>
+                    :''}
                     <table className="border-separate mt-8 w-full">
                         <thead>
                             <tr>
@@ -392,7 +413,9 @@ export const VerEquipo = () => {
                                 <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">Nombre </th>
                                 <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">Ficha </th>
                                 <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border th3">N° Dorsal </th>
+                                {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato'?
                                 <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">Eliminar</th>
+                                :''}
                             </tr>
                         </thead>
                         <tbody>
@@ -402,18 +425,25 @@ export const VerEquipo = () => {
                                     <td className="border rounded-md p-1 bg-white">{equipo.nombreJugador}</td>
                                     <td className="border rounded-md p-1 bg-white">{equipo.ficha}</td>
                                     <td className="border rounded-md p-1 bg-white">{equipo.dorsal}</td>
+                                    {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ?
                                     <td  onClick={()=>eliminarJugador(index)} className=" hover:cursor-pointer border rounded-md p-1 bg-white flex items-center justify-center"><img className="" src="/public/img/carrusel/eliminar.svg" alt="" /></td>
+                            :''}
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
             </form>
+            {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ?
+            <div>
             {verificarActualizacion() && (
             <h1 
             onClick={()=>actualizarEquipo()}
             className='bg-black text-white p-3 w-48 rounded-lg text-xl font-bold text-center cursor-pointer'>Actualiar</h1>
             )}
+            </div>
+            :''}
+       
         </div>
     )
 }

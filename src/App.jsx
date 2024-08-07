@@ -7,6 +7,7 @@ import { DatosEquipos } from "./components/Jugador/CrearEquipo/datosEquipos";
 import { DatosEquiposInscripcion } from "./components/Jugador/InscribirEquipo/DatosEquiposInscripcion"; 
 import { VerEquipo } from "./components/Jugador/VerEquipo/VerEquipo";
 import { PerfilJugador } from "./components/Jugador/PerfilJugador/perfilJugador";
+import { Derrotero } from "./components/Jugador/Campeonatos/Derrotero";
 function App() {
   return (
     <Routes>
@@ -22,10 +23,9 @@ function App() {
       <Route path="/jugador/dashboard/crearequipo" element={<DatosEquipos/>}/>
       <Route path="/jugador/dashboard/:id/:cedula/" element={<DatosEquiposInscripcion/>}/>
       <Route path="/jugador/dashboard/verequipo/:cedula" element={<VerEquipo/>} />
-      <Route path="/jugador/dashboard/perfilJugador" element={
-        <PerfilJugador/>
-      }
+      <Route path="/jugador/dashboard/perfilJugador" element={<PerfilJugador/>}
         />
+      <Route path="/jugador/dashboard/derrotero/:id" element={<Derrotero/>}/>
     </Routes>
   );
 }
