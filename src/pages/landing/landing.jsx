@@ -20,7 +20,7 @@ export default function Landing() {
     <>
       
       <div>
-        <nav class="bg-white dark:bg-gray-900 w-[100vw] ">
+        <nav class="bg-white dark:bg-gray-900 w-[100vw]  ">
           <div class="flex flex-wrap items-center mx-auto h-[10vh]">
             <div class="flex items-center">
               <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
@@ -59,9 +59,9 @@ export default function Landing() {
           </div>
         </nav>
 
-        <div class="flex flex-col justify-center items-center">
+        <div class=" flex flex-col justify-center items-center">
           <div className="relative">
-            <img src='/public/img/landing/imgplayer.jpg' className='h-[90vh] object-cover w-screen'></img>
+            <img src='/public/img/landing/imgplayer.jpg' className='h-full object-cover  w-screen'></img>
             <div className="absolute inset-0 flex flex-col w-[20vw] justify-end pb-32">
               <p className="w-[33rem]  text-[1.9rem] font-sans leading-[1.7] text-justify ml-[3rem] tracking-[1px] text-black ">
                 Crea campeonatos inolvidables. ¡Dale vida a la competencia y
