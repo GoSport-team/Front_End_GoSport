@@ -39,10 +39,10 @@ export default function CardCampeonato({cedula}) {
   const mensajeInscrito =()=>{
     Swal.fire({
       title: "Estado Inscrito",
-      text:"Ya te encuentras Registrado a un campeonato, espera a que inicie y podras ver el avance del campeonato en la App Movil GoSport",
+      text:`Ya te encuentras Registrado a un campeonato, espera a que inicie y podras ver el avance del campeonato en la App Movil GoSport`,
       confirmButtonText: "OK",
       confirmButtonColor: "#04ff00",
-      timer:8000,
+      timer:5000,
       showClass: {
         popup: `
           animate__animated
@@ -60,6 +60,7 @@ export default function CardCampeonato({cedula}) {
     });
   }
 
+  console.log(data)
   
   return (
     <>

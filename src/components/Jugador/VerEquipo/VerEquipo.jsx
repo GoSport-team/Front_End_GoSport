@@ -302,9 +302,10 @@ export const VerEquipo = () => {
       })
        
     }
+
     return (
-        <div className="flex flex-col items-center">
-            <form action="" className='flex gap-10 justify-between p-10'>
+        <div className="flex flex-col">
+            <form action="" className='flex gap-10  justify-between p-10'>
                 {equipo ?
                     <div className="bg-gray-200 rounded-lg p-5">
                         <h2 className="text-xl font-bold ml-5">Planilla Inscripcion Equipo</h2>
@@ -354,8 +355,10 @@ export const VerEquipo = () => {
                                     />
                                 </div>
                             </div>
-                            <div className="flex flex-col justify-center items-center">
+                            <div className="flex flex-col justify-center items-center w-32">
+                                {image.tipo == 'Cloudinary' && (
                                 <img src={image.img} className=" w-44 h-44 top-52" alt="Logo Del Equipo" />
+                                )}
                                 {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ?
 
                                 
@@ -406,7 +409,7 @@ export const VerEquipo = () => {
                             onClick={() => searchJugador(jugador)} >Buscar</button>
                     </div>
                     :''}
-                    <table className="border-separate mt-8 w-full">
+                    <table className="border-separate w-full mt-8">
                         <thead>
                             <tr>
                                 <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">N°</th>
