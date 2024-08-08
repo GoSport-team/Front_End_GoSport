@@ -12,7 +12,8 @@ const ModalSalir = ({ isOpen, onClose }) => {
  const navifate = useNavigate()
   const handleOk= async ()=>{
     await axios.post('http://localhost:3001/auth/cerarSesion')
-    navifate("/src/pages/landing/landing.jsx");
+    navifate("/");
+    Cookies.set('token', '')
     notify("Sesión cerrada exitosamente.");
   }
   const handleCerrar=()=>{
@@ -29,7 +30,7 @@ const ModalSalir = ({ isOpen, onClose }) => {
           <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
             <div className="bg-white p-6 rounded-lg shadow-lg">
               <h3 className="text-lg font-bold">Confirmación</h3>
-              <p className="mt-2">¿Está seguro de que desea guardar cambios?</p>
+              <p className="mt-2">¿Está seguro de que desea salir ?</p>
               <div className="flex justify-end mt-4">
                 {
                     loading ?(
