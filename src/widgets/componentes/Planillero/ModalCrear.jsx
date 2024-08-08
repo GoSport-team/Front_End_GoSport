@@ -1,21 +1,37 @@
 import Modal from 'react-modal';
-Modal.setAppElement('#root');
-
 import axios from 'axios';
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
+Modal.setAppElement('#root');
 
 export default function ModalCrear({ openPlan, onRequestClose, onUsuarioCreado }) {
     const [nombres, setNombres] = useState('');
     const [telefono, setTelefono] = useState('');
     const [correo, setCorreo] = useState('');
     const [contrasena, setContrasena] = useState('');
+    const [confirmarContrasena, setConfirmarContrasena] = useState('');
     const [identificacion, setIdentificacion] = useState('');
-    const [rol, setRol] = useState('planillero');
+    const [rol, setRol] = useState('');
+    const [passwordError, setPasswordError] = useState('');
+    const [roleError, setRoleError] = useState('');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
+
+        if (contrasena !== confirmarContrasena) {
+            setPasswordError('Las contraseñas no coinciden.');
+            return;
+        }
+        setPasswordError(''); 
+
+
+        if (!rol) {
+            setRoleError('Selecciona un rol.');
+            return;
+        }
+        setRoleError(''); 
 
         const formData = {
             nombres,
@@ -26,16 +42,15 @@ export default function ModalCrear({ openPlan, onRequestClose, onUsuarioCreado }
             rol
         };
 
-        axios.post('http://localhost:3001/usuarios/', formData)
-            .then(response => {
-                console.log('Planillero registrado exitosamente', response.data);
-                onUsuarioCreado(); 
-                toast.success('Registrado exitosamente');
-            })
-            .catch(error => {
-                toast.error('Error al registrar el Planillero');
-                console.error('Error al registrar el Planillero', error);
-            });
+        try {
+            const response = await axios.post('http://localhost:3001/usuarios/', formData);
+            console.log('Planillero registrado exitosamente', response.data);
+            onUsuarioCreado();
+            toast.success('Registrado exitosamente');
+        } catch (error) {
+            toast.error('Error al registrar');
+            console.error('Error al registrar ', error);
+        }
     };
 
     return (
@@ -45,7 +60,7 @@ export default function ModalCrear({ openPlan, onRequestClose, onUsuarioCreado }
             className="relative flex justify-center items-center h-screen"
             overlayClassName="fixed inset-0 bg-black bg-opacity-50"
         >
-            <div className="rounded-lg shadow-lg overflow-hidden flex flex-col  bg-white">
+            <div className="rounded-lg shadow-lg overflow-hidden flex flex-col bg-white">
                 <div className='flex justify-end'>
                     <button
                         className="relative top-4 right-4 text-gray-600 hover:text-gray-900 text-2xl font-bold w-10 h-10 flex items-center justify-center rounded-full bg-gray-200"
@@ -55,8 +70,8 @@ export default function ModalCrear({ openPlan, onRequestClose, onUsuarioCreado }
                     </button>
                 </div>
                 <section>
-                    <div className="flex bg-white items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-8 ">
-                        <div className="shadow-md p-4  w-[30vw]">
+                    <div className="flex bg-white items-center justify-center px-4 py-10 sm:px-6 sm:py-16 lg:px-8 lg:py-8 w-[40vw]">
+                        <div className="shadow-md p-4 w-full max-w-2xl">
                             <div className="mb-2 flex justify-center"></div>
                             <h2 className="text-center text-2xl font-bold leading-tight text-black">
                                 Registrar Usuario para el Partido
@@ -65,7 +80,7 @@ export default function ModalCrear({ openPlan, onRequestClose, onUsuarioCreado }
                                 Complete los detalles para agregar un nuevo miembro al sistema.
                             </p>
                             <form className="mt-8" onSubmit={handleSubmit}>
-                                <div className="space-y-5">
+                                <div className="grid grid-cols-1 gap-y-5 sm:grid-cols-2 sm:gap-x-4 sm:gap-y-5">
                                     <div>
                                         <label className="text-base font-medium text-gray-900">
                                             Nombre
@@ -87,9 +102,23 @@ export default function ModalCrear({ openPlan, onRequestClose, onUsuarioCreado }
                                         <div className="mt-2">
                                             <input
                                                 placeholder="Teléfono"
-                                                type="number"
+                                                type="tel"
                                                 value={telefono}
                                                 onChange={(e) => setTelefono(e.target.value)}
+                                                className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label className="text-base font-medium text-gray-900">
+                                            Identificación
+                                        </label>
+                                        <div className="mt-2">
+                                            <input
+                                                placeholder="000-000-000"
+                                                type="text"
+                                                value={identificacion}
+                                                onChange={(e) => setIdentificacion(e.target.value)}
                                                 className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1"
                                             />
                                         </div>
@@ -124,17 +153,20 @@ export default function ModalCrear({ openPlan, onRequestClose, onUsuarioCreado }
                                     </div>
                                     <div>
                                         <label className="text-base font-medium text-gray-900">
-                                            Identificación
+                                            Confirmar Contraseña
                                         </label>
                                         <div className="mt-2">
                                             <input
-                                                placeholder="000-000-000"
-                                                type="text"
-                                                value={identificacion}
-                                                onChange={(e) => setIdentificacion(e.target.value)}
+                                                placeholder="Confirmar Contraseña"
+                                                type="password"
+                                                value={confirmarContrasena}
+                                                onChange={(e) => setConfirmarContrasena(e.target.value)}
                                                 className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1"
                                             />
                                         </div>
+                                        {passwordError && (
+                                            <p className="mt-1 text-sm text-red-600">{passwordError}</p>
+                                        )}
                                     </div>
                                     <div>
                                         <label htmlFor="roles" className="text-base font-medium text-gray-900">
@@ -148,11 +180,15 @@ export default function ModalCrear({ openPlan, onRequestClose, onUsuarioCreado }
                                                 onChange={(e) => setRol(e.target.value)}
                                                 className="flex h-10 w-full rounded-md border border-gray-300 bg-transparent px-3 py-2 text-sm placeholder:text-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400 focus:ring-offset-1"
                                             >
-                                                <option value="Planillero">Planillero</option>
+                                                <option value="">Selecciona un rol</option>
+                                                <option value="planillero">Planillero</option>
                                             </select>
                                         </div>
+                                        {roleError && (
+                                            <p className="mt-1 text-sm text-red-600">{roleError}</p>
+                                        )}
                                     </div>
-                                    <div>
+                                    <div className="col-span-2">
                                         <button
                                             className="inline-flex w-full items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
                                             type="submit"
