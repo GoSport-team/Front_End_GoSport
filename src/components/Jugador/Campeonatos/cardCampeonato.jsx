@@ -7,17 +7,13 @@ export default function CardCampeonato({cedula}) {
   const [campeonatos, setCampenatos] = useState(null)
   const [validarInscripcion, setValidarInscripcion] = useState()
   const [data, setData] = useState()
-  const [campeonatoEjecucion, setCampeonatoEjecucion] = useState()
-  const token = Cookies.get('token')
   useEffect(()=>{
     const obtenerCampeonatos =async()=>{
     const response = await axios.get('http://localhost:3001/campeonato')
     if(response == undefined){
       setCampenatos(null)
     }else{
-      const campeonatosFiltradosCreado = response.data.filter(campeonato => campeonato.estadoCampeonato !== 'Creado');
-      // const campeonatosFiltradosEjecucion = response.data.filter(campeonato => campeonato.estadoCampeonato == 'Ejecucion');
-      // setCampeonatoEjecucion(campeonatosFiltradosEjecucion)
+      const campeonatosFiltradosCreado = response.data.filter(campeonato => campeonato.estadoCampeonato !== 'Creado' && campeonato.estadoCampeonato !=='Ejecucion');
       setCampenatos(campeonatosFiltradosCreado)
     }
     }
