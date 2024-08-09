@@ -5,7 +5,7 @@ import {
   InformationCircleIcon,
   ServerStackIcon,
   RectangleStackIcon,
-  
+  ArrowLeftOnRectangleIcon
 } from "@heroicons/react/24/solid";
 import { Home, Tables, Notifications, Profile } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
@@ -14,6 +14,8 @@ import { element } from "prop-types";
 import { Participante } from "@/pages/dashboard";
 import { Resultados } from "./pages/dashboard/resultados";
 import Cronograma from "./pages/dashboard/cronograma";
+
+import { Salir } from "./pages/dashboard/salir";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -52,7 +54,13 @@ const icon = {
         path: "/notifications",
         element: <Notifications />,
       },
-      
+      {
+        icon:<InformationCircleIcon {...icon }/>,
+        name: "salir",
+        path:"/salir",
+        element:<Salir/>
+
+      }
       
     ],
   }]

@@ -4,3 +4,5 @@ export * from "@/pages/dashboard/tables";
 export * from "@/pages/dashboard/notifications";
 export * from "@/pages/dashboard/cronograma";
 export * from "@/pages/dashboard/participantes";
+export * from "@/pages/dashboard/salir";
+
