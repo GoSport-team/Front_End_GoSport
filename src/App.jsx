@@ -9,6 +9,8 @@ import { VerEquipo } from "./components/Jugador/VerEquipo/VerEquipo";
 import { PerfilJugador } from "./components/Jugador/PerfilJugador/perfilJugador";
 function App() {
   return (
+    
+  
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/dashboard/*" element={<Dashboard />} />
@@ -25,8 +27,9 @@ function App() {
       <Route path="/jugador/dashboard/perfilJugador" element={
         <PerfilJugador/>
       }
-        />
+      />
     </Routes>
+   
   );
 }
 

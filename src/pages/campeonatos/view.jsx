@@ -14,13 +14,14 @@
         const [descripcion, setDescripcion] = useState('');
         const [inicioInscripcion, setInicioInscripcion] = useState('');
         const [finInscripcion, setFinInscripcion] = useState('');
-        const [añoCreacion, setAñoCreacion] = useState('');
+        const [añoCreacion, setAñoCreacion] = useState(new Date().getFullYear());
         const [error, setError] = useState(null);
         const [modalidades, setModalidad] = useState([]);
         const [sedes, setSedes] = useState([]);
         const [disciplinas,setDisciplinas]= useState([]);
         const estado = true;
         const nombre = 'Fase 1'
+
         const notify = (message) => toast(message);
 
         useEffect(() => {
@@ -215,17 +216,6 @@
                             </div>
                         </div>
 
-                        <div className="w-1/2 mb-6">
-                            <label className="block text-gray-800">Año creación</label>
-                            <input
-                                required
-                                placeholder="2024"
-                                type="text"
-                                value={añoCreacion}
-                                onChange={(e) => setAñoCreacion(e.target.value)}
-                                className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
-                            />
-                        </div>
 
                         <div className="mb-6">
                             <label className="block text-gray-800">Descripción</label>

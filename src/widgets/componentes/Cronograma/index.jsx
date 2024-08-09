@@ -3,15 +3,19 @@
 
 import React, { useEffect, useState } from 'react'
 import { MostrarJugadores } from './mostrarJugadores';
+import { VersusPage } from '../Resultados/verResultados';
 import 'tailwindcss/tailwind.css';
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
+import { BotonAgregar } from './botonAgregar';
 import 'react-toastify/dist/ReactToastify.css';     
 export default function CronogramaDesing({  patchFechaHora, guardarEdicion, datosVss}) {
+
 const idVs = datosVss._id
+
 const [equipo1, setEquipo1]= useState([])
 const [equipo2, setEquipo2]= useState([])
-
+const[modalVer, setModalVer]=useState(false)
+const[botonVer, setBotonVer]=useState(false)
 useEffect(()=>{
   setEquipo1(datosVss.equipo1.informacion.team1.Equipo)
   setEquipo2(datosVss.equipo2.informacion.team2.Equipo)
@@ -31,24 +35,6 @@ useEffect(()=>{
     fetchFechaHora();
   }, [idVs]);
 
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3001/vs/${idVs}`);
-        setDatos(response.datos)
-        console.log("Resultados", response.data);
-
-      } catch (error) {
-        console.error("Error al obtener Datos", error);
-      }
-    };
-
-    fetchData();
-  }, [idVs]);
-
-
-
   const handleConfirmarCmabios = () => {
     guardarEdicion(true, idVs);
     patchFechaHora({ fecha, hora })
@@ -67,6 +53,10 @@ useEffect(()=>{
 
   const openModal = () => {
     setModalIsOpen(true);
+    
+  };
+  const openModalVer = () => {
+    setModalVer(true);
   };
   const closeModal = () => {
     setModalIsOpen(false);
@@ -91,7 +81,7 @@ useEffect(()=>{
 
   return (
     <>
-<div className='w-full sm:w-[50vw] md:w-[40vw] lg:w-[35vw] h-auto md:h-72 mt-8 flex flex-col rounded-md border-2 border-gray-300 shadow-lg'>
+<div className=' relative w-full sm:w-[50vw] md:w-[40vw] lg:w-[35vw] h-auto md:h-72 mt-8 flex flex-col rounded-md border-2 border-gray-300 shadow-lg'>
   <div className='flex flex-col md:flex-row justify-between flex-1 p-6'>
     <div className='w-full md:w-1/2 flex flex-col justify-between'>
       <div className='flex flex-col gap-4'>
@@ -135,26 +125,37 @@ useEffect(()=>{
         </div>
       </div>
       <div className='flex flex-col md:flex-row justify-center md:justify-start space-y-4 md:space-y-0 md:space-x-4 mt-4 md:mt-6'>
+        <BotonAgregar openModal={openModal} agregar= {false}/>
+        {botonVer&&(
         <button 
-          onClick={openModal} 
+        onClick={openModalVer}
           className="inline-flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 w-full md:w-auto"
         >
-          Agregar Resultados
+         Ver Resultados
         </button>
+        )}
         <button
           onClick={handleConfirmarCmabios} 
-          className="inline-flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 w-full md:w-auto"
+          className=" items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 w-full md:w-auto"
         >
           Editar Horario
         </button>
       </div>
     </div>
   </div>
+
+<VersusPage
+modalVer={modalVer}
+ setBotonVer={setBotonVer}
+ setModalVer={setModalVer}
+ idVs={idVs}
+/>
 </div>
 
 <MostrarJugadores 
   datosVss={datosVss} 
-  modalIsOpen={modalIsOpen}  
+  modalIsOpen={modalIsOpen}
+  setModalIsOpen={setModalIsOpen}  
   closeModal={closeModal} 
   showPlayers={showPlayers} 
   equipo1={equipo1} 
@@ -162,8 +163,9 @@ useEffect(()=>{
   togglePlayerRows={togglePlayerRows} 
   showPlayersTable2={showPlayersTable2} 
   togglePlayerRowsTable2={togglePlayerRowsTable2} 
-  
+  setBotonVer={setBotonVer}
 />
+
 </>
   )
 }

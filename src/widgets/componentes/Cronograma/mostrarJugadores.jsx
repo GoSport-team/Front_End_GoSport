@@ -1,62 +1,184 @@
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
+import {TerminarPartidoModal} from './modalTerminarPartido'
 import Modal from 'react-modal';
+import axios from 'axios';
 Modal.setAppElement('#root');
-export const MostrarJugadores = ({datosVss, modalIsOpen, closeModal, equipo1, equipo2, showPlayersTable2, showPlayers, togglePlayerRows, togglePlayerRowsTable2}) => {
+export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeModal, equipo1, equipo2, showPlayersTable2, showPlayers, togglePlayerRows, togglePlayerRowsTable2, setBotonVer}) => {
     const [countGol1, setCountGol1]= useState(0)
     const [countGol2, setCountGol2]= useState(0)
     const [amarilla1, setAmarilla1]= useState(0)
     const [amarilla2, setAmarilla2]= useState(0)
     const [roja1, setRoja1]= useState(0)
     const [roja2, setRoja2]= useState(0)
+    const [jugadorGol1, setJugadorGol1]=useState([])
+    const [jugadorGol2, setJugadorGol2]=useState([])
+    const [jugadorAmarilla1, setJugadorAmarilla1]=useState([])
+    const [jugadorAmarilla2, setJugadorAmarilla2]=useState([])
+    const [jugadorRoja1, setJugadorRoja1]=useState([])
+    const [jugadorRoja2, setJugadorRoja2]=useState([])
+    const [jugadorDestacado, setJugadorDestacado]= useState([])
+    const [ganador, setGanador]= useState([])
+    const [perdedor, setPerdedor]=useState([])
+    const [isModalOpenOk, setModalOpenOk] = useState(false);
+   useEffect(()=>{
+    if(countGol1<countGol2){
+            setGanador(equipo2)
+            setPerdedor( equipo1)
+    }else if(countGol2<countGol1){
+        setGanador(equipo1)
+        setPerdedor(equipo2)
+    }
+   },[countGol1, countGol2])
+  
+    const actualizarFase=async()=>{
+        if(ganador && perdedor){
+        try{
+            const patchFase= await axios.patch(`http://localhost:3001/fase/${datosVss.IdFase}`,{
+                equiposGanadores:ganador,
+                equiposPerdedores:perdedor
+            })
+            console.log("actualizacion correcta")
+    
+        }catch(error){
+            console.log(error)
+        }
+    }
+    
+   }
 
-    const gol1=()=>{
- setCountGol1(countGol1+1)
+
+  const guardarResultado=async()=>{
+      const response = await axios.post('http://localhost:3001/resultados',{
+        equipo1:{
+            Equipo1:equipo1,
+            tarjetasAmarillas:jugadorAmarilla1,
+            tarjetasRojas:jugadorRoja1,
+            goles:{
+        marcador:countGol1,
+        jugadorGoleador:jugadorGol1
+            }
+        },
+            equipo2:{
+                Equipo2:equipo2,
+                tarjetasAmarillas:jugadorAmarilla2,
+                tarjetasRojas:jugadorRoja2,
+                goles:{
+            marcador:countGol2,
+            jugadorGoleador:jugadorGol2
+                }
+            },
+            IdVs:datosVss._id,
+            IdFase:datosVss.IdFase,
+            estadoPartido:false
+      })
+      console.log(response)
   }
-  const gol2=()=>{
-    setCountGol2(countGol2+ 1)
+  const botonPublicar=()=>{
+    guardarResultado()
+    actualizarFase()
+    setBotonVer(true)
+    setModalIsOpen(false)
   }
-  const menosGol1=()=>{
-    setCountGol1(countGol1-1)
+ 
+    const gol1=(jugador)=>{
+        if(countGol1>=0){
+            setCountGol1(countGol1+1)
+            setJugadorGol1((prevJugador) => [...prevJugador, jugador])
+        }
+       
   }
-  const menosGol2=()=>{
-    setCountGol2(countGol2-1)
+ 
+  const gol2=(jugador)=>{
+    if(countGol2>=0){
+        setCountGol2(countGol2+ 1)
+        setJugadorGol2((prevJugador) => [...prevJugador, jugador])
+    }
   }
-  const countAmarilla1=()=>{
-    setAmarilla1(amarilla1+1)
+  const menosGol1=(jugador)=>{
+    if(jugadorGol1.includes(jugador)){
+        setJugadorGol1((prevJugadores) => prevJugadores.filter(j => j !== jugador));
+        setCountGol1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    }
+    }
+    
+  const menosGol2=(jugador)=>{
+    if(jugadorGol2.includes(jugador)){
+        setJugadorGol2((prevJugadores) => prevJugadores.filter(j => j !== jugador));
+        setCountGol2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    }
+  }
+  const countAmarilla1=(jugador)=>{
+    if(amarilla1>=0){
+        setJugadorAmarilla1((prevJugador) => [...prevJugador, jugador])
+        setAmarilla1(amarilla1+1)
+    }
      }
-     const countAmarilla2=()=>{
-       setAmarilla2(amarilla2+ 1)
+    const countAmarilla2=(jugador)=>{
+        if(amarilla2>=0){
+            setJugadorAmarilla2((prevJugador) => [...prevJugador, jugador])
+            setAmarilla2(amarilla2+ 1)
+        }
      }
-     const menosAmarilla1=()=>{
-       setAmarilla1(amarilla1-1)
+     const menosAmarilla1=(jugador)=>{
+        if(jugadorAmarilla1.includes(jugador)){
+            setJugadorAmarilla1((prevJugadores) => prevJugadores.filter(j => j !== jugador));
+            setAmarilla1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+        }
      }
-     const menosAmarilla2=()=>{
-setAmarilla2(amarilla2-1)
+     const menosAmarilla2=(jugador)=>{
+        if(jugadorAmarilla2.includes(jugador)){
+            setJugadorAmarilla2((prevJugadores) => prevJugadores.filter(j => j !== jugador));
+            setAmarilla2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+        }
      }
-     const countRoja1=()=>{
-        setRoja1(roja1+1)
+     const countRoja1=(jugador)=>{
+        if(roja1>=0){
+            setJugadorRoja1((prevJugador) => [...prevJugador, jugador])
+            setRoja1(roja1+1)
+        }
          }
-         const countRoja2=()=>{
-           setRoja2(roja2+ 1)
+         const countRoja2=(jugador)=>{
+            if(roja2>=0){
+                setJugadorRoja2((prevJugador) => [...prevJugador, jugador])
+                setRoja2(roja2+ 1)
+            }
          }
-         const menosRoja1=()=>{
-           setRoja1(roja1-1)
+         const menosRoja1=(jugador)=>{
+            if(jugadorRoja1.includes(jugador)){
+                setJugadorRoja1((prevJugadores) => prevJugadores.filter(j => j !== jugador));
+                setRoja1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+            }
          }
-         const menosRoja2=()=>{
-    setRoja2(roja2-1)
+         const menosRoja2=(jugador)=>{
+            if(jugadorRoja2.includes(jugador)){
+                setJugadorRoja2((prevJugadores) => prevJugadores.filter(j => j !== jugador));
+                setRoja2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+            }
          }
+         const jugadorDes=(jugador)=>{
+                setJugadorDestacado((prevJugador) => [...prevJugador, jugador])
+           
+      }
+      const menosJugadorDes=(jugador)=>{
+        if(jugadorDestacado.includes(jugador)){
+            setJugadorDestacado((prevJugadores) => prevJugadores.filter(j => j !== jugador));
+          
+        }
+     }
+     
+      
 
     return (
    <>
          <Modal
     isOpen={modalIsOpen}
     onRequestClose={closeModal}
-    className="flex justify-center items-center h-screen"
+    className="flex justify-center items-center h-screen w-auto"
     overlayClassName="fixed inset-0 bg-black bg-opacity-50"
 >
-    <div className="rounded-lg shadow-lg overflow-hidden flex flex-col w-[70vw] bg-white p-3 ml-[10vw]"> {/* Agregué la clase ml-[10vw] */}
+    <div className="rounded-lg shadow-lg overflow-hidden flex flex-col w-[auto] bg-white p-3 ml-[10vw]"> {/* Agregué la clase ml-[10vw] */}
         <div className='flex justify-end'>
             <button
                 className="text-gray-600 hover:text-gray-900 text-2xl font-bold w-10 h-10 flex items-center justify-center rounded-full bg-gray-200"
@@ -113,6 +235,7 @@ setAmarilla2(amarilla2-1)
                                 <th scope="col" className="px-6 py-3">Gol</th>
                                 <th scope="col" className="px-6 py-3">Amarilla</th>
                                 <th scope="col" className="px-6 py-3">Roja</th>
+                                <th scope="col" className="px-6 py-3">Jugador Destacado</th>
                             </tr>
                         </thead>
                         {showPlayers && (
@@ -124,30 +247,39 @@ setAmarilla2(amarilla2-1)
                                     </th>
                                     <td className="px-6 py-4">{jugador.dorsal}</td>
                                     <td className="px-6 py-4">
-                                        <td onClick={gol1}>
+                                        <td onClick={()=>gol1(jugador)}>
 
                                     <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
                                         </td>
-                                        <td onClick={menosGol1}>
+                                        <td onClick={()=>menosGol1(jugador)}>
                                     <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
                                         </td>
                                     </td>
                                    
                                     <td className="px-6 py-4">
-                                        <td onClick={countAmarilla1}>
+                                        <td onClick={()=>countAmarilla1(jugador)}>
 
                                     <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
                                         </td>
-                                        <td onClick={menosAmarilla1}>
+                                        <td onClick={()=>menosAmarilla1(jugador)}>
                                     <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6"/>
                                         </td>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <td onClick={countRoja1}>
+                                        <td onClick={()=>countRoja1(jugador)}>
 
                                     <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
                                         </td>
-                                        <td onClick={menosRoja1}>
+                                        <td onClick={()=>menosRoja1(jugador)}>
+                                    <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
+                                        </td>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <td onClick={()=>jugadorDes(jugador)}>
+
+                                    <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
+                                        </td>
+                                        <td onClick={()=>menosJugadorDes(jugador)}>
                                     <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
                                         </td>
                                     </td>
@@ -195,6 +327,7 @@ setAmarilla2(amarilla2-1)
       </div>
       
     </div>
+ 
                     <div className='grid place-content-center'>
                         <div>
                             <img className="object-contain w-32 drop-shadow-lg"
@@ -216,6 +349,7 @@ setAmarilla2(amarilla2-1)
                                 <th scope="col" className="px-6 py-3">Gol</th>
                                 <th scope="col" className="px-6 py-3">Amarilla</th>
                                 <th scope="col" className="px-6 py-3">Roja</th>
+                                <th scope="col" className="px-6 py-3">Jugador Destacado</th>
                             </tr>
                         </thead>
                         {showPlayersTable2 && (
@@ -227,29 +361,38 @@ setAmarilla2(amarilla2-1)
                                     </th>
                                     <td className="px-6 py-4">{jugador.dorsal}</td>
                                     <td className="px-6 py-4">
-                                        <td onClick={gol2}>
+                                        <td onClick={()=>gol2(jugador)}>
 
                                     <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
                                         </td>
-                                        <td onClick={menosGol2}>
+                                        <td onClick={()=>menosGol2(jugador)}>
                                     <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
                                         </td>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <td onClick={countAmarilla2}>
+                                        <td onClick={()=>countAmarilla2(jugador)}>
 
                                     <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
                                         </td>
-                                        <td onClick={menosAmarilla2}>
+                                        <td onClick={()=>menosAmarilla2(jugador)}>
                                     <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
                                         </td>
                                     </td>
                                     <td className="px-6 py-4">
-                                        <td onClick={countRoja2}>
+                                        <td onClick={()=>countRoja2(jugador)}>
 
                                     <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
                                         </td>
-                                        <td onClick={menosRoja2}>
+                                        <td onClick={()=>menosRoja2(jugador)}>
+                                    <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
+                                        </td>
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <td onClick={()=>jugadorDes(jugador)}>
+
+                                    <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
+                                        </td>
+                                        <td onClick={()=>menosJugadorDes(jugador)}>
                                     <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
                                         </td>
                                     </td>
@@ -279,11 +422,20 @@ setAmarilla2(amarilla2-1)
 
         <div className="flex justify-end pr-3 pb-3 mt-2">
             <div className="flex justify-end">
-                <button className="bg-black text-white py-2 px-4 rounded-lg">
+           
+                <button onClick={()=>setModalOpenOk(true)} className="bg-black text-white py-2 px-4 rounded-lg">
                     Finalizar Partido
                 </button>
+               
             </div>
         </div>
+            <TerminarPartidoModal
+             setModalIsOpen={setModalIsOpen}
+        isOpen={isModalOpenOk}
+        onClose={() => setModalOpenOk(false)}
+        agregarResultado={botonPublicar}
+        setModalOpenOk={setModalOpenOk}
+        />
     </div>
 </Modal>
    </>
