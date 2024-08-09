@@ -356,9 +356,9 @@ export const VerEquipo = () => {
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center items-center w-32">
-                                {image.tipo == 'Cloudinary' && (
+                            
                                 <img src={image.img} className=" w-44 h-44 top-52" alt="Logo Del Equipo" />
-                                )}
+                                
                                 {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ?
 
                                 
@@ -438,7 +438,7 @@ export const VerEquipo = () => {
                 </div>
             </form>
             {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ?
-            <div>
+            <div className='text-center flex justify-center'>
             {verificarActualizacion() && (
             <h1 
             onClick={()=>actualizarEquipo()}
