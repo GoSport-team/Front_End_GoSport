@@ -7,6 +7,7 @@ import { DatosEquipos } from "./components/Jugador/CrearEquipo/datosEquipos";
 import { DatosEquiposInscripcion } from "./components/Jugador/InscribirEquipo/DatosEquiposInscripcion"; 
 import { VerEquipo } from "./components/Jugador/VerEquipo/VerEquipo";
 import { PerfilJugador } from "./components/Jugador/PerfilJugador/perfilJugador";
+import { CrearPlanillero } from "./widgets/componentes/Planillero/CrearPlanillero";
 function App() {
   return (
     
@@ -28,6 +29,7 @@ function App() {
         <PerfilJugador/>
       }
       />
+      <Route path="/planillero/agregar" element={<CrearPlanillero/>}/>
     </Routes>
    
   );

@@ -15,6 +15,8 @@ import { Participante } from "@/pages/dashboard";
 import Cronograma from "./pages/dashboard/cronograma";
 
 import { Salir } from "./pages/dashboard/salir";
+import Planillero from "./widgets/componentes/Planillero";
+import { FaRegGrinSquintTears, FaRegNewspaper, FaRegRegistered } from "react-icons/fa";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -52,6 +54,12 @@ const icon = {
         name: "notifications",
         path: "/notifications",
         element: <Notifications />,
+      },
+      {
+        icon: <FaRegNewspaper {...icon}/>,
+        name:"planillero",
+        path:"/planillero",
+        element: <Planillero/>
       },
       {
         icon:<InformationCircleIcon {...icon }/>,

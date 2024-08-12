@@ -61,67 +61,68 @@ export default function Landing() {
 
         <div class=" flex flex-col justify-center items-center">
           <div className="relative">
-            <img src='/public/img/landing/imgplayer.jpg' className='h-full object-cover  w-screen'></img>
+            <img src='/public/img/landing/imgplayer.jpg' className='h-[96vh] object-cover  w-screen'></img>
             <div className="absolute inset-0 flex flex-col w-[20vw] justify-end pb-32">
               <p className="w-[33rem]  text-[1.9rem] font-sans leading-[1.7] text-justify ml-[3rem] tracking-[1px] text-black ">
                 Crea campeonatos inolvidables. ¡Dale vida a la competencia y
                 eleva el espíritu deportivo! ¿Estás listo para ser parte de la
                 experiencia?
               </p>
-              <button className="BotonUnirmeAnimacion ml-[3rem] mt-[2rem] px-[25px] py-[20px] text-[17px]  font-bold  cursor-pointer  ">
-                Unete Ahora
-              </button>
+              <Link to={`auth/sign-in`}>
+                <button className="BotonUnirmeAnimacion ml-[3rem] mt-[2rem] px-[25px] py-[20px] text-[17px]  font-bold  cursor-pointer  ">
+                  Unete Ahora
+                </button>
+              </Link>
             </div>
           </div>
 
         </div>
       </div>
       
-      <div class="bg-white w-full h-full flex flex-col justify-center items-center">
+      <div class="bg-white w-full h-full flex flex-col justify-center">
         
-        <section className="mt-2 w-full h-full flex flex-row gap-7 justify-center items-center">
+        <section className="mt-2 w-[100vw] h-[100vh] flex flex-row gap-5 justify-center items-center mr-16">
 
-          <div className=" w-4/5 h-full flex justify-center items-center rounded-xl drop-shadow-xl" data-aos="fade-right" >
+          <div className=" w-[45vw] h-full flex justify-center items-center rounded-xl drop-shadow-xl" data-aos="fade-right" >
             <img className="AnimacionImagenOrganizadores w-3/4"
               src="/public/img/landing/video.png" alt="img" />
 
           </div>
-          <div className="flex flex-row flex-wrap items-center mb-5 pb-5 w-full">
-            <div className="flex flex-col pl-8 mb-6">
+
+          <div className="flex flex-row flex-wrap mb-5 pb-5 w-[55vw]">
+            <div className="flex flex-col h-[20vh]">
               <h3 className="pt-12 text-3xl font-bold uppercase tracking-wide text-shadow ">PARA ORGANIZADORES</h3>
               <p className="pt-6 text-xl mt-4">Optimiza la gestión de tus torneos con nuestra plataforma, convierte tus ideas en experiencias inolvidables.</p>
             </div>
-
-
-            <div className="pt-5 pl-8 flex flex-col gap-5 justify-around w-full">
-              <div className="admin-icon flex flex-row flex-wrap items-center mb-5 pb-5 w-full">
-                <div className="w-2/5 flex justify-center">
-                  <img data-aos="zoom-in-down" className='w-1/3'
+            <div className="flex flex-col h-[80vh] justify-around">
+              <div className="flex flex-row mb-5 pb-5">
+                <div className="w-[10vw]">
+                  <img data-aos="zoom-in-down" className='w-[6vw] object-cover'
                     src="/public/img/landing/administracion.png" alt="img" />
                 </div>
-                <div className="w-3/5 flex flex-col flex-wrap">
+                <div className=" flex flex-col flex-wrap">
                   <p className="text-2xl font-medium tracking-wide mb-2 text-shadow">Facilidad de creación</p>
-                  <p className="text-shadow-black text-lg pr-1.5">Crea campeonatos en cuestión de minutos con nuestro proceso intuitivo y amigable.</p>
+                  <p className="text-shadow-black text-lg pr-1.5 tracking-wider">Crea campeonatos en cuestión de minutos con nuestro proceso intuitivo y amigable.</p>
                 </div>
               </div>
-              <div className=" flex flex-row flex-wrap items-center mb-5 pb-5 w-full">
-                <div className="w-2/5 flex justify-center">
-                  <img data-aos="zoom-in-down" className='w-1/3'
+              <div className=" flex flex-row flex-wrap mb-5 pb-5 ">
+                <div className="w-[10vw]">
+                  <img data-aos="zoom-in-down" className='w-[6vw] object-cover'
                     src="/public/img/landing/bingo.png" alt="img" />
                 </div>
                 <div className="w-3/5 flex flex-col flex-wrap">
                   <p className="text-2xl font-medium tracking-wide mb-2 text-shadow">Sorteo automático de equipos</p>
-                  <p className="text-shadow-black text-lg pr-1.5">Di adiós a las complicaciones. Deja que nuestro sistema inteligente distribuya los equipos de manera justa y aleatoria.</p>
+                  <p className="text-shadow-black text-lg pr-1.5 tracking-wider">Di adiós a las complicaciones. Deja que nuestro sistema inteligente distribuya los equipos de manera justa y aleatoria.</p>
                 </div>
               </div>
-              <div className="admin-icon flex flex-row flex-wrap items-center mb-5 pb-5 w-full">
-                <div className="w-2/5 flex justify-center">
-                  <img data-aos="zoom-in-down" className='w-1/3'
+              <div className="flex flex-row flex-wrap items-center mb-5 pb-5 w-full">
+                <div className="w-[10vw]">
+                  <img data-aos="zoom-in-down" className='w-[6vw] object-cover '
                     src="/public/img/landing/project.png" alt="img" />
                 </div>
                 <div className="w-3/5 flex flex-col flex-wrap">
                   <p className="text-2xl font-medium  tracking-wide mb-2 text-shadow">Cronogramas personalizados</p>
-                  <p className="text-shadow-black text-lg pr-1.5">Di adiós a las complicaciones. Deja que nuestro sistema inteligente distribuya los equipos de manera justa y aleatoria.</p>
+                  <p className="text-shadow-black text-lg pr-1.5 tracking-wider">Di adiós a las complicaciones. Deja que nuestro sistema inteligente distribuya los equipos de manera justa y aleatoria.</p>
                 </div>
               </div>
             </div>
@@ -129,17 +130,18 @@ export default function Landing() {
         </section>
 
         <section className="mt-4 ml-2 w-full h-full flex flex-col bg-blue-gray-50 rounded-lg">
+          <h1 className='pt-12 text-3xl font-bold uppercase tracking-wide text-shadow grid place-content-center p-y-6'>PARA JUGADORES</h1>
           <div className="mt-6 ml-2 w-full h-full flex flex-row bg-blue-gray-50 rounded-lg">
             <section className='flex flex-col pl-24'>
               <div className="w-full  flex flex-col ml-2">
-                <h1 className='pt-12 text-3xl font-bold uppercase tracking-wide text-shadow '>PARA JUGADORES</h1>
-                <p className="pt-4 mb-5 text-xl mt-4">Regístrate y participa en campeonatos exclusivos en nuestra plataforma para amantes del juego.</p>
+                
+                <p className="pt-4 mb-5 text-xl mt-4 tracking-wider">Regístrate y participa en campeonatos exclusivos en nuestra plataforma para amantes del juego.</p>
               </div>
 
               <div className="flex flex-row items-center mb-5 pb-5 w-full mt-6">
                 <div className="w-3/5 flex flex-col flex-wrap ml-2">
                   <p className="text-2xl font-medium  tracking-wide mb-2 text-shadow">Explora campeonatos</p>
-                  <p className="text-shadow-black text-lg pr-1.5">Descubre una variedad de torneos emocionantes y elige aquellos que despierten tu espiritu competitivo</p>
+                  <p className="text-shadow-black text-lg pr-1.5 tracking-wider">Descubre una variedad de torneos emocionantes y elige aquellos que despierten tu espiritu competitivo</p>
                 </div>
                 <div className="w-2/5 flex justify-center items-center">
                   <img data-aos="zoom-in-down" className='w-1/3 rounded-lg' src="/public/img/landing/imagenCampeonato.jpg" alt="img" />
@@ -148,7 +150,7 @@ export default function Landing() {
               <div className="flex flex-row items-center mb-5 pb-5 w-full mt-6">
                 <div className="w-3/5 flex flex-col flex-wrap ml-2">
                   <p className="text-2xl font-medium  tracking-wide mb-2 text-shadow">Inscripcion rapida y sencilla</p>
-                  <p className="text-shadow-black text-lg pr-1.5">Unete a la competicion en cuestion de segundos.Inscríbete fácilmente en los torneos que te emocionan</p>
+                  <p className="text-shadow-black text-lg pr-1.5 tracking-wider">Unete a la competicion en cuestion de segundos.Inscríbete fácilmente en los torneos que te emocionan</p>
                 </div>
                 <div className="w-2/5 flex justify-center items-center">
                   <img data-aos="zoom-in-down" className='w-1/3 rounded-lg' src="/public/img/landing/Incripcion.jpg" alt="img" />
@@ -157,7 +159,7 @@ export default function Landing() {
               <div className="flex flex-row items-center mb-5 pb-5 w-full mt-6">
                 <div className="w-3/5 flex flex-col flex-wrap ml-2">
                   <p className="text-2xl font-medium  tracking-wide mb-2 text-shadow">Se el protagonista de momentos inolvidables </p>
-                  <p className="text-shadow-black text-lg pr-1.5">Vive momentos inolvidables desde jugadas asomborsas hasta victorias gloriosas. Cada campeonato tiene su propia historia,¡Tu eres la estrella!</p>
+                  <p className="text-shadow-black text-lg pr-1.5 tracking-wider">Vive momentos inolvidables desde jugadas asomborsas hasta victorias gloriosas. Cada campeonato tiene su propia historia,¡Tu eres la estrella!</p>
                 </div>
                 <div className="w-2/5 flex justify-center items-center">
                   <img data-aos="zoom-in-down" className='w-1/3 rounded-lg' src="/public/img/landing/vive.jpg" alt="img" />
@@ -173,27 +175,27 @@ export default function Landing() {
         </section>
 
         <section class=" mt-5 flex justify-center flex-col w-full" id="section_dow">
-          <div class="flex flex-col pl-24 ">
-            <h1 class="mt-3 text-center text-3xl font-bold text-black">Equipo Bienestar al Aprendiz</h1>
-            <h5 class="text-2xl mt-7 mb-7  font-bold"> ¿Quiénes somos?</h5>
-            <p class="font-sans text-xl leading-6 mb-4 ">
+          <div class="flex flex-col p-x-24 px-28">
+            <h1 class="mt-3 text-center text-3xl font-bold text-black py-6 tracking-wider">Equipo Bienestar al Aprendiz</h1>
+            <h5 class="text-2xl mt-7 mb-7 font-bold tracking-wider"> ¿Quiénes somos?</h5>
+            <p class="tracking-wider text-xl leading-6 mb-4 ">
               Equipo encargado de gestionar y realizar acciones para el
               bienestar de sus aprendices en el marco de los planes, politicas
               y normativas institucionales.
             </p>
 
-            <div class="flex flex-row gap-11 mt-10 justify-center items-center w-full">
-              <div className=" w-2/5 text-center">
+            <div class="flex flex-row  mt-10 justify-between items-center w-full">
+              <div className=" w-[50vw] text-center">
                 <img
-                  className="rounded-lg w-4/5"
+                  className="rounded-lg w-[30vw] object-cover"
                   src="/public/img/BienesApren/TeamAp.jpg"
                   alt=""
                 />
               </div>
 
-              <div className="w-2/5 flex justify-center gap-3 flex-col items-center">
-                <h4 class="text-black text-3xl  font-bold text-center">Nuestro propósito</h4>
-                <p className="font-sans text-xl leading-9 mb-4 text-justify pr-7 pt-4 pb-4 flex justify-center items-center">
+              <div className="w-[50vw] flex justify-center gap-3 flex-col items-center p-10">
+                <h4 class="text-black text-3xl  font-bold text-center py-3">Nuestro propósito</h4>
+                <p className="text-xl leading-9 mb-4 text-justify flex justify-center items-center tracking-wider">
                   "Promover la inclusión y la diversidad a través del deporte,
                   creando espacios donde todas las personas,
                   independientemente de sus capacidades físicas o condiciones
@@ -205,10 +207,10 @@ export default function Landing() {
               </div>
             </div>
 
-            <div className="w-full flex mb-4 text-center pr-8 flex-row justify-center items-center mt-8 gap-16" id="section_ft">
-              <div className="w-2/5 flex justify-center gap-3 flex-col items-center ">
-                <h4 class="text-black text-3xl  font-bold text-center">GoSport</h4>
-                <p class=" font-sans text-xl leading-9 mb-4 text-justify pr-7 flex justify-center items-center">
+            <div className="w-full flex mb-4 text-center  flex-row justify-center items-center mt-4" id="section_ft">
+              <div className="w-[50vw] flex justify-center gap-3 flex-col items-center">
+                <h4 class="text-black text-3xl  font-bold text-center py-2">GoSport</h4>
+                <p class="text-xl leading-9 mb-4 text-justify flex justify-center items-center tracking-wider">
                   Uno de nuestros propósitos es fomentar la practica del
                   deporte y la actividad fisica para el desarrollo de habitos
                   de vida saludable, el adecuado uso del tiempo libre y el
@@ -216,12 +218,13 @@ export default function Landing() {
                   proceso de formacion integral.
                 </p>
               </div>
-              <div className="w-2/5 text-center flex justify-center items-center">
-                <img src="/public/img/BienesApren/Colombia.jpg" className='rounded-lg w-4/5' alt="" />
+              <div className="w-[50vw] text-center flex justify-center items-center">
+                <img src="/public/img/BienesApren/soccer.jpg" className=' w-[30vw] object-cover' alt="" />
               </div>
             </div>
           </div>
         </section>
+
         <CardFooter className='flex flex-wrap bg-blue-gray-100 w-full'>
           <section className='w-1/3 flex flex-col justify-center items-center'>
             <Typography className='text-lg font-bold mb-3'>¿Que hacemos?</Typography>

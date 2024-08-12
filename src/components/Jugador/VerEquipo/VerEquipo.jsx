@@ -4,7 +4,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
-
+import { eliminarJugador, searchJugador } from '../useFunciones'
 export const VerEquipo = () => {
     const { cedula } = useParams()
     const [equipo, setEquipo] = useState(null)
@@ -123,135 +123,23 @@ export const VerEquipo = () => {
         }
     }
 
-    const searchJugador = async (idenfiticacion) => {
-        try {
-            const response = await axios.get(`http://localhost:3001/usuarios/identificacion/${idenfiticacion}`)
-
-            const responseValidador = await axios.get(`http://localhost:3001/equipoInscripto/validarJugador/${response.data._id}`)
-
-            if (responseValidador.data.msg == "Jugador ya existe en un equipo") {
-                Swal.fire({
-                    icon: "error",
-                    title: "Jugador ya existe en un equipo",
-                })
+    const buscarJugador =async (identificacion)=>{
+      const response =await searchJugador(identificacion, jugadores)
+      if(response){
+          setJugadores(prev => [...prev,
+            {
+              _id:response._id,
+              nombreJugador: response.nombreJugador,
+              ficha: response.ficha,
+              dorsal: response.dorsal
             }
-
-            console.log(response.data)
-            const { value: formValues } = await Swal.fire({
-                title: "Deseas agregar a este jugador",
-                confirmButtonText: "OK",
-                confirmButtonColor: "#0837C0",
-                html: `
-              <h1>${response.data.nombres}</h1>
-              <h1>Ficha</h1>
-              <input id="swal-input1"  value=${response.data.ficha} class="swal2-input" required  placeholder="Ingresa la ficha" >
-              <input id="swal-input2" class="swal2-input" required  placeholder="Ingresa el dorsal" >
-            `,
-                focusConfirm: false,
-                preConfirm: () => {
-                    return [
-                        document.getElementById("swal-input1").value,
-                        document.getElementById("swal-input2").value
-                    ];
-                }
-            });
-            if (formValues) {
-                const dorsalNum = parseInt(formValues[1])
-                if (jugadores.length >= 1) {
-                    const dorsalExiste = jugadores.filter((item) => item.dorsal == dorsalNum)
-                    if (dorsalExiste.length > 0) {
-                        return Swal.fire({
-                            icon: "error",
-                            title: "El numero de dorsal ya esta ocupado",
-                            confirmButtonText: "OK",
-                            confirmButtonColor: "#E42245",
-                        })
-                    }
-
-                    const existeJugador = jugadores.filter((item) => item._id == response.data._id)
-                    if (existeJugador.length > 0) {
-                        return Swal.fire({
-                            icon: "error",
-                            title: `El jugador ${response.data.nombres} ya hace parte de un equipo`,
-                            confirmButtonText: "OK",
-                            confirmButtonColor: "#E42245",
-                        })
-                    }
-                }
-                Swal.fire({
-                    title: "Datos del jugador",
-                    showCancelButton: true,
-                    confirmButtonText: "Save",
-                    confirmButtonColor: "#04ff00",
-                    cancelButtonColor: "#d33",
-                    text: `Nombre ${response.data.nombres} \n 
-              Ficha ${JSON.stringify(formValues[0])} \n
-              Dorsal ${JSON.stringify(formValues[1])}`,
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Swal.fire({
-                            title: "Jugador guardado correctamente",
-                            icon: "success",
-                            confirmButtonText: "OK",
-                            confirmButtonColor: "#0837C0",
-                        });
-                        setJugadores(prev => [...prev,
-                        {
-                            _id: response.data._id,
-                            nombreJugador: response.data.nombres,
-                            ficha: formValues[0],
-                            dorsal: dorsalNum
-                        }
-                        ])
-                    }
-                });
-            }
-        } catch (error) {
-            console.log(error)
-            Swal.fire({
-                icon: "error",
-                title: "Jugador no registrado",
-                text: `identificacion no encontrada ${idenfiticacion}`,
-                confirmButtonText: "Ok",
-                confirmButtonColor: "#0837C0",
-            })
-        }
-    }
-
-    const eliminarJugador=(indice)=> {
-    
-        if(jugadores[indice].nombreJugador == user.nombres){
-          return  Swal.fire({
-            title: "Este jugador no se puede borrar por que es el capitan",
-            confirmButtonText: "OK",
-            confirmButtonColor: "#E42245",
-          });
-        }
-        if (jugadores && jugadores.length > indice) {
-          Swal.fire({
-            title: "Deseas eliminar este jugador",
-            showCancelButton: true,
-            confirmButtonText: "Save",
-            confirmButtonColor: "#04ff00",
-            cancelButtonColor: "#d33",
-            text: `Nombre ${jugadores[indice].nombreJugador} \n `,
-          }).then((result) => {
-              if (result.isConfirmed) {
-                Swal.fire({
-                  title:"Jugador borrado correctamente",
-                  icon:"success",
-                  confirmButtonText: "OK",
-            confirmButtonColor: "#0837C0",
-                });
-                console.log(indice)
-              jugadores.splice(indice, 1);
-              setJugadores(jugadores)
-              }
-          });
-        }
+            ])
       }
-
-      
+    }
+   const eliminarJug =async(indice)=>{
+    const response =await eliminarJugador(indice, jugadores, user)
+    setJugadores(response)
+   } 
     const verificarActualizacion =()=>{
         if(equipo){
             const verificarArray = equipo.participantes.filter((item1)=> !jugadores.some((item2)=> item1.nombreJugador == item2.nombreJugador))
@@ -406,7 +294,7 @@ export const VerEquipo = () => {
                         <input type="search" className="h-10 w-80 rounded-md text-center" onChange={e => setJugador(e.target.value)} placeholder='Busca por su numero de cedula' />
                         <button className='mt-2.5 px-12 py-5 text-xs uppercase tracking-wider font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none ml-[70px] hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5'
                             type="button"
-                            onClick={() => searchJugador(jugador)} >Buscar</button>
+                            onClick={() => buscarJugador(jugador)} >Buscar</button>
                     </div>
                     :''}
                     <table className="border-separate w-full mt-8">
@@ -429,7 +317,7 @@ export const VerEquipo = () => {
                                     <td className="border rounded-md p-1 bg-white">{equipo.ficha}</td>
                                     <td className="border rounded-md p-1 bg-white">{equipo.dorsal}</td>
                                     {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ?
-                                    <td  onClick={()=>eliminarJugador(index)} className=" hover:cursor-pointer border rounded-md p-1 bg-white flex items-center justify-center"><img className="" src="/public/img/carrusel/eliminar.svg" alt="" /></td>
+                                    <td  onClick={()=>eliminarJug(index)} className=" hover:cursor-pointer border rounded-md p-1 bg-white flex items-center justify-center"><img className="" src="/public/img/carrusel/eliminar.svg" alt="" /></td>
                             :''}
                                 </tr>
                             ))}
