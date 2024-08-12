@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import Modal from 'react-modal';
+Modal.setAppElement('#root');
 export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
   const [resultado, setResultado] = useState();
-
   const modales = () => {
     setModalVer(false);
   };
@@ -21,11 +22,11 @@ export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
 
   return (
     <>
-      {modalVer && (
-        <div className="absolute  flex justify-center z-50 items-center h-screen w-full"
-        overlayClassName=" z-50 bg-black bg-opacity-50">
+    <Modal
+       isOpen={modalVer}
+       className="flex justify-center items-center h-screen w-auto ml-36">
           <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
-            <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl relative">
+            <div className="bg-white shadow-md rounded-lg p-6 w-full max-w-2xl relative grid place-items-center flex-col">
               <h1 className="text-4xl font-bold mb-8">Resultado del Partido</h1>
               {resultado && (
                 <div key={resultado._id}>
@@ -40,7 +41,6 @@ export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
                   </div>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="text-xl">
-                      {/* Equipo 1 Details */}
                       <table className="table-auto w-full text-left">
                         <tbody>
                           <tr>
@@ -50,7 +50,7 @@ export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
                           {resultado.equipo1.goles.jugadorGoleador?.map((jugadorG, index) => (
                             <tr key={index}>
                               <td className="px-4 py-2">Goleador:</td>
-                              <td className="px-4 py-2">{jugadorG.nombreJugador} (Dorsal: {jugadorG.dorsal})</td>
+                              <td className="px-4 py-2">{jugadorG.nombreJugador}</td>
                             </tr>
                           ))}
                           <tr>
@@ -60,7 +60,7 @@ export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
                           {resultado.equipo1.tarjetasAmarillas?.map((jugadorG, index) => (
                             <tr key={index}>
                               <td className="px-4 py-2">Jugador con Amarilla:</td>
-                              <td className="px-4 py-2">{jugadorG.nombreJugador} (Dorsal: {jugadorG.dorsal})</td>
+                              <td className="px-4 py-2">{jugadorG.nombreJugador} </td>
                             </tr>
                           ))}
                           <tr>
@@ -78,7 +78,6 @@ export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
                     </div>
 
                     <div className="text-xl">
-                      {/* Equipo 2 Details */}
                       <table className="table-auto w-full text-left">
                         <tbody>
                           <tr>
@@ -119,14 +118,14 @@ export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
               )}
               <button
                 onClick={modales}
-                className="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3"
+                className="text-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3 w-24"
               >
                 Cerrar
               </button>
             </div>
           </div>
-        </div>
-      )}
+   
+      </Modal>
     </>
   );
 };

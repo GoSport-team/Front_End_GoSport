@@ -56,6 +56,7 @@ export default function Cronograma() {
                patchFechaHora={setFechaHora}
                guardarEdicion={hanlde}
                datosVss={versus}
+               vs={datosVss}
                ></CronogramaDesing>
 
              </div>

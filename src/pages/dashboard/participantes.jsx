@@ -19,7 +19,6 @@ export const Participante = () => {
   const [selectedEquipo, setSelectedEquipo] = useState(null);
   const [showConfirmModalEliminar, setShowConfirmModalEliminar]= useState(false)
   const [idInscripto,setIdInscripto]= useState('')
-  const [estadoAgregar, setEstadoAgregar]=useState(true)
   const [isLoading, setIsLoading] = useState(true); 
 const [agregarEquipo, setAgregarEquipo]= useState(false)
 const [estadoCam, setEstadoCam]=useState('Ejecucion')
@@ -66,7 +65,6 @@ useEffect(()=>{
  
   const sortearEquipos = async () => {
     try {
-      
       localStorage.setItem('estadoFase', estadoFase);
       const fase = await axios.post('http://localhost:3001/fase', { estado: estadoFase, nombre: nombreFase, idCampeonato: IdCampeonato });
       const idFase = fase.data._id;
@@ -182,7 +180,7 @@ useEffect(()=>{
             <p className="mt-2">¿Está seguro de que desea sortear los equipos?</p>
             <div className="flex justify-end mt-4">
               <button
-                onClick={handleConfirmSortear}
+                onClick={()=>handleConfirmSortear()}
                 className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
               >
                 <Link to="/campe/cronograma" >Ok</Link>

@@ -12,7 +12,6 @@ import { SignIn, SignUp } from "@/pages/auth";
 import Fotos from "./pages/dashboard/fotos";
 import { element } from "prop-types";
 import { Participante } from "@/pages/dashboard";
-import { Resultados } from "./pages/dashboard/resultados";
 import Cronograma from "./pages/dashboard/cronograma";
 
 import { Salir } from "./pages/dashboard/salir";
@@ -101,12 +100,7 @@ export  const routeCampeonato=[
         path: "/cronograma",
         element: <Cronograma/>
       },
-      {
-        icon: <InformationCircleIcon {...icon}/>,
-        name: "resultados",
-        path: "/resultados",
-        element: <Resultados/>
-      },
+      
     ],
   },
 ];

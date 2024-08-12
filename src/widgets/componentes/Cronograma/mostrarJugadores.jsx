@@ -175,7 +175,7 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
          <Modal
     isOpen={modalIsOpen}
     onRequestClose={closeModal}
-    className="flex justify-center items-center h-screen w-auto"
+    className="flex justify-center items-center h-screen w-auto ml-36"
     overlayClassName="fixed inset-0 bg-black bg-opacity-50"
 >
     <div className="rounded-lg shadow-lg overflow-hidden flex flex-col w-[auto] bg-white p-3 ml-[10vw]"> {/* Agregué la clase ml-[10vw] */}
