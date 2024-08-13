@@ -44,24 +44,38 @@ export default function CampeonatosDisponibles() {
         <div>
           <NavBarJugador cedula={user.identificacion} />
           <Carrusel />
-          <section>
-            <div className="w-full py-6 md:py-12 flex items-center justify-center">
-              <div className="w-[85vw] bg-white md:p-8 rounded-lg shadow-xl relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-200 via-blue-100 to-white opacity-40"></div>
-                <h1 className="relative text-center text-lg md:text-2xl font-semibold text-gray-800 leading-relaxed z-10">
-                  “Estimado
-                  <span className="text-xl md:text-3xl font-bold text-blue-600 relative inline-block pl-2 md:pl-3">
-                    {user.nombres}
-                  </span>, bienvenido al área de inscripciones. 🏆
-                  Aquí podrás elegir los campeonatos en los que deseas participar.
-                  No olvides que cada torneo es una oportunidad para demostrar
-                  tu habilidad en la cancha. ¡Éxito!”
-                </h1>
-              </div>
-            </div>
+          <section className='mt-11'>
+            <div className='flex w-screen justify-center items-center content-center h-[50vh]'>
+              <div className='w-[65vw] grid place-content-center'>
+                <div class="group flex flex-col justify-start items-start gap-2 w-[50vw] h-[35vh] duration-500 relative rounded-lg p-4 bg-gray-100 hover:-translate-y-2 hover:shadow-xl shadow-gray-300"
+                >
+                  <div class="absolute duration-700 shadow-md group-hover:-translate-y-4 group-hover:-translate-x-4 -bottom-10 -right-10 w-[50vh] h-1/2 rounded-lg bg-gray-200"
+                    alt="image here">
+                    <img src="\public\img\carrusel\cr7.jpg" alt="" className='w-[50vh] h-[20vh] object-cover rounded-xl opacity-90'/>
+                  </div>
 
-            <div className='w-full flex justify-center'>
-              <div className='w-[85vw]'>
+                  <div class="">
+                    <h2 class="text-2xl font-bold mb-2 text-gray-800  tracking-wide">Bienvenido</h2>
+                    <p class="text-gray-700 line-clamp-3 tracking-wide">
+                      “Estimado
+                      <span className="text-lg md:text-3xl font-bold text-blue-600 relative inline-block  md:pl-3">
+                        {user.nombres}
+                      </span>, bienvenido al área de inscripciones. 🏆
+                      Aquí podrás elegir los campeonatos en los que deseas participar.
+                      No olvides que cada torneo es una oportunidad para demostrar
+                      tu habilidad en la cancha. ¡Éxito!”
+                    </p>
+                  </div>
+                  <button
+                    class="hover:bg-gray-300 bg-gray-200 text-gray-800 mt-6 rounded p-2 px-6"
+                  >
+                    Explore
+                  </button>
+                </div>
+
+              </div>
+
+              <div className='w-[35vw] grid place-content-center'>
                 <div class="relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
                   <div class="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
                     <img src="\public\img\carrusel\fubol-sala-futsal.jpg" alt="img" className='object-cover w-full h-full' />
@@ -82,10 +96,8 @@ export default function CampeonatosDisponibles() {
                     </Link>
                   </div>
                 </div>
-
               </div>
             </div>
-
             <div>
               <h1 className="text-xl md:text-2xl lg:text-3xl font-bold uppercase tracking-wide text-shadow p-6 text-center">
                 Campeonatos Disponibles
@@ -97,9 +109,6 @@ export default function CampeonatosDisponibles() {
 
               </article>
             </div>
-
-
-
           </section>
         </div>
         : <h1>Esqueleton</h1>
