@@ -53,7 +53,6 @@ export const CrearPlanillero = () => {
         try {
             const response = await axios.post('http://localhost:3001/usuarios/', formData);
             console.log('Planillero registrado exitosamente', response.data);
-            onUsuarioCreado();
             toast.success('Registrado exitosamente');
         } catch (error) {
             toast.error('Error al registrar');
@@ -76,8 +75,6 @@ export const CrearPlanillero = () => {
     };
     return (
         <section className='flex justify-center mt-5'>
-
-
             <div className="w-[50vw] h-auto shadow-md p-4 xl:max-w-sm 2xl:max-w-md ">
                 <div className="mb-2 flex justify-center "></div>
                 <h2 className="text-center text-2xl font-bold leading-tight text-black">

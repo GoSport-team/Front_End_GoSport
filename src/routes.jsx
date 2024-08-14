@@ -5,19 +5,18 @@ import {
   InformationCircleIcon,
   ServerStackIcon,
   RectangleStackIcon,
-  ArrowLeftOnRectangleIcon
+  PhotoIcon
 } from "@heroicons/react/24/solid";
 import { Home, Tables, Notifications, Profile } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import Fotos from "./pages/dashboard/fotos";
-import { element } from "prop-types";
 import { Participante } from "@/pages/dashboard";
 import { Resultados } from "./pages/dashboard/resultados";
 import Cronograma from "./pages/dashboard/cronograma";
 
 import { Salir } from "./pages/dashboard/salir";
 import Planillero from "./widgets/componentes/Planillero";
-import { FaRegGrinSquintTears, FaRegNewspaper, FaRegRegistered } from "react-icons/fa";
+import { FaRegNewspaper } from "react-icons/fa";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -39,7 +38,7 @@ const icon = {
         element:<Profile/>
       },
       {
-        icon: <InformationCircleIcon {...icon}/>,
+        icon: <PhotoIcon {...icon}/>,
         name: "fotos",
         path: "/fotos",
         element: <Fotos/>

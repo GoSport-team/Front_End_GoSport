@@ -99,9 +99,13 @@
                 setAñoCreacion('');
 
             } catch (error) {
+                console.log(error)
                 if (error.response && error.response.status === 401) {
-                    toast.error('No se puede crear más de un interfichas o intercentros por año');
-                } else {
+                    toast.error(error.response.data.msg);
+                }else if(error.response && error.response.status === 403){
+                    toast.error(error.response.data.msg);
+                }
+                 else {
                     toast.error('Error al crear el campeonato. Inténtalo de nuevo.');
                 }
             }
