@@ -91,19 +91,19 @@ export default function CardCampeonato({ cedula }) {
                 <div className="flex gap-4 mt-4">
                   {campeonato.estadoCampeonato === 'Ejecucion' ? (
                     <Link to={`/jugador/dashboard/derrotero/${campeonato._id}`}>
-                      <button className="px-6 py-3 text-sm font-medium text-white bg-blue-500 border-none rounded-lg shadow-lg transition-all hover:bg-blue-600 hover:shadow-xl focus:opacity-90 focus:shadow-none active:opacity-80 active:shadow-none disabled:pointer-events-none disabled:opacity-50">
+                      <button className="px-6 py-3 text-sm font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-lg transition-all hover:bg-blue-600 hover:shadow-xl focus:opacity-90 focus:shadow-none active:opacity-80 active:shadow-none disabled:pointer-events-none disabled:opacity-50">
                         Ver Derrotero
                       </button>
                     </Link>
                   ) : validarInscripcion === 'Equipo ya esta Inscrito en un campeonato' ? (
                     <button
                       onClick={() => mensajeInscrito()}
-                      className="px-6 py-3 text-sm font-medium text-white bg-blue-500 border-none rounded-lg shadow-lg transition-all hover:bg-blue-600 hover:shadow-xl focus:opacity-90 focus:shadow-none active:opacity-80 active:shadow-none disabled:pointer-events-none disabled:opacity-50">
+                      className="px-6 py-3 text-sm font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-lg transition-all hover:bg-blue-600 hover:shadow-xl focus:opacity-90 focus:shadow-none active:opacity-80 active:shadow-none disabled:pointer-events-none disabled:opacity-50">
                       Ya estás Inscrito
                     </button>
                   ) : (
                     <Link to={`/jugador/dashboard/${campeonato._id}/${cedula}`}>
-                      <button className="px-6 py-3 text-sm font-medium text-white bg-blue-500 border-none rounded-lg shadow-lg transition-all hover:bg-blue-600 hover:shadow-xl focus:opacity-90 focus:shadow-none active:opacity-80 active:shadow-none disabled:pointer-events-none disabled:opacity-50">
+                      <button className="px-6 py-3 text-sm font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-lg transition-all hover:bg-blue-600 hover:shadow-xl focus:opacity-90 focus:shadow-none active:opacity-80 active:shadow-none disabled:pointer-events-none disabled:opacity-50">
                         Inscribirme
                       </button>
                     </Link>
