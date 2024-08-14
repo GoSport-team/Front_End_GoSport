@@ -11,7 +11,6 @@ import { Creado } from "@/widgets/componentes/campeonato/estadosCampeonato/cread
 import { Inscripto } from "@/widgets/componentes/campeonato/estadosCampeonato/inscripto";
 import { Ejecucion } from "@/widgets/componentes/campeonato/estadosCampeonato/ejecucion";
 export function Tables() {
-
   const [tasks, setTasks] = useState([]);
   const [selectedCampeonato, setSelectedCampeonato] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,8 +18,8 @@ export function Tables() {
     const[idUpdate, setIdUpdate]= useState(null)
     const [modalUpdate, setModalUpdate]= useState(false)
     const[campeonato, setCampeonato]= useState([])
-  
-
+   
+    
   useEffect(() => {
     const fetchTasks = async () => {
       try {
@@ -56,12 +55,6 @@ export function Tables() {
       }
 
     }
- 
-
-  
-    
-    
-
   return (
     <>
     <div className="mt-10 mb-8 flex flex-col">

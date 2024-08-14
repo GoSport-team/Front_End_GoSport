@@ -34,10 +34,16 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
   
     const actualizarFase=async()=>{
         if(ganador && perdedor){
+            const ganadores={
+                Equipo:ganador
+            }
+            const perdedores={
+                Equipo:perdedor
+            }
         try{
             const patchFase= await axios.patch(`http://localhost:3001/fase/${datosVss.IdFase}`,{
-                equiposGanadores:ganador,
-                equiposPerdedores:perdedor
+                equiposGanadores:ganadores,
+                equiposPerdedores:perdedores
             })
             console.log("actualizacion correcta")
     
@@ -73,7 +79,6 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
             IdFase:datosVss.IdFase,
             estadoPartido:false
       })
-      console.log(response)
   }
   const botonPublicar=()=>{
     guardarResultado()

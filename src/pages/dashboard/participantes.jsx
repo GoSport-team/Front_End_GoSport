@@ -61,7 +61,6 @@ useEffect(()=>{
     };
     fetchData();
   },[equipoInscripto]);
-
  
   const sortearEquipos = async () => {
     try {
@@ -75,6 +74,7 @@ useEffect(()=>{
       };
       localStorage.setItem('IdFase', idFase);
       const equiposSorteados = await axios.post('http://localhost:3001/vs', { dataVs });
+      console.log(equiposSorteados)
       if (equiposSorteados.data) {
         setIsLoading(true);
       }else{

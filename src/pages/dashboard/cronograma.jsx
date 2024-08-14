@@ -17,12 +17,11 @@ import { ConfirmarGuardar  } from "@/widgets/componentes/Cronograma/ConfirmarGua
 export default function Cronograma() {
   const [datosVss, setDatosVs]= useState();
   const [fechaHora, setFechaHora]= useState({'fecha':'', 'hora':''})
-
+  const [isLoading, setIsLoading] = useState(true); 
   const [confirmarCambios, setConfirmarCambios] = useState(false);
   const [IdVs , setIdVs]= useState('')
-  //console.log(datosVss)
-  
     const IdFasee = localStorage.getItem('IdFase');
+    const estadoFase= localStorage.getItem('estadoFase')
     useEffect(()=>{
       const GetDatosVs = async()=>{
         try{
@@ -32,11 +31,15 @@ export default function Cronograma() {
             }
           });
           setDatosVs(Vs.data)
+          setIsLoading(true)
         }catch(error){
           console.log(error)
+        }finally{
+          setIsLoading(false)
         }
       }
       GetDatosVs();
+    
     },[datosVss])
     const hanlde = (estado,idVs)=>{
       setConfirmarCambios(estado)
@@ -47,6 +50,11 @@ export default function Cronograma() {
   return (
     <>
     {/* //CRONOGRAMA */}
+    {isLoading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
+          <div className="text-white">Cargando...</div>
+        </div>
+      )}
     <div className='w-full h-full'>
      <Card className='w-auto h-auto flex justify-center items-center p-2'>
            <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-7">

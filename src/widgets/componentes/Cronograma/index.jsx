@@ -4,10 +4,11 @@ import { MostrarJugadores } from './mostrarJugadores';
 import { VersusPage } from '../Resultados/verResultados';
 import 'tailwindcss/tailwind.css';
 import { cambioFase } from '@/services/cambioFase';
+import { ganador } from '@/services/ganador';
 import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';  
-import ModalCrear from '../Planillero/ModalCrear';
+import 'react-toastify/dist/ReactToastify.css';
+import { BuscarPlanillero } from '../Planillero/BuscarPlanillero';  
 export default function CronogramaDesing({  patchFechaHora, guardarEdicion, datosVss, vs}) {
 const idVs = datosVss._id
 const [equipo1, setEquipo1]= useState([])
@@ -15,17 +16,20 @@ const IdCampeonato = localStorage.getItem('ID');
 const[modalVer, setModalVer]=useState()
 const[botonVer, setBotonVer]=useState()
   const [equipo2, setEquipo2] = useState([])
-  const [usuarioCreado, setUsuarioCreado] = useState(false); 
+  const [usuarioCreado, setUsuarioCreado] = useState(); 
   const [botonAgregar ,setBotonAgregar]= useState();
   const [resultado, setResultado]= useState([])
-  const [idPlanillero, setIdPlanillero]=useState('66ba66cb88554f0148116653')
   const [estadoFase, setEStadoFase] = useState(true);
   const [nombreFase, setNombreFase] = useState("Fase 1");
   const [idFases, setIdFase] = useState();
   const [isLoading, setIsLoading] = useState(true); 
-  const [equipoGanadores, setEquiposGanadores]=useState()
+  const [equipoGanadores, setEquiposGanadores]=useState([])
+  const [idPlanillero, setIdPlanillero]=useState()
+  const [botonVerPlanillero, setBotonVerPlanillero]=useState()
+  const [ganadorCampeonato, setGanadorCampeonato]=useState()
+  const [ok, setOk]= useState()
+  const [mostrarGanador, setMostrarGanador]= useState()
   const idfase= datosVss.IdFase
-  console.log(idfase)
     useEffect(()=>{
         const resultados=async()=>{
             const response= await axios.get('http://localhost:3001/resultados',{
@@ -37,76 +41,76 @@ const[botonVer, setBotonVer]=useState()
         }
         resultados()
     },[idfase])
-    useEffect(()=>{
-      const resultados=async()=>{
-          const response= await axios.get('http://localhost:3001/resultados/planillero',{
-              headers: {
-                  idplanillero:idPlanillero
-              }
-          })
-          if(!response){
-            setUsuarioCreado(false)
-          }else if(response){
-            setUsuarioCreado(true)
-          }
-      }
-      resultados()
-  },[idfase])
-  console.log(equipoGanadores)
-useEffect(()=>{
-})
-useEffect(()=>{
   const cambioFase2= cambioFase(vs,resultado)
-if(cambioFase2){
-  const EquiposGanadores=async()=>{
-const response= await axios.get(`http://localhost:3001/fase/${idfase}`)
-console.log('response '+response)
-setEquiposGanadores(response.data.equiposGanadores)
-  }
-  EquiposGanadores()
-  const actualizarFase=async()=>{
-  try{
-      const patchFase= await axios.patch(`http://localhost:3001/fase/estado/${idfase}`,{
-        estado:false
-      })
-      console.log(patchFase)
-      toast('Fase Finalizada exitosamente');
+  const EquipoGanador=ganador(resultado)
+  useEffect(()=>{
+    if(EquipoGanador){
+      console.log('campeonato finalizado')
+      EquiposGanadores()
+      setOk(false)
+      setGanadorCampeonato(equipoGanadores)
+  setMostrarGanador(true)
     }
-  catch(error){
-    console.log(error)
-    toast.error('Hubo un error al finalizar la fase');
-  }
-}
-const sortearEquipos = async () => {
-  try {
-    localStorage.setItem('estadoFase', estadoFase);
-    const fase = await axios.post('http://localhost:3001/fase', { estado: estadoFase, nombre: nombreFase, idCampeonato: IdCampeonato });
-    const idFase = fase.data._id;
-    setIdFase(idFase);
-    const dataVs = {
-      equipos: equipoGanadores,
-      IdFase: idFase
-    };
-    localStorage.setItem('IdFase', idFase);
-    const equiposSorteados = await axios.post('http://localhost:3001/vs', { dataVs });
-    console.log('equipos sorteado '+equiposSorteados)
-  } catch (error) {
-    console.log(error);
-    setError("Error al sortear. Intente nuevamente.");
-  }finally {
+  },[datosVss])
   
-  }
-};
-sortearEquipos()
  
-actualizarFase()
-}else{
-console.log('error')
-}
-    
-},[])
-//console.log(equipoGanadores)
+useEffect(()=>{
+  if(cambioFase2){
+    EquiposGanadores()
+    setOk(true)
+  }else{
+    setOk(false)
+  }
+},[datosVss])
+   
 
+  const EquiposGanadores=async()=>{
+    const response= await axios.get(`http://localhost:3001/fase/${idfase}`)
+    setEquiposGanadores(response.data.equiposGanadores)
+      }
+      const actualizarFase=async()=>{
+        try{
+            const patchFase= await axios.patch(`http://localhost:3001/fase/estado/${idfase}`,{
+              estado:false
+            })
+            console.log('fase finalizada')
+            toast('Fase Finalizada exitosamente');
+          }
+        catch(error){
+          console.log(error)
+          toast.error('Hubo un error al finalizar la fase');
+        }
+      }
+    
+      const sortearEquipos = async (equipoGanadores) => {
+        try {
+          const fase = await axios.post('http://localhost:3001/fase', { estado: estadoFase, nombre: nombreFase, idCampeonato: IdCampeonato });
+          const idFase = fase.data._id;
+          localStorage.setItem('IdFase', idFase);
+         
+          const dataVs = {
+            equipos:equipoGanadores
+              ,
+            IdFase: idFase
+          };
+          console.log(dataVs)
+          const equiposSorteados = await axios.post('http://localhost:3001/vs', { dataVs });
+          console.log(equiposSorteados)
+        } catch (error) {
+          console.log(error);
+          setError("Error al sortear. Intente nuevamente.");
+        }finally {
+        
+        }
+      };
+const handleClick=()=>{
+  if(cambioFase2){
+  sortearEquipos(equipoGanadores)
+  actualizarFase()
+  setOk(false)
+  }
+      
+  }
   useEffect(() => {
     const resultados = async () => {
       try {
@@ -143,10 +147,7 @@ useEffect(()=>{
 
     fetchFechaHora();
   }, [idVs]);
-
-  const handleUsuarioCreado = () => {
-    setUsuarioCreado(true);
-  };
+console.log(equipoGanadores)
 
   const handleConfirmarCmabios = () => {
     guardarEdicion(true, idVs);
@@ -199,7 +200,6 @@ useEffect(()=>{
   const toggleModal = () => {
     setShowModal(!showModal);
   };
-
 
   return (
     <>
@@ -297,21 +297,25 @@ useEffect(()=>{
         </div>
          
         )}
-        {usuarioCreado ? (
+        {botonVerPlanillero && (
           <button
             onClick={toggleModal}
             className="inline-flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 w-full md:w-auto"
           >
-            Ver Usuario
+            Ver Planillero
           </button>
-        ) : (
+        ) }{
+          usuarioCreado&&(
+
           <button
             onClick={openModalPlan}
             className="inline-flex items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 w-full md:w-auto"
           >
-            Planillero
+           Agregar Planillero
           </button>
-        )}
+          )
+        }
+      
        {botonAgregar&&( <button
           onClick={handleConfirmarCmabios} 
           className=" items-center justify-center px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 w-full md:w-auto"
@@ -323,6 +327,34 @@ useEffect(()=>{
 
       </div>
   </div>
+  {ok&&(
+     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+     <div className="bg-white p-6 rounded-lg shadow-lg text-center">
+       <h2 className="text-xl font-semibold mb-4">Fase terminada con éxito</h2>
+       <button 
+         onClick={()=>handleClick()} 
+         className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition">
+         OK
+       </button>
+     </div>
+   </div>
+  )
+
+  }
+  {mostrarGanador&&(
+   <>
+   <div className='flex flex-gap gap-4 flex justify-center items-center'>
+ <div className='flex items-center'>
+   <img className='w-1/4 md:w-2/4 object-contain h-16 md:h-24 rounded-3xl' src={ganadorCampeonato.Equipo.imgLogo} />
+   <div className='ml-4 flex justify-center items-center'>
+     <h4 className='text-lg md:text-xl font-semibold text-gray-700'>{ganadorCampeonato.Equipo.nombreEquipo}</h4>
+   </div>
+   <h1>Ganador Campeonato</h1>
+ </div>
+</div>
+ </>
+  )
+  }
 <VersusPage
 modalVer={modalVer}
  setBotonVer={setBotonVer}
@@ -344,11 +376,13 @@ modalVer={modalVer}
   setBotonVer={setBotonVer}
 />
 
-      <ModalCrear
-        openPlan={openPlan}
-        onRequestClose={onRequestClose}
-        onUsuarioCreado={handleUsuarioCreado} 
-      />
+   <BuscarPlanillero
+   modalIsOpen={openPlan}
+   closeModal={onRequestClose}
+   idVs={idVs}
+   setIdPlanillero={setIdPlanillero}
+   setBotonVerPlanillero={setBotonVerPlanillero}
+   setUsuarioCreado={setUsuarioCreado}/> 
       
       
   
