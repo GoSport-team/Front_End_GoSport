@@ -5,69 +5,113 @@ import { NavBarJugador } from '../NavBar/NavBarJugador'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import './main.css'
 
 export default function CampeonatosDisponibles() {
   const [user, setUser] = useState()
   const token = Cookies.get('token')
   const [equipo, setEquipo] = useState(null)
-  useEffect(()=>{
-    const obtenerUser =async ()=>{
-      const response = await axios.get('http://localhost:3001/usuarios/perfil',{
-        headers:{
+  useEffect(() => {
+    const obtenerUser = async () => {
+      const response = await axios.get('http://localhost:3001/usuarios/perfil', {
+        headers: {
           Authorization: `Bearer ${token}`
         }
       })
       setUser(response.data)
     }
     obtenerUser()
-  },[])
+  }, [])
 
-    useEffect(() => {
-        const obtnenerEquipo = async () => {
-          if(user){
-            console.log(user)
-            const response = await axios.get(`http://localhost:3001/equipoInscripto/cedula/${user.identificacion}`)
-            console.log(response)
-            if (response.data.msg) {
-               return setEquipo(null)
-            }
-            setEquipo(response.data)
-          }
+  useEffect(() => {
+    const obtnenerEquipo = async () => {
+      if (user) {
+        console.log(user)
+        const response = await axios.get(`http://localhost:3001/equipoInscripto/cedula/${user.identificacion}`)
+        console.log(response)
+        if (response.data.msg) {
+          return setEquipo(null)
         }
-        obtnenerEquipo()
-    }, [user])
-
-    
+        setEquipo(response.data)
+      }
+    }
+    obtnenerEquipo()
+  }, [user])
 
   return (
     <>
-    {user?
-    <div>
-    <NavBarJugador cedula={user.identificacion}/>
-    <Carrusel/>
-    <section className='contenedorBienvenida'>
-        <h1 className='text-center text-2xl ml-28 mr-28 flex ' >
-        “Estimado<p className='text-3xl font-bold min-w-max pl-3 '>{user.nombres}</p>, bienvenido al área de inscripciones. 🏆 
-        Aquí podrás elegir los campeonatos en los que deseas participar. 
-        No olvides que cada torneo es una oportunidad para demostrar 
-        tu habilidad en la cancha. ¡Éxito!”
-        </h1>
-        <h1 className='tituloCam text-center mt-5 text-2xl font-semibold '>Campeonatos Disponibles</h1>
-        <Link to={'/jugador/dashboard/crearequipo'}>
-        <button  
-        className=' btnExpecial mt-2.5 px-12 py-5 text-xs uppercase tracking-wider font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none ml-[70px] hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5' >
-          Crear Equipo
-        </button>
-        </Link>
-       <article className='contenedorCards flex gap-10 mt-20 p-18 justify-around flex-wrap p-5'>
-        {user && (
-        <CardCampeonato cedula={user.identificacion}/>
-        )}
-        
-        </article>
-      </section>
-      </div>
-      :<h1>Esqueleton</h1>
+      {user ?
+        <div>
+          <NavBarJugador cedula={user.identificacion} />
+          <Carrusel />
+          <section className='mt-11'>
+            <div className='flex w-screen justify-center items-center content-center h-[50vh]'>
+              <div className='w-[65vw] grid place-content-center'>
+                <div class="group flex flex-col justify-start items-start gap-2 w-[50vw] h-[35vh] duration-500 relative rounded-lg p-4 bg-gray-100 hover:-translate-y-2 hover:shadow-xl shadow-gray-300"
+                >
+                  <div class="absolute duration-700 shadow-md group-hover:-translate-y-4 group-hover:-translate-x-4 -bottom-10 -right-10 w-[50vh] h-1/2 rounded-lg bg-gray-200"
+                    alt="image here">
+                    <img src="\public\img\carrusel\cr7.jpg" alt="" className='w-[50vh] h-[20vh] object-cover rounded-xl opacity-90'/>
+                  </div>
+
+                  <div class="">
+                    <h2 class="text-2xl font-bold mb-2 text-gray-800  tracking-wide">Bienvenido</h2>
+                    <p class="text-gray-700 line-clamp-3 tracking-wide">
+                      “Estimado
+                      <span className="text-lg md:text-3xl font-bold text-blue-600 relative inline-block  md:pl-3">
+                        {user.nombres}
+                      </span>, bienvenido al área de inscripciones. 🏆
+                      Aquí podrás elegir los campeonatos en los que deseas participar.
+                      No olvides que cada torneo es una oportunidad para demostrar
+                      tu habilidad en la cancha. ¡Éxito!”
+                    </p>
+                  </div>
+                  <button
+                    class="hover:bg-gray-300 bg-gray-200 text-gray-800 mt-6 rounded p-2 px-6"
+                  >
+                    Explore
+                  </button>
+                </div>
+
+              </div>
+
+              <div className='w-[35vw] grid place-content-center'>
+                <div class="relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
+                  <div class="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
+                    <img src="\public\img\carrusel\fubol-sala-futsal.jpg" alt="img" className='object-cover w-full h-full' />
+                  </div>
+                  <div class="p-6">
+                    <h5 class="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+                      Crea tu equipo
+                    </h5>
+                    <p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased">
+                      ¡Forma tu equipo de fútbol sala para participar! Si quieres competir y ser parte de un gran equipo, ¡únete a la acción!
+                    </p>
+                  </div>
+                  <div class="p-6 pt-0">
+                    <Link to={'/jugador/dashboard/crearequipo'}>
+                      <button data-ripple-light="true" type="button" class="select-none rounded-lg bg-blue-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                        Crear equipo
+                      </button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold uppercase tracking-wide text-shadow p-6 text-center">
+                Campeonatos Disponibles
+              </h1>
+              <article className='contenedorCards flex gap-10 mt-20 p-18 justify-around flex-wrap p-5'>
+                {user && (
+                  <CardCampeonato cedula={user.identificacion} />
+                )}
+
+              </article>
+            </div>
+          </section>
+        </div>
+        : <h1>Esqueleton</h1>
       }
     </>
   )
