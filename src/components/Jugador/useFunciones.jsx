@@ -38,11 +38,17 @@ export  const searchJugador = async (idenfiticacion, jugadores) => {
     try {
         const response = await axios.get(`http://localhost:3001/usuarios/identificacion/${idenfiticacion}`)
         
-        const responseValidador = await axios.get(`http://localhost:3001/equipoInscripto/validarJugador/${response.data._id}`)
+        const responseValidador = await axios.get(`http://localhost:3001/equipoInscripto/validarJugador`,{
+            headers:{
+                idJugador: response.data._id
+            }
+        })
+        console.log(responseValidador.data.equipo)
         if (responseValidador.data.msg == "Jugador ya existe en un equipo") {
             Swal.fire({
                 icon: "error",
-                title: "Jugador ya existe en un equipo",
+                title: `Jugador ya pertenece al equipo ${responseValidador.data.equipo[0].nombreEquipo}`,
+                confirmButtonColor: "#0837C0",
             })
 
             return false
