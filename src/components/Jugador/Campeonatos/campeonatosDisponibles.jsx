@@ -45,13 +45,12 @@ export default function CampeonatosDisponibles() {
           <NavBarJugador cedula={user.identificacion} />
           <Carrusel />
           <section className='mt-11'>
-            <div className='flex w-screen justify-center items-center content-center h-[50vh]'>
-              <div className='w-[65vw] grid place-content-center'>
-                <div class="group flex flex-col justify-start items-start gap-2 w-[50vw] h-[35vh] duration-500 relative rounded-lg p-4 bg-gray-100 hover:-translate-y-2 hover:shadow-xl shadow-gray-300"
-                >
-                  <div class="absolute duration-700 shadow-md group-hover:-translate-y-4 group-hover:-translate-x-4 -bottom-10 -right-10 w-[50vh] h-1/2 rounded-lg bg-gray-200"
+            <div className='flex w-[85vw] mx-auto py-8 justify-between'>
+              <div className='w-[65vw]'>
+                <div class="group flex flex-col justify-start items-start gap-2 w-[50vw] h-[35vh] duration-500 relative rounded-lg p-4 bg-gray-100 hover:-translate-y-2 hover:shadow-xl shadow-gray-300">
+                  <div class="absolute duration-700 shadow-md group-hover:-translate-y-4 group-hover:-translate-x-4 -bottom-10 -right-10 w-[30vh] h-1/2 rounded-lg bg-gray-200"
                     alt="image here">
-                    <img src="\public\img\carrusel\cr7.jpg" alt="" className='w-[50vh] h-[20vh] object-cover rounded-xl opacity-90'/>
+                    <img src="\public\img\carrusel\cr7.jpg" alt="" className='w-[30vh] h-[19vh] object-cover rounded-xl opacity-90 absolute                                                    '/>
                   </div>
 
                   <div class="">
@@ -66,16 +65,12 @@ export default function CampeonatosDisponibles() {
                       tu habilidad en la cancha. ¡Éxito!”
                     </p>
                   </div>
-                  <button
-                    class="hover:bg-gray-300 bg-gray-200 text-gray-800 mt-6 rounded p-2 px-6"
-                  >
+                  <button class="hover:bg-gray-300 bg-gray-200 text-gray-800 mt-6 rounded p-2 px-6">
                     Explore
                   </button>
                 </div>
-
               </div>
-
-              <div className='w-[35vw] grid place-content-center'>
+              <div className='w-[35vw] flex justify-end mt-9'>
                 <div class="relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
                   <div class="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
                     <img src="\public\img\carrusel\fubol-sala-futsal.jpg" alt="img" className='object-cover w-full h-full' />
@@ -99,14 +94,13 @@ export default function CampeonatosDisponibles() {
               </div>
             </div>
             <div>
-              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold uppercase tracking-wide text-shadow p-6 text-center">
+              <h1 className="text-xl md:text-2xl lg:text-3xl font-bold uppercase tracking-wide text-shadow pt-5 text-center">
                 Campeonatos Disponibles
               </h1>
-              <article className='contenedorCards flex gap-10 mt-20 p-18 justify-around flex-wrap p-5'>
+              <article className='contenedorCards flex gap-10 mt-16 p-18 justify-around flex-wrap p-5'>
                 {user && (
                   <CardCampeonato cedula={user.identificacion} />
                 )}
-
               </article>
             </div>
           </section>

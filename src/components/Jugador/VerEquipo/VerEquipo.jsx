@@ -17,7 +17,7 @@ export const VerEquipo = () => {
     const token = Cookies.get('token')
     const [data, setData] = useState({
         nombreEquipo: '',
-        contactoDos:''
+        contactoDos: ''
     })
     const [validarInscripcion, setValidarInscripcion] = useState()
     const handleImage = async (e) => {
@@ -31,31 +31,31 @@ export const VerEquipo = () => {
 
     }
 
-    useEffect(()=>{
-        const validarInscripcion = async ()=>{
-          const responseValidador = await axios.get(`http://localhost:3001/equipoInscripto/validarInscripcion`,{
-            headers:{
-              cedulaJugador:cedula
-            }
-          })
-    
-          setValidarInscripcion(responseValidador.data.msg)
+    useEffect(() => {
+        const validarInscripcion = async () => {
+            const responseValidador = await axios.get(`http://localhost:3001/equipoInscripto/validarInscripcion`, {
+                headers: {
+                    cedulaJugador: cedula
+                }
+            })
+
+            setValidarInscripcion(responseValidador.data.msg)
         }
-    
+
         validarInscripcion()
-      },[])
-    
+    }, [])
+
     useEffect(() => {
         const obtenerUser = async () => {
-          const response = await axios.get('http://localhost:3001/usuarios/perfil', {
-            headers: {
-              Authorization: `Bearer ${token}`
-            }
-          })
-          setUser(response.data)
+            const response = await axios.get('http://localhost:3001/usuarios/perfil', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            setUser(response.data)
         }
         obtenerUser()
-      }, [])
+    }, [])
 
     useEffect(() => {
         const obtnenerEquipo = async () => {
@@ -71,7 +71,7 @@ export const VerEquipo = () => {
                 })
             setEquipo(response.data)
             setJugadores(response.data.participantes)
-           
+
         }
         obtnenerEquipo()
     }, [])
@@ -123,218 +123,216 @@ export const VerEquipo = () => {
         }
     }
 
-    const buscarJugador =async (identificacion)=>{
-      const response =await searchJugador(identificacion, jugadores)
-      if(response){
-          setJugadores(prev => [...prev,
+    const buscarJugador = async (identificacion) => {
+        const response = await searchJugador(identificacion, jugadores)
+        if (response) {
+            setJugadores(prev => [...prev,
             {
-              _id:response._id,
-              nombreJugador: response.nombreJugador,
-              ficha: response.ficha,
-              dorsal: response.dorsal
+                _id: response._id,
+                nombreJugador: response.nombreJugador,
+                ficha: response.ficha,
+                dorsal: response.dorsal
             }
             ])
-      }
+        }
     }
-   const eliminarJug =async(indice)=>{
-    const response =await eliminarJugador(indice, jugadores, user)
-    setJugadores(response)
-   } 
-    const verificarActualizacion =()=>{
-        if(equipo){
-            const verificarArray = equipo.participantes.filter((item1)=> !jugadores.some((item2)=> item1.nombreJugador == item2.nombreJugador))
-            if(verificarArray.length >0){
+    const eliminarJug = async (indice) => {
+        const response = await eliminarJugador(indice, jugadores, user)
+        setJugadores(response)
+    }
+    const verificarActualizacion = () => {
+        if (equipo) {
+            const verificarArray = equipo.participantes.filter((item1) => !jugadores.some((item2) => item1.nombreJugador == item2.nombreJugador))
+            if (verificarArray.length > 0) {
                 return verificarArray
             }
-           const existeActualizacion = nombreEquipo || contactoDos ||  jugadores.length > equipo.participantes.length
+            const existeActualizacion = nombreEquipo || contactoDos || jugadores.length > equipo.participantes.length
 
-           return   existeActualizacion
+            return existeActualizacion
         }
     }
 
-    const actualizarEquipo =async()=>{
-        
-        const datosAEnviar={}
-        if(nombreEquipo !== equipo.nombreEquipo  && nombreEquipo !== undefined){
+    const actualizarEquipo = async () => {
+
+        const datosAEnviar = {}
+        if (nombreEquipo !== equipo.nombreEquipo && nombreEquipo !== undefined) {
             datosAEnviar.nombreEquipo = nombreEquipo
         }
-        if(contactoDos !== equipo.contactoDos && contactoDos !== undefined){
+        if (contactoDos !== equipo.contactoDos && contactoDos !== undefined) {
             datosAEnviar.contactoDos = contactoDos
         }
-       datosAEnviar.participantes = jugadores
-       Swal.fire({
-        title: "Seguro que deseas actualizar el equipo",
-        icon:"question",
-        showCancelButton: true,
-        confirmButtonText: "Save",
-        confirmButtonColor: "#04ff00",
-        cancelButtonColor: "#d33",
-      }).then(async(result) => {
-          if (result.isConfirmed) {
-            try {     
-                const response =await axios.patch(`http://localhost:3001/inscripcionEquipos/completo/${equipo._id}`, datosAEnviar)
-                console.log(response.data)
-                Swal.fire({
-                  title:"Equipo actualizado correctamente",
-                  icon:"success",
-                  confirmButtonText: "OK",
-            confirmButtonColor: "#0837C0",
-                });
-                setEquipo(response.data)
-                setNombreEquipo()
-                setContactoDos()
-            } catch (error) {
-                console.log(error)
+        datosAEnviar.participantes = jugadores
+        Swal.fire({
+            title: "Seguro que deseas actualizar el equipo",
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Save",
+            confirmButtonColor: "#04ff00",
+            cancelButtonColor: "#d33",
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                try {
+                    const response = await axios.patch(`http://localhost:3001/inscripcionEquipos/completo/${equipo._id}`, datosAEnviar)
+                    console.log(response.data)
+                    Swal.fire({
+                        title: "Equipo actualizado correctamente",
+                        icon: "success",
+                        confirmButtonText: "OK",
+                        confirmButtonColor: "#0837C0",
+                    });
+                    setEquipo(response.data)
+                    setNombreEquipo()
+                    setContactoDos()
+                } catch (error) {
+                    console.log(error)
+                }
             }
-          }
-      })
-       
+        })
+
     }
 
     return (
-        <div className="flex flex-col">
-            <form action="" className='flex gap-10  justify-between p-10'>
+        <div className="flex items-center justify-center min-h-screen bg-gray-200 p-6">
+            <form action="" className='flex flex-row  p-8 w-[80vw] justify-center content-center gap'>
                 {equipo ?
-                    <div className="bg-gray-200 rounded-lg p-5">
-                        <h2 className="text-xl font-bold ml-5">Planilla Inscripcion Equipo</h2>
+                    <div className="bg-gray-50 border border-gray-300 rounded-lg p-6 shadow-sm w-[50vw]">
+                        <h2 className="text-2xl font-semibold text-gray-800 mb-4">Planilla Inscripcion Equipo</h2>
 
-                        <div className="flex items-center gap-5  mt-6">
-                            <label className="" htmlFor="name">
+                        <div className="flex flex-col gap-4 mb-6">
+                            <label className="text-gray-700 text-sm font-medium" htmlFor="name">
                                 Equipo
                             </label>
                             <input
-                            onChange={(e)=>setNombreEquipo(e.target.value)}
-                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" type="text" placeholder={equipo.nombreEquipo} />
+                                onChange={(e) => setNombreEquipo(e.target.value)}
+                                className="bg-gray-100 border border-gray-300 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition duration-200 ease-in-out hover:border-gray-400"
+                                type="text"
+                                placeholder={equipo.nombreEquipo} />
                         </div>
-                        <div className="flex items-center gap-3  mt-6">
-                            <label className="mt-4-label" htmlFor="address">
+
+                        <div className="flex flex-col gap-4 mb-6">
+                            <label className="text-gray-700 text-sm font-medium" htmlFor="address">
                                 Capitan
                             </label>
                             <input
                                 value={equipo.nombreCapitan}
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" id="address"
+                                className="bg-gray-100 border border-gray-300 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition duration-200 ease-in-out hover:border-gray-400"
+                                id="address"
                                 placeholder={equipo.nombreCapitan} />
                         </div>
-                        <div className="flex items-center  gap-16 items- mt-5">
-                            <div className="flex flex-col gap-5">
-                                <div className='flex gap-5 items-center'>
-                                    <label className="text-black w-28" htmlFor="city">
+
+                        <div className="flex gap-8 mb-6">
+                            <div className="flex flex-col gap-4">
+                                <div className='flex items-center gap-4'>
+                                    <label className="text-gray-700 font-medium" htmlFor="city">
                                         Contacto Uno
                                     </label>
                                     <input
                                         value={equipo.contactoUno}
                                         placeholder={equipo.contactoUno}
-                                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        className="bg-gray-100 border border-gray-300 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 p-3 transition duration-200 ease-in-out hover:border-gray-400"
                                         id="city"
-                                        type="text"
-
-                                    />
+                                        type="text" />
                                 </div>
-                                <div className='flex gap-5 items-center'>
-                                    <label className="text-black w-28 " htmlFor="city">
+                                <div className='flex items-center gap-4'>
+                                    <label className="text-gray-700 font-medium" htmlFor="city">
                                         Contacto Dos
                                     </label>
                                     <input
-                                        onChange={(e)=>setContactoDos(e.target.value)}
+                                        onChange={(e) => setContactoDos(e.target.value)}
                                         placeholder={equipo.contactoDos}
-                                        className="w-80 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                        className="bg-gray-100 border border-gray-300 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-80 p-3 transition duration-200 ease-in-out hover:border-gray-400"
                                         id="state"
-                                        type="text"
-                                    />
+                                        type="text" />
                                 </div>
                             </div>
-                            <div className="flex flex-col justify-center items-center w-32">
-                            
-                                <img src={image.img} className=" w-44 h-44 top-52" alt="Logo Del Equipo" />
-                                
-                                {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ?
 
-                                
-                                <div className='flex gap-5'>
-                                    {
-                                        image.tipo == 'Cloudinary' ?
-                                            <label htmlFor="uploadFile1"
-                                                className="mt-5 flex bg-gray-800 hover:bg-gray-700 text-white text-base px-5 py-3 outline-none rounded w-max cursor-pointer mx-auto font-[sans-serif]">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 mr-2 fill-white inline" viewBox="0 0 32 32">
-                                                    <path
-                                                        d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z"
-                                                        data-original="#000000" />
-                                                    <path
-                                                        d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z"
-                                                        data-original="#000000" />
-                                                </svg>
-                                                Cambiar Logo
-                                                <input onChange={handleImage} type="file" id='uploadFile1' className="hidden" />
-                                            </label>
-                                            :
-                                            <label htmlFor="uploadFile1"
-                                                className="mt-5 flex bg-gray-800 hover:bg-gray-700 text-white text-base px-5 py-3 outline-none rounded w-max cursor-pointer mx-auto font-[sans-serif]">
-                                                <svg xmlns="http://www.w3.org/2000/svg" className="w-6 mr-2 fill-white inline" viewBox="0 0 32 32">
-                                                    <path
-                                                        d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z"
-                                                        data-original="#000000" />
-                                                    <path
-                                                        d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z"
-                                                        data-original="#000000" />
-                                                </svg>
-                                                Subir
-                                                <button onClick={() => actualizarLogo()} type="button" id='uploadFile1' className="hidden" />
-                                            </label>
-                                    }
-                                </div>
-                                :''}
+                            <div className="flex flex-col items-center justify-center">
+                                <img src={image.img} className="w-32  rounded-lg shadow-md mb-4 object-cover" alt="Logo Del Equipo" />
+
+                                {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ?
+                                    <div className='flex flex-col gap-4'>
+                                        {
+                                            image.tipo == 'Cloudinary' ?
+                                                <label htmlFor="uploadFile1"
+                                                    className="flex items-center bg-gray-800 hover:bg-gray-700 text-white text-base px-5 py-3 rounded-lg cursor-pointer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 mr-2 fill-white" viewBox="0 0 32 32">
+                                                        <path d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z" />
+                                                        <path d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z" />
+                                                    </svg>
+                                                    Cambiar Logo
+                                                    <input onChange={handleImage} type="file" id='uploadFile1' className="hidden" />
+                                                </label>
+                                                :
+                                                <label htmlFor="uploadFile1"
+                                                    className="flex items-center bg-gray-800 hover:bg-gray-700 text-white text-base px-5 py-3 rounded-lg cursor-pointer">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" className="w-6 mr-2 fill-white" viewBox="0 0 32 32">
+                                                        <path d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z" />
+                                                        <path d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z" />
+                                                    </svg>
+                                                    Subir
+                                                    <button onClick={() => actualizarLogo()} type="button" id='uploadFile1' className="hidden" />
+                                                </label>
+                                        }
+                                    </div>
+                                    : ''}
                             </div>
                         </div>
                     </div>
-                    : <h1 className='text-2xl font-bold mt-10'>No tienes equipos creados todavia</h1>}
-                <div className="w-full bg-gray-200  p-5 rounded-xl">
+                    : <h1 className='text-2xl font-bold text-center text-gray-700 mt-10'>No tienes equipos creados todavía</h1>}
+
+                <div className=" p-6 rounded-lg shadow-sm w-[45vw] flex justify-center align-content-center content-center bg-gray-50">
                     {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ?
-                    <div className='flex justify-center items-center'>
-                        <label className="font-bold text-2xl mr-5">Busca tus compañeros</label>
-                        <input type="search" className="h-10 w-80 rounded-md text-center" onChange={e => setJugador(e.target.value)} placeholder='Busca por su numero de cedula' />
-                        <button className='mt-2.5 px-12 py-5 text-xs uppercase tracking-wider font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none ml-[70px] hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5'
-                            type="button"
-                            onClick={() => buscarJugador(jugador)} >Buscar</button>
-                    </div>
-                    :''}
-                    <table className="border-separate w-full mt-8">
-                        <thead>
+                        <div className='flex flex-col items-center gap-4'>
+                            <label className="font-semibold text-lg text-gray-800">Busca tus compañeros</label>
+                            <input type="search" className="h-12 w-80 rounded-md border border-gray-300 text-gray-800 placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out" onChange={e => setJugador(e.target.value)} placeholder='Busca por su numero de cedula' />
+                            <button className='px-8 py-4 text-base uppercase font-semibold text-white bg-teal-500 rounded-lg shadow-md transition-all duration-300 ease-in-out hover:bg-teal-600 hover:shadow-lg hover:text-black'
+                                type="button"
+                                onClick={() => buscarJugador(jugador)}>Buscar</button>
+                        </div>
+                        : ''}
+
+                    <table className="w-full mt-8 border-separate border-spacing-0 bg-white shadow-sm rounded-lg">
+                        <thead className=''>
                             <tr>
-                                <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">N°</th>
-                                <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">Nombre </th>
-                                <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">Ficha </th>
-                                <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border th3">N° Dorsal </th>
-                                {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato'?
-                                <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">Eliminar</th>
-                                :''}
+                                <th className="bg-blue-gray-200 text-white py-3 px-4 rounded-tl-lg">N°</th>
+                                <th className="bg-blue-gray-200 text-white py-3 px-4">Nombre</th>
+                                <th className="bg-blue-gray-200 text-white py-3 px-4">Ficha</th>
+                                <th className="bg-blue-gray-200 text-white py-3 px-4">N° Dorsal</th>
+                                {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ?
+                                    <th className="bg-blue-gray-200 text-white py-3 px-4 rounded-tr-lg">Eliminar</th>
+                                    : ''}
                             </tr>
                         </thead>
                         <tbody>
                             {jugadores && jugadores.map((equipo, index) => (
-                                <tr className="border-separate text-center text-lg font-medium">
-                                    <td className="border rounded-md p-1 bg-white">{index + 1}</td>
-                                    <td className="border rounded-md p-1 bg-white">{equipo.nombreJugador}</td>
-                                    <td className="border rounded-md p-1 bg-white">{equipo.ficha}</td>
-                                    <td className="border rounded-md p-1 bg-white">{equipo.dorsal}</td>
+                                <tr key={index} className="text-center text-gray-700">
+                                    <td className="py-2 px-4 border-b border-gray-200">{index + 1}</td>
+                                    <td className="py-2 px-4 border-b border-gray-200">{equipo.nombreJugador}</td>
+                                    <td className="py-2 px-4 border-b border-gray-200">{equipo.ficha}</td>
+                                    <td className="py-2 px-4 border-b border-gray-200">{equipo.dorsal}</td>
                                     {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ?
-                                    <td  onClick={()=>eliminarJug(index)} className=" hover:cursor-pointer border rounded-md p-1 bg-white flex items-center justify-center"><img className="" src="/public/img/carrusel/eliminar.svg" alt="" /></td>
-                            :''}
+                                        <td className="py-2 px-4 border-b border-gray-200 hover:bg-gray-100 cursor-pointer" onClick={() => eliminarJug(index)}>
+                                            <img className="w-6 h-6 mx-auto" src="/public/img/carrusel/eliminar.svg" alt="Eliminar" />
+                                        </td>
+                                        : ''}
                                 </tr>
                             ))}
                         </tbody>
                     </table>
                 </div>
             </form>
+
             {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ?
-            <div className='text-center flex justify-center'>
-            {verificarActualizacion() && (
-            <h1 
-            onClick={()=>actualizarEquipo()}
-            className='bg-black text-white p-3 w-48 rounded-lg text-xl font-bold text-center cursor-pointer'>Actualiar</h1>
-            )}
-            </div>
-            :''}
-       
+                <div className='flex flex-col items-center justify-center w-1/2'>
+                    {verificarActualizacion() && (
+                        <h1
+                            onClick={() => actualizarEquipo()}
+                            className='bg-black text-white p-4 w-48 rounded-lg text-xl font-bold cursor-pointer hover:bg-gray-800'>
+                            Actualizar
+                        </h1>
+                    )}
+                </div>
+                : ''}
         </div>
     )
 }
