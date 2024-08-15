@@ -42,16 +42,16 @@ const[botonVer, setBotonVer]=useState()
         resultados()
     },[idfase])
   const cambioFase2= cambioFase(vs,resultado)
-  const EquipoGanador=ganador(resultado)
-  useEffect(()=>{
-    if(EquipoGanador){
-      console.log('campeonato finalizado')
-      EquiposGanadores()
-      setOk(false)
-      setGanadorCampeonato(equipoGanadores)
-  setMostrarGanador(true)
-    }
-  },[datosVss])
+  // const EquipoGanador=ganador(resultado)
+  // useEffect(()=>{
+  //   if(EquipoGanador){
+  //     console.log('campeonato finalizado')
+  //     EquiposGanadores()
+  //     setOk(false)
+  //     setGanadorCampeonato(equipoGanadores)
+  // setMostrarGanador(true)
+  //   }
+  // },[datosVss])
   
  
 useEffect(()=>{

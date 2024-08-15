@@ -1,12 +1,15 @@
 import { chartsConfig } from "@/configs";
+import { numeroEquipos } from "./dataGraficas";
+
+const resultadoEquipos =await numeroEquipos()
 
 const websiteViewsChart = {
   type: "bar",
-  height: 220,
+  height: 250,
   series: [
     {
-      name: "Views",
-      data: [50, 20, 10, 22, 50, 10, 40],
+      name: "N° Equipos",
+      data: resultadoEquipos,
     },
   ],
   options: {
@@ -14,20 +17,20 @@ const websiteViewsChart = {
     colors: "#388e3c",
     plotOptions: {
       bar: {
-        columnWidth: "16%",
-        borderRadius: 5,
+        columnWidth: "15%",
+        borderRadius: 6,
       },
     },
     xaxis: {
       ...chartsConfig.xaxis,
-      categories: ["M", "T", "W", "T", "F", "S", "S"],
+      categories: ["1", "2", "3", "4", "5"],
     },
   },
 };
 
 const dailySalesChart = {
   type: "line",
-  height: 220,
+  height: 250,
   series: [
     {
       name: "Sales",
@@ -62,7 +65,7 @@ const dailySalesChart = {
 
 const completedTaskChart = {
   type: "line",
-  height: 220,
+  height: 250,
   series: [
     {
       name: "Sales",
@@ -107,23 +110,20 @@ const completedTasksChart = {
 export const statisticsChartsData = [
   {
     color: "white",
-    title: "Website View",
-    description: "Last Campaign Performance",
-    footer: "campaign sent 2 days ago",
+    title: "Top 5 de campeonatos con mas inscritos",
+    description: "Esta grafica muestra el numero de equipos inscritos por campeonato",
     chart: websiteViewsChart,
   },
   {
     color: "white",
     title: "Daily Sales",
     description: "15% increase in today sales",
-    footer: "updated 4 min ago",
     chart: dailySalesChart,
   },
   {
     color: "white",
     title: "Completed Tasks",
     description: "Last Campaign Performance",
-    footer: "just updated",
     chart: completedTasksChart,
   },
 ];
