@@ -1,7 +1,10 @@
 import { chartsConfig } from "@/configs";
-import { numeroEquipos } from "./dataGraficas";
+import { cantidadCampeonatos, numeroEquipos, numeroInscritos } from "./dataGraficas";
 
 const resultadoEquipos =await numeroEquipos()
+const resultadoIntegrantes = await numeroInscritos()
+
+const resultadoCampeonatos = await cantidadCampeonatos()
 
 const websiteViewsChart = {
   type: "bar",
@@ -34,7 +37,7 @@ const dailySalesChart = {
   series: [
     {
       name: "Sales",
-      data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+      data: resultadoIntegrantes,
     },
   ],
   options: {
@@ -55,76 +58,64 @@ const dailySalesChart = {
         "Jul",
         "Aug",
         "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
       ],
     },
   },
 };
 
 const completedTaskChart = {
-  type: "line",
+  type: "pie",
   height: 250,
-  series: [
-    {
-      name: "Sales",
-      data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
-    },
-  ],
+  series: [resultadoCampeonatos.interfichas, resultadoCampeonatos.intercentros, resultadoCampeonatos.recreativos],
   options: {
-    ...chartsConfig,
-    colors: ["#388e3c"],
-    stroke: {
-      lineCap: "round",
+    chart: {
+      width: 380,
+      type: 'pie',
     },
-    markers: {
-      size: 5,
+    colors: ["#388e3c", "#0288d1", "#FDCC00"], 
+    labels: [
+      "Interfichas",
+      "Intercentros",
+      "Recreativos",
+    ], 
+    plotOptions: {
+      pie: {
+        expandOnClick: true, // Activa el desplazamiento al hacer clic
+        dataLabels: {
+          offset: 20, 
+        },
+      },
     },
-    xaxis: {
-      ...chartsConfig.xaxis,
-      categories: [
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+    dataLabels: {
+      enabled: true, // Activa las etiquetas de datos
+      formatter: function (val) {
+        return val.toFixed(0); // Formatea los valores como enteros
+      },
     },
+
+    
   },
 };
-const completedTasksChart = {
-  ...completedTaskChart,
-  series: [
-    {
-      name: "Tasks",
-      data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-    },
-  ],
-};
+
 
 export const statisticsChartsData = [
   {
     color: "white",
-    title: "Top 5 de campeonatos con mas inscritos",
+    title: "Top 5 de campeonatos con mas equipos mas inscritos",
     description: "Esta grafica muestra el numero de equipos inscritos por campeonato",
     chart: websiteViewsChart,
   },
   {
     color: "white",
-    title: "Daily Sales",
-    description: "15% increase in today sales",
+    title: "Top 6 de campeonatos con mas integrantes de equipos mas inscritos",
+    description: "Esta grafica muestra el numero de integrantes de equipos por campeonato",
     chart: dailySalesChart,
   },
   {
     color: "white",
-    title: "Completed Tasks",
-    description: "Last Campaign Performance",
-    chart: completedTasksChart,
+    title: "Campeonatos creados por modalidades",
+    description: "Esta grafica muestra el porcentaje de campeonatos creados por modalidad",
+    chart: completedTaskChart,
   },
 ];
 
