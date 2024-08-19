@@ -18,7 +18,7 @@ export default function Landing() {
   }, []);
   return (
     <>
-      
+
       <div>
         <nav class="bg-white dark:bg-gray-900 w-[100vw]  ">
           <div class="flex flex-wrap items-center mx-auto h-[10vh]">
@@ -58,7 +58,7 @@ export default function Landing() {
             </div>
           </div>
         </nav>
-
+        {/* 
         <div class=" flex flex-col justify-center items-center">
           <div className="relative">
             <img src='/public/img/landing/imgplayer.jpg' className='h-[96vh] object-cover  w-screen'></img>
@@ -76,11 +76,27 @@ export default function Landing() {
             </div>
           </div>
 
+        </div> */}
+        <div class="flex flex-col justify-center items-center">
+          <div className="relative">
+            <img src="/public/img/landing/imgplayer.jpg" className="h-[96vh] object-cover w-screen" />
+            <div className="absolute inset-0 flex flex-col w-[90vw] sm:w-[60vw] md:w-[40vw] lg:w-[20vw] justify-end pb-16 md:pb-32">
+              <p className="w-[90%] sm:w-[80%] md:w-[60%] lg:w-[33rem] text-[1.2rem] sm:text-[1.4rem] md:text-[1.6rem] lg:text-[1.9rem] font-sans leading-[1.5] sm:leading-[1.6] md:leading-[1.7] text-justify ml-4 sm:ml-[2rem] md:ml-[3rem] tracking-[0.5px] sm:tracking-[0.75px] md:tracking-[1px] text-black">
+                Crea campeonatos inolvidables. ¡Dale vida a la competencia y eleva el espíritu deportivo! ¿Estás listo para ser parte de la experiencia?
+              </p>
+              <Link to={`auth/sign-in`}>
+                <button className="BotonUnirmeAnimacion ml-4 sm:ml-[2rem] md:ml-[3rem] mt-[1rem] sm:mt-[1.5rem] md:mt-[2rem] px-[20px] py-[15px] sm:px-[22px] sm:py-[18px] md:px-[25px] md:py-[20px] text-[15px] sm:text-[16px] md:text-[17px] font-bold cursor-pointer">
+                  Únete Ahora
+                </button>
+              </Link>
+            </div>
+          </div>
         </div>
+
       </div>
-      
+
       <div class="bg-white w-full h-full flex flex-col justify-center">
-        
+
         <section className="mt-2 w-[100vw] h-[100vh] flex flex-row gap-5 justify-center items-center mr-16">
 
           <div className=" w-[45vw] h-full flex justify-center items-center rounded-xl drop-shadow-xl" data-aos="fade-right" >
@@ -90,11 +106,11 @@ export default function Landing() {
           </div>
 
           <div className="flex flex-row flex-wrap mb-5 pb-5 w-[55vw]">
-            <div className="flex flex-col h-[20vh]">
+            <div className="flex flex-col h-[20vh] mb-10">
               <h3 className="pt-12 text-3xl font-bold uppercase tracking-wide text-shadow ">PARA ORGANIZADORES</h3>
               <p className="pt-6 text-xl mt-4">Optimiza la gestión de tus torneos con nuestra plataforma, convierte tus ideas en experiencias inolvidables.</p>
             </div>
-            <div className="flex flex-col h-[80vh] justify-around">
+            <div className="flex flex-col h-[70vh] justify-around">
               <div className="flex flex-row mb-5 pb-5">
                 <div className="w-[10vw]">
                   <img data-aos="zoom-in-down" className='w-[6vw] object-cover'
@@ -134,7 +150,7 @@ export default function Landing() {
           <div className="mt-6 ml-2 w-full h-full flex flex-row bg-blue-gray-50 rounded-lg">
             <section className='flex flex-col pl-24'>
               <div className="w-full  flex flex-col ml-2">
-                
+
                 <p className="pt-4 mb-5 text-xl mt-4 tracking-wider">Regístrate y participa en campeonatos exclusivos en nuestra plataforma para amantes del juego.</p>
               </div>
 
@@ -225,44 +241,47 @@ export default function Landing() {
           </div>
         </section>
 
-        <CardFooter className='flex flex-wrap bg-blue-gray-100 w-full'>
-          <section className='w-1/3 flex flex-col justify-center items-center'>
-            <Typography className='text-lg font-bold mb-3'>¿Que hacemos?</Typography>
-            <Typography></Typography>
-            <Typography>¿Que hacemos?</Typography>
-            <Typography>¿Que hacemos?</Typography>
-          </section>
-          <section className='w-1/3 flex flex-col gap-5 justify-center items-center'>
-            <Typography className='text-lg font-bold '>Siguenos es redes sociales</Typography>
-            <div className='flex flex-row gap-6'>
+        <div className='flex justify-center bg-blue-gray-100 w-screen'>
+          <CardFooter className='flex flex-wrap  w-[90vw] justify-between'>
+            <section className='flex flex-col justify-center items-center'>
+              <Typography className='text-lg font-bold mb-3'>¿Que hacemos?</Typography>
+              <Typography></Typography>
+              <Typography>¿Que hacemos?</Typography>
+              <Typography>¿Que hacemos?</Typography>
+            </section>
+            <section className='flex flex-col gap-5 justify-center items-center'>
+              <Typography className='text-lg font-bold '>Siguenos es redes sociales</Typography>
+              <div className='flex flex-row gap-6'>
 
-              <FaFacebookF className="text-blue-600 w-9 h-9" />
-              <FaInstagram className='text-pink-400  w-9 h-9' />
-              <FaWhatsapp className='text-green-500  w-9 h-9' />
-
-            </div>
-          </section>
-          <section className='w-1/3 gap-3 flex flex-col justify-center items-center'>
-            <Typography className='text-lg font-bold'>Contactanos</Typography>
-
-            <div className='flex gap-2 flex-col justify-center items-center'>
-              <div className='flex flex-row gap-3 justify-center items-center'>
-                <FaEnvelope className='' />
-                <Typography>grupoAdso@gmail.com</Typography>
-              </div>
-              <div className='flex flex-row gap-3 justify-center items-center'>
-                <FaPhone className='' />
-                <Typography>3001364564</Typography>
-              </div>
-              <div className='flex flex-row gap-3 justify-center items-center'>
-                <FaHome className='' />
-                <Typography>Sena</Typography>
+                <FaFacebookF className="text-blue-600 w-9 h-9" />
+                <FaInstagram className='text-pink-400  w-9 h-9' />
+                <FaWhatsapp className='text-green-500  w-9 h-9' />
 
               </div>
-            </div>
+            </section>
+            <section className='gap-3 flex flex-col justify-center items-center'>
+              <Typography className='text-lg font-bold'>Contactanos</Typography>
 
-          </section>
-        </CardFooter>
+              <div className='flex gap-2 flex-col justify-center items-center'>
+                <div className='flex flex-row gap-3 justify-center items-center'>
+                  <FaEnvelope className='' />
+                  <Typography>grupoAdso@gmail.com</Typography>
+                </div>
+                <div className='flex flex-row gap-3 justify-center items-center'>
+                  <FaPhone className='' />
+                  <Typography>3001364564</Typography>
+                </div>
+                <div className='flex flex-row gap-3 justify-center items-center'>
+                  <FaHome className='' />
+                  <Typography>Sena</Typography>
+
+                </div>
+              </div>
+
+            </section>
+          </CardFooter>
+        </div>
+
       </div>
 
     </>
