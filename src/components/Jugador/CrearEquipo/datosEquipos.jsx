@@ -212,12 +212,20 @@ export const DatosEquipos = () => {
 
     <div className="flex items-center bg-white flex-col w-[100vw]">
       {equipo ?
-        <div>
-          <h1 className="mt-20 text-3xl font-bold bg-red-400 p-5 text-white rounded-lg">Ya tienes creado un equipo no puedes crear mas</h1>
-          <Link to={'/jugador/dashboard'}>
-            <button className="bg-black text-white mt-5 h-14  w-full rounded-lg text-2xl">Atras</button>
-          </Link>
+        <div className="flex items-center justify-center min-h-screen p-6 w-screen">
+          <div className="bg-white shadow-2xl rounded-3xl p-8 max-w-md w-full text-center transform transition-transform duration-300 hover:scale-105">
+            <h1 className="text-2xl font-bold text-gray-800 mb-6">
+              Ya tienes creado un equipo, no puedes crear más
+            </h1>
+            <Link to={'/jugador/dashboard'}>
+              <button className="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                Atrás
+              </button>
+            </Link>
+          </div>
         </div>
+
+
         :
 
         <form action="" onSubmit={submit}>
@@ -340,7 +348,7 @@ export const DatosEquipos = () => {
             </table>
           </div>
           <div class="w-[60vw] flex justify-start mt-10 ButtonPlanillaIns">
-            <button class=" select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="submit"> Inscribir </button>
+            <button class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="submit"> Inscribir </button>
           </div>
         </form>
       }
