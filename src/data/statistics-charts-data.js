@@ -3,7 +3,6 @@ import { cantidadCampeonatos, numeroEquipos, numeroInscritos } from "./dataGrafi
 
 const resultadoEquipos =await numeroEquipos()
 const resultadoIntegrantes = await numeroInscritos()
-
 const resultadoCampeonatos = await cantidadCampeonatos()
 
 const websiteViewsChart = {
@@ -52,12 +51,12 @@ const dailySalesChart = {
     xaxis: {
       ...chartsConfig.xaxis,
       categories: [
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
       ],
     },
   },

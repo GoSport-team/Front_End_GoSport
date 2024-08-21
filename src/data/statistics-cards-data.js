@@ -22,7 +22,7 @@ export const statisticsCardsData = [
     footer: {
       color: "text-green-500",
       value: equipos,
-      label: "equipos sean inscirto en el top 5 de campeonatos con mas equipos ",
+      label: "Equipos inscritos en los 5 campeonatos con más equipos ",
     },
   },
   {
@@ -33,7 +33,7 @@ export const statisticsCardsData = [
     footer: {
       color: "text-green-500",
       value: participantes,
-      label: "integrantes se han inscrito al top 6 de campeonatos con mas integrantes",
+      label: "Integrantes inscritos en los 6 campeonatos con más participantes",
     },
   },
   {

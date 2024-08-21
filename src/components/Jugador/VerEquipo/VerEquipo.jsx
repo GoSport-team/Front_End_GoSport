@@ -392,7 +392,7 @@ export const VerEquipo = () => {
                                     alt="Logo Del Equipo"
                                 />
 
-                                {validarInscripcion !== 'Equipo ya está Inscrito en un campeonato' ? (
+                                {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ? (
                                     <div className="flex flex-col gap-4">
                                         {image.tipo === 'Cloudinary' ? (
                                             <label htmlFor="uploadFile1" className="flex items-center bg-gray-800 hover:bg-gray-700 text-white text-base px-5 py-3 rounded-lg cursor-pointer">
@@ -426,7 +426,7 @@ export const VerEquipo = () => {
             <div className="w-[45vw] h-[60vh] flex flex-col  bg-blue-gray-50 rounded-xl">
                 <div className="rounded-lg shadow-sm flex flex-col w-[45vw] h-[60vh]">
                     <div className="flex flex-col  gap-4 mt-8 px-4">
-                        {validarInscripcion !== 'Equipo ya está Inscrito en un campeonato' ? (
+                        {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ? (
                             <div className="flex flex-row items-center gap-4">
                                 <label className="font-semibold text-lg text-gray-800">Busca tus compañeros</label>
                                 <input
@@ -454,7 +454,7 @@ export const VerEquipo = () => {
                                     <th className="bg-blue-gray-200 text-white py-3 px-4">Nombre</th>
                                     <th className="bg-blue-gray-200 text-white py-3 px-4">Ficha</th>
                                     <th className="bg-blue-gray-200 text-white py-3 px-4">N° Dorsal</th>
-                                    {validarInscripcion !== 'Equipo ya está Inscrito en un campeonato' ? (
+                                    {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ? (
                                         <th className="bg-blue-gray-200 text-white py-3 px-4 rounded-tr-lg">Eliminar</th>
                                     ) : ''}
                                 </tr>
@@ -480,7 +480,7 @@ export const VerEquipo = () => {
                         </table>
                     </div>
 
-                    {validarInscripcion !== 'Equipo ya está Inscrito en un campeonato' ? (
+                    {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ? (
                         <div className="px-4 mt-5 w-[10vw]">
                             {verificarActualizacion() && (
                                 <h1
