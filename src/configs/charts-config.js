@@ -1,7 +1,7 @@
 export const chartsConfig = {
   chart: {
     toolbar: {
-      show: false,
+      show: true,
     },
   },
   title: {
@@ -15,14 +15,14 @@ export const chartsConfig = {
       show: false,
     },
     axisBorder: {
-      show: false,
+      show: true,
     },
     labels: {
       style: {
         colors: "#37474f",
         fontSize: "13px",
         fontFamily: "inherit",
-        fontWeight: 300,
+        fontWeight: 400,
       },
     },
   },
@@ -32,7 +32,7 @@ export const chartsConfig = {
         colors: "#37474f",
         fontSize: "13px",
         fontFamily: "inherit",
-        fontWeight: 300,
+        fontWeight: 400,
       },
     },
   },
@@ -46,7 +46,7 @@ export const chartsConfig = {
       },
     },
     padding: {
-      top: 5,
+      top: 2,
       right: 20,
     },
   },

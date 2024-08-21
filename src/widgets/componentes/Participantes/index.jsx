@@ -1,12 +1,12 @@
 'use client'
-import React,{useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 
-export default function Participantes({equipo,id, modal, setShowConfirmModalEliminar,setIdInscripto}) {
-    
-  const  handleEliminarClick=()=>{
-    setShowConfirmModalEliminar(true)
-    setIdInscripto(id)
-  }
+export default function Participantes({ equipo, id, modal, setShowConfirmModalEliminar, setIdInscripto }) {
+
+    const handleEliminarClick = () => {
+        setShowConfirmModalEliminar(true)
+        setIdInscripto(id)
+    }
     return (
         <div className="relative">
             <div className='flex justify-center items-center m-3'>
@@ -95,28 +95,23 @@ export default function Participantes({equipo,id, modal, setShowConfirmModalElim
                                 >
                                     Ver Jugadores
                                 </button>
-    
-                        </div>
-                           
-                            <div>
-                             <button
-                             onClick={handleEliminarClick}
-                                className="m-2 bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded"
-                              >
-                              Eliminar
-                          </button>
-                          </div>
 
+                            </div>
 
-
-
-
+                            <div className='mt-3'>
+                                <button
+                                    onClick={handleEliminarClick}
+                                    class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                >
+                                    Eliminar
+                                </button>
+                            </div>
                         </div>
 
                     </div>
                 )}
             </div>
-            
+
         </div>
     )
 }

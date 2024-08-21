@@ -30,96 +30,99 @@ export default function Planillero() {
         fetchUsuarios();
     }, []);
 
-    const eliminarPlanillero = async(id, nombre)=>{
+    const eliminarPlanillero = async (id, nombre) => {
         Swal.fire({
-            icon:"question", 
+            icon: "question",
             title: `Seguro de que quieres eliminar al planillero ${nombre}`,
             showCancelButton: true,
             confirmButtonText: "Si",
             confirmButtonColor: "#04ff00",
             cancelButtonColor: "#d33",
-          }).then(async(result) => {
-            
+        }).then(async (result) => {
+
             if (result.isConfirmed) {
                 const response = await axios.delete(`http://localhost:3001/usuarios/${id}`)
                 console.log(response.data)
-                if(response.data){
+                if (response.data) {
                     Swal.fire("Saved!", "", "success");
                 }
             }
-          });
+        });
 
-          setUsuarios(usuarios.filter((usuario)=> usuario._id !== id))
+        setUsuarios(usuarios.filter((usuario) => usuario._id !== id))
     }
     if (loading) return <div>Loading...</div>;
-    const handleModalActualizar =(id)=>{
+    const handleModalActualizar = (id) => {
         setId(id)
         setOpenModal(true)
     }
     const closeModal = () => {
         setOpenModal(false);
-      };
+    };
     return (
         <>
-        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <button className='bg-gradient-to-tr from-gray-900 to-gray-800 hover:from-gray-800 hover:to-gray-700 text-white px-8 py-4 rounded mb-5 '><Link to={'/planillero/agregar'}>Agregar planillero</Link></button>
-    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-        <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-                <th scope="col" className="px-6 py-3">
-                    Nombre
-                </th>
-                <th scope="col" className="px-6 py-3">
-                    Correo
-                </th>
-                <th scope="col" className="px-6 py-3">
-                    Identificacion
-                </th>
-                <th scope="col" className="px-6 py-3">
-                    Actualizar
-                </th>
-                <th scope="col" className="px-6 py-3">
-                    Eliminar
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            {usuarios && usuarios.map((usuario, indice)=>(
-            <tr key={indice} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                   {usuario.nombres}
-                </th>
-                <td className="px-6 py-4">
-                    {usuario.correo}
-                </td>
-                <td className='px-6 py-4'>
-                    {usuario.identificacion}
-                </td>
-                <td className="px-6 py-4">
-                    <FaUserEdit
-                    onClick={()=>handleModalActualizar(usuario.correo)}
-                    className='w-10 h-8 text-cyan-800 cursor-pointer'/>
-                </td>
-                <td className="px-6 py-4">
-                    <FaTrashAlt
-                    onClick={()=> eliminarPlanillero(usuario._id, usuario.nombres)}
-                    className='w-10 h-8 text-red-400 cursor-pointer'/>
-                </td>
-            </tr>
-            ))}
-        </tbody>
-    </table>
-</div>
-    {openModal &&  (
-        
-        <ActualizarPlanillero 
-        id={id}
-        isOpen={openModal}
-        onClose={closeModal}
-        />   
-    )}
-</>
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                <button 
+                class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none mb-4">
+                    <Link to={'/planillero/agregar'}>Agregar planillero</Link>
+                </button>
+                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                            <th scope="col" className="px-6 py-3">
+                                Nombre
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Correo
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Identificacion
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Actualizar
+                            </th>
+                            <th scope="col" className="px-6 py-3">
+                                Eliminar
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {usuarios && usuarios.map((usuario, indice) => (
+                            <tr key={indice} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {usuario.nombres}
+                                </th>
+                                <td className="px-6 py-4">
+                                    {usuario.correo}
+                                </td>
+                                <td className='px-6 py-4'>
+                                    {usuario.identificacion}
+                                </td>
+                                <td className="px-6 py-4">
+                                    <FaUserEdit
+                                        onClick={() => handleModalActualizar(usuario.correo)}
+                                        className='w-10 h-8 text-cyan-800 cursor-pointer' />
+                                </td>
+                                <td className="px-6 py-4">
+                                    <FaTrashAlt
+                                        onClick={() => eliminarPlanillero(usuario._id, usuario.nombres)}
+                                        className='w-10 h-8 text-red-400 cursor-pointer' />
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+            {openModal && (
 
-               
+                <ActualizarPlanillero
+                    id={id}
+                    isOpen={openModal}
+                    onClose={closeModal}
+                />
+            )}
+        </>
+
+
     )
 }

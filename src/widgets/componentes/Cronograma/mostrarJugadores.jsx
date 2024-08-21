@@ -296,7 +296,7 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
                     <div className='grid place-content-center'>
                         <button
                             onClick={togglePlayerRows}
-                            className="mt-5 px-4 py-2 bg-black text-white rounded flex items-center rounded-md opacity-80"
+                            class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         >
                             {showPlayers ? 'Ocultar Jugadores' : 'Mostrar Jugadores'}
                             <FontAwesomeIcon
@@ -411,7 +411,7 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
                     <div className='grid place-content-center'>
                         <button
                             onClick={togglePlayerRowsTable2}
-                            className="mt-5 px-4 py-2 bg-black text-white rounded flex items-center opacity-75"
+                            class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         >
                             {showPlayersTable2 ? 'Ocultar Jugadores' : 'Mostrar Jugadores'}
                             <FontAwesomeIcon
@@ -428,7 +428,8 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
         <div className="flex justify-end pr-3 pb-3 mt-2">
             <div className="flex justify-end">
            
-                <button onClick={()=>setModalOpenOk(true)} className="bg-black text-white py-2 px-4 rounded-lg">
+                <button onClick={()=>setModalOpenOk(true)} 
+                class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
                     Finalizar Partido
                 </button>
                

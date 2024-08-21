@@ -1,12 +1,18 @@
 import { chartsConfig } from "@/configs";
+import { cantidadCampeonatos, numeroEquipos, numeroInscritos } from "./dataGraficas";
+
+const resultadoEquipos =await numeroEquipos()
+const resultadoIntegrantes = await numeroInscritos()
+
+const resultadoCampeonatos = await cantidadCampeonatos()
 
 const websiteViewsChart = {
   type: "bar",
-  height: 220,
+  height: 250,
   series: [
     {
-      name: "Views",
-      data: [50, 20, 10, 22, 50, 10, 40],
+      name: "N° Equipos",
+      data: resultadoEquipos,
     },
   ],
   options: {
@@ -14,24 +20,24 @@ const websiteViewsChart = {
     colors: "#388e3c",
     plotOptions: {
       bar: {
-        columnWidth: "16%",
-        borderRadius: 5,
+        columnWidth: "15%",
+        borderRadius: 6,
       },
     },
     xaxis: {
       ...chartsConfig.xaxis,
-      categories: ["M", "T", "W", "T", "F", "S", "S"],
+      categories: ["1", "2", "3", "4", "5"],
     },
   },
 };
 
 const dailySalesChart = {
   type: "line",
-  height: 220,
+  height: 250,
   series: [
     {
       name: "Sales",
-      data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+      data: resultadoIntegrantes,
     },
   ],
   options: {
@@ -52,79 +58,64 @@ const dailySalesChart = {
         "Jul",
         "Aug",
         "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
       ],
     },
   },
 };
 
 const completedTaskChart = {
-  type: "line",
-  height: 220,
-  series: [
-    {
-      name: "Sales",
-      data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
-    },
-  ],
+  type: "pie",
+  height: 250,
+  series: [resultadoCampeonatos.interfichas, resultadoCampeonatos.intercentros, resultadoCampeonatos.recreativos],
   options: {
-    ...chartsConfig,
-    colors: ["#388e3c"],
-    stroke: {
-      lineCap: "round",
+    chart: {
+      width: 380,
+      type: 'pie',
     },
-    markers: {
-      size: 5,
+    colors: ["#388e3c", "#0288d1", "#FDCC00"], 
+    labels: [
+      "Interfichas",
+      "Intercentros",
+      "Recreativos",
+    ], 
+    plotOptions: {
+      pie: {
+        expandOnClick: true, // Activa el desplazamiento al hacer clic
+        dataLabels: {
+          offset: 20, 
+        },
+      },
     },
-    xaxis: {
-      ...chartsConfig.xaxis,
-      categories: [
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
-      ],
+    dataLabels: {
+      enabled: true, // Activa las etiquetas de datos
+      formatter: function (val) {
+        return val.toFixed(0); // Formatea los valores como enteros
+      },
     },
+
+    
   },
 };
-const completedTasksChart = {
-  ...completedTaskChart,
-  series: [
-    {
-      name: "Tasks",
-      data: [50, 40, 300, 220, 500, 250, 400, 230, 500],
-    },
-  ],
-};
+
 
 export const statisticsChartsData = [
   {
     color: "white",
-    title: "Website View",
-    description: "Last Campaign Performance",
-    footer: "campaign sent 2 days ago",
+    title: "Top 5 de campeonatos con mas equipos mas inscritos",
+    description: "Esta grafica muestra el numero de equipos inscritos por campeonato",
     chart: websiteViewsChart,
   },
   {
     color: "white",
-    title: "Daily Sales",
-    description: "15% increase in today sales",
-    footer: "updated 4 min ago",
+    title: "Top 6 de campeonatos con mas integrantes de equipos mas inscritos",
+    description: "Esta grafica muestra el numero de integrantes de equipos por campeonato",
     chart: dailySalesChart,
   },
   {
     color: "white",
-    title: "Completed Tasks",
-    description: "Last Campaign Performance",
-    footer: "just updated",
-    chart: completedTasksChart,
+    title: "Campeonatos creados por modalidades",
+    description: "Esta grafica muestra el porcentaje de campeonatos creados por modalidad",
+    chart: completedTaskChart,
   },
 ];
 
