@@ -222,7 +222,7 @@ export default function ModalCrear({ openPlan, onRequestClose, onUsuarioCreado }
                                     </div>
                                     <div className="col-span-2 flex justify-between content-center items-center">
                                         <button
-                                            className="inline-flex w-full sm:w-auto items-center justify-center rounded-md bg-black px-3.5 py-2.5 font-semibold leading-7 text-white hover:bg-black/80"
+                                            class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                                             type="submit"
                                         >
                                             Guardar

@@ -58,8 +58,8 @@ export function Tables() {
   return (
     <>
     <div className="mt-10 mb-8 flex flex-col">
-    <div className="flex justify-start">
-      <button className="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3">
+    <div className="flex justify-start mb-4">
+      <button class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
         <Link to="/dashboard/tables/view">Crear Campeonato</Link>
       </button>
     </div>

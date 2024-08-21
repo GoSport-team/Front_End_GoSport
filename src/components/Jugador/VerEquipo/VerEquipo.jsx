@@ -388,7 +388,7 @@ export const VerEquipo = () => {
                             <div className="flex flex-col items-center justify-center">
                                 <img
                                     src={image.img}
-                                    className="w-32 rounded-lg shadow-md mb-4 object-cover"
+                                    className="w-32 rounded-lg  mb-4 object-cover"
                                     alt="Logo Del Equipo"
                                 />
 

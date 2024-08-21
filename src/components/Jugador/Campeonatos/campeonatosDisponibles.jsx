@@ -15,7 +15,6 @@ export default function CampeonatosDisponibles() {
     const obtenerUser = async () => {
       const response = await axios.get('http://localhost:3001/usuarios/perfil', {
         headers: {
-          Authorization: `Bearer ${token}`
         }
       })
       setUser(response.data)
