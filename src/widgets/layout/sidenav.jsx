@@ -29,8 +29,8 @@ export function Sidenav({ brandImg, brandName, routes }) {
       >
         <Link to="/" className="py-6 px-8 text-center">
           <Typography
-            variant="h6"
             color={sidenavType === "dark" ? "white" : "blue-gray"}
+            variant="h6"
           >
             {brandName}
           </Typography>
@@ -97,7 +97,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
 
 Sidenav.defaultProps = {
   brandImg: "/img/logo-ct.png",
-  brandName: "Material Tailwind React",
+  brandName: "GoSport",
 };
 
 Sidenav.propTypes = {
