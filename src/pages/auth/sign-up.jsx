@@ -14,11 +14,29 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { registroUser } from "../../services/api";
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import axios from "axios";
+
 export function SignUp() {
 
   const [setContrasena , setSetContrasena] = useState(false)
   const [setConfirmContra, setSetConfirmContra] = useState(false)
   const [selectedOption, setSelectedOption] = useState('');
+  const [programa, setPrograma] = useState([])
+
+  useEffect(() => {
+    const fetchPrograma = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3001/programa`);
+            setPrograma(response.data);
+            console.log('Programas', response.data);
+            
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    fetchPrograma();
+}, []);
+
   const {
     register,
     handleSubmit,
@@ -222,24 +240,28 @@ const handleSelectChange = (e) => {
                 })}
             />
           </div>
-                    <div className="mb-1 flex flex-col gap-3">
-                      <Typography variant="small" color="blue-gray" className="-mb-3 font-medium text-base">
-                        Nombre del programa que estas cursando
-                      </Typography>
-                      <Input
-                        size="lg"
-                        type="text"
-                        id="programa"
-                        placeholder="Analisis y desarrollo del software"
-                        className={`!border-blue-gray-200 focus:!border-gray-900 ${errors.programa ? '!border-1 !border-red-500' : ''}`}
-                        labelProps={{
-                          className: "before:content-none after:content-none",
-                        }}
-                        {...register("programa", {
-                          required: "Este campo es obligatorio",
-                        })}
-                      />
-                    </div>
+                    
+
+<div className="mb-1 flex flex-col gap-3">
+        <Typography variant="small" color="blue-gray" className="-mb-3 font-medium text-base">
+          Nombre del programa que estás cursando
+        </Typography>
+        <select
+          id="programa"
+          className={`border p-2 rounded-md focus:outline-none ${errors.programa ? 'border-red-500' : 'border-gray-300'}`}
+          {...register("programa", {
+            required: "Este campo es obligatorio",
+          })}
+        >
+          <option value="">Selecciona un programa</option>
+          {programa.map((programa) => (
+            <option key={programa._id} value={programa.namePrograma}>
+              {programa.namePrograma}
+            </option>
+          ))}
+        </select>
+        {errors.programa && <span className="text-red-500">{errors.programa.message}</span>}
+      </div>
           
               <div className="mb-1 flex flex-col gap-3">
                   <Typography variant="small" color="blue-gray" className="-mb-3 text-base font-medium">
