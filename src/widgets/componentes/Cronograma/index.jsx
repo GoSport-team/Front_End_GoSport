@@ -9,7 +9,8 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BuscarPlanillero } from '../Planillero/BuscarPlanillero';  
-export default function CronogramaDesing({  patchFechaHora, guardarEdicion, datosVss, vs}) {
+export default function CronogramaDesing({  patchFechaHora, guardarEdicion, datosVss, vs, oks}) {
+  
 const idVs = datosVss._id
 const [equipo1, setEquipo1]= useState([])
 const IdCampeonato = localStorage.getItem('ID');
@@ -20,7 +21,7 @@ const[botonVer, setBotonVer]=useState()
   const [botonAgregar ,setBotonAgregar]= useState();
   const [resultado, setResultado]= useState([])
   const [estadoFase, setEStadoFase] = useState(true);
-  const [nombreFase, setNombreFase] = useState("Fase 1");
+  const [nombreFase, setNombreFase] = useState();
   const [idFases, setIdFase] = useState();
   const [isLoading, setIsLoading] = useState(true); 
   const [equipoGanadores, setEquiposGanadores]=useState([])
@@ -28,11 +29,14 @@ const[botonVer, setBotonVer]=useState()
   const [botonVerPlanillero, setBotonVerPlanillero]=useState()
   const [ok, setOk]= useState()
   const [mostrarGanador, setMostrarGanador]= useState()
+
   const idfase= datosVss.IdFase
+
   const EquiposGanadores=async()=>{
     try{
       const response= await axios.get(`http://localhost:3001/fase/${idfase}`)
       //console.log(response.data.equiposGanadores)
+      setNombreFase(response.data.nombre + 1)
       setEquiposGanadores(response.data.equiposGanadores)
     }catch(error){
 console.log(error)
@@ -79,8 +83,10 @@ console.log(error)
     },[datosVss]);
     
 useEffect(()=>{
-  if(cambioFase2 && !EquipoGanador){
+  if(cambioFase2 && !EquipoGanador && oks ){
     EquiposGanadores()
+    sortearEquipos(equipoGanadores)
+  actualizarFase()
     setOk(true)
   }else if(!cambioFase2){
     setOk(false)
@@ -93,6 +99,7 @@ useEffect(()=>{
           const fase = await axios.post('http://localhost:3001/fase', { estado: estadoFase, nombre: nombreFase, idCampeonato: IdCampeonato });
           const idFase = fase.data._id;
           localStorage.setItem('IdFase', idFase);
+          localStorage.setItem('nombreFase', nombreFase)
          
           const dataVs = {
             equipos:equipoGanadores
@@ -110,19 +117,10 @@ useEffect(()=>{
         }
       };
 const handleClick=()=>{
-  if(cambioFase2 && !EquipoGanador){
   sortearEquipos(equipoGanadores)
   actualizarFase()
   setOk(false)
-  } 
   }
-  // const handleFinal=()=>{
-  //   if(EquipoGanador){
-  //     console.log('campeonato finalizado')
-  //      console.log(equipoGanadores)
-  // setMostrarGanador(true)
-  //   }
-  // }
   useEffect(() => {
     const resultados = async () => {
       try {
@@ -216,6 +214,8 @@ useEffect(()=>{
   return (
     <>
 <div className=' w-full sm:w-[50vw] md:w-[40vw] lg:w-[35vw] h-full mt-8 flex flex-col m-4 justify-center item-center'>
+
+
 <ToastContainer />
   <div className='flex flex-col md:flex-col justify-between flex-1 p-6 justify-center item-center rounded-md border-2 border-gray-300 shadow-lg'>
     <div className='w-full flex flex-row justify-between '>

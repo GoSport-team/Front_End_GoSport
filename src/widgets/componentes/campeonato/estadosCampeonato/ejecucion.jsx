@@ -12,12 +12,14 @@ export const Ejecucion = ({tasks}) => {
                 id: tasks._id
               },
             });
-            setFase(data);
+           // console.log(data.faseActiva)
+            setFase(data.faseActiva);
           } catch (error) {
             console.log(error);
           }
         };
         fetchData();
+       // console.log(fase)
       }, []);
     useEffect(()=>{
       if(tasks.estadoCampeonato==='Ejecucion'){
@@ -25,11 +27,19 @@ export const Ejecucion = ({tasks}) => {
         }
        },[tasks])
 
-       const handleClick=async()=>{
-          localStorage.setItem('ID', tasks._id);
-          localStorage.setItem('IdFase', fase[0]._id)
-          localStorage.setItem('estadoFase',fase[0].estado)
-       }
+       const handleClick = async () => {
+        if (tasks && tasks._id) {
+            localStorage.setItem('ID', tasks._id);
+        }
+    
+        if (fase && fase.length > 0) {
+            await localStorage.setItem('IdFase', fase[0]._id);
+            localStorage.setItem('estadoFase', fase[0].estado);
+            localStorage.setItem('nombreFase', fase[0].nombre)
+        } else {
+            console.error('No se encontró la fase');
+        }
+    }
       
        
   return (
