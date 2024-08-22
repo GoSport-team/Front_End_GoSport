@@ -1,47 +1,39 @@
-.BotonUnirmeAnimacion {
-  width: 15rem;
-  text-transform: uppercase;
-  font-family: 'Exo 2', sans-serif;
-  display: inline-block;
-  position: relative;
-  color: white;
-  background-color: rgb(48, 169, 234);
-  border-radius: 5px;
-  box-shadow: 0 0 0 0 transparent;
-  transition: (all 0.2s ease-in);
-
-  &:hover {
-    color: white;
-    box-shadow: 0 0 30px 0 transparentize(rgb(17, 149, 220), 0.5);
-    background-color: rgb(17, 149, 220);
-
-    transition: (all 0.2s ease-out);
-
-    &:before {
-      animation: shine 0.5s 0s linear;
-    }
-  }
-
-  &:active {
-    box-shadow: 0 0 0 0 transparent;
-    transition: (box-shadow 0.2s ease-in);
-  }
-
-  &:before {
-    content: '';
-    display: block;
-    width: 0px;
-    height: 86%;
-    position: absolute;
-    top: 7%;
-    left: 0%;
-
-    opacity: 0;
-    background: white;
-    box-shadow: 0 0 15px 3px white;
-    transform: (skewX(-20deg));
-  }
+.custom-button {
+  user-select: none;
+  border-radius: 0.5rem; /* Esto es equivalente a rounded-lg */
+  background-color: rgba(18, 174, 209, 0.8); /* bg-[#12aed1cd] */
+  padding: 0.75rem 1.5rem; /* py-3 px-6 */
+  text-align: center;
+  vertical-align: middle; /* align-middle */
+  font-family: sans-serif; /* font-sans */
+  font-size: 0.75rem; /* text-xs */
+  font-weight: bold; /* font-bold */
+  text-transform: uppercase; /* uppercase */
+  color: white; /* text-white */
+  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2); /* shadow-md shadow-blue-500/20 */
+  transition: all 0.3s ease-in-out; /* transition-all */
 }
+
+.custom-button:hover {
+  box-shadow: 0 6px 8px rgba(0, 123, 255, 0.4); /* hover:shadow-lg hover:shadow-blue-500/40 */
+}
+
+.custom-button:focus {
+  opacity: 0.85; /* focus:opacity-[0.85] */
+  box-shadow: none; /* focus:shadow-none */
+}
+
+.custom-button:active {
+  opacity: 0.85; /* active:opacity-[0.85] */
+  box-shadow: none; /* active:shadow-none */
+}
+
+.custom-button:disabled {
+  pointer-events: none; /* disabled:pointer-events-none */
+  opacity: 0.5; /* disabled:opacity-50 */
+  box-shadow: none; /* disabled:shadow-none */
+}
+
 
 @keyframes shine {
   from {

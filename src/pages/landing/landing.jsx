@@ -21,7 +21,7 @@ export default function Landing() {
 
       <div>
         <nav class="bg-white dark:bg-gray-900 w-[100vw]  ">
-          <div class="flex flex-wrap items-center mx-auto h-[10vh]">
+          <div class="flex flex-wrap items-center mx-auto h-[10vh] w-[97vw]">
             <div class="flex items-center">
               <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="\public\img\logoGos.png" class="h-24 object-contain" alt="Flowbite Logo" />
@@ -85,7 +85,7 @@ export default function Landing() {
                 Crea campeonatos inolvidables. ¡Dale vida a la competencia y eleva el espíritu deportivo! ¿Estás listo para ser parte de la experiencia?
               </p>
               <Link to={`auth/sign-in`}>
-                <button className="BotonUnirmeAnimacion ml-4 sm:ml-[2rem] md:ml-[3rem] mt-[1rem] sm:mt-[1.5rem] md:mt-[2rem] px-[20px] py-[15px] sm:px-[22px] sm:py-[18px] md:px-[25px] md:py-[20px] text-[15px] sm:text-[16px] md:text-[17px] font-bold cursor-pointer">
+                <button className="custom-button ml-4 sm:ml-[2rem] md:ml-[3rem] mt-[1rem] sm:mt-[1.5rem] md:mt-[2rem] px-[20px] py-[15px] sm:px-[22px] sm:py-[18px] md:px-[25px] md:py-[20px] text-[15px] sm:text-[16px] md:text-[17px] font-bold cursor-pointer">
                   Únete Ahora
                 </button>
               </Link>
