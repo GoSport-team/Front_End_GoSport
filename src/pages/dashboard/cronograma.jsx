@@ -35,16 +35,16 @@ export default function Cronograma() {
               id:IdCampeonato
             },
           });
-          await setFasesInactivas(data.faseInactiva)
-         console.log(data.faseInactiva)
+          setFasesInactivas(data.faseInactiva)
+          // console.log(data.faseInactiva)
          setFasesActiva(data.faseActiva)
-         console.log(data.faseActiva)
+          // console.log(data.faseActiva)
         } catch (error) {
           console.log(error);
         }
       };
       fetchData();
-    }, []);
+    }, [datosVss]);
     useEffect(()=>{
       const GetDatosVs = async()=>{
         try{
@@ -67,7 +67,7 @@ export default function Cronograma() {
       setConfirmarCambios(estado)
       setIdVs(idVs)
     }
-  
+   
     const handleClick=(id)=>{
       localStorage.setItem('IdFase', id);
       setOks(false)
@@ -97,7 +97,7 @@ export default function Cronograma() {
   }
   {
     faseActiva&&(
-      <button  onClick={()=>handleClickEje(faseActiva._id)}className='select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none'>
+      <button  onClick={()=>handleClickEje(faseActiva[0]._id)}className='select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none'>
 {`fase en ejecucion`}
 </button>
     )

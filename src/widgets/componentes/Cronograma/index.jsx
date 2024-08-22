@@ -10,7 +10,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BuscarPlanillero } from '../Planillero/BuscarPlanillero';  
 export default function CronogramaDesing({  patchFechaHora, guardarEdicion, datosVss, vs, oks}) {
-  
+ // console.log(oks)
 const idVs = datosVss._id
 const [equipo1, setEquipo1]= useState([])
 const IdCampeonato = localStorage.getItem('ID');
@@ -82,16 +82,14 @@ console.log(error)
       equiGan()
     },[datosVss]);
     
-useEffect(()=>{
-  if(cambioFase2 && !EquipoGanador && oks ){
-    EquiposGanadores()
-    sortearEquipos(equipoGanadores)
-  actualizarFase()
-    setOk(true)
-  }else if(!cambioFase2){
-    setOk(false)
-  }
-},[datosVss])
+    useEffect(() => {
+      if (cambioFase2 && !EquipoGanador && oks) {
+        EquiposGanadores();
+        setOk(true);
+      } else if (!cambioFase2) {
+        setOk(false);
+      }
+    }, [cambioFase2, EquipoGanador]);
    
 
       const sortearEquipos = async (equipoGanadores) => {

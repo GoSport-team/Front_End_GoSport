@@ -19,7 +19,7 @@ export const Ejecucion = ({tasks}) => {
           }
         };
         fetchData();
-       // console.log(fase)
+        console.log(fase)
       }, []);
     useEffect(()=>{
       if(tasks.estadoCampeonato==='Ejecucion'){
@@ -33,9 +33,9 @@ export const Ejecucion = ({tasks}) => {
         }
     
         if (fase && fase.length > 0) {
-            await localStorage.setItem('IdFase', fase[0]._id);
-            localStorage.setItem('estadoFase', fase[0].estado);
-            localStorage.setItem('nombreFase', fase[0].nombre)
+            localStorage.setItem('IdFase', fase._id);
+            localStorage.setItem('estadoFase', fase.estado);
+            localStorage.setItem('nombreFase', fase.nombre)
         } else {
             console.error('No se encontró la fase');
         }
