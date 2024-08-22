@@ -45,7 +45,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo}) =>
             idCampeonato:idCampeonato
           })
           onAgregarEquipo(equipo);
-         Swal.fire(response.data.msg,"","success")
+         //Swal.fire(response.data.msg,"","success")
         
          if(equipo){
           setAgregarEquipo(false)

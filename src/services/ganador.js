@@ -1,5 +1,5 @@
-export const ganador=(resultado)=>{
-    if(resultado.length===1){
+export const ganador=(resultado, vs)=>{
+    if(resultado.length===1 && vs.length === 1){
         return true
     }else{
         return false

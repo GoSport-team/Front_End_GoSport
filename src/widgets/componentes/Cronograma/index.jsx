@@ -9,7 +9,8 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BuscarPlanillero } from '../Planillero/BuscarPlanillero';  
-export default function CronogramaDesing({  patchFechaHora, guardarEdicion, datosVss, vs}) {
+export default function CronogramaDesing({  patchFechaHora, guardarEdicion, datosVss, vs, oks}) {
+ // console.log(oks)
 const idVs = datosVss._id
 const [equipo1, setEquipo1]= useState([])
 const IdCampeonato = localStorage.getItem('ID');
@@ -20,53 +21,26 @@ const[botonVer, setBotonVer]=useState()
   const [botonAgregar ,setBotonAgregar]= useState();
   const [resultado, setResultado]= useState([])
   const [estadoFase, setEStadoFase] = useState(true);
-  const [nombreFase, setNombreFase] = useState("Fase 1");
+  const [nombreFase, setNombreFase] = useState();
   const [idFases, setIdFase] = useState();
   const [isLoading, setIsLoading] = useState(true); 
   const [equipoGanadores, setEquiposGanadores]=useState([])
   const [idPlanillero, setIdPlanillero]=useState()
   const [botonVerPlanillero, setBotonVerPlanillero]=useState()
-  const [ganadorCampeonato, setGanadorCampeonato]=useState()
   const [ok, setOk]= useState()
   const [mostrarGanador, setMostrarGanador]= useState()
+
   const idfase= datosVss.IdFase
-    useEffect(()=>{
-        const resultados=async()=>{
-            const response= await axios.get('http://localhost:3001/resultados',{
-                headers: {
-                    idfase:idfase
-                }
-            })
-            setResultado(response.data)
-        }
-        resultados()
-    },[idfase])
-  const cambioFase2= cambioFase(vs,resultado)
-  // const EquipoGanador=ganador(resultado)
-  // useEffect(()=>{
-  //   if(EquipoGanador){
-  //     console.log('campeonato finalizado')
-  //     EquiposGanadores()
-  //     setOk(false)
-  //     setGanadorCampeonato(equipoGanadores)
-  // setMostrarGanador(true)
-  //   }
-  // },[datosVss])
-  
- 
-useEffect(()=>{
-  if(cambioFase2){
-    EquiposGanadores()
-    setOk(true)
-  }else{
-    setOk(false)
-  }
-},[datosVss])
-   
 
   const EquiposGanadores=async()=>{
-    const response= await axios.get(`http://localhost:3001/fase/${idfase}`)
-    setEquiposGanadores(response.data.equiposGanadores)
+    try{
+      const response= await axios.get(`http://localhost:3001/fase/${idfase}`)
+      //console.log(response.data.equiposGanadores)
+      setNombreFase(response.data.nombre + 1)
+      setEquiposGanadores(response.data.equiposGanadores)
+    }catch(error){
+console.log(error)
+    }
       }
       const actualizarFase=async()=>{
         try{
@@ -81,12 +55,49 @@ useEffect(()=>{
           toast.error('Hubo un error al finalizar la fase');
         }
       }
+    useEffect(()=>{
+        const resultados=async()=>{
+            const response= await axios.get('http://localhost:3001/resultados',{
+                headers: {
+                    idfase:idfase
+                }
+            })
+            setResultado(response.data)
+        }
+        resultados()
+    },[idfase])
+  
+      const cambioFase2=cambioFase(vs,resultado)
+     const EquipoGanador=ganador(resultado, vs)
+  
+     useEffect(() => {
+      const equiGan=async()=>{
+        if (EquipoGanador) {
+          await EquiposGanadores();
+      setMostrarGanador(true)
+        } else {
+         setMostrarGanador(false)
+        }
+      }
+      equiGan()
+    },[datosVss]);
     
+    useEffect(() => {
+      if (cambioFase2 && !EquipoGanador && oks) {
+        EquiposGanadores();
+        setOk(true);
+      } else if (!cambioFase2) {
+        setOk(false);
+      }
+    }, [cambioFase2, EquipoGanador]);
+   
+
       const sortearEquipos = async (equipoGanadores) => {
         try {
           const fase = await axios.post('http://localhost:3001/fase', { estado: estadoFase, nombre: nombreFase, idCampeonato: IdCampeonato });
           const idFase = fase.data._id;
           localStorage.setItem('IdFase', idFase);
+          localStorage.setItem('nombreFase', nombreFase)
          
           const dataVs = {
             equipos:equipoGanadores
@@ -104,12 +115,9 @@ useEffect(()=>{
         }
       };
 const handleClick=()=>{
-  if(cambioFase2){
   sortearEquipos(equipoGanadores)
   actualizarFase()
   setOk(false)
-  }
-      
   }
   useEffect(() => {
     const resultados = async () => {
@@ -147,7 +155,7 @@ useEffect(()=>{
 
     fetchFechaHora();
   }, [idVs]);
-console.log(equipoGanadores)
+///console.log(equipoGanadores)
 
   const handleConfirmarCmabios = () => {
     guardarEdicion(true, idVs);
@@ -203,7 +211,9 @@ console.log(equipoGanadores)
 
   return (
     <>
-<div className=' w-full sm:w-[50vw] md:w-[40vw] lg:w-[35vw] h-full mt-8 flex flex-col m-4'>
+<div className=' w-full sm:w-[50vw] md:w-[40vw] lg:w-[35vw] h-full mt-8 flex flex-col m-4 justify-center item-center'>
+
+
 <ToastContainer />
   <div className='flex flex-col md:flex-col justify-between flex-1 p-6 justify-center item-center rounded-md border-2 border-gray-300 shadow-lg'>
     <div className='w-full flex flex-row justify-between '>
@@ -327,6 +337,29 @@ console.log(equipoGanadores)
       </div>
 
       </div>
+      {mostrarGanador&&(
+        <>
+      <div className='flex flex-col justify-center items-center m-8'>
+        <h1 className='text-4xl md:text-5xl font-extrabold text-black mb-6'>
+          Ganador Campeonato
+        </h1>
+        <div className='flex items-center'>
+          <img
+            className='w-1/3 md:w-1/4 object-contain h-24 md:h-32 rounded-3xl'
+            src={equipoGanadores[0].Equipo.imgLogo}
+            alt={equipoGanadores[0].Equipo.nombreEquipo}
+          />
+          <div className='ml-6 flex flex-col justify-center items-center'>
+            <h4 className='text-2xl md:text-3xl font-bold text-gray-900'>
+              {equipoGanadores[0].Equipo.nombreEquipo}
+            </h4>
+          </div>
+        </div>
+      </div>
+    </>
+  )
+  }
+
   </div>
   {ok&&(
      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
@@ -339,23 +372,8 @@ console.log(equipoGanadores)
        </button>
      </div>
    </div>
-  )
-
-  }
-  {mostrarGanador&&(
-   <>
-   <div className='flex flex-gap gap-4 flex justify-center items-center'>
- <div className='flex items-center'>
-   <img className='w-1/4 md:w-2/4 object-contain h-16 md:h-24 rounded-3xl' src={ganadorCampeonato.Equipo.imgLogo} />
-   <div className='ml-4 flex justify-center items-center'>
-     <h4 className='text-lg md:text-xl font-semibold text-gray-700'>{ganadorCampeonato.Equipo.nombreEquipo}</h4>
-   </div>
-   <h1>Ganador Campeonato</h1>
- </div>
-</div>
- </>
-  )
-  }
+  )}
+  
 <VersusPage
 modalVer={modalVer}
  setBotonVer={setBotonVer}

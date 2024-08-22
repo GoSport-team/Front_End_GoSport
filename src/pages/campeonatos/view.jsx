@@ -80,9 +80,9 @@
                 nombre,  }    
             try {
                 const response = await axios.post('http://localhost:3001/campeonato/', campeonatoData);
-                const reponseFase = await axios.post('http://localhost:3001/fase/',faseData)
+               // const reponseFase = await axios.post('http://localhost:3001/fase/',faseData)
                 console.log('Respuesta del servidor:', response.data);
-                console.log('Respuesta: ', reponseFase.data)
+               // console.log('Respuesta: ', reponseFase.data)
                 notify("Campeonato creado exitosamente");
 
                 // Restablecer campos del formulario

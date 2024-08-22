@@ -11,7 +11,7 @@ export const Participante = () => {
   const [equipoInscripto, setEquipoInscripto] = useState([]);
   const [estadoBoton, setEstadoBoton] = useState(true);
   const [estadoFase, setEStadoFase] = useState(true);
-  const [nombreFase, setNombreFase] = useState("Fase 1");
+  const [nombreFase, setNombreFase] = useState(1);
   const [idFases, setIdFase] = useState();
   const [error, setError] = useState("");
   const [showConfirmModal, setShowConfirmModal] = useState(false); 
@@ -67,12 +67,14 @@ useEffect(()=>{
       localStorage.setItem('estadoFase', estadoFase);
       const fase = await axios.post('http://localhost:3001/fase', { estado: estadoFase, nombre: nombreFase, idCampeonato: IdCampeonato });
       const idFase = fase.data._id;
+
       setIdFase(idFase);
       const dataVs = {
         equipos: equipoInscripto,
         IdFase: idFase
       };
       localStorage.setItem('IdFase', idFase);
+      localStorage.setItem('nombreFase', nombreFase)
       const equiposSorteados = await axios.post('http://localhost:3001/vs', { dataVs });
       console.log(equiposSorteados)
       if (equiposSorteados.data) {
@@ -100,6 +102,7 @@ useEffect(()=>{
   const handleConfirmSortear = () => {
     localStorage.setItem('IdFase', idFases);
     localStorage.setItem('ID', IdCampeonato)
+    localStorage.setItem('nombreFase', nombreFase)
     sortearEquipos();
     handleSubmit()
     setShowConfirmModal(false);
