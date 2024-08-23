@@ -6,7 +6,7 @@ export const eliminarJugador=(indice, jugadores, user)=> {
       return  Swal.fire({
         title: "Este jugador no se puede borrar por que es el capitan",
         confirmButtonText: "OK",
-        confirmButtonColor: "#E42245",
+          confirmButtonColor: "#12aed1cd",
       });
     }
     if (jugadores && jugadores.length > indice) {
@@ -14,7 +14,7 @@ export const eliminarJugador=(indice, jugadores, user)=> {
         title: "Deseas eliminar este jugador",
         showCancelButton: true,
         confirmButtonText: "Save",
-        confirmButtonColor: "#04ff00",
+          confirmButtonColor: "#12aed1cd",
         cancelButtonColor: "#d33",
         text: `Nombre ${jugadores[indice].nombreJugador} \n `,
       }).then((result) => {
@@ -48,7 +48,7 @@ export  const searchJugador = async (idenfiticacion, jugadores) => {
             Swal.fire({
                 icon: "error",
                 title: `Jugador ya pertenece al equipo ${responseValidador.data.equipo[0].nombreEquipo}`,
-                confirmButtonColor: "#0837C0",
+                confirmButtonColor: "#12aed1cd",
             })
 
             return false
@@ -57,7 +57,7 @@ export  const searchJugador = async (idenfiticacion, jugadores) => {
         const { value: formValues } = await Swal.fire({
             title: "Deseas agregar a este jugador",
             confirmButtonText: "OK",
-            confirmButtonColor: "#0837C0",
+            confirmButtonColor: "#12aed1cd",
             html: `
           <h1>${response.data.nombres}</h1>
           <h1>Ficha</h1>
@@ -103,7 +103,7 @@ export  const searchJugador = async (idenfiticacion, jugadores) => {
                 title: "Datos del jugador",
                 showCancelButton: true,
                 confirmButtonText: "Save",
-                confirmButtonColor: "#04ff00",
+                confirmButtonColor: "#12aed1cd",
                 cancelButtonColor: "#d33",
                 text: `Nombre ${response.data.nombres} \n 
           Ficha ${JSON.stringify(formValues[0])} \n
@@ -134,7 +134,7 @@ export  const searchJugador = async (idenfiticacion, jugadores) => {
             title: "Jugador no registrado",
             text: `identificacion no encontrada ${idenfiticacion}`,
             confirmButtonText: "Ok",
-            confirmButtonColor: "#0837C0",
+            confirmButtonColor: "#12aed1cd",
         })
     }
 }

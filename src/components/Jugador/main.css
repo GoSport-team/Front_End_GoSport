@@ -1,0 +1,14 @@
+/* Añade este CSS a tu archivo de estilos global */
+.swal2-confirm {
+    background-color: #12aed1cd;
+    /* El color de fondo que quieres */
+    border-color: #12aed1cd;
+    /* El color del borde del botón */
+}
+
+.swal2-cancel {
+    background-color: #f44336;
+    /* Color para el botón de cancelar (si es necesario) */
+    border-color: #f44336;
+    /* Color del borde del botón de cancelar */
+}

@@ -38,7 +38,7 @@ const icon = {
       },
       {
         icon: <PhotoIcon {...icon}/>,
-        name: "fotos",
+        name: "gestinar noticias",
         path: "/fotos",
         element: <Fotos/>
       },
@@ -48,12 +48,12 @@ const icon = {
         path: "/campeonatos",
         element: <Tables />,
       },
-      {
-        icon: <InformationCircleIcon {...icon} />,
-        name: "notifications",
-        path: "/notifications",
-        element: <Notifications />,
-      },
+      // {
+      //   icon: <InformationCircleIcon {...icon} />,
+      //   name: "notifications",
+      //   path: "/notifications",
+      //   element: <Notifications />,
+      // },
       {
         icon: <FaRegNewspaper {...icon}/>,
         name:"planillero",

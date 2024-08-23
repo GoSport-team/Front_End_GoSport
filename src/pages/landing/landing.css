@@ -1,5 +1,4 @@
 .custom-button {
-  user-select: none;
   border-radius: 0.5rem; /* Esto es equivalente a rounded-lg */
   background-color: rgba(18, 174, 209, 0.8); /* bg-[#12aed1cd] */
   padding: 0.75rem 1.5rem; /* py-3 px-6 */
