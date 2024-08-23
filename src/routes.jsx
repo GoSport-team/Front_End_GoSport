@@ -38,7 +38,7 @@ const icon = {
       },
       {
         icon: <PhotoIcon {...icon}/>,
-        name: "gestinar noticias",
+        name: "gestionar noticias",
         path: "/fotos",
         element: <Fotos/>
       },
