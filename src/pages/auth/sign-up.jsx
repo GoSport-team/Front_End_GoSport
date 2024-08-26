@@ -98,15 +98,13 @@ const handleSelectChange = (e) => {
   
   return (
     <section className="ml-2 mr-2flex-row flex justify-center items-center h-screen">
-         <div className="w-2/5 h-screen flex justify-center  items-center">
-        <img
-          src="/public/img/IniciarSesio/reg.jpg"
-          className="w-full h-full object-cover rounded-3xl"
-        />
-      </div>
+        <div className="w-2/5 h-screen">
+          <img
+            src="/public/img/up3.jpg"
+            className="rounded-3xl object-cover w-full h-screen"
+            />
+        </div>
       
-     
-
      
       <div className="w-full lg:w-3/5 flex flex-col items-center justify-center">
         <div className="text-center">
@@ -327,9 +325,9 @@ const handleSelectChange = (e) => {
        </section>
 
           </div>
-        <Button type="submit" className="text-base w-1/3 mt-6" fullWidth>
+          <button type="submit" class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none mt-4 w-[46.5vw] " fullWidth>
             REGISTRARSE
-          </Button>
+          </button>
         </form>
        
          <Typography variant="paragraph" className="text-center text-blue-gray-500 font-medium mt-4">
