@@ -129,7 +129,7 @@ export const VerEquipo = () => {
             setJugadores(prev => [...prev,
             {
                 _id: response._id,
-                nombreJugador: response.nombreJugador,
+                nombres: response.nombres,
                 ficha: response.ficha,
                 dorsal: response.dorsal
             }
@@ -142,7 +142,7 @@ export const VerEquipo = () => {
     }
     const verificarActualizacion = () => {
         if (equipo) {
-            const verificarArray = equipo.participantes.filter((item1) => !jugadores.some((item2) => item1.nombreJugador == item2.nombreJugador))
+            const verificarArray = equipo.participantes.filter((item1) => !jugadores.some((item2) => item1.nombres == item2.nombres))
             if (verificarArray.length > 0) {
                 return verificarArray
             }

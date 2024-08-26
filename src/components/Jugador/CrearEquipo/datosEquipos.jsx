@@ -103,7 +103,7 @@ export const DatosEquipos = () => {
       setJugadores(prev => [...prev,
       {
         _id: response._id,
-        nombres: response.nombreJugador,
+        nombres: response.nombres,
         ficha: response.ficha,
         dorsal: response.dorsal
       }
