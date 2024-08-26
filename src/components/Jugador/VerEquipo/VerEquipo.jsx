@@ -463,7 +463,7 @@ export const VerEquipo = () => {
                                 {jugadores && jugadores.map((equipo, index) => (
                                     <tr key={index} className="text-center text-gray-700">
                                         <td className="py-2 px-4 border-b border-gray-200">{index + 1}</td>
-                                        <td className="py-2 px-4 border-b border-gray-200">{equipo.nombreJugador}</td>
+                                        <td className="py-2 px-4 border-b border-gray-200">{equipo.nombres}</td>
                                         <td className="py-2 px-4 border-b border-gray-200">{equipo.ficha}</td>
                                         <td className="py-2 px-4 border-b border-gray-200">{equipo.dorsal}</td>
                                         {validarInscripcion !== 'Equipo ya está Inscrito en un campeonato' ? (
