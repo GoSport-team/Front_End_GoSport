@@ -120,7 +120,7 @@ export  const searchJugador = async (idenfiticacion, jugadores) => {
             });
             const newJugador={
                 _id: response.data._id,
-                nombreJugador: response.data.nombres,
+                nombres: response.data.nombres,
                 ficha:formValues[0],
                 dorsal: dorsalNum
             }
