@@ -2,7 +2,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2'
 
 export const eliminarJugador=(indice, jugadores, user)=> {
-    if(jugadores[indice].nombreJugador == user.nombres){
+    if(jugadores[indice].nombres == user.nombres){
       return  Swal.fire({
         title: "Este jugador no se puede borrar por que es el capitan",
         confirmButtonText: "OK",
@@ -16,7 +16,7 @@ export const eliminarJugador=(indice, jugadores, user)=> {
         confirmButtonText: "Save",
           confirmButtonColor: "#12aed1cd",
         cancelButtonColor: "#d33",
-        text: `Nombre ${jugadores[indice].nombreJugador} \n `,
+        text: `Nombre ${jugadores[indice].nombres} \n `,
       }).then((result) => {
           if (result.isConfirmed) {
             Swal.fire({
@@ -120,7 +120,7 @@ export  const searchJugador = async (idenfiticacion, jugadores) => {
             });
             const newJugador={
                 _id: response.data._id,
-                nombreJugador: response.data.nombres,
+                nombres: response.data.nombres,
                 ficha:formValues[0],
                 dorsal: dorsalNum
             }

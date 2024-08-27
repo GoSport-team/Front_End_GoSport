@@ -129,7 +129,7 @@ export const VerEquipo = () => {
             setJugadores(prev => [...prev,
             {
                 _id: response._id,
-                nombreJugador: response.nombreJugador,
+                nombres: response.nombres,
                 ficha: response.ficha,
                 dorsal: response.dorsal
             }
@@ -142,7 +142,7 @@ export const VerEquipo = () => {
     }
     const verificarActualizacion = () => {
         if (equipo) {
-            const verificarArray = equipo.participantes.filter((item1) => !jugadores.some((item2) => item1.nombreJugador == item2.nombreJugador))
+            const verificarArray = equipo.participantes.filter((item1) => !jugadores.some((item2) => item1.nombres == item2.nombres))
             if (verificarArray.length > 0) {
                 return verificarArray
             }
@@ -463,7 +463,7 @@ export const VerEquipo = () => {
                                 {jugadores && jugadores.map((equipo, index) => (
                                     <tr key={index} className="text-center text-gray-700">
                                         <td className="py-2 px-4 border-b border-gray-200">{index + 1}</td>
-                                        <td className="py-2 px-4 border-b border-gray-200">{equipo.nombreJugador}</td>
+                                        <td className="py-2 px-4 border-b border-gray-200">{equipo.nombres}</td>
                                         <td className="py-2 px-4 border-b border-gray-200">{equipo.ficha}</td>
                                         <td className="py-2 px-4 border-b border-gray-200">{equipo.dorsal}</td>
                                         {validarInscripcion !== 'Equipo ya está Inscrito en un campeonato' ? (

@@ -103,7 +103,7 @@ export const DatosEquipos = () => {
       setJugadores(prev => [...prev,
       {
         _id: response._id,
-        nombreJugador: response.nombreJugador,
+        nombres: response.nombres,
         ficha: response.ficha,
         dorsal: response.dorsal
       }
@@ -333,7 +333,7 @@ export const DatosEquipos = () => {
                 {jugadores && jugadores.map((jugador, indice) => (
                   <tr className="text-gray-700 text-sm border-b border-gray-300" key={indice}>
                     <td className="py-3 px-4">{indice + 1}</td>
-                    <td className="py-3 px-4">{jugador.nombreJugador}</td>
+                    <td className="py-3 px-4">{jugador.nombres}</td>
                     <td className="py-3 px-4">{jugador.ficha}</td>
                     <td className="py-3 px-4">{jugador.dorsal}</td>
                     <td

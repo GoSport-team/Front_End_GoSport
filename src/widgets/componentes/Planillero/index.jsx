@@ -36,7 +36,7 @@ export default function Planillero() {
             title: `Seguro de que quieres eliminar al planillero ${nombre}`,
             showCancelButton: true,
             confirmButtonText: "Si",
-            confirmButtonColor: "#04ff00",
+            confirmButtonColor: "#12aed1cd",
             cancelButtonColor: "#d33",
         }).then(async (result) => {
 
@@ -61,11 +61,14 @@ export default function Planillero() {
     };
     return (
         <>
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <button 
-                class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none mb-4">
+            <div>
+                <button
+                    class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none mb-4">
                     <Link to={'/planillero/agregar'}>Agregar planillero</Link>
                 </button>
+            </div>
+            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+
                 <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -79,10 +82,7 @@ export default function Planillero() {
                                 Identificacion
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Actualizar
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Eliminar
+                                Action
                             </th>
                         </tr>
                     </thead>
@@ -98,15 +98,14 @@ export default function Planillero() {
                                 <td className='px-6 py-4'>
                                     {usuario.identificacion}
                                 </td>
-                                <td className="px-6 py-4">
-                                    <FaUserEdit
-                                        onClick={() => handleModalActualizar(usuario.correo)}
-                                        className='w-10 h-8 text-cyan-800 cursor-pointer' />
-                                </td>
-                                <td className="px-6 py-4">
-                                    <FaTrashAlt
+                                <td className="px-6 py-4 flex gap-x-5">
+                                    <img  className='w-10 cursor-pointer object-cover'
+                                    onClick={() => handleModalActualizar(usuario.correo)} 
+                                    src="\public\img\Pruebas\avatar-de-usuario (1).png" alt="img" />
+
+                                    <img className='w-10 cursor-pointer object-cover opacity-90'
                                         onClick={() => eliminarPlanillero(usuario._id, usuario.nombres)}
-                                        className='w-10 h-8 text-red-400 cursor-pointer' />
+                                    src="\public\img\Pruebas\borrar-usuario (1).png" alt="img" />
                                 </td>
                             </tr>
                         ))}
