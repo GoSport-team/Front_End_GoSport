@@ -241,23 +241,23 @@ const handleSelectChange = (e) => {
                     
 
 <div className="mb-1 flex flex-col gap-3">
-        <Typography variant="small" color="blue-gray" className="-mb-3 font-medium text-base">
+                <Typography variant="small" color="blue-gray" className="-mb-3 text-base font-medium">
           Nombre del programa que estás cursando
         </Typography>
-        <select
-          id="programa"
-          className={`border p-2 rounded-md focus:outline-none ${errors.programa ? 'border-red-500' : 'border-gray-300'}`}
-          {...register("programa", {
-            required: "Este campo es obligatorio",
-          })}
-        >
-          <option value="">Selecciona un programa</option>
-          {programa.map((programa) => (
-            <option key={programa._id} value={programa.namePrograma}>
-              {programa.namePrograma}
-            </option>
-          ))}
-        </select>
+                <select
+                  id="programa"
+                  className={`!border-blue-gray-200 focus:!border-gray-900 border p-2 rounded-md ${errors.programa ? '!border-1 !border-red-500' : ''} h-12`}
+                  {...register("programa", {
+                    required: "Este campo es obligatorio",
+                  })}
+                >
+                  <option value="">Selecciona un programa</option>
+                  {programa.map((programa) => (
+                    <option key={programa._id} value={programa.namePrograma}>
+                      {programa.namePrograma}
+                    </option>
+                  ))}
+                </select>
         {errors.programa && <span className="text-red-500">{errors.programa.message}</span>}
       </div>
           

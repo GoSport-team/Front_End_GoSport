@@ -21,7 +21,7 @@ export default function Landing() {
 
       <div>
         <nav class="bg-white dark:bg-gray-900 w-[100vw]  ">
-          <div class="flex flex-wrap items-center mx-auto h-[10vh] w-[97vw]">
+          <div class="flex flex-wrap items-center mx-auto h-[10vh] w-[91vw]">
             <div class="flex items-center">
               <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
                 <img src="\public\img\logoGos.png" class="h-24 object-contain" alt="Flowbite Logo" />
@@ -38,49 +38,31 @@ export default function Landing() {
               <div class="md:block md:w-auto pr-7" id="navbar-default">
                 <ul class="font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                   <li class="relative">
-                    <Link to={`auth/sign-up`} className="block py-3 px-5 text-lg text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                    <Link to={`auth/sign-up`} className="block py-3 px-5 text-lg text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-white  dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
                       Registrarse
                     </Link>
                   </li>
                   <li class="relative">
-                    <Link to={`auth/sign-in`} class="block py-3 px-5 text-lg text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                    <Link to={`auth/sign-in`} class="block py-3 px-5 text-lg text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
                       Iniciar sesión
                     </Link>
                   </li>
                   <li>
-                    <a href="#section_dow" class="block py-3 px-5 text-lg text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Equipo Bienestar</a>
+                    <a href="#section_dow" class="block py-3 px-5 text-lg text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Equipo Bienestar</a>
                   </li>
                   <li>
-                    <a href="#section_ft" class="block py-3 px-5 text-lg text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-00 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contactanos</a>
+                    <a href="#section_ft" class="block py-3 px-5 text-lg text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-white md:dark:hover:text-blue-00 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contactanos</a>
                   </li>
                 </ul>
               </div>
             </div>
           </div>
         </nav>
-        {/* 
-        <div class=" flex flex-col justify-center items-center">
-          <div className="relative">
-            <img src='/public/img/landing/imgplayer.jpg' className='h-[96vh] object-cover  w-screen'></img>
-            <div className="absolute inset-0 flex flex-col w-[20vw] justify-end pb-32">
-              <p className="w-[33rem]  text-[1.9rem] font-sans leading-[1.7] text-justify ml-[3rem] tracking-[1px] text-black ">
-                Crea campeonatos inolvidables. ¡Dale vida a la competencia y
-                eleva el espíritu deportivo! ¿Estás listo para ser parte de la
-                experiencia?
-              </p>
-              <Link to={`auth/sign-in`}>
-                <button className="BotonUnirmeAnimacion ml-[3rem] mt-[2rem] px-[25px] py-[20px] text-[17px]  font-bold  cursor-pointer  ">
-                  Unete Ahora
-                </button>
-              </Link>
-            </div>
-          </div>
 
-        </div> */}
         <div class="flex flex-col justify-center items-center">
           <div className="relative">
             <img src="/public/img/landing/imgplayer.jpg" className="h-[96vh] object-cover w-screen" />
-            <div className="absolute inset-0 flex flex-col w-[90vw] sm:w-[60vw] md:w-[40vw] lg:w-[20vw] justify-end pb-16 md:pb-32">
+            <div className="ml-[4vw]  absolute inset-0 flex flex-col w-[90vw] sm:w-[60vw] md:w-[40vw] lg:w-[20vw] justify-end pb-16 md:pb-32">
               <p className="w-[90%] sm:w-[80%] md:w-[60%] lg:w-[33rem] text-[1.2rem] sm:text-[1.4rem] md:text-[1.6rem] lg:text-[1.9rem] font-sans leading-[1.5] sm:leading-[1.6] md:leading-[1.7] text-justify ml-4 sm:ml-[2rem] md:ml-[3rem] tracking-[0.5px] sm:tracking-[0.75px] md:tracking-[1px] text-black">
                 Crea campeonatos inolvidables. ¡Dale vida a la competencia y eleva el espíritu deportivo! ¿Estás listo para ser parte de la experiencia?
               </p>
