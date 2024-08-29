@@ -56,13 +56,13 @@ export const ConfirmarGuardar = ({ confirmarCambios, cerrarModal, idVs, fecha, h
                         <div>
                             <button
                   onClick={handleConfirmar}
-                  className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
+                  class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                 >
                   OK
                 </button>
                 <button
                   onClick={handleCerrarModal}
-                  className="px-4 py-2 bg-red-500 text-white rounded-md"
+                          className="px-4 py-2 bg-gray-500 text-white rounded-md"
                 >
                   Cancelar
                 </button>

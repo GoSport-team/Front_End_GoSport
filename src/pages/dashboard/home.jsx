@@ -30,7 +30,12 @@ import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 export function Home() {
   return (
     <div className="">
-      <div className="mb-12 grid gap-y-5 gap-x-6 md:grid-cols-2 xl:grid-cols-5">
+      <Typography variant="h6" color="blue-gray" className="">
+        Inicio: En esta sección encontrarás toda la información estadística de los campeonatos.
+      </Typography>
+
+
+      <div className="mb-12 grid gap-y-5 gap-x-6 md:grid-cols-2 xl:grid-cols-5 mt-5">
         {statisticsCardsData.map(({ icon, title, footer, ...rest }) => (
           <StatisticsCard
             key={title}
@@ -59,7 +64,7 @@ export function Home() {
       </div>
 
 
-      <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
+      {/* <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
          <Card className="overflow-hidden xl:col-span-2 border border-blue-gray-100 shadow-sm">
           <CardHeader
             floated={false}
@@ -186,9 +191,9 @@ export function Home() {
               </tbody>
             </table>
           </CardBody> 
-        </Card> 
+        </Card>  
 
-        {/* <Card className="border border-blue-gray-100 shadow-sm">
+       <Card className="border border-blue-gray-100 shadow-sm">
           <CardHeader
             floated={false}
             shadow={false}
@@ -244,8 +249,8 @@ export function Home() {
               )
             )}
           </CardBody>
-        </Card>   */}
-      </div>
+        </Card>   
+      </div> */}
     </div>
   );
 }

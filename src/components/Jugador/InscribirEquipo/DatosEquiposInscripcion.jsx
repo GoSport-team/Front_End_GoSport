@@ -26,7 +26,7 @@ export const DatosEquiposInscripcion = () => {
             title: "Equipo Encontrado",
             text: `Nombre ${response.data.nombreEquipo}`,
             confirmButtonText: "OK",
-            confirmButtonColor: "#0837C0",
+            confirmButtonColor: "#12aed1cd",
           })
           setEquipo(response.data)
         }
@@ -60,7 +60,7 @@ export const DatosEquiposInscripcion = () => {
           title: response.data.msg,
           icon: "success",
           confirmButtonText: "OK",
-          confirmButtonColor: "#0837C0",
+          confirmButtonColor: "#12aed1cd",
         })
         setTimeout(() => {
           navigate('/jugador/dashboard')
@@ -70,7 +70,7 @@ export const DatosEquiposInscripcion = () => {
           icon: "error",
           title: validarRegistroEquipo.data.msg,
           confirmButtonText: "OK",
-          confirmButtonColor: "#E42245",
+          confirmButtonColor: "#12aed1cd",
         })
       }
     } catch (error) {
@@ -79,7 +79,7 @@ export const DatosEquiposInscripcion = () => {
         icon: "error",
         title: "Error al guardar el equipo",
         confirmButtonText: "OK",
-        confirmButtonColor: "#E42245",
+        confirmButtonColor: "#12aed1cd",
       })
     }
 
@@ -87,83 +87,6 @@ export const DatosEquiposInscripcion = () => {
   }
 
   return (
-    // <div className="flex flex-col items-center justify-center ">
-    //   <form action="">
-    //     {equipo ?
-    //       <div className="bg-gray-200 mt-20 rounded-lg p-5">
-    //         <h2 className="text-xl font-bold ml-5">Planilla Inscripcion Equipo</h2>
-
-    //         <div className="flex items-center gap-5  mt-6">
-    //           <label className="" htmlFor="name">
-    //             Equipo
-    //           </label>
-    //           <input value={equipo.nombreEquipo} className="mr-6 h-9 rounded-lg w-96" type="text" placeholder="Nombre del equipo" />
-    //         </div>
-    //         <div className="flex items-center gap-3  mt-6">
-    //           <label className="mt-4-label" htmlFor="address">
-    //             Capitan
-    //           </label>
-    //           <input value={equipo.nombreCapitan} className=" h-9 rounded-lg w-96" id="address" placeholder="Nombre del capitan" />
-    //         </div>
-    //         <div className="flex gap-16 items- mt-5">
-    //           <div className="flex  items-center  gap-5">
-    //             <label className="text-black " htmlFor="city">
-    //               Contacto
-    //             </label>
-    //             <input
-    //               value={equipo.contactoUno}
-    //               placeholder="Principal"
-    //               className="mr-6 h-9 rounded-lg w-72"
-    //               id="city"
-    //               type="text"
-
-    //             />
-    //             <input
-    //               value={equipo.contactoDos}
-    //               placeholder="Secundario"
-    //               className="mr-6 h-9 rounded-lg w-72"
-    //               id="state"
-    //               type="text"
-    //             />
-    //           </div>
-    //           <div class="">
-    //             <img src={equipo.imgLogo} className=" w-44 h-44 top-52" alt="Logo Del Equipo" />
-    //           </div>
-    //         </div>
-    //       </div>
-
-    //       : <h1></h1>}
-
-    //     <div className="bg-gray-200 mt-10 p-5 rounded-xl">
-    //       <table className="w-full border-separate mt-8">
-    //         <thead>
-    //           <tr>
-    //             <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">N°</th>
-    //             <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">Nombre </th>
-    //             <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">Ficha </th>
-    //             <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border th3">N° Dorsal </th>
-    //           </tr>
-    //         </thead>
-    //         <tbody>
-    //           {equipo && equipo.participantes.map((equipo, indice) => (
-    //             <tr className="border-separate text-center text-lg font-medium">
-    //               <td className="border rounded-md p-1 bg-white">{indice + 1}</td>
-    //               <td className="border rounded-md p-1 bg-white">{equipo.nombreJugador}</td>
-    //               <td className="border rounded-md p-1 bg-white">{equipo.ficha}</td>
-    //               <td className="border rounded-md p-1 bg-white">{equipo.dorsal}</td>
-    //             </tr>
-    //           ))}
-    //         </tbody>
-    //       </table>
-    //     </div>
-    //   </form>
-    //   <div class="ButtonPlanillaIns">
-    //     <button
-    //       onClick={() => inscribirEquipo()}
-    //       className="mt-2.5 px-12 py-5 text-xs uppercase tracking-wider font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none ml-[70px] hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5"> Inscribir </button>
-    //   </div>
-    // </div>
-
     <div className="flex items-center bg-white flex-col w-[100vw]">
       <form action="">
         {equipo ?
@@ -256,7 +179,7 @@ export const DatosEquiposInscripcion = () => {
       <div class="w-[60vw] flex justify-start mt-10 ButtonPlanillaIns">
         <button
           onClick={() => inscribirEquipo()}
-          class=" select-none rounded-lg bg-[#12aed1cd] py-4 px-7 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"> Inscribir </button>
+          class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"> Inscribir </button>
       </div>
     </div>
   )

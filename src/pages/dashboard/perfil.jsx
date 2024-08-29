@@ -295,6 +295,11 @@ notify('No hay cambios para actualizar.');
 
   return (
     <>
+      <Typography variant="h6" color="blue-gray" className="mb-1">
+        Perfil: Revisa y actualiza los detalles de tu cuenta en esta sección.
+        
+      </Typography>
+
     <ToastContainer/>
     <div className="">
   {loading ? (

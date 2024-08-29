@@ -4,6 +4,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import { Spinner } from "@material-tailwind/react";
 import 'react-toastify/dist/ReactToastify.css';
 
+import {
+  Typography,
+  
+ 
+} from "@material-tailwind/react";
+
 export function Fotos() {
   const [loading, setLoading] = useState(true);
   const [photos, setPhotos] = useState([]);
@@ -150,11 +156,15 @@ export function Fotos() {
           <Spinner size="lg" className="text-blue-600" />
         </div>
       )}
-
-      <div className="w-full max-w-8xl mt-10">
+      
+      <div className="w-full max-w-8xl">
+        <Typography variant="h6" color="blue-gray" className="mb-1">
+          Gestión de noticias: Modifica, crea o elimina artículos de noticias desde aquí.
+        </Typography>
         {!loading && (
           <>
-            <div className="flex justify-start w-full mb-5">
+            <div className="flex justify-start w-full my-5">
+              
               <button 
                 onClick={handleUploadPhoto} 
                 class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
