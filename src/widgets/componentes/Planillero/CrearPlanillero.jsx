@@ -74,8 +74,8 @@ export const CrearPlanillero = () => {
         setRoleError('');
     };
     return (
-        <section className='flex justify-center mt-5'>
-            <div className="w-[50vw] h-auto shadow-md p-4 xl:max-w-sm 2xl:max-w-md ">
+        <section className='flex justify-center items-center min-h-screen'>
+            <div className="w-[45vw] h-auto shadow-md p-4">
                 <div className="mb-2 flex justify-center "></div>
                 <h2 className="text-center text-2xl font-bold leading-tight text-black">
                     Registrar Usuario para el Partido
@@ -205,10 +205,6 @@ export const CrearPlanillero = () => {
                             >
                                 Guardar
                             </button>
-                            <div>
-                                <img onClick={handleReset} className="inline-flex w-6 h-6 cursor-pointer items-center justify-center object-cover transition-transform duration-300 ease-in-out hover:scale-110 hover:opacity-80"
-                                    src="\public\img\Campeonato\reset.png" alt="img" />
-                            </div>
                         </div>
                     </div>
                 </form>

@@ -10,12 +10,21 @@ import { useForm } from "react-hook-form";
 import { loginUser } from "../../services/api";
 import { Check } from "react-feather";
 import Cookies from "js-cookie";
-import { useState } from "react";
-
+import { useState, useEffect } from "react";
+import './main.css'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const SignIn= ()=> {
+export const SignIn = () => {
+  const [showWelcome, setShowWelcome] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowWelcome(false);
+    }, 1500); 
+
+    return () => clearTimeout(timer); 
+  }, []);
+
   const notify = (message) => toast(message);
   const {
     register,
@@ -106,9 +115,9 @@ export const SignIn= ()=> {
             Iniciar sesion
         </Button> */}
 
-        <Button type="submit"class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" fullWidth>
+        <button type="submit" class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none mt-4 w-[30vw]" fullWidth>
             Iniciar sesion
-        </Button>
+        </button>
 
           <div className="flex items-center justify-end gap-2 mt-6">
            
@@ -126,15 +135,31 @@ export const SignIn= ()=> {
         </form>
 
       </div>
-      <div className="w-2/5 h-screen">
-        <img
-          src="/public/img/IniciarSesio/ini.jpg"
-          className="w-full h-full object-cover rounded-3xl"
+      {/* <div className="w-2/5 h-screen grid place-content-center thunder-animation rounded-3xl">
+        <img 
+          src="\public\img\logoGos.png"
+          className="object-cover rounded-3xl w-[35vw]"
         />
-      </div>
+      </div> */}
 
+      <div className={`h-screen flex items-center justify-center w-[40vw] container ${showWelcome ? 'line-animated' : ''}`}>
+        <div className="w-full h-full flex items-center justify-center">
+          {showWelcome ? (
+            <div className="w-full h-full grid place-content-center thunder-animation rounded-3xl bg-white">
+              <p className="text-2xl font-semibold text-gray-800">Inicia sesión en GoSport</p>
+            </div>
+          ) : (
+            <div className="h-screen flex items-center justify-center w-[40vw]">
+              <img
+                src="/public/img/logoGos.png"
+                  className="object-cover rounded-3xl w-[35vw] Animation"
+                alt="Logo"
+              />
+            </div>
+          )}
+        </div>
+      </div>
     </section>
   );
 }
-
 

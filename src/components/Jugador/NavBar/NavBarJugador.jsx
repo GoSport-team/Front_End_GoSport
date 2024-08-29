@@ -22,6 +22,9 @@ export const NavBarJugador = ({ cedula }) => {
         <Link to={'perfilJugador/'} className="hover:text-blue-400">
           <h1>Perfil</h1>
         </Link>
+        <Link to={'/'} className="">
+          <h1>Salir</h1>                                      
+        </Link>
       </div>
 
       <button

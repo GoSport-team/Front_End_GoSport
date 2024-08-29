@@ -14,11 +14,29 @@ import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { registroUser } from "../../services/api";
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
+import axios from "axios";
+
 export function SignUp() {
 
   const [setContrasena , setSetContrasena] = useState(false)
   const [setConfirmContra, setSetConfirmContra] = useState(false)
   const [selectedOption, setSelectedOption] = useState('');
+  const [programa, setPrograma] = useState([])
+
+  useEffect(() => {
+    const fetchPrograma = async () => {
+        try {
+            const response = await axios.get(`http://localhost:3001/programa`);
+            setPrograma(response.data);
+            console.log('Programas', response.data);
+            
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    fetchPrograma();
+}, []);
+
   const {
     register,
     handleSubmit,
@@ -80,15 +98,13 @@ const handleSelectChange = (e) => {
   
   return (
     <section className="ml-2 mr-2flex-row flex justify-center items-center h-screen">
-         <div className="w-2/5 h-screen flex justify-center  items-center">
-        <img
-          src="/public/img/IniciarSesio/reg.jpg"
-          className="w-full h-full object-cover rounded-3xl"
-        />
-      </div>
+        <div className="w-2/5 h-screen">
+          <img
+            src="/public/img/up3.jpg"
+            className="rounded-3xl object-cover w-full h-screen"
+            />
+        </div>
       
-     
-
      
       <div className="w-full lg:w-3/5 flex flex-col items-center justify-center">
         <div className="text-center">
@@ -222,24 +238,28 @@ const handleSelectChange = (e) => {
                 })}
             />
           </div>
-                    <div className="mb-1 flex flex-col gap-3">
-                      <Typography variant="small" color="blue-gray" className="-mb-3 font-medium text-base">
-                        Nombre del programa que estas cursando
-                      </Typography>
-                      <Input
-                        size="lg"
-                        type="text"
-                        id="programa"
-                        placeholder="Analisis y desarrollo del software"
-                        className={`!border-blue-gray-200 focus:!border-gray-900 ${errors.programa ? '!border-1 !border-red-500' : ''}`}
-                        labelProps={{
-                          className: "before:content-none after:content-none",
-                        }}
-                        {...register("programa", {
-                          required: "Este campo es obligatorio",
-                        })}
-                      />
-                    </div>
+                    
+
+<div className="mb-1 flex flex-col gap-3">
+                <Typography variant="small" color="blue-gray" className="-mb-3 text-base font-medium">
+          Nombre del programa que estás cursando
+        </Typography>
+                <select
+                  id="programa"
+                  className={`!border-blue-gray-200 focus:!border-gray-900 border p-2 rounded-md ${errors.programa ? '!border-1 !border-red-500' : ''} h-12`}
+                  {...register("programa", {
+                    required: "Este campo es obligatorio",
+                  })}
+                >
+                  <option value="">Selecciona un programa</option>
+                  {programa.map((programa) => (
+                    <option key={programa._id} value={programa.namePrograma}>
+                      {programa.namePrograma}
+                    </option>
+                  ))}
+                </select>
+        {errors.programa && <span className="text-red-500">{errors.programa.message}</span>}
+      </div>
           
               <div className="mb-1 flex flex-col gap-3">
                   <Typography variant="small" color="blue-gray" className="-mb-3 text-base font-medium">
@@ -305,9 +325,9 @@ const handleSelectChange = (e) => {
        </section>
 
           </div>
-        <Button type="submit" className="text-base w-1/3 mt-6" fullWidth>
+          <button type="submit" class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none mt-4 w-[46.5vw] " fullWidth>
             REGISTRARSE
-          </Button>
+          </button>
         </form>
        
          <Typography variant="paragraph" className="text-center text-blue-gray-500 font-medium mt-4">
