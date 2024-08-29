@@ -143,7 +143,7 @@ export function Fotos() {
   };
 
   return (
-    <main className="flex flex-col items-center min-h-screen bg-blue-gray-50/50">
+    <main className="flex flex-col items-center min-h-screen">
       {/* Spinner de carga */}
       {loading && (
         <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
@@ -154,7 +154,7 @@ export function Fotos() {
       <div className="w-full max-w-8xl mt-10">
         {!loading && (
           <>
-            <div className="flex justify-center w-full mb-5">
+            <div className="flex justify-start w-full mb-5">
               <button 
                 onClick={handleUploadPhoto} 
                 class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"

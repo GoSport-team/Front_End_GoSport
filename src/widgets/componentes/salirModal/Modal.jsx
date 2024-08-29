@@ -47,7 +47,7 @@ const ModalSalir = ({ isOpen, onClose }) => {
                 </button>
                 <button
                   onClick={handleCerrar}
-                  className="px-4 py-2 bg-red-500 text-white rounded-md"
+                  className="px-4 py-2 bg-gray-500 text-white rounded-md"
                 >
                   Cancelar
                 </button>

@@ -49,7 +49,7 @@ export const EliminarEquipo = ({ showConfirmModal, id, setShowConfirmModalElimin
               </button>
               <button
                 onClick={handleCancelEliminar}
-                className="px-4 py-2 bg-red-400 text-white rounded-md"
+                className="px-4 py-2 bg-gray-500 text-white rounded-md"
               >
                 Cancelar
               </button>

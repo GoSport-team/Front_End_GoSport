@@ -57,9 +57,9 @@ export function Home() {
           />
         ))}
       </div>
-      <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
+      {/* <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
         <Card className="overflow-hidden xl:col-span-2 border border-blue-gray-100 shadow-sm">
-          <CardHeader
+           <CardHeader
             floated={false}
             shadow={false}
             color="transparent"
@@ -93,7 +93,7 @@ export function Home() {
                 <MenuItem>Something else here</MenuItem>
               </MenuList>
             </Menu>
-          </CardHeader>
+          </CardHeader> 
           <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
             <table className="w-full min-w-[640px] table-auto">
               <thead>
@@ -183,8 +183,9 @@ export function Home() {
                 )}
               </tbody>
             </table>
-          </CardBody>
+          </CardBody> 
         </Card>
+        
         <Card className="border border-blue-gray-100 shadow-sm">
           <CardHeader
             floated={false}
@@ -241,8 +242,8 @@ export function Home() {
               )
             )}
           </CardBody>
-        </Card>
-      </div>
+        </Card> 
+      </div> */}
     </div>
   );
 }
