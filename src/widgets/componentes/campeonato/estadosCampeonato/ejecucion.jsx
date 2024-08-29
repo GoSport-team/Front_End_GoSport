@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React,{useState, useEffect} from 'react'
 import { Link } from "react-router-dom";
-export const Ejecucion = ({tasks}) => {
+export const Ejecucion = ({tasks, setControlador, controlador}) => {
     const[ejecucion, setEjecucion]= useState()
     const[fase, setFase]= useState()
     useEffect(() => {
@@ -13,9 +13,12 @@ export const Ejecucion = ({tasks}) => {
               },
             });
            // console.log(data.faseActiva)
+           setControlador(true)
             setFase(data.faseActiva);
           } catch (error) {
             console.log(error);
+          }finally{
+            setControlador(false)
           }
         };
         fetchData();
@@ -24,8 +27,9 @@ export const Ejecucion = ({tasks}) => {
     useEffect(()=>{
       if(tasks.estadoCampeonato==='Ejecucion'){
           setEjecucion(true)
+          setControlador(true)
         }
-       },[tasks])
+       },[controlador])
 
        const handleClick = async () => {
         if (tasks && tasks._id) {

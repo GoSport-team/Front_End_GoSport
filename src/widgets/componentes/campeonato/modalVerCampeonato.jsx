@@ -13,9 +13,9 @@ const ViewCampeonatoModal = ({ isOpen, onClose, campeonato }) => {
             className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50"
             overlayClassName="fixed inset-0 bg-black bg-opacity-50"
         >
-            <div className="bg-white rounded-lg p-6 max-w-4xl w-full shadow-lg overflow-y-auto">
-                <h2 className="text-2xl font-semibold mb-6 text-center">Detalles del Campeonato</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="bg-white rounded-lg p-6 max-w-md max-h-[80vh] w-full shadow-lg overflow-y-auto">
+                <h2 className="text-2xl font-semibold  mb-6 text-center">Detalles del Campeonato</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
                     <div className="mb-4">
                         <strong className="block font-medium text-gray-700">Nombre Disciplina:</strong>
                         <p className="text-gray-900">{campeonato.nombreDisciplinas}</p>

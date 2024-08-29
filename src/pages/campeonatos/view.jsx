@@ -21,6 +21,12 @@
         const [disciplinas,setDisciplinas]= useState([]);
         const estado = true;
         const nombre = 'Fase 1'
+        const [minDate, setMinDate] = useState('');
+
+        useEffect(() => {
+            const today = new Date().toISOString().split('T')[0];
+            setMinDate(today);
+        }, []);
 
         const notify = (message) => toast(message);
 
@@ -149,14 +155,22 @@
                             </div>
                             <div className="w-1/2">
                                 <label className="block text-gray-800">Tamaño equipo</label>
-                                <input
-                                    required
-                                    placeholder="Numero participantes"
-                                    type="number"
-                                    value={tamanoEquipos}
-                                    onChange={(e) => setTamanoEquipos(e.target.value)}
-                                    className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
-                                />
+                                <select
+  required
+  value={tamanoEquipos}
+  onChange={(e) => setTamanoEquipos(e.target.value)}
+  className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
+>
+  <option value="" disabled>Seleccione el número de participantes</option>
+  {[...Array(9)].map((_, i) => {
+    const value = i + 4;
+    return (
+      <option key={value} value={value}>
+        {value}
+      </option>
+    );
+  })}
+</select>
                             </div>
                         </div>
 
@@ -167,6 +181,7 @@
                                     required
                                     placeholder="Fecha de inicio"
                                     type="date"
+                                    min={minDate}
                                     value={fechaInicio}
                                     onChange={(e) => setFechaInicio(e.target.value)}
                                     className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
@@ -179,6 +194,7 @@
                                     placeholder="Fecha de fin"
                                     type="date"
                                     value={fechaFin}
+                                    min={minDate}
                                     onChange={(e) => setFechaFin(e.target.value)}
                                     className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
                                 />
@@ -240,6 +256,7 @@
                                     required
                                     placeholder="Inicio inscripción"
                                     type="date"
+                                    min={minDate}
                                     value={inicioInscripcion}
                                     onChange={(e) => setInicioInscripcion(e.target.value)}
                                     className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
@@ -252,6 +269,7 @@
                                     placeholder="Fin de inscripción"
                                     type="date"
                                     value={finInscripcion}
+                                    min={minDate}
                                     onChange={(e) => setFinInscripcion(e.target.value)}
                                     className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
                                 />

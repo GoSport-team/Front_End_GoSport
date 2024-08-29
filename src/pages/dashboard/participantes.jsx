@@ -21,7 +21,34 @@ export const Participante = () => {
   const [idInscripto,setIdInscripto]= useState('')
   const [isLoading, setIsLoading] = useState(true); 
 const [agregarEquipo, setAgregarEquipo]= useState(false)
+const [botonEliminar, setBotonEliminar]= useState()
+const [botonAgregar, setBotonAgregar]= useState()
 const [estadoCam, setEstadoCam]=useState('Ejecucion')
+const [controlador, setControlador]= useState()
+useEffect(()=>{
+const botonSorteo= async()=>{
+  const response = await axios.get('http://localhost:3001/fase',{
+    headers:{
+     id:IdCampeonato,
+    }
+    
+  }
+)
+
+if(!response.data[0] && equipoInscripto.length >= 3)  {
+setEstadoBoton(true)
+}else if(!response.data[0]){
+  setEstadoBoton(false)
+ setBotonEliminar(true)
+ setBotonAgregar(true)
+}else{
+  setEstadoBoton(false)
+  setBotonAgregar(false)
+  setBotonEliminar(false)
+}
+}
+botonSorteo()
+},[equipoInscripto])
 
 const handleSubmit = async () => {
   try {
@@ -32,18 +59,7 @@ const handleSubmit = async () => {
       console.error('Error public campeonato:', error);
   }
 };
-useEffect(()=>{
-  const condicion =()=>{
 
-    if (equipoInscripto.length >= 3) {
-    setEstadoBoton(true)
-            } else {
-     setEstadoBoton(false) 
-    }
-  }
-  condicion()
-
-},[equipoInscripto])
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -53,6 +69,7 @@ useEffect(()=>{
           },
         });
         setEquipoInscripto(data);
+        console.log(data)
       } catch (error) {
         console.log(error);
       }finally{
@@ -60,7 +77,7 @@ useEffect(()=>{
       }
     };
     fetchData();
-  },[equipoInscripto]);
+  },[controlador]);
  
   const sortearEquipos = async () => {
     try {
@@ -125,7 +142,7 @@ useEffect(()=>{
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0">
             {equipoInscripto.map((equipo) => (
               <div key={equipo._id} className="flex justify-center items-center z-0">
-               <Participantes equipo={equipo.Equipo} id={equipo._id} modal={() => openModal(equipo.Equipo)}  setShowConfirmModalEliminar={setShowConfirmModalEliminar} setIdInscripto={setIdInscripto} />
+               <Participantes equipo={equipo.Equipo} id={equipo._id} modal={() => openModal(equipo.Equipo)}  setShowConfirmModalEliminar={setShowConfirmModalEliminar} setIdInscripto={setIdInscripto} botonEliminar={botonEliminar} />
               </div>
             ))}
           </div>
@@ -137,7 +154,7 @@ useEffect(()=>{
           showConfirmModalEliminar&&(
 
             <EliminarEquipo  showConfirmModal={showConfirmModalEliminar}  id={idInscripto} setShowConfirmModalEliminar={setShowConfirmModalEliminar}
-            setIsLoadingPar={setIsLoading}/>
+            setIsLoadingPar={setIsLoading} setControlador={setControlador}/>
           )
         }
  {selectedEquipo && (
@@ -150,17 +167,19 @@ useEffect(()=>{
     
       <div className="flex justify-center space-x-4 mx-6 my-4">
         {agregarEquipo &&(
-        <ModalInscribirCampeonato setAgregarEquipo={setAgregarEquipo} onAgregarEquipo={handleAgregarEquipo} />
+        <ModalInscribirCampeonato setAgregarEquipo={setAgregarEquipo} onAgregarEquipo={handleAgregarEquipo} setControlador={setControlador}/>
       )}
         
           <div className="flex space-x-4">
-           
-        <button
+        {botonAgregar&&(
+          <button
         onClick={()=>setAgregarEquipo(true)}
         className="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3"
         >
           Agregar Equipo
         </button>
+        )}   
+        
         { estadoBoton && (
           <button
           onClick={()=>handleSortearClick()}
@@ -182,12 +201,13 @@ useEffect(()=>{
             <h3 className="text-lg font-bold">Confirmación</h3>
             <p className="mt-2">¿Está seguro de que desea sortear los equipos?</p>
             <div className="flex justify-end mt-4">
-              <button
+              
+              <Link to={'/campe/cronograma'}
                 onClick={()=>handleConfirmSortear()}
                 className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
               >
-                <Link to="/campe/cronograma" >Ok</Link>
-              </button>
+                ok
+              </Link>
               <button
                 onClick={handleCancelSortear}
                 className="px-4 py-2 bg-red-500 text-white rounded-md"

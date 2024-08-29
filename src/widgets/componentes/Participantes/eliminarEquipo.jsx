@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const EliminarEquipo = ({ showConfirmModal, id, setShowConfirmModalEliminar ,setIsLoadingPar}) => {
+export const EliminarEquipo = ({ showConfirmModal, id, setShowConfirmModalEliminar ,setIsLoadingPar, setControlador}) => {
 
 
   const eliminarEquipo = async () => {
@@ -11,8 +11,10 @@ export const EliminarEquipo = ({ showConfirmModal, id, setShowConfirmModalElimin
       setIsLoadingPar(true)
       const response = await axios.delete(`http://localhost:3001/equipoInscripto/${id}`);
       console.log(response)
+      setControlador(true)
       if (response.data.acknowledged) {
         toast.success('Equipo eliminado con éxito');
+        setControlador(true)
       } else {
         toast.error('Hubo un problema al eliminar el equipo');
       }
@@ -21,16 +23,19 @@ export const EliminarEquipo = ({ showConfirmModal, id, setShowConfirmModalElimin
       toast.error('Error al eliminar el equipo');
     } finally {
       setIsLoadingPar(false);
+      setControlador(false)
     }
   };
 
   const handleConfirmEliminar = () => {
     eliminarEquipo();
+    setControlador(true)
     setShowConfirmModalEliminar(false);
   };
 
   const handleCancelEliminar = () => {
     setShowConfirmModalEliminar(false);
+    setControlador(false)
   };
 
   return (

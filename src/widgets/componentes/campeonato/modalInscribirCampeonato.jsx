@@ -2,7 +2,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import Swal from "sweetalert2";
-export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo}) => {
+export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, setControlador}) => {
     const [idEquipo, setIdEquipo]=useState('')
     const [equipo, setEquipo]= useState()
     const [isLoading, setIsLoading] = useState(false); 
@@ -23,6 +23,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo}) =>
               text: `Nombre ${response.data.nombreEquipo}`
             })
             setEquipo(response.data)
+            setControlador(true)
           }
         } catch (error) {
           console.log(error)
@@ -45,11 +46,12 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo}) =>
             idCampeonato:idCampeonato
           })
           onAgregarEquipo(equipo);
-         //Swal.fire(response.data.msg,"","success")
+          setControlador(true)
         
          if(equipo){
           setAgregarEquipo(false)
           setIsLoading(true)
+          setControlador(true)
          }
         
         } catch (error) {
@@ -60,6 +62,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo}) =>
           })
         }finally{
           setIsLoading(false)
+          setControlador(false)
         }
     
       }
