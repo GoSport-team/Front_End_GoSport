@@ -65,9 +65,9 @@ export default function CampeonatosDisponibles() {
                       tu habilidad en la cancha. ¡Éxito!”
                     </p>
                   </div>
-                  <button class="hover:bg-gray-300 bg-gray-200 text-gray-800 mt-6 rounded p-2 px-6">
+                  {/* <button class="hover:bg-gray-300 bg-gray-200 text-gray-800 mt-6 rounded p-2 px-6">
                     Explore
-                  </button>
+                  </button> */}
                 </div>
               </div>
               <div className='w-[35vw] flex justify-end mt-9'>

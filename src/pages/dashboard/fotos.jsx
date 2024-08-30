@@ -158,8 +158,8 @@ export function Fotos() {
       )}
       
       <div className="w-full max-w-8xl">
-        <Typography variant="h6" color="blue-gray" className="mb-1">
-          Gestión de noticias: Modifica, crea o elimina artículos de noticias desde aquí.
+        <Typography variant="h6" color="blue-gray" className="text-2xl mb-6">
+          Crea o elimina artículos de noticias desde aquí.
         </Typography>
         {!loading && (
           <>

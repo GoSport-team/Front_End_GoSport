@@ -30,12 +30,12 @@ import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 export function Home() {
   return (
     <div className="">
-      <Typography variant="h6" color="blue-gray" className="">
-        Inicio: En esta sección encontrarás toda la información estadística de los campeonatos.
+      <Typography variant="h6" color="blue-gray" className="text-2xl mb-6">
+        En esta sección encontrarás toda la información estadística de los campeonatos.
       </Typography>
 
 
-      <div className="mb-12 grid gap-y-5 gap-x-6 md:grid-cols-2 xl:grid-cols-5 mt-5">
+      <div className="mb-12 grid gap-y-5 gap-x-6 md:grid-cols-2 xl:grid-cols-5">
         {statisticsCardsData.map(({ icon, title, footer, ...rest }) => (
           <StatisticsCard
             key={title}

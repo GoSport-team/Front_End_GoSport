@@ -261,26 +261,29 @@ const handleSelectChange = (e) => {
         {errors.programa && <span className="text-red-500">{errors.programa.message}</span>}
       </div>
           
-              <div className="mb-1 flex flex-col gap-3">
-                  <Typography variant="small" color="blue-gray" className="-mb-3 text-base font-medium">
-                    Seleccione su jornada
-                  </Typography>
-                 
-                  <select
-              id="select"
-              onChange={handleSelectChange}
-              defaultValue=''
-              className={`block w-full p-2.5 text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-black-500 focus:border-black-500 ${errors.jornada ? '!border-1 !border-red-500' : ''}`}
-              {...register("jornada", {
-                required: "Este campo es obligatorio",
-              })}
-            >
-                <option value=''></option>
-              <option value="Mañana">Mañana</option>
-              <option value="Tarde">Tarde</option>
-              <option  value="Noche">Noche</option>
-            </select>
-                </div>
+      <div className="mb-1 flex flex-col gap-3">
+  <Typography variant="small" color="blue-gray" className="-mb-3 text-base font-medium">
+    Seleccione su jornada
+  </Typography>
+
+  <select
+    id="select"
+    onChange={handleSelectChange}
+    defaultValue=""
+    className={`!border-blue-gray-200 focus:!border-gray-900 border p-2 rounded-md ${errors.jornada ? '!border-1 !border-red-500' : ''} h-12`}
+    {...register("jornada", {
+      required: "Este campo es obligatorio",
+    })}
+  >
+    <option value=""></option>
+    <option value="Mañana">Mañana</option>
+    <option value="Tarde">Tarde</option>
+    <option value="Noche">Noche</option>
+  </select>
+
+  {errors.jornada && <span className="text-red-500">{errors.jornada.message}</span>}
+</div>
+
                <div className="mb-1 flex flex-col gap-3">
                  <Typography variant="small" color="blue-gray" className="-mb-3 text-base font-medium">
                    Tu correo

@@ -64,11 +64,11 @@ export function Tables() {
     <>
       <div className="mb-8 flex flex-col">
         
-        <Typography variant="h6" color="blue-gray" className="mb-1">
-          Gestión de campeonatos: Visualiza, crea y administra todos los campeonatos desde aquí.
+        <Typography variant="h6" color="blue-gray" className="text-2xl mb-6">
+          Visualiza, crea y administra todos los campeonatos desde aquí.
         </Typography>
 
-    <div className="flex justify-start my-4">
+    <div className="flex justify-start mb-4">
       <button class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
         <Link to="/dashboard/tables/view">Crear Campeonato</Link>
       </button>

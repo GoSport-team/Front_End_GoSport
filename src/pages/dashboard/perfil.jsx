@@ -295,8 +295,8 @@ notify('No hay cambios para actualizar.');
 
   return (
     <>
-      <Typography variant="h6" color="blue-gray" className="mb-1">
-        Perfil: Revisa y actualiza los detalles de tu cuenta en esta sección.
+      <Typography variant="h6" color="blue-gray" className="text-2xl mb-6">
+        Revisa y actualiza los detalles de tu cuenta en esta sección.
         
       </Typography>
 

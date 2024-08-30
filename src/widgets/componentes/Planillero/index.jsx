@@ -42,7 +42,7 @@ export default function Planillero() {
             showCancelButton: true,
             confirmButtonText: "Si",
             confirmButtonColor: "#12aed1cd",
-            cancelButtonColor: "#d33",
+            cancelButtonColor: "#9e9e9e",
         }).then(async (result) => {
 
             if (result.isConfirmed) {
@@ -67,9 +67,8 @@ export default function Planillero() {
     return (
         <>
             <div>
-
-                <Typography variant="h6" color="blue-gray" className="mb-1">
-                    Planillero: Aquí puedes agregar un usuario para que dirija un partido.
+                <Typography variant="h6" color="blue-gray" className="mb-2 text-2xl">
+                    Aquí puedes agregar un usuario para que dirija un partido.
                 </Typography>
 
                 <button
@@ -92,7 +91,7 @@ export default function Planillero() {
                                 Identificacion
                             </th>
                             <th scope="col" className="px-6 py-3">
-                                Action
+                                Acciones 
                             </th>
                         </tr>
                     </thead>
