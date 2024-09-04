@@ -49,7 +49,7 @@ export default function Planillero() {
                 const response = await axios.delete(`http://localhost:3001/usuarios/${id}`)
                 console.log(response.data)
                 if (response.data) {
-                    Swal.fire("Saved!", "", "success");
+                    Swal.fire("Eliminado", "", "success");
                 }
             }
         });

@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useState } from 'react'
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+
 
 export const CrearPlanillero = () => {
     const [nombres, setNombres] = useState('');
@@ -14,6 +16,8 @@ export const CrearPlanillero = () => {
     const [identificacionError, setIdentificacionError] = useState('');
     const [passwordError, setPasswordError] = useState('');
     const [roleError, setRoleError] = useState('');
+    const navigate = useNavigate();
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -54,6 +58,7 @@ export const CrearPlanillero = () => {
             const response = await axios.post('http://localhost:3001/usuarios/', formData);
             console.log('Planillero registrado exitosamente', response.data);
             toast.success('Registrado exitosamente');
+            navigate('/dashboard/planillero');
         } catch (error) {
             toast.error('Error al registrar');
             console.error('Error al registrar ', error);
