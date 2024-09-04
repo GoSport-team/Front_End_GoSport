@@ -1,4 +1,4 @@
- import {
+import {
   Card,
   Input,
   Checkbox,
@@ -20,9 +20,9 @@ export const SignIn = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowWelcome(false);
-    }, 1500); 
+    }, 1500);
 
-    return () => clearTimeout(timer); 
+    return () => clearTimeout(timer);
   }, []);
 
   const notify = (message) => toast(message);
@@ -32,7 +32,7 @@ export const SignIn = () => {
     formState: { errors, touchedFields },
     setError,
   } = useForm();
-  const [isValid, setIsvalid]= useState({correo:false, contrasena: false});
+  const [isValid, setIsvalid] = useState({ correo: false, contrasena: false });
   const Navigate = useNavigate();
 
   const onSubmit = async (data) => {
@@ -53,15 +53,15 @@ export const SignIn = () => {
         }
       }, 1000);
     } catch (error) {
-     
-        console.log("Ingrese usuario y contraseña");
-      
+
+      console.log("Ingrese usuario y contraseña");
+
     }
   };
 
   return (
     <section className="flex flex-row h-screen">
-      <ToastContainer/>
+      <ToastContainer />
       <div className="w-100p h-100p flex items-center flex-col justify-center gap-3 lg:w-3/5">
         <div className="text-center">
           <Typography variant="h2" className="font-bold mb-4  ">Iniciar Sesion</Typography>
@@ -73,61 +73,57 @@ export const SignIn = () => {
               Correo
             </Typography>
             <div className="relative flex flex-row">
-            <Input
-              size="lg"
-              placeholder="name@mail.com"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("correo")}
-              id
-            />
-             {errors.correo && <p>{errors.correo.message}</p>}
-            {touchedFields.correo && isValid.correo && !errors.correo && (
-              <Check className="iconLogin" />
-            )}
+              <Input
+                size="lg"
+                placeholder="name@mail.com"
+                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+                {...register("correo")}
+                id
+              />
+              {errors.correo && <p>{errors.correo.message}</p>}
+              {touchedFields.correo && isValid.correo && !errors.correo && (
+                <Check className="iconLogin" />
+              )}
             </div>
-           
-           
+
+
             <Typography variant="small" color="blue-gray" className="-mb-3 text-lg font-medium">
               Contraseña
             </Typography>
             <div className="relative flex flex-row">
-            <Input
-              type="password"
-              size="lg"
-              placeholder="********"
-              className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
-              labelProps={{
-                className: "before:content-none after:content-none",
-              }}
-              {...register("contrasena")}
-            />
+              <Input
+                type="password"
+                size="lg"
+                placeholder="********"
+                className=" !border-t-blue-gray-200 focus:!border-t-gray-900"
+                labelProps={{
+                  className: "before:content-none after:content-none",
+                }}
+                {...register("contrasena")}
+              />
               {errors.contrasena && <p>{errors.contrasena.message}</p>}
-            {touchedFields.contrasena &&
-              isValid.contrasena &&
-              !errors.contrasena && <Check className="iconLogin" />}
+              {touchedFields.contrasena &&
+                isValid.contrasena &&
+                !errors.contrasena && <Check className="iconLogin" />}
             </div>
           </div>
-          
-          {/* <Button type="submit" className="mt-6 text-base" fullWidth>
-            Iniciar sesion
-        </Button> */}
 
-        <button type="submit" class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none mt-4 w-[30vw]" fullWidth>
+          <button type="submit" class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none mt-4 w-full" >
             Iniciar sesion
-        </button>
+          </button>
 
           <div className="flex items-center justify-end gap-2 mt-6">
-           
+
             <Typography variant="small" className="font-medium text-gray-900">
               <a href="#">
                 ¿Has olvidado tu contraseña?
               </a>
             </Typography>
           </div>
-          
+
           <Typography variant="paragraph" className="text-center text-blue-gray-500 font-medium mt-4">
             ¿No estas registrado?
             <Link to="/auth/sign-up" className="text-gray-900 ml-1">Crear cuenta</Link>
@@ -146,13 +142,14 @@ export const SignIn = () => {
         <div className="w-full h-full flex items-center justify-center">
           {showWelcome ? (
             <div className="w-full h-full grid place-content-center thunder-animation rounded-3xl bg-white">
-              <p className="text-2xl font-semibold text-gray-800">Inicia sesión en GoSport</p>
+              <img src="\public\img\logoGos.png"
+                className="object-cover rounded-3xl w-[35vw]"  alt="" />
             </div>
           ) : (
             <div className="h-screen flex items-center justify-center w-[40vw]">
               <img
-                src="/public/img/logoGos.png"
-                  className="object-cover rounded-3xl w-[35vw] Animation"
+                  src="\public\sing.jpg"
+                className="object-cover rounded-3xl w-[35vw]"
                 alt="Logo"
               />
             </div>

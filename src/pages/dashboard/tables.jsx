@@ -10,6 +10,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Creado } from "@/widgets/componentes/campeonato/estadosCampeonato/creado";
 import { Inscripto } from "@/widgets/componentes/campeonato/estadosCampeonato/inscripto";
 import { Ejecucion } from "@/widgets/componentes/campeonato/estadosCampeonato/ejecucion";
+
+import {
+  Typography,
+
+} from "@material-tailwind/react";
 export function Tables() {
   const [tasks, setTasks] = useState([]);
   const [selectedCampeonato, setSelectedCampeonato] = useState(null);
@@ -63,7 +68,12 @@ export function Tables() {
     }
   return (
     <>
-    <div className="mt-10 mb-8 flex flex-col">
+      <div className="mb-8 flex flex-col">
+        
+        <Typography variant="h6" color="blue-gray" className="text-2xl mb-6">
+          Visualiza, crea y administra todos los campeonatos desde aquí.
+        </Typography>
+
     <div className="flex justify-start mb-4">
       <button class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
         <Link to="/dashboard/tables/view">Crear Campeonato</Link>

@@ -181,7 +181,7 @@ const handleSubmit = async () => {
         {botonAgregar&&(
           <button
         onClick={()=>setAgregarEquipo(true)}
-        className="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3"
+        className="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
         >
           Agregar Equipo
         </button>
@@ -190,7 +190,7 @@ const handleSubmit = async () => {
         { estadoBoton && (
           <button
           onClick={()=>handleSortearClick()}
-          className="flex items-center justify-center text-white gap-1 px-5 py-3 cursor-pointer bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded tracking-widest rounded-md duration-300 hover:gap-2 hover:translate-x-3" 
+          className="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" 
           >   Sorteo
           </button>
         )}
@@ -211,17 +211,17 @@ const handleSubmit = async () => {
               
               <Link to={'/campe/cronograma'}
                 onClick={()=>handleConfirmSortear()}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
+                className="mr-3  select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               >
                 ok
               </Link>
               <button
                 onClick={handleCancelSortear}
-                className="px-4 py-2 bg-red-500 text-white rounded-md"
+                className="px-4 py-2 bg-gray-500 text-white rounded-md"
               >
                 Cancelar
               </button>
-            </div>
+            </div> 
           </div>
         </div>
       )}

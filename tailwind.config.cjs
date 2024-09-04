@@ -6,7 +6,10 @@ module.exports = withMT({
   theme: {
     extend: {},
     colors: {
-      'custom-teal':'#12aed1cd'
+      'custom-teal': '#12aed1cd',
+      'metal': '#565584',
+      'tahiti': '#12aed1cd',
+      'silver': '#ecebff'
     }
   },
   plugins: [],

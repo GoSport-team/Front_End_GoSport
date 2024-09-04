@@ -10,13 +10,13 @@ const DeleteCampeonatoModal = ({ isOpen, onClose, onDelete, campeonatoName }) =>
                 <p>¿Estás seguro de que deseas eliminar el campeonato <strong>{campeonatoName}</strong>? Esta acción no se puede deshacer.</p>
                 <div className="flex justify-end mt-4">
                     <button
-                        className="bg-gray-500 text-white px-4 py-2 rounded mr-2"
+                        className="px-4 py-2 bg-gray-500 text-white rounded-md mr-3"
                         onClick={onClose}
                     >
                         Cancelar
                     </button>
                     <button
-                        className="bg-gradient-to-tr from-gray-900 to-gray-800 text-white px-4 py-2 rounded"
+                        class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         onClick={onDelete}
                     >
                         Eliminar

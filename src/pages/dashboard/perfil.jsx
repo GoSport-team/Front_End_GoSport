@@ -295,6 +295,11 @@ notify('No hay cambios para actualizar.');
 
   return (
     <>
+      <Typography variant="h6" color="blue-gray" className="text-2xl mb-6">
+        Revisa y actualiza los detalles de tu cuenta en esta sección.
+        
+      </Typography>
+
     <ToastContainer/>
     <div className="">
   {loading ? (
@@ -303,7 +308,7 @@ notify('No hay cambios para actualizar.');
     </div>
   ) : (
     <div className="relative mt-8 h-auto lg:h-72">
-      <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover bg-center">
+      <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/hq720.jpg')] bg-cover bg-center">
         <div className="absolute inset-0 h-full w-full bg-black-900/75" />
       </div>
 
@@ -500,7 +505,6 @@ notify('No hay cambios para actualizar.');
               <button   className="absolute z-40 bottom-0 left-0 bg-white rounded-full p-1 border-0 w-10 h-10 flex items-center justify-center cursor-pointer" onClick={handleDelete}>
               <TrashIcon className="w-6 h-6  text-red-500 cursor-pointer" />
               </button>
-              
             </Tooltip>
             <div className="relative">
      {

@@ -30,6 +30,11 @@ import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 export function Home() {
   return (
     <div className="">
+      <Typography variant="h6" color="blue-gray" className="text-2xl mb-6">
+        En esta sección encontrarás toda la información estadística de los campeonatos.
+      </Typography>
+
+
       <div className="mb-12 grid gap-y-5 gap-x-6 md:grid-cols-2 xl:grid-cols-5">
         {statisticsCardsData.map(({ icon, title, footer, ...rest }) => (
           <StatisticsCard
@@ -57,8 +62,10 @@ export function Home() {
           />
         ))}
       </div>
-      <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
-        <Card className="overflow-hidden xl:col-span-2 border border-blue-gray-100 shadow-sm">
+
+
+      {/* <div className="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
+         <Card className="overflow-hidden xl:col-span-2 border border-blue-gray-100 shadow-sm">
           <CardHeader
             floated={false}
             shadow={false}
@@ -93,7 +100,7 @@ export function Home() {
                 <MenuItem>Something else here</MenuItem>
               </MenuList>
             </Menu>
-          </CardHeader>
+          </CardHeader> 
           <CardBody className="overflow-x-scroll px-0 pt-0 pb-2">
             <table className="w-full min-w-[640px] table-auto">
               <thead>
@@ -183,9 +190,10 @@ export function Home() {
                 )}
               </tbody>
             </table>
-          </CardBody>
-        </Card>
-        <Card className="border border-blue-gray-100 shadow-sm">
+          </CardBody> 
+        </Card>  
+
+       <Card className="border border-blue-gray-100 shadow-sm">
           <CardHeader
             floated={false}
             shadow={false}
@@ -241,8 +249,8 @@ export function Home() {
               )
             )}
           </CardBody>
-        </Card>
-      </div>
+        </Card>   
+      </div> */}
     </div>
   );
 }

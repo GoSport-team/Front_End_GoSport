@@ -85,13 +85,13 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
             <div className="flex justify-end mb-4">
               <button
                    onClick={searchEquipo}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
+                 class="mr-3 select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               >
                 Buscar
               </button>
               <button
               onClick={()=>setAgregarEquipo(false)}
-                className="px-4 py-2 bg-red-500 text-white rounded-md"
+                className="px-4 py-2 bg-gray-500 text-white rounded-md"
               >
                 Cancelar
               </button>
@@ -108,7 +108,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
                 <p><strong>Jornada:</strong> {equipo.jornada} </p>
               <button
                    onClick={inscribirEquipo}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md mr-2"
+                 class="select-none mt-3 rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               >
                 Agregar
               </button>

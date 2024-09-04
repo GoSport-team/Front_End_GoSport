@@ -13,9 +13,9 @@ export const eliminarJugador=(indice, jugadores, user)=> {
       Swal.fire({
         title: "Deseas eliminar este jugador",
         showCancelButton: true,
-        confirmButtonText: "Save",
+        confirmButtonText: "Guardar",
           confirmButtonColor: "#12aed1cd",
-        cancelButtonColor: "#d33",
+        cancelButtonColor: "#9e9e9e",
         text: `Nombre ${jugadores[indice].nombres} \n `,
       }).then((result) => {
           if (result.isConfirmed) {
@@ -81,7 +81,7 @@ export  const searchJugador = async (idenfiticacion, jugadores) => {
                         icon: "error",
                         title: "El numero de dorsal ya esta ocupado",
                         confirmButtonText: "OK",
-                        confirmButtonColor: "#E42245",
+                        confirmButtonColor: "#9e9e9e",
                     })
 
                     return false
@@ -93,7 +93,7 @@ export  const searchJugador = async (idenfiticacion, jugadores) => {
                         icon: "error",
                         title: `El jugador ${response.data.nombres} ya hace parte de este equipo`,
                         confirmButtonText: "OK",
-                        confirmButtonColor: "#E42245",
+                        confirmButtonColor: "#9e9e9e",
                     })
 
                     return false
@@ -102,9 +102,9 @@ export  const searchJugador = async (idenfiticacion, jugadores) => {
             Swal.fire({
                 title: "Datos del jugador",
                 showCancelButton: true,
-                confirmButtonText: "Save",
+                confirmButtonText: "Guardar",
                 confirmButtonColor: "#12aed1cd",
-                cancelButtonColor: "#d33",
+                cancelButtonColor: "#9e9e9e",
                 text: `Nombre ${response.data.nombres} \n 
           Ficha ${JSON.stringify(formValues[0])} \n
           Dorsal ${JSON.stringify(formValues[1])}`,

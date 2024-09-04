@@ -16,13 +16,13 @@ export const NavBarJugador = ({ cedula }) => {
         alt="Logo"
       />
       <div className="hidden md:flex space-x-6 text-lg font-bold text-black pr-10">
-        <Link to={`verequipo/${cedula}`} className="hover:text-blue-400">
+        <Link to={`verequipo/${cedula}`} className="hover:text-tahiti">
           <h1>Ver Equipo</h1>
         </Link>
-        <Link to={'perfilJugador/'} className="hover:text-blue-400">
+        <Link to={'perfilJugador/'} className="hover:text-tahiti">
           <h1>Perfil</h1>
         </Link>
-        <Link to={'/'} className="">
+        <Link to={'/'} className="hover:text-tahiti">
           <h1>Salir</h1>                                      
         </Link>
       </div>
@@ -54,17 +54,20 @@ export const NavBarJugador = ({ cedula }) => {
       >
         <Link
           to={`verequipo/${cedula}`}
-          className="block py-2 px-4 text-lg font-bold hover:text-blue-400"
+          className="block py-2 px-4 text-lg font-bold hover:text-tahiti"
           onClick={toggleMenu}
         >
           Ver Equipo
         </Link>
         <Link
           to={'perfilJugador/'}
-          className="block py-2 px-4 text-lg font-bold hover:text-blue-400"
+          className="block py-2 px-4 text-lg font-bold hover:text-tahiti"
           onClick={toggleMenu}
         >
           Perfil
+        </Link>
+        <Link to={'/'} className="block py-2 px-4 text-lg font-bold hover:text-tahiti">
+          <h1>Salir</h1>
         </Link>
       </div>
     </nav>

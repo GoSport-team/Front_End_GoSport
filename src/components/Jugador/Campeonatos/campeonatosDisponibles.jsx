@@ -57,7 +57,7 @@ export default function CampeonatosDisponibles() {
                     <h2 class="text-2xl font-bold mb-2 text-gray-800  tracking-wide">Bienvenido</h2>
                     <p class="block font-sans text-base font-light leading-relaxed text-inherit antialiased tracking-wide">
                       “Estimado
-                      <span className="text-lg md:text-3xl font-bold text-blue-400 relative inline-block  md:pl-3">
+                      <span className="text-lg md:text-3xl font-bold text-tahiti relative inline-block  md:pl-3">
                         {user.nombres}
                       </span> , bienvenido al área de inscripciones. 🏆
                       Aquí podrás elegir los campeonatos en los que deseas participar.
@@ -65,9 +65,9 @@ export default function CampeonatosDisponibles() {
                       tu habilidad en la cancha. ¡Éxito!”
                     </p>
                   </div>
-                  <button class="hover:bg-gray-300 bg-gray-200 text-gray-800 mt-6 rounded p-2 px-6">
+                  {/* <button class="hover:bg-gray-300 bg-gray-200 text-gray-800 mt-6 rounded p-2 px-6">
                     Explore
-                  </button>
+                  </button> */}
                 </div>
               </div>
               <div className='w-[35vw] flex justify-end mt-9'>
