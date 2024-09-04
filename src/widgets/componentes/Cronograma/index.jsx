@@ -274,7 +274,8 @@ useEffect(()=>{
       </>
       ):(
         <>
-          <div className='flex flex-gap gap-4 justify-center items-center'>
+        
+          <div className='flex flex-gap gap-4 justify-center items-center flex-col'>
         <div className='flex items-center'>
           <img className='w-1/4 md:w-2/4 object-contain h-16 md:h-24 rounded-3xl' src={equipo1.imgLogo} />
           <div className='ml-4 flex justify-center items-center'>
@@ -285,11 +286,38 @@ useEffect(()=>{
           <h1 className='text-center text-4xl font-extrabold'>Vs</h1>
         </div>
         <div className='flex items-center'>
+          <img className='w-1/4 md:w-2/4 object-contain h-16 md:h-24 rounded-3xl ml-4' src={equipo2.imgLogo} />
           <div className='ml-4 flex justify-center items-center'>
             <h4 className='text-lg md:text-xl font-semibold text-gray-700'>{equipo2.nombreEquipo}</h4>
           </div>
-          <img className='w-1/4 md:w-2/4 object-contain h-16 md:h-24 rounded-3xl ml-4' src={equipo2.imgLogo} />
+          
         </div>
+        
+      </div>
+      <div className='w-full md:w-1/2 flex flex-col justify-between mt-6 md:mt-0  ' >
+      <div>
+        <h3 className='text-xl md:text-2xl font-bold text-gray-800 mb-4 md:mb-6'>Detalles</h3>
+        <div className='flex flex-col gap-y-4 md:gap-y-6'>
+          <div className='flex flex-col md:flex-row items-start md:items-center gap-x-4 md:gap-x-10'>
+            <label className='text-md md:text-lg font-medium text-gray-600'>Hora</label>
+            <input 
+              type="time" 
+              value={hora} 
+              onChange={handleHora} 
+              className='p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mt-2 md:mt-0 w-full md:w-auto' 
+            />
+          </div>
+          <div className='flex flex-col md:flex-row items-start md:items-center gap-x-4 md:gap-x-10'>
+            <label className='text-md md:text-lg font-medium text-gray-600'>Fecha</label>
+            <input 
+              type="date" 
+              value={fecha} 
+              onChange={handleFecha} 
+              className='p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 mt-2 md:mt-0 w-full md:w-auto' 
+            />
+          </div>
+        </div>
+      </div>
       </div>
         </>
       )}
