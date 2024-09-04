@@ -75,8 +75,8 @@ export function Fotos() {
   };
 
   const handleUploadPhoto = () => {
-    if (photos.length >= 6) {
-      toast.error('Solo puedes subir hasta 6 imágenes.');
+    if (photos.length >= 10) {
+      toast.error('Solo puedes subir hasta 10 imágenes.');
     } else {
       setShowUploadModal(true);
     }

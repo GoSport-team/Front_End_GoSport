@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const Creado = ({ tasks, viewCampeonato, setModalView, setIdUpdate, setModalUpdate, setSelectedCampeonato, setIsModalOpen }) => {
+export const Creado = ({ tasks, viewCampeonato, setModalView, setIdUpdate, setModalUpdate, setSelectedCampeonato, setIsModalOpen , setControlador}) => {
   const [estado, setEstado]= useState('Inscripcion')
   const[creado, setCreado]= useState()
  useEffect(()=>{
@@ -18,6 +18,7 @@ const handleSubmit = async (e) => {
         {estadoCampeonato: estado}
        );
       toast.success('Campeonato actualizado exitosamente');
+      setControlador(true)
       setCreado(false)
   } catch (error) {
       console.error('Error public campeonato:', error);

@@ -5,7 +5,7 @@ import {
   } from "@material-tailwind/react";
   import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';     
-export const ConfirmarGuardar = ({ confirmarCambios, cerrarModal, idVs, fecha, hora }) => {
+export const ConfirmarGuardar = ({ confirmarCambios, cerrarModal, idVs, fecha, hora, setControlador }) => {
     const notify = (message)=> toast(message);
     const [loading, setLoading]= useState(false)
   const editarFechasHoras = async () => {
@@ -19,11 +19,14 @@ export const ConfirmarGuardar = ({ confirmarCambios, cerrarModal, idVs, fecha, h
         try {
         setLoading(true);
           const patch = await axios.patch(`http://localhost:3001/vs/${idVs}`, { fecha, hora });
-          console.log(patch);
-          setLoading(false)
+          setControlador(true)
           confirmarCambios(false)
+          setHorario(true)
         } catch (error) {
           console.log(`${error} revise`);
+        }finally{
+          setLoading(false)
+setControlador(false)
         }
       };
     

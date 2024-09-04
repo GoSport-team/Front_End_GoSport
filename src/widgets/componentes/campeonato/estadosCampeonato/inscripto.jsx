@@ -1,14 +1,16 @@
 import React,{useState, useEffect} from 'react'
 import { Link } from "react-router-dom";
-export const Inscripto = ({tasks}) => {
+export const Inscripto = ({tasks,setControlador}) => {
     const[inscripto, setInscripto]= useState()
     useEffect(()=>{
       if(tasks.estadoCampeonato==='Inscripcion'){
           setInscripto(true)
         }
        })
+
        const handleClick=()=>{
         localStorage.setItem('ID', tasks._id);
+        setControlador(true)
        }
   return (
     <>

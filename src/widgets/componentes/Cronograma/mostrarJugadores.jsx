@@ -22,6 +22,7 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
     const [ganador, setGanador]= useState([])
     const [perdedor, setPerdedor]=useState([])
     const [isModalOpenOk, setModalOpenOk] = useState(false);
+    
    useEffect(()=>{
     if(countGol1<countGol2){
             setGanador(equipo2)
@@ -183,7 +184,7 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
     className="flex justify-center items-center h-screen w-auto ml-36"
     overlayClassName="fixed inset-0 bg-black bg-opacity-50"
 >
-    <div className="rounded-lg shadow-lg overflow-hidden flex flex-col w-[auto] bg-white p-3 ml-[10vw]"> {/* Agregué la clase ml-[10vw] */}
+    <div className="rounded-lg shadow-lg overflow-hidden flex flex-col min-w-[50vw] max-w-[70vw] min-h-[50vh] max-h-[100vh] bg-white p-3 ml-[10vw]"> {/* Agregué la clase ml-[10vw] */}
         <div className='flex justify-end'>
             <button
                 className="text-gray-600 hover:text-gray-900 text-2xl font-bold w-10 h-10 flex items-center justify-center rounded-full bg-gray-200"
@@ -193,7 +194,7 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
             </button>
         </div>
 {datosVss&&(
-        <div  key={ datosVss._id} className="flex flex-row gap-x-4">
+        <div  key={ datosVss._id} className="flex relative flex-row gap-x-4 min-w-[50vw] max-w-[80vw] min-h-[50vh] max-h-[100vh]">
             <div className="flex flex-col w-1/2">
                 <div className='flex content-center justify-center gap-x-5'>
                     <div className='grid place-content-center'>
@@ -441,6 +442,7 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
         onClose={() => setModalOpenOk(false)}
         agregarResultado={botonPublicar}
         setModalOpenOk={setModalOpenOk}
+    
         />
     </div>
 </Modal>

@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 
 Modal.setAppElement('#root');
 
-const UpdateCampeonatoModal = ({ isOpen, onClose, campeonato, onUpdate }) => {
+const UpdateCampeonatoModal = ({ isOpen, onClose, campeonato, onUpdate, setControlador, controlador }) => {
  
     const [formData, setFormData] = useState({
         nombreDisciplinas: '',
@@ -77,7 +77,7 @@ const UpdateCampeonatoModal = ({ isOpen, onClose, campeonato, onUpdate }) => {
                 finInscripcion: campeonato.finInscripcion || ''
             });
         }
-    }, [campeonato]);
+    }, [controlador]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -93,9 +93,12 @@ const UpdateCampeonatoModal = ({ isOpen, onClose, campeonato, onUpdate }) => {
             await axios.patch(`http://localhost:3001/campeonato/${onUpdate}`, formData);
             toast.success('Campeonato actualizado exitosamente');
             onClose();
+            setControlador(true)
         } catch (error) {
             console.error('Error updating campeonato:', error);
             toast.error('Error al actualizar el campeonato. Inténtalo de nuevo.');
+        }finally{
+            setControlador(false)
         }
     };
 
@@ -108,7 +111,7 @@ const UpdateCampeonatoModal = ({ isOpen, onClose, campeonato, onUpdate }) => {
             className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50"
             overlayClassName="fixed inset-0 bg-black bg-opacity-50"
         >
-            <div className="bg-white rounded-lg p-6 max-w-4xl w-full shadow-lg overflow-y-auto">
+            <div className="bg-white rounded-lg p-6 max-w-md max-h-[80vh] w-full shadow-lg overflow-y-auto">
                 <h2 className="text-2xl font-semibold mb-6 text-center">Actualizar Campeonato</h2>
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -5,7 +5,8 @@ import { Link } from "react-router-dom";
 import Participantes from '@/widgets/componentes/Participantes/index';
 import { ModalInscribirCampeonato } from '@/widgets/componentes/campeonato/modalInscribirCampeonato';
 import { EliminarEquipo } from "@/widgets/componentes/Participantes/eliminarEquipo";
-
+import { par } from "@/services/par.js";
+import { usePar } from "@/context/parContext";
 export const Participante = () => {
   const IdCampeonato = localStorage.getItem('ID');
   const [equipoInscripto, setEquipoInscripto] = useState([]);
@@ -21,7 +22,40 @@ export const Participante = () => {
   const [idInscripto,setIdInscripto]= useState('')
   const [isLoading, setIsLoading] = useState(true); 
 const [agregarEquipo, setAgregarEquipo]= useState(false)
+const [botonEliminar, setBotonEliminar]= useState()
+const [botonAgregar, setBotonAgregar]= useState()
 const [estadoCam, setEstadoCam]=useState('Ejecucion')
+const [controlador, setControlador]= useState()
+const{par2, setPar}=usePar()
+useEffect(()=>{
+  const pares = par(equipoInscripto.length)
+setPar(pares)
+},[equipoInscripto])
+
+useEffect(()=>{
+const botonSorteo= async()=>{
+  const response = await axios.get('http://localhost:3001/fase',{
+    headers:{
+     id:IdCampeonato,
+    }
+    
+  }
+)
+
+if(!response.data[0] && equipoInscripto.length >= 3)  {
+setEstadoBoton(true)
+}else if(!response.data[0]){
+  setEstadoBoton(false)
+ setBotonEliminar(true)
+ setBotonAgregar(true)
+}else{
+  setEstadoBoton(false)
+  setBotonAgregar(false)
+  setBotonEliminar(false)
+}
+}
+botonSorteo()
+},[equipoInscripto])
 
 const handleSubmit = async () => {
   try {
@@ -32,18 +66,7 @@ const handleSubmit = async () => {
       console.error('Error public campeonato:', error);
   }
 };
-useEffect(()=>{
-  const condicion =()=>{
 
-    if (equipoInscripto.length >= 3) {
-    setEstadoBoton(true)
-            } else {
-     setEstadoBoton(false) 
-    }
-  }
-  condicion()
-
-},[equipoInscripto])
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -53,6 +76,7 @@ useEffect(()=>{
           },
         });
         setEquipoInscripto(data);
+        console.log(data)
       } catch (error) {
         console.log(error);
       }finally{
@@ -60,7 +84,7 @@ useEffect(()=>{
       }
     };
     fetchData();
-  },[equipoInscripto]);
+  },[controlador]);
  
   const sortearEquipos = async () => {
     try {
@@ -125,7 +149,7 @@ useEffect(()=>{
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0">
             {equipoInscripto.map((equipo) => (
               <div key={equipo._id} className="flex justify-center items-center z-0">
-               <Participantes equipo={equipo.Equipo} id={equipo._id} modal={() => openModal(equipo.Equipo)}  setShowConfirmModalEliminar={setShowConfirmModalEliminar} setIdInscripto={setIdInscripto} />
+               <Participantes equipo={equipo.Equipo} id={equipo._id} modal={() => openModal(equipo.Equipo)}  setShowConfirmModalEliminar={setShowConfirmModalEliminar} setIdInscripto={setIdInscripto} botonEliminar={botonEliminar} />
               </div>
             ))}
           </div>
@@ -137,7 +161,7 @@ useEffect(()=>{
           showConfirmModalEliminar&&(
 
             <EliminarEquipo  showConfirmModal={showConfirmModalEliminar}  id={idInscripto} setShowConfirmModalEliminar={setShowConfirmModalEliminar}
-            setIsLoadingPar={setIsLoading}/>
+            setIsLoadingPar={setIsLoading} setControlador={setControlador}/>
           )
         }
  {selectedEquipo && (
@@ -150,17 +174,19 @@ useEffect(()=>{
     
       <div className="flex justify-center space-x-4 mx-6 my-4">
         {agregarEquipo &&(
-        <ModalInscribirCampeonato setAgregarEquipo={setAgregarEquipo} onAgregarEquipo={handleAgregarEquipo} />
+        <ModalInscribirCampeonato setAgregarEquipo={setAgregarEquipo} onAgregarEquipo={handleAgregarEquipo} setControlador={setControlador}/>
       )}
         
           <div className="flex space-x-4">
-           
-        <button
+        {botonAgregar&&(
+          <button
         onClick={()=>setAgregarEquipo(true)}
         className="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
         >
           Agregar Equipo
         </button>
+        )}   
+        
         { estadoBoton && (
           <button
           onClick={()=>handleSortearClick()}
@@ -182,12 +208,13 @@ useEffect(()=>{
             <h3 className="text-lg font-bold">Confirmación</h3>
             <p className="mt-2">¿Está seguro de que desea sortear los equipos?</p>
             <div className="flex justify-end mt-4">
-              <button
+              
+              <Link to={'/campe/cronograma'}
                 onClick={()=>handleConfirmSortear()}
                 className="mr-3  select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               >
-                <Link to="/campe/cronograma" >Ok</Link>
-              </button>
+                ok
+              </Link>
               <button
                 onClick={handleCancelSortear}
                 className="px-4 py-2 bg-gray-500 text-white rounded-md"

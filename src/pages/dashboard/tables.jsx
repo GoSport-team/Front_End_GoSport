@@ -23,29 +23,34 @@ export function Tables() {
     const[idUpdate, setIdUpdate]= useState(null)
     const [modalUpdate, setModalUpdate]= useState(false)
     const[campeonato, setCampeonato]= useState([])
-   
+   const [controlador, setControlador]= useState()
     
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const response = await axios.get('http://localhost:3001/campeonato');
           setTasks(response.data);
+          setControlador(true)
       } catch (error) {
         console.error('Error fetching tasks:', error);
       }
     };
     fetchTasks();
-  },[tasks]);
+
+  });
  
     const deleteTasks = async () => {
       try {
         const response = await axios.delete(`http://localhost:3001/campeonato/${selectedCampeonato}`);
         console.log(response)
         setIsModalOpen(false);
+        setControlador(true)
         toast('Campeonato eliminado exitosamente');
       } catch (error) {
         console.error('Error fetching tasks:', error);
         toast.error('Error al eliminar el campeonato. Inténtalo de nuevo.');
+      }finally{
+        setControlador(false)
       }
     };
 
@@ -54,6 +59,7 @@ export function Tables() {
   const response = await axios.get(`http://localhost:3001/campeonato/${id}`);
   console.log(response.data)
    setCampeonato(response.data)
+   setControlador(true)
     }catch(error){
   console.error('Error fetching tasks:', error);
   toast.error('Error al abrir el campeonato. Inténtalo de nuevo.');
@@ -107,12 +113,18 @@ export function Tables() {
                 setModalUpdate={setModalUpdate}
                 setSelectedCampeonato={setSelectedCampeonato}
                 setIsModalOpen={setIsModalOpen}
+                setControlador={setControlador}
+                controlador={controlador}
               />
               <Inscripto
                 tasks={task} 
+                setControlador={setControlador}
+                controlador={controlador}
               />
               <Ejecucion
-              tasks={task} />
+              tasks={task}
+              setControlador={setControlador}
+              controlador={controlador} />
           
             </td>
           </tr>
@@ -133,18 +145,24 @@ export function Tables() {
       onClose={() => setIsModalOpen(false)}
       onDelete={deleteTasks}
       campeonatoName={selectedCampeonato ? selectedCampeonato.nombreCampeonato : ''}
+      setControlador={setControlador}
+      controlador={controlador}
     />
     <ToastContainer />
     <ViewCampeonatoModal
       isOpen={modalView}
       onClose={() => setModalView(false)}
       campeonato={campeonato}
+      setControlador={setControlador}
+      controlador={controlador}
     />
     <UpdateCampeonato
       isOpen={modalUpdate}
       onClose={() => setModalUpdate(false)}
       campeonato={campeonato}
       onUpdate={idUpdate}
+      setControlador={setControlador}
+      controlador={controlador}
     />
   </div>
     </>

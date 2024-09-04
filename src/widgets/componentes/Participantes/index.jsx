@@ -1,8 +1,7 @@
 'use client'
-import React, { useEffect, useState } from 'react';
 
-export default function Participantes({ equipo, id, modal, setShowConfirmModalEliminar, setIdInscripto }) {
 
+export default function Participantes({ equipo, id, modal, setShowConfirmModalEliminar, setIdInscripto , botonEliminar}) {
     const handleEliminarClick = () => {
         setShowConfirmModalEliminar(true)
         setIdInscripto(id)
@@ -34,15 +33,18 @@ export default function Participantes({ equipo, id, modal, setShowConfirmModalEl
 
                         <div className="absolute rounded-full bg-gray-500 z-20 left-1/2 top-[44%] h-[110%] w-[110%] -translate-x-1/2 group-hover:top-[58%] transition-all duration-300"></div>
                         <div className="para uppercase text-center leading-none z-40">
-                            <p className="text-black font-semibold text-xs font-serif">Equipo</p>
+                            <p className="text-black font-semibold text-xs font-serif">Equipos</p>
                             <p className="font-bold text-xl tracking-wider text-gray-500">{equipo.nombreEquipo}</p>
                         </div>
 
 
-                        <div className="img w-[180px] aspect-square bg-gray-100 z-40 rounded-md ">
-                            <img className='h-full object-cover rounded-md opacity-80'
-                                src={equipo.imgLogo} alt="img" />
-                        </div>
+                        <div className="img w-[180px] h-[180px] bg-gray-100 z-40 rounded-md overflow-hidden">
+    <img 
+        className="w-full h-full object-cover rounded-md"
+        src={equipo.imgLogo} 
+        alt="img" 
+    />
+</div>
 
                         <div className="btm-_container z-40  justify-between items-end gap-6">
                             <div className="flex flex-col items-start gap-1 m-1">
@@ -99,12 +101,15 @@ export default function Participantes({ equipo, id, modal, setShowConfirmModalEl
                             </div>
 
                             <div className='mt-3'>
-                                <button
+                                {botonEliminar&&(
+                                    <button
                                     onClick={handleEliminarClick}
                                     class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                                 >
                                     Eliminar
                                 </button>
+                                )}
+                                
                             </div>
                         </div>
 

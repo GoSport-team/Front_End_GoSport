@@ -4,6 +4,7 @@ import React, { useState } from "react";
     const agregar=()=>{
         agregarResultado()
         setModalOpenOk(false)
+    
     }
     if (!isOpen) return null;
   return (

@@ -27,6 +27,8 @@ export default function Cronograma() {
     const [fasesInactivas, setFasesInactivas]= useState()
     const [faseActiva, setFasesActiva]= useState()
     const [oks, setOks]= useState(true)
+    const [controlador, setControlador]= useState()
+  
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -36,9 +38,7 @@ export default function Cronograma() {
             },
           });
           setFasesInactivas(data.faseInactiva)
-          // console.log(data.faseInactiva)
          setFasesActiva(data.faseActiva)
-          // console.log(data.faseActiva)
         } catch (error) {
           console.log(error);
         }
@@ -63,6 +63,7 @@ export default function Cronograma() {
       }
       GetDatosVs();
     },[datosVss])
+    //console.log(datosVss)
     const hanlde = (estado,idVs)=>{
       setConfirmarCambios(estado)
       setIdVs(idVs)
@@ -114,6 +115,8 @@ export default function Cronograma() {
                datosVss={versus}
                vs={datosVss}
                oks={oks}
+               setControlador={setControlador}
+               controlador={controlador}
                ></CronogramaDesing>
 
              </div>
@@ -130,6 +133,8 @@ export default function Cronograma() {
                  cerrarModal={setConfirmarCambios}
                  fecha={fechaHora.fecha}
                  hora={fechaHora.hora}
+                 setControlador={setControlador}
+
                  />
                )
              }
