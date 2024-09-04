@@ -8,6 +8,7 @@ import { DatosEquiposInscripcion } from "./components/Jugador/InscribirEquipo/Da
 import { VerEquipo } from "./components/Jugador/VerEquipo/VerEquipo";
 import { PerfilJugador } from "./components/Jugador/PerfilJugador/perfilJugador";
 import { CrearPlanillero } from "./widgets/componentes/Planillero/CrearPlanillero";
+
 function App() {
   return (
     
@@ -17,6 +18,7 @@ function App() {
       <Route path="/dashboard/*" element={<Dashboard />} />
       <Route path="/auth/*" element={<Auth />} />
       <Route path="/dashboard/tables/view" element={<CreateCampeonato />} />
+      
       <Route path="/campe/*" element={<Campe/>}/>
       
       <Route path="*" element={<Navigate to="/dashboard/home" replace />} />

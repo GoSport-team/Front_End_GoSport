@@ -9,6 +9,9 @@ import axios from "axios";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { BuscarPlanillero } from '../Planillero/BuscarPlanillero';  
+import { VerPlanillero } from '../Planillero/verPlanillero';
+import { MejorPerdedor } from './mejorPerdedor';
+import { usePar } from '@/context/parContext';
 export default function CronogramaDesing({  patchFechaHora, guardarEdicion, datosVss, vs, oks}) {
 const idVs = datosVss._id
 const [equipo1, setEquipo1]= useState([])
@@ -24,13 +27,22 @@ const[botonVer, setBotonVer]=useState()
   const [isLoading, setIsLoading] = useState(true); 
   const [equipoGanadores, setEquiposGanadores]=useState([])
   const [idPlanillero, setIdPlanillero]=useState()
-  const [botonVerPlanillero, setBotonVerPlanillero]=useState(false)
+  const [botonVerPlanillero, setBotonVerPlanillero]=useState()
   const [ok, setOk]= useState()
   const [mostrarGanador, setMostrarGanador]= useState()
 const[cambioFase2, setCambioFase2]= useState()
 const[EquipoGanador, setEquipoGanador]= useState()
-  const idfase= datosVss.IdFase
+const [modalVerPlanillero, setVerPlanillero]=useState()
+const [controladorResult, setControladorResult]= useState()
+const {par2, setPar}= usePar()
 
+  const idfase= datosVss.IdFase
+  const openModalVerPlanillero = () => {
+    setVerPlanillero(true);
+  };
+  const closeModalPlanillero = () => {
+    setVerPlanillero(false);
+  };
   const EquiposGanadores=async()=>{
     try{
       const response= await axios.get(`http://localhost:3001/fase/${idfase}`)
@@ -56,32 +68,41 @@ console.log(error)
       }
     useEffect(()=>{
         const resultados=async()=>{
+          try{
+
             const response= await axios.get('http://localhost:3001/resultados',{
                 headers: {
                     idfase:idfase
                 }
             })
+            setControladorResult(true)
             setResultado(response.data)
+          }catch(error){
+            console.log(error)
+          }finally{
+            setControladorResult(false)
+          }
         }
         resultados()
-    },[idfase])
+    },[controladorResult])
   useEffect(()=>{
   setCambioFase2(cambioFase(vs,resultado))
    setEquipoGanador(ganador(resultado, vs))
-  }, [datosVss])
-    
+  }) 
   
      useEffect(() => {
       const equiGan=async()=>{
-        if (EquipoGanador) {
-          await EquiposGanadores();
-      setMostrarGanador(true)
-        } else {
-         setMostrarGanador(false)
-        }
+        
+          if (EquipoGanador) {
+            await EquiposGanadores();
+        setMostrarGanador(true)
+          } else {
+           setMostrarGanador(false)
+          }
+
       }
       equiGan()
-    },[datosVss]);
+    },[]);
     
     useEffect(() => {
       if (cambioFase2 && !EquipoGanador && oks) {
@@ -138,10 +159,12 @@ const handleClick=()=>{
     };
     resultados()
   }, [datosVss])
+  //console.log(datosVss)
 useEffect(()=>{
   setEquipo1(datosVss.equipo1.informacion.team1.Equipo)
   setEquipo2(datosVss.equipo2.informacion.team2.Equipo)
 },[])
+//console.log(equipo2)
   useEffect(() => {
     const fetchFechaHora = async () => {
       try {
@@ -208,35 +231,20 @@ useEffect(()=>{
 
   const toggleModal = () => {
     setShowModal(!showModal);
-  };
-
+  }
+  console.log(equipo2)
   return (
     <>
 <div className=' w-full sm:w-[50vw] md:w-[40vw] lg:w-[35vw] h-full mt-8 flex flex-col m-4 justify-center item-center'>
 
 
 <ToastContainer />
-  <div className='flex flex-col md:flex-col justify-between flex-1 p-6 justify-center item-center rounded-md border-2 border-gray-300 shadow-lg'>
+  <div className='flex flex-col md:flex-col flex-1 p-6 justify-center item-center rounded-md border-2 border-gray-300 shadow-lg'>
     <div className='w-full flex flex-row justify-between '>
       
-    {botonAgregar?(
-      
+    {equipo2.nombreEquipo==='no tiene asignado equipo'?(
       <>
-      <div className='flex flex-col gap-4'>
-        <div className='flex items-center'>
-          <img className='w-1/4 md:w-2/4 object-contain h-16 md:h-24 rounded-3xl' src={equipo1.imgLogo} />
-          <div className='ml-4 flex justify-center items-center'>
-            <h4 className='text-lg md:text-xl font-semibold text-gray-700'>{equipo1.nombreEquipo}</h4>
-          </div>
-        </div>
-        <div className='flex items-center'>
-          <img className='w-1/4 md:w-2/4 object-contain h-16 md:h-24 rounded-3xl' src={equipo2.imgLogo} />
-          <div className='ml-4 flex justify-center items-center'>
-            <h4 className='text-lg md:text-xl font-semibold text-gray-700'>{equipo2.nombreEquipo}</h4>
-          </div>
-        </div>
-      </div>
-   
+   <MejorPerdedor equipo1={equipo1} equipo2={equipo2} setBotonAgregar={setBotonAgregar}/>
 
     <div className='w-full md:w-1/2 flex flex-col justify-between mt-6 md:mt-0  ' >
       <div>
@@ -266,7 +274,7 @@ useEffect(()=>{
       </>
       ):(
         <>
-          <div className='flex flex-gap gap-4 flex justify-center items-center'>
+          <div className='flex flex-gap gap-4 justify-center items-center'>
         <div className='flex items-center'>
           <img className='w-1/4 md:w-2/4 object-contain h-16 md:h-24 rounded-3xl' src={equipo1.imgLogo} />
           <div className='ml-4 flex justify-center items-center'>
@@ -312,13 +320,15 @@ useEffect(()=>{
         )}
         {botonVerPlanillero && (
           <button
-            onClick={toggleModal}
+            onClick={openModalVerPlanillero}
             class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           >
             Ver Planillero
           </button>
         ) }
-        {!botonVerPlanillero&&(
+        {botonAgregar&&(
+          <>
+            {!botonVerPlanillero&& (
           <button
           key={idVs}
             onClick={()=>openModalPlan()}
@@ -328,6 +338,9 @@ useEffect(()=>{
           </button>
           )
         }
+          </>
+        )}
+      
       
        {botonAgregar&&( <button
           onClick={handleConfirmarCmabios} 
@@ -402,7 +415,13 @@ modalVer={modalVer}
    closeModal={onRequestClose}
    idVs={idVs}
    setIdPlanillero={setIdPlanillero}
-   setBotonVerPlanillero={setBotonVerPlanillero}/> 
+   setBotonVerPlanillero={setBotonVerPlanillero}
+   /> 
+   <VerPlanillero
+   modalIsOpen={modalVerPlanillero}
+   closeModal={closeModalPlanillero}
+   idPlanillero={idPlanillero}
+   />
   
 </>
   )

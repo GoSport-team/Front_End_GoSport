@@ -22,6 +22,7 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
     const [ganador, setGanador]= useState([])
     const [perdedor, setPerdedor]=useState([])
     const [isModalOpenOk, setModalOpenOk] = useState(false);
+    
    useEffect(()=>{
     if(countGol1<countGol2){
             setGanador(equipo2)
@@ -441,6 +442,7 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
         onClose={() => setModalOpenOk(false)}
         agregarResultado={botonPublicar}
         setModalOpenOk={setModalOpenOk}
+    
         />
     </div>
 </Modal>

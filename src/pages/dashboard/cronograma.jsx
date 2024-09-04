@@ -28,6 +28,7 @@ export default function Cronograma() {
     const [faseActiva, setFasesActiva]= useState()
     const [oks, setOks]= useState(true)
     const [controlador, setControlador]= useState()
+  
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -62,6 +63,7 @@ export default function Cronograma() {
       }
       GetDatosVs();
     },[datosVss])
+    //console.log(datosVss)
     const hanlde = (estado,idVs)=>{
       setConfirmarCambios(estado)
       setIdVs(idVs)

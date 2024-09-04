@@ -10,12 +10,14 @@ import {
 import {routeCampeonato} from "@/routes";
 import {routes} from "@/routes"
 import { useMaterialTailwindController, setOpenConfigurator } from "@/context";
+import { ParProvider } from "@/context/parContext";
 
 export function Campe() {
   const [controller, dispatch] = useMaterialTailwindController();
   const { sidenavType } = controller;
 
   return (
+    <ParProvider>
     <div className="min-h-screen bg-blue-gray-50/50">
       <Sidenav
         routes={routes}
@@ -49,6 +51,7 @@ export function Campe() {
         </div>
       </div>
     </div>
+    </ParProvider>
   );
 }
 
