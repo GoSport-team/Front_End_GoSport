@@ -66,6 +66,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
         }
     
       }
+      console.log(equipo)
   return (
     <>
      {isLoading && (

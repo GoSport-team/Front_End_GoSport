@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 
 export default function ViewJugadores({ isOpen, onClose, equipo }) {
     
-
+console.log(equipo.Equipo.equipo)
     if (!isOpen) return null;
 
     return (
         <div className=" absolute p-4  inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center z-50">
             {equipo &&(
 
-                <div key={equipo._id} className="bg-white flex flex-col rounded-lg shadow-lg w-[50vw] z-50">
+                <div key={equipo.equipo._id} className="bg-white flex flex-col rounded-lg shadow-lg w-[50vw] z-50">
                     <div className='flex justify-end mr-5'>
                     <button
                     className=" left-0 text-gray-600 hover:text-gray-900 text-2xl font-bold w-10 h-10 flex items-center justify-center rounded-full bg-gray-200"
@@ -22,7 +22,7 @@ export default function ViewJugadores({ isOpen, onClose, equipo }) {
                 <div className='flex justify-center items-center flex-col'>
                 <div className="team-name text-gray-900 mb-4 flex items-center space-x-2 ml-2 mt-2">
                     <span className="text-lg font-semibold">Nombre del Equipo:</span>
-                    <span className="text-md ">{equipo.nombreEquipo}</span>
+                    <span className="text-md ">{equipo.equipo.nombreEquipo}</span>
                 </div>
                 <div className="team-name text-gray-900 mb-4 flex items-center space-x-2 ml-2 mt-2">
                     <span className="text-lg font-semibold">Nombre del capitan:</span>
@@ -34,7 +34,7 @@ export default function ViewJugadores({ isOpen, onClose, equipo }) {
                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
                                 <th scope="col" className="px-6 py-3">
-                                    Nombre Jugador
+                                    Nombre Jugador 
                                 </th>
                                 <th scope="col" className="px-6 py-3">
                                     <div className="flex items-center">
