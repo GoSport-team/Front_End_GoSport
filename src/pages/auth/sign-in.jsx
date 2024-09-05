@@ -16,11 +16,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const SignIn = () => {
-  const [showWelcome, setShowWelcome] = useState(true);
+  const [showLogo, setShowLogo] = useState(false); 
+
   useEffect(() => {
     const timer = setTimeout(() => {
-      setShowWelcome(false);
-    }, 1500);
+      setShowLogo(true);
+    }, 2000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -136,25 +137,22 @@ export const SignIn = () => {
           src="\public\img\logoGos.png"
           className="object-cover rounded-3xl w-[35vw]"
         />
-      </div> */}
+      </div>  */}
 
-      <div className={`h-screen flex items-center justify-center w-[40vw] container ${showWelcome ? 'line-animated' : ''}`}>
-        <div className="w-full h-full flex items-center justify-center">
-          {showWelcome ? (
-            <div className="w-full h-full grid place-content-center thunder-animation rounded-3xl bg-white">
-              <img src="\public\img\logoGos.png"
-                className="object-cover rounded-3xl w-[35vw]"  alt="" />
-            </div>
-          ) : (
-            <div className="h-screen flex items-center justify-center w-[40vw]">
-              <img
-                  src="\public\sing.jpg"
-                className="object-cover rounded-3xl w-[35vw]"
-                alt="Logo"
-              />
-            </div>
-          )}
-        </div>
+      <div className="w-2/5 h-screen grid place-content-center">
+        {!showLogo ? (
+          <div className='flex justify-center items-center'>
+            <img className="thunder-image flex h-screen"
+              src="\img\landing\3d.png" alt="img"
+            />
+          </div>
+        ) : (
+          <div className='flex justify-center items-center'>
+            <img className='object-cover bounce-animation'
+              src="\public\img\logoGos.png" alt="Logo"
+            />
+          </div>
+        )}
       </div>
     </section>
   );
