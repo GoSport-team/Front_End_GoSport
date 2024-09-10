@@ -45,6 +45,7 @@ export default function Cronograma() {
       };
       fetchData();
     }, [datosVss]);
+   // console.log(faseActiva)
     useEffect(()=>{
       const GetDatosVs = async()=>{
         try{

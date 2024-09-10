@@ -88,7 +88,7 @@ console.log(error)
   useEffect(()=>{
   setCambioFase2(cambioFase(vs,resultado))
    setEquipoGanador(ganador(resultado, vs))
-  }) 
+  },[resultado]) 
   
      useEffect(() => {
       const equiGan=async()=>{
@@ -102,7 +102,7 @@ console.log(error)
 
       }
       equiGan()
-    },[]);
+    },[resultado]);
     
     useEffect(() => {
       if (cambioFase2 && !EquipoGanador && oks) {
@@ -111,13 +111,14 @@ console.log(error)
       } else if (!cambioFase2) {
         setOk(false);
       }
-    }, [cambioFase2, EquipoGanador]);
+    }, [resultado]);
    
 
       const sortearEquipos = async (equipoGanadores) => {
         try {
           const fase = await axios.post('http://localhost:3001/fase', { estado: estadoFase, nombre: nombreFase, idCampeonato: IdCampeonato });
           const idFase = fase.data._id;
+          console.log(idFase + ' fase creada')
           localStorage.setItem('IdFase', idFase);
           localStorage.setItem('nombreFase', nombreFase)
          
@@ -126,7 +127,7 @@ console.log(error)
               ,
             IdFase: idFase
           };
-          console.log(dataVs)
+          //console.log(dataVs)
           const equiposSorteados = await axios.post('http://localhost:3001/vs', { dataVs });
           console.log(equiposSorteados)
         } catch (error) {
@@ -144,6 +145,7 @@ const handleClick=()=>{
   useEffect(() => {
     const resultados = async () => {
       try {
+        setControladorResult(true)
         const response = await axios.get(`http://localhost:3001/resultados/${idVs}`);
         if(response.data){
           setBotonVer(true)
@@ -152,13 +154,12 @@ const handleClick=()=>{
            setBotonAgregar(true)
            setBotonVer(false)
         }
-
       } catch (error) {
         console.log(error);
       }
     };
     resultados()
-  }, [datosVss])
+  }, [controladorResult])
   //console.log(datosVss)
 useEffect(()=>{
   setEquipo1(datosVss.equipo1.informacion.team1.Equipo)
@@ -232,7 +233,8 @@ useEffect(()=>{
   const toggleModal = () => {
     setShowModal(!showModal);
   }
-  console.log(equipo2)
+  //console.log(equipo2)
+ // console.log(idPlanillero)
   return (
     <>
 <div className=' w-full sm:w-[50vw] md:w-[40vw] lg:w-[35vw] h-full mt-8 flex flex-col m-4 justify-center item-center'>
@@ -445,11 +447,14 @@ modalVer={modalVer}
    setIdPlanillero={setIdPlanillero}
    setBotonVerPlanillero={setBotonVerPlanillero}
    /> 
-   <VerPlanillero
-   modalIsOpen={modalVerPlanillero}
-   closeModal={closeModalPlanillero}
-   idPlanillero={idPlanillero}
-   />
+   {idPlanillero&&(
+ <VerPlanillero
+ modalIsOpen={modalVerPlanillero}
+ closeModal={closeModalPlanillero}
+ idVs={idVs}
+ />
+   )}
+  
   
 </>
   )
