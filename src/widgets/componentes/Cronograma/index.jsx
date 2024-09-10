@@ -23,7 +23,6 @@ const[botonVer, setBotonVer]=useState()
   const [resultado, setResultado]= useState([])
   const [estadoFase, setEStadoFase] = useState(true);
   const [nombreFase, setNombreFase] = useState();
-  const [idFases, setIdFase] = useState();
   const [isLoading, setIsLoading] = useState(true); 
   const [equipoGanadores, setEquiposGanadores]=useState([])
   const [idPlanillero, setIdPlanillero]=useState()
@@ -35,7 +34,8 @@ const[EquipoGanador, setEquipoGanador]= useState()
 const [modalVerPlanillero, setVerPlanillero]=useState()
 const [controladorResult, setControladorResult]= useState()
 const {par2, setPar}= usePar()
-
+const [equipoPerdedores, setEquiposPerdedores]= useState([])
+const [controlerVs, setControllerVs]= useState()
   const idfase= datosVss.IdFase
   const openModalVerPlanillero = () => {
     setVerPlanillero(true);
@@ -49,6 +49,8 @@ const {par2, setPar}= usePar()
       //console.log(response.data.equiposGanadores)
       setNombreFase(response.data.nombre + 1)
       setEquiposGanadores(response.data.equiposGanadores)
+      //console.log(response.data)
+      setEquiposPerdedores(response.data.equiposPerdedores)
     }catch(error){
 console.log(error)
     }
@@ -66,6 +68,7 @@ console.log(error)
           toast.error('Hubo un error al finalizar la fase');
         }
       }
+     // console.log(equipoGanadores)
     useEffect(()=>{
         const resultados=async()=>{
           try{
@@ -164,11 +167,12 @@ const handleClick=()=>{
 useEffect(()=>{
   setEquipo1(datosVss.equipo1.informacion.team1.Equipo)
   setEquipo2(datosVss.equipo2.informacion.team2.Equipo)
-},[])
+},[datosVss])
 //console.log(equipo2)
   useEffect(() => {
     const fetchFechaHora = async () => {
       try {
+        setControllerVs(true)
         const response = await axios.get(`http://localhost:3001/vs/${idVs}`);
         const { fecha, hora } = response.data;
         setFecha(fecha || '');
@@ -179,7 +183,7 @@ useEffect(()=>{
     };
 
     fetchFechaHora();
-  }, [idVs]);
+  }, [controlerVs]);
 ///console.log(equipoGanadores)
 
   const handleConfirmarCmabios = () => {
@@ -246,7 +250,7 @@ useEffect(()=>{
       
     {equipo2.nombreEquipo==='no tiene asignado equipo'?(
       <>
-   <MejorPerdedor equipo1={equipo1} equipo2={equipo2} setBotonAgregar={setBotonAgregar}/>
+   <MejorPerdedor equipo1={equipo1} equipo2={equipo2} setBotonAgregar={setBotonAgregar} idfase={idfase} idVs={idVs}/>
 
     <div className='w-full md:w-1/2 flex flex-col justify-between mt-6 md:mt-0  ' >
       <div>
