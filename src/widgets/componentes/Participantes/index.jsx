@@ -5,7 +5,9 @@ export default function Participantes({ equipo, id, modal, setShowConfirmModalEl
     const handleEliminarClick = () => {
         setShowConfirmModalEliminar(true)
         setIdInscripto(id)
+
     }
+ 
     return (
         <div className="relative">
             <div className='flex justify-center items-center m-3'>

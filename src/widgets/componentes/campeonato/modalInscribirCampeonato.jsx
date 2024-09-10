@@ -17,12 +17,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
               text: `Revisa tu numero de cedula ${idEquipo}`
             })
           }else{
-            Swal.fire({
-              icon: "success",
-              title: "Equipo Encontrado",
-              text: `Nombre ${response.data.nombreEquipo}`
-            })
-            setEquipo(response.data)
+            setEquipo(response.data.equipo)
             setControlador(true)
           }
         } catch (error) {
@@ -66,6 +61,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
         }
     
       }
+      console.log(equipo)
   return (
     <>
      {isLoading && (
