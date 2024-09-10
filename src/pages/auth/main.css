@@ -1,51 +1,54 @@
-/* Animación personalizada para la línea vertical */
-@keyframes slideUpDown {
+
+  .thunder-image {
+    animation: lightningStrike 1.5s ease-out forwards; 
+  }
+  
+  @keyframes lightningStrike {
     0% {
-        transform: translateY(-100%);
+      opacity: 0;
+      transform: scale(0.9) rotate(0deg); 
     }
-
-    50% {
-        transform: translateY(0);
+    10% {
+      opacity: 1;
+      filter: brightness(2); 
+      transform: scale(1.2) rotate(5deg); 
     }
-
+    25% {
+      filter: brightness(1); 
+      transform: scale(1) rotate(-3deg); 
+    }
+    40% {
+      filter: brightness(2.5); 
+      transform: scale(1.1) rotate(3deg);
+    }
+    55% {
+      opacity: 1;
+      filter: brightness(0.5); 
+      transform: scale(0.95) rotate(-2deg);
+    }
+    75% {
+      opacity: 0.8;
+      filter: brightness(1.5); 
+      transform: scale(1);
+    }
     100% {
-        transform: translateY(-100%);
+      opacity: 0; 
+      filter: brightness(0);
+      transform: scale(1) rotate(0deg);
     }
+  }
+  
+
+.bounce-animation {
+  animation: slowBounce 2.5s ease-in-out infinite; 
+  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, 0.5));
 }
 
-.container {
-    position: relative;
-}
-
-.container.line-animated::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 4px;
-    /* Grosor de la línea */
-    height: 100%;
-    background-color: #374151;
-    /* Color de la línea */
-    animation: slideUpDown 2s infinite;
-    /* Aplicación de la animación */
-}
-
-.Animation {
-    transform: translateY(0px);
-    animation: float 5s infinite;
-}
-
-@keyframes float {
-    0% {
-        transform: translate(0px, 0);
-    }
-
-    50% {
-        transform: translate(25px, 0);
-    }
-
-    100% {
-        transform: translate(-0px, 0);
-    }
+@keyframes slowBounce {
+  0%, 100% {
+    transform: translateY(0); 
+  }
+  50% {
+    transform: translateY(-20px); 
+  }
 }
