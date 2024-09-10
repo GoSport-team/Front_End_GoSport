@@ -7,7 +7,7 @@ import {
   RectangleStackIcon,
   PhotoIcon
 } from "@heroicons/react/24/solid";
-import { Home, Tables, Notifications, Profile } from "@/pages/dashboard";
+import { Home, Tables, JugadorDestacado, Profile } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import Fotos from "./pages/dashboard/fotos";
 import { Participante } from "@/pages/dashboard";
@@ -48,17 +48,17 @@ const icon = {
         path: "/campeonatos",
         element: <Tables />,
       },
-      // {
-      //   icon: <InformationCircleIcon {...icon} />,
-      //   name: "notifications",
-      //   path: "/notifications",
-      //   element: <Notifications />,
-      // },
       {
         icon: <FaRegNewspaper {...icon}/>,
         name:"planillero",
         path:"/planillero",
         element: <Planillero/>
+      },
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "Jugador Destacado",
+        path: "/destacado",
+        element: <JugadorDestacado />,
       },
       {
         icon:<InformationCircleIcon {...icon }/>,
