@@ -9,8 +9,10 @@ import { cantidadCampeonatos, numeroEquipos, numeroInscritos } from "./dataGrafi
 
 
 const resultadoEquipos =await numeroEquipos()
+console.log(resultadoEquipos)
 const equipos = resultadoEquipos.reduce((suma,valor)=>suma+valor,0)
 const resultadoIntegrantes = await numeroInscritos()
+console.log(resultadoIntegrantes)
 const participantes = resultadoIntegrantes.reduce((suma,valor)=> suma+valor,0)
 const resultadoCampeonatos = await cantidadCampeonatos()
 export const statisticsCardsData = [

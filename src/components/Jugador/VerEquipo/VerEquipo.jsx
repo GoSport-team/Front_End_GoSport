@@ -66,11 +66,11 @@ export const VerEquipo = () => {
             }
             setImage(
                 {
-                    img: response.data.imgLogo,
+                    img: response.data.equipo.imgLogo,
                     tipo: "Cloudinary"
                 })
             setEquipo(response.data)
-            setJugadores(response.data.participantes)
+            setJugadores(response.data.equipo.participantes)
 
         }
         obtnenerEquipo()
@@ -91,7 +91,7 @@ export const VerEquipo = () => {
                     const formData = new FormData();
                     console.log(image.file)
                     formData.append("file", image.file)
-                    const response = await axios.patch(`http://localhost:3001/inscripcionEquipos/${equipo._id}/${equipo.idLogo}`, formData)
+                    const response = await axios.patch(`http://localhost:3001/inscripcionEquipos/${equipo.equipo._id}/${equipo.equipo.idLogo}`, formData)
                     if (response.data.message) {
                         Swal.fire({
                             icon: "success",
@@ -106,7 +106,7 @@ export const VerEquipo = () => {
                     }
                 } else {
                     setImage({
-                        img: equipo.imgLogo,
+                        img: equipo.equipo.imgLogo,
                         tipo: "Cloudinary"
                     })
                 }
@@ -142,11 +142,11 @@ export const VerEquipo = () => {
     }
     const verificarActualizacion = () => {
         if (equipo) {
-            const verificarArray = equipo.participantes.filter((item1) => !jugadores.some((item2) => item1.nombres == item2.nombres))
+            const verificarArray = equipo.equipo.participantes.filter((item1) => !jugadores.some((item2) => item1.nombres == item2.nombres))
             if (verificarArray.length > 0) {
                 return verificarArray
             }
-            const existeActualizacion = nombreEquipo || contactoDos || jugadores.length > equipo.participantes.length
+            const existeActualizacion = nombreEquipo || contactoDos || jugadores.length > equipo.equipo.participantes.length
 
             return existeActualizacion
         }
@@ -155,10 +155,10 @@ export const VerEquipo = () => {
     const actualizarEquipo = async () => {
 
         const datosAEnviar = {}
-        if (nombreEquipo !== equipo.nombreEquipo && nombreEquipo !== undefined) {
+        if (nombreEquipo !== equipo.equipo.nombreEquipo && nombreEquipo !== undefined) {
             datosAEnviar.nombreEquipo = nombreEquipo
         }
-        if (contactoDos !== equipo.contactoDos && contactoDos !== undefined) {
+        if (contactoDos !== equipo.equipo.contactoDos && contactoDos !== undefined) {
             datosAEnviar.contactoDos = contactoDos
         }
         datosAEnviar.participantes = jugadores
@@ -172,7 +172,7 @@ export const VerEquipo = () => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 try {
-                    const response = await axios.patch(`http://localhost:3001/inscripcionEquipos/completo/${equipo._id}`, datosAEnviar)
+                    const response = await axios.patch(`http://localhost:3001/inscripcionEquipos/completo/${equipo.equipo._id}`, datosAEnviar)
                     console.log(response.data)
                     Swal.fire({
                         title: "Equipo actualizado correctamente",
@@ -347,17 +347,17 @@ export const VerEquipo = () => {
                                 onChange={(e) => setNombreEquipo(e.target.value)}
                                 className="bg-gray-100 border border-gray-300 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition duration-200 ease-in-out hover:border-gray-400"
                                 type="text"
-                                placeholder={equipo.nombreEquipo}
+                                placeholder={equipo.equipo.nombreEquipo}
                             />
                         </div>
 
                         <div className="flex flex-col gap-4 mb-6">
                             <label className="text-gray-700 text-sm font-medium" htmlFor="address">Capitán</label>
                             <input
-                                value={equipo.nombreCapitan}
+                                value={equipo.equipo.nombreCapitan}
                                 className="bg-gray-100 border border-gray-300 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition duration-200 ease-in-out hover:border-gray-400"
                                 id="address"
-                                placeholder={equipo.nombreCapitan}
+                                placeholder={equipo.equipo.nombreCapitan}
                             />
                         </div>
 
@@ -366,8 +366,8 @@ export const VerEquipo = () => {
                                 <div className="flex items-center gap-4">
                                     <label className="text-gray-700 font-medium" htmlFor="city">Contacto Uno</label>
                                     <input
-                                        value={equipo.contactoUno}
-                                        placeholder={equipo.contactoUno}
+                                        value={equipo.equipo.contactoUno}
+                                        placeholder={equipo.equipo.contactoUno}
                                         className="bg-gray-100 border border-gray-300 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition duration-200 ease-in-out hover:border-gray-400"
                                         id="city"
                                         type="text"
@@ -377,7 +377,7 @@ export const VerEquipo = () => {
                                     <label className="text-gray-700 font-medium" htmlFor="city">Contacto Dos</label>
                                     <input
                                         onChange={(e) => setContactoDos(e.target.value)}
-                                        placeholder={equipo.contactoDos}
+                                        placeholder={equipo.equipo.contactoDos}
                                         className="bg-gray-100 border border-gray-300 text-gray-800 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-3 transition duration-200 ease-in-out hover:border-gray-400"
                                         id="state"
                                         type="text"
