@@ -84,6 +84,7 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
   const botonPublicar=()=>{
     guardarResultado()
     actualizarFase()
+    enviarIdsJugadoresDestacados();
     setBotonVer(true)
     setModalIsOpen(false)
   }
@@ -172,9 +173,30 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
             setJugadorDestacado((prevJugadores) => prevJugadores.filter(j => j !== jugador));
           
         }
-     }
-     
-      
+    }
+    
+    // Función para enviar los jugadores destacados
+    const enviarIdsJugadoresDestacados = async () => {
+        try {
+            const idsJugadoresDestacados = jugadorDestacado.map(jugador => jugador._id);
+            const detallesPromesas = idsJugadoresDestacados.map(id =>
+                axios.get(`http://localhost:3001/usuarios/id/${id}`)
+            );
+            const detallesRespuestas = await Promise.all(detallesPromesas);
+            const detallesJugadores = detallesRespuestas.map(respuesta => respuesta.data);
+            const idCam = localStorage.getItem('ID')
+            console.log(idCam)
+            await axios.post('http://localhost:3001/jugadorDestacado', {
+                jugadorDestacado: detallesJugadores,
+                Campeonato:idCam
+            });
+            console.log('Detalles de jugadores guardados exitosamente');
+        } catch (error) {
+            console.error("Error al procesar los jugadores destacados:", error);
+        }
+    };
+
+
 
     return (
    <>
@@ -435,7 +457,7 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
                 </button>
                
             </div>
-        </div>
+        </div>  
             <TerminarPartidoModal
              setModalIsOpen={setModalIsOpen}
         isOpen={isModalOpenOk}
