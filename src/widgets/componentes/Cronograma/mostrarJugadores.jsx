@@ -185,10 +185,15 @@ export const MostrarJugadores = ({datosVss,setModalIsOpen, modalIsOpen, closeMod
             const detallesRespuestas = await Promise.all(detallesPromesas);
             const detallesJugadores = detallesRespuestas.map(respuesta => respuesta.data);
             const idCam = localStorage.getItem('ID')
+
+            const campeonatoRespuesta = await axios.get(`http://localhost:3001/campeonato/${idCam}`);
+            const nombreCampeonato = campeonatoRespuesta.data.nombreCampeonato; // Solo obtenemos el nombre
+            
             console.log(idCam)
+
             await axios.post('http://localhost:3001/jugadorDestacado', {
                 jugadorDestacado: detallesJugadores,
-                Campeonato:idCam
+                Campeonato:nombreCampeonato 
             });
             console.log('Detalles de jugadores guardados exitosamente');
         } catch (error) {
