@@ -211,6 +211,7 @@ const CreateCampeonato = () => {
                                 required
                                 value={tipoSede}
                                 onChange={(e) => setTipoSede(e.target.value)}
+                                disabled={tipoCampeonato === 'Intercentros'}
                                 className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
                             >
                                 <option value="">Selecciona una sede</option>
