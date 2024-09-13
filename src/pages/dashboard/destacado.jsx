@@ -1,50 +1,48 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import {
-  Typography,
-  Alert,
-  Card,
-  CardHeader,
-  CardBody,
+    Typography,
+    Alert,
+    Card,
+    CardHeader,
+    CardBody,
 } from "@material-tailwind/react";
 export function JugadorDestacado() {
-  const [jugadoresDestacados, setJugadoresDestacados] = useState([]);
+    const [jugadoresDestacados, setJugadoresDestacados] = useState([]);
 
-  const obtenerJugadoresDestacados = async () => {
-      try {
-          const response = await axios.get('http://localhost:3001/jugadorDestacado');
-          const dataAgrupada = agruparPorCampeonato(response.data);
-          setJugadoresDestacados(dataAgrupada); // Guardar los datos agrupados en el estado
-          console.log('Jugadores Destacados:', response.data);
-      } catch (error) {
-          console.error('Error al obtener los jugadores destacados:', error);
-      }
-  };
+    const obtenerJugadoresDestacados = async () => {
+        try {
+            const response = await axios.get('http://localhost:3001/jugadorDestacado');
+            const dataAgrupada = agruparPorCampeonato(response.data);
+            setJugadoresDestacados(dataAgrupada);
+            console.log('Jugadores Destacados:', response.data);
+        } catch (error) {
+            console.error('Error al obtener los jugadores destacados:', error);
+        }
+    };
 
-  // Agrupar los jugadores por campeonato
-  const agruparPorCampeonato = (data) => {
-      const agrupados = {};
-      data.forEach((item) => {
-          if (agrupados[item.Campeonato]) {
-              agrupados[item.Campeonato] = agrupados[item.Campeonato].concat(item.jugadorDestacado);
-          } else {
-              agrupados[item.Campeonato] = item.jugadorDestacado;
-          }
-      });
-      return agrupados;
-  };
+    const agruparPorCampeonato = (data) => {
+        const agrupados = {};
+        data.forEach((item) => {
+            if (agrupados[item.Campeonato]) {
+                agrupados[item.Campeonato] = agrupados[item.Campeonato].concat(item.jugadorDestacado);
+            } else {
+                agrupados[item.Campeonato] = item.jugadorDestacado;
+            }
+        });
+        return agrupados;
+    };
 
-  useEffect(() => {
-      obtenerJugadoresDestacados();
-  }, []);
+    useEffect(() => {
+        obtenerJugadoresDestacados();
+    }, []);
 
-  return (
-    <div className="flex max-w-screen-lg flex-col gap-5">
-          <Typography variant="h5" color="blue-gray">
-            Jugadores Destacados SENA !
-          </Typography>
-          
-            <h1 className="text-4xl font-extrabold text-gray-800 mb-8">Jugadores Destacados por Campeonato</h1>
+    return (
+        <div className="flex max-w-screen-lg flex-col gap-5">
+            <Typography variant="h5" color="blue-gray">
+                Jugadores Destacados SENA !
+            </Typography>
+
             {Object.keys(jugadoresDestacados).length > 0 ? (
                 Object.keys(jugadoresDestacados).map((campeonato, index) => (
                     <div key={index} className="mb-12">
@@ -86,9 +84,9 @@ export function JugadorDestacado() {
             ) : (
                 <p>Cargando los jugadores destacados...</p>
             )}
-       
-    </div>
-  );
+
+        </div>
+    );
 }
 
 export default JugadorDestacado;
