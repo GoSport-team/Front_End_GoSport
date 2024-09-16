@@ -8,6 +8,7 @@ import { DatosEquiposInscripcion } from "./components/Jugador/InscribirEquipo/Da
 import { VerEquipo } from "./components/Jugador/VerEquipo/VerEquipo";
 import { PerfilJugador } from "./components/Jugador/PerfilJugador/perfilJugador";
 import { CrearPlanillero } from "./widgets/componentes/Planillero/CrearPlanillero";
+import InicioPassword from "./widgets/componentes/RecuperarContraseña/home";
 
 function App() {
   return (
@@ -31,7 +32,8 @@ function App() {
         <PerfilJugador/>
       }
       />
-      <Route path="/planillero/agregar" element={<CrearPlanillero/>}/>
+      <Route path="/planillero/agregar" element={<CrearPlanillero />} />
+      <Route path="/contraseña" element={<InicioPassword/>} />
     </Routes>
    
   );

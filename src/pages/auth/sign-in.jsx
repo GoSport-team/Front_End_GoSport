@@ -16,7 +16,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export const SignIn = () => {
-  const [showLogo, setShowLogo] = useState(false); 
+  const [showLogo, setShowLogo] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -119,9 +119,7 @@ export const SignIn = () => {
           <div className="flex items-center justify-end gap-2 mt-6">
 
             <Typography variant="small" className="font-medium text-gray-900">
-              <a href="#">
-                ¿Has olvidado tu contraseña?
-              </a>
+              <Link to="/contraseña" className="text-gray-900 ml-1">¿Has olvidado tu contraseña?</Link>
             </Typography>
           </div>
 
