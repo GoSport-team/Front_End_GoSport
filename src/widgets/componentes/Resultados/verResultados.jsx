@@ -2,23 +2,14 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import Modal from 'react-modal';
 Modal.setAppElement('#root');
-export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
-  const [resultado, setResultado] = useState();
+export const VersusPage = ({ setModalVer, modalVer, resultado }) => {
+ 
+  const [controler, setControler]=useState()
   const modales = () => {
     setModalVer(false);
   };
 
-  useEffect(() => {
-    const resultados = async () => {
-      try {
-        const response = await axios.get(`http://localhost:3001/resultados/${idVs}`);
-        setResultado(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    resultados();
-  }, [idVs]);
+ 
 
   return (
     <>

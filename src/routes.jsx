@@ -91,8 +91,7 @@ const icon = {
         element: <SignUp />,
       },
     ],
-  },
-];
+  }]
 export  const routeCampeonato=[
   {
     title: "campeonato pages",
@@ -130,6 +129,5 @@ export  const routeCampeonato=[
       },
       
     ],
-  },
-];
+  }]
 
