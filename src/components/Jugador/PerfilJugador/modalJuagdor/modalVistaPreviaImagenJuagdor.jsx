@@ -1,3 +1,12 @@
+import {
+  Card,
+  CardBody,
+  Avatar,
+  Typography,
+  Tooltip,
+  Button,
+  Spinner,
+} from "@material-tailwind/react";
 const ModalFotoPerfilJugadorOne = ({isOpen, onClose, onSave, imagePreview})=>{
     if (!isOpen) {
         return null;

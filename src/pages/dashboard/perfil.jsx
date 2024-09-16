@@ -188,6 +188,7 @@ try {
     const data = response.json();
     console.log(data)
     if (!usuarioId.public_id) {
+      console.log(usuarioId.public_id)
       notify('Nay foto por eliminar');
       }else{
         await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
