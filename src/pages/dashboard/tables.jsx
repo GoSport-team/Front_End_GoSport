@@ -72,7 +72,7 @@ export function Tables() {
     <>
       <div className="mb-8 flex flex-col ">
         
-        <Typography variant="h6" color="blue-gray" className="text-2xl mb-6">
+        <Typography variant="h6" color="blue-gray" className="text-3xl mb-10 text-center">
           Visualiza, crea y administra todos los campeonatos desde aquí.
         </Typography>
 
