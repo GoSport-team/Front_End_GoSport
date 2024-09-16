@@ -3,11 +3,27 @@ import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal';
 
 Modal.setAppElement('#root');
-export const VerPlanillero = ({modalIsOpen, closeModal, idPlanillero}) => {
+export const VerPlanillero = ({modalIsOpen, closeModal, idVs}) => {
     // console.log(idPlanillero)
     const [planillero, setPlanillero]= useState()
     const [controler, setControler]= useState()
+    const [controlerData, setControlerData]= useState()
+    const [idPlanillero, setIdPlanillero]= useState()
     useEffect(()=>{
+const vs=async()=>{
+try{
+const response = await axios.get(`http://localhost:3001/vs/${idVs}`)
+//console.log(response.data.idPlanillero)
+setIdPlanillero(response.data.idPlanillero)
+}catch(error){
+    console.log(error)
+    controlerData(false)
+}
+}
+vs()
+    },[controlerData])
+    useEffect(()=>{
+        if(idPlanillero){
         const obtenerPlanilero=async()=>{
             try{
                 const response = await axios.get(`http://localhost:3001/usuarios/identificacion/${idPlanillero}`);
@@ -19,8 +35,10 @@ setControler(true)
             }
         }
         obtenerPlanilero()
+    }
 
-    },[])
+    },[controler])
+   // console.log(planillero)
   return (
     <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="flex justify-center items-center h-screen w-auto ml-36" overlayClassName="fixed inset-0 bg-black bg-opacity-50">
   

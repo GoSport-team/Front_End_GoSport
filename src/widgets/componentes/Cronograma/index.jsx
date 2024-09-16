@@ -13,6 +13,7 @@ import { VerPlanillero } from '../Planillero/verPlanillero';
 import { MejorPerdedor } from './mejorPerdedor';
 import { usePar } from '@/context/parContext';
 export default function CronogramaDesing({  patchFechaHora, guardarEdicion, datosVss, vs, oks}) {
+
 const idVs = datosVss._id
 const [equipo1, setEquipo1]= useState([])
 const IdCampeonato = localStorage.getItem('ID');
@@ -23,7 +24,6 @@ const[botonVer, setBotonVer]=useState()
   const [resultado, setResultado]= useState([])
   const [estadoFase, setEStadoFase] = useState(true);
   const [nombreFase, setNombreFase] = useState();
-  const [idFases, setIdFase] = useState();
   const [isLoading, setIsLoading] = useState(true); 
   const [equipoGanadores, setEquiposGanadores]=useState([])
   const [idPlanillero, setIdPlanillero]=useState()
@@ -35,8 +35,26 @@ const[EquipoGanador, setEquipoGanador]= useState()
 const [modalVerPlanillero, setVerPlanillero]=useState()
 const [controladorResult, setControladorResult]= useState()
 const {par2, setPar}= usePar()
+const [equipoPerdedores, setEquiposPerdedores]= useState([])
+const [controlerVs, setControllerVs]= useState()
+const [controlerDatosvss, setControlerDatosvss]= useState(false)
+const [resultados, setResultados] = useState();
 
-  const idfase= datosVss.IdFase
+  const resultadoss = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3001/resultados/${idVs}`);
+      setResultados(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+const idfase= datosVss.IdFase
+useEffect(()=>{
+  setEquipo1(datosVss.equipo1.informacion.team1.Equipo)
+  setEquipo2(datosVss.equipo2.informacion.team2.Equipo)
+},[datosVss])
+console.log(idfase)
   const openModalVerPlanillero = () => {
     setVerPlanillero(true);
   };
@@ -49,6 +67,8 @@ const {par2, setPar}= usePar()
       //console.log(response.data.equiposGanadores)
       setNombreFase(response.data.nombre + 1)
       setEquiposGanadores(response.data.equiposGanadores)
+      //console.log(response.data)
+      setEquiposPerdedores(response.data.equiposPerdedores)
     }catch(error){
 console.log(error)
     }
@@ -66,16 +86,16 @@ console.log(error)
           toast.error('Hubo un error al finalizar la fase');
         }
       }
+     // console.log(equipoGanadores)
     useEffect(()=>{
         const resultados=async()=>{
           try{
-
+            setControladorResult(true)
             const response= await axios.get('http://localhost:3001/resultados',{
                 headers: {
                     idfase:idfase
                 }
             })
-            setControladorResult(true)
             setResultado(response.data)
           }catch(error){
             console.log(error)
@@ -88,7 +108,7 @@ console.log(error)
   useEffect(()=>{
   setCambioFase2(cambioFase(vs,resultado))
    setEquipoGanador(ganador(resultado, vs))
-  }) 
+  },[resultado]) 
   
      useEffect(() => {
       const equiGan=async()=>{
@@ -102,7 +122,7 @@ console.log(error)
 
       }
       equiGan()
-    },[]);
+    },[resultado]);
     
     useEffect(() => {
       if (cambioFase2 && !EquipoGanador && oks) {
@@ -111,13 +131,14 @@ console.log(error)
       } else if (!cambioFase2) {
         setOk(false);
       }
-    }, [cambioFase2, EquipoGanador]);
+    }, [resultado]);
    
 
       const sortearEquipos = async (equipoGanadores) => {
         try {
           const fase = await axios.post('http://localhost:3001/fase', { estado: estadoFase, nombre: nombreFase, idCampeonato: IdCampeonato });
           const idFase = fase.data._id;
+          console.log(idFase + ' fase creada')
           localStorage.setItem('IdFase', idFase);
           localStorage.setItem('nombreFase', nombreFase)
          
@@ -126,7 +147,7 @@ console.log(error)
               ,
             IdFase: idFase
           };
-          console.log(dataVs)
+          //console.log(dataVs)
           const equiposSorteados = await axios.post('http://localhost:3001/vs', { dataVs });
           console.log(equiposSorteados)
         } catch (error) {
@@ -144,7 +165,13 @@ const handleClick=()=>{
   useEffect(() => {
     const resultados = async () => {
       try {
+        setControlerDatosvss(true)
+        if(equipo2.nombreEquipo==='no tiene asignado equipo' ){
+          setBotonAgregar(false)
+          setBotonVer(false)
+        }else{
         const response = await axios.get(`http://localhost:3001/resultados/${idVs}`);
+        console.log(response.data)
         if(response.data){
           setBotonVer(true)
           setBotonAgregar(false)
@@ -152,22 +179,20 @@ const handleClick=()=>{
            setBotonAgregar(true)
            setBotonVer(false)
         }
-
+      }
       } catch (error) {
         console.log(error);
       }
     };
     resultados()
-  }, [datosVss])
+  },[idVs])
   //console.log(datosVss)
-useEffect(()=>{
-  setEquipo1(datosVss.equipo1.informacion.team1.Equipo)
-  setEquipo2(datosVss.equipo2.informacion.team2.Equipo)
-},[])
+
 //console.log(equipo2)
   useEffect(() => {
     const fetchFechaHora = async () => {
       try {
+        setControllerVs(true)
         const response = await axios.get(`http://localhost:3001/vs/${idVs}`);
         const { fecha, hora } = response.data;
         setFecha(fecha || '');
@@ -178,7 +203,7 @@ useEffect(()=>{
     };
 
     fetchFechaHora();
-  }, [idVs]);
+  }, [controlerVs]);
 ///console.log(equipoGanadores)
 
   const handleConfirmarCmabios = () => {
@@ -204,6 +229,7 @@ useEffect(()=>{
   };
   const openModalVer = () => {
     setModalVer(true);
+    resultadoss()
   };
   const closeModal = () => {
     setModalIsOpen(false);
@@ -232,7 +258,8 @@ useEffect(()=>{
   const toggleModal = () => {
     setShowModal(!showModal);
   }
-  console.log(equipo2)
+  //console.log(equipo2)
+ // console.log(idPlanillero)
   return (
     <>
 <div className=' w-full sm:w-[50vw] md:w-[40vw] lg:w-[35vw] h-full mt-8 flex flex-col m-4 justify-center item-center'>
@@ -244,7 +271,7 @@ useEffect(()=>{
       
     {equipo2.nombreEquipo==='no tiene asignado equipo'?(
       <>
-   <MejorPerdedor equipo1={equipo1} equipo2={equipo2} setBotonAgregar={setBotonAgregar}/>
+   <MejorPerdedor equipo1={equipo1} equipo2={equipo2} setBotonAgregar={setBotonAgregar} idfase={idfase} idVs={idVs}/>
 
     <div className='w-full md:w-1/2 flex flex-col justify-between mt-6 md:mt-0  ' >
       <div>
@@ -421,7 +448,7 @@ useEffect(()=>{
 modalVer={modalVer}
  setBotonVer={setBotonVer}
  setModalVer={setModalVer}
- idVs={idVs}
+resultado={resultados}
 />
 
 <MostrarJugadores 
@@ -436,6 +463,7 @@ modalVer={modalVer}
   showPlayersTable2={showPlayersTable2} 
   togglePlayerRowsTable2={togglePlayerRowsTable2} 
   setBotonVer={setBotonVer}
+  setBotonAgregar={setBotonAgregar}
 />
 
    <BuscarPlanillero
@@ -445,11 +473,14 @@ modalVer={modalVer}
    setIdPlanillero={setIdPlanillero}
    setBotonVerPlanillero={setBotonVerPlanillero}
    /> 
-   <VerPlanillero
-   modalIsOpen={modalVerPlanillero}
-   closeModal={closeModalPlanillero}
-   idPlanillero={idPlanillero}
-   />
+   {idPlanillero&&(
+ <VerPlanillero
+ modalIsOpen={modalVerPlanillero}
+ closeModal={closeModalPlanillero}
+ idVs={idVs}
+ />
+   )}
+  
   
 </>
   )

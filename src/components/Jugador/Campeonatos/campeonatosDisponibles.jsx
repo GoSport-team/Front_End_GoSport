@@ -105,7 +105,7 @@ export default function CampeonatosDisponibles() {
             </div>
           </section>
         </div>
-        : <h1>Esqueleton</h1>
+        : <h1>Esqueleto page</h1>
       }
     </>
   )

@@ -1,12 +1,52 @@
-import React ,{useEffect}from 'react'
-export const MejorPerdedor = ({equipo1, equipo2, setBotonAgregar}) => {
-    
-    // console.log(equipo2)
-    useEffect(() => {
-        if (equipo2.imgLogo === "No tiene asignado equipo ") {
-          setBotonAgregar(false);
+import axios from 'axios'
+import React ,{useEffect, useState, useCallback}from 'react'
+import { SortearMejorPerdedor } from './sortearMejorPerdedor'
+export const MejorPerdedor = ({equipo1, equipo2, setBotonAgregar, idfase, idVs}) => {
+ // console.log(idfase)
+  const [equiposPerdedores, setEquiposPerdedores]= useState([])
+  const [controlers, setControllers]= useState()
+  const[equipoRamdon, setEquipoRamdon]=useState()
+const [controler , setController]= useState(false)
+const[modalSortearEquipos, setSortearEquipos]=useState()
+    useEffect(()=>{
+      const EquiposGanadores=async()=>{
+        try{
+          const response= await axios.get(`http://localhost:3001/fase/${idfase}`)
+         console.log(response.data.equiposPerdedores)
+          setEquiposPerdedores(response.data.equiposPerdedores)
+        }catch(error){
+    console.log(error)
         }
-      });
+          }
+          EquiposGanadores()
+    },[equiposPerdedores])
+   console.log(equiposPerdedores)
+
+    useEffect(()=>{
+  if (equipo2.imgLogo === "No tiene asignado equipo ") {
+  setBotonAgregar(false);
+}
+},[equipo2])
+      //console.log(equiposPerdedores)
+   
+const ramdonPerdedores=async(equiposPerdedores)=>{
+  try{
+    const response= await axios.post('http://localhost:3001/vs/mejorPerdedor',{equiposPerdedores:equiposPerdedores})
+    console.log(response.data[0])
+    setEquipoRamdon(response.data[0])
+  }catch(error){
+    console.log(error)
+  }
+}
+
+const modalSortearEquipo=()=>{
+  ramdonPerdedores(equiposPerdedores)
+  setSortearEquipos(true)
+
+}
+
+ 
+console.log(equipoRamdon)
   return (
     <div className='flex flex-col gap-4 '>
     <div className='flex items-center'>
@@ -25,9 +65,11 @@ export const MejorPerdedor = ({equipo1, equipo2, setBotonAgregar}) => {
 <h1 >No tiene equipo asignado</h1>
             )
         }
+        <button onClick={modalSortearEquipo}   className="px-4 py-2 bg-gray-500 text-white rounded-md"> Sortear</button>
    
      
     </div>
+<SortearMejorPerdedor setSortearEquipos={setSortearEquipos} idVs={idVs} equipoRamdon={equipoRamdon} equiposPerdedores={equiposPerdedores} modalSortearEquipos={modalSortearEquipos}/>
   </div>
   )
 }

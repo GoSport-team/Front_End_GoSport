@@ -7,7 +7,7 @@ import {
   RectangleStackIcon,
   PhotoIcon
 } from "@heroicons/react/24/solid";
-import { Home, Tables, Notifications, Profile } from "@/pages/dashboard";
+import { Home, Tables, JugadorDestacado, Profile } from "@/pages/dashboard";
 import { SignIn, SignUp } from "@/pages/auth";
 import Fotos from "./pages/dashboard/fotos";
 import { Participante } from "@/pages/dashboard";
@@ -16,6 +16,9 @@ import Cronograma from "./pages/dashboard/cronograma";
 import { Salir } from "./pages/dashboard/salir";
 import Planillero from "./widgets/componentes/Planillero";
 import { FaRegNewspaper } from "react-icons/fa";
+import { ParticipantesIntercentros } from "./pages/dashboard/participantesIntercentros";
+import { CronogramasIntercentros} from "./pages/dashboard/CronogramaIntercentros";
+import {ResultadosIntercentros} from "./pages/dashboard/resultadosIntercentros";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -48,17 +51,17 @@ const icon = {
         path: "/campeonatos",
         element: <Tables />,
       },
-      // {
-      //   icon: <InformationCircleIcon {...icon} />,
-      //   name: "notifications",
-      //   path: "/notifications",
-      //   element: <Notifications />,
-      // },
       {
         icon: <FaRegNewspaper {...icon}/>,
         name:"planillero",
         path:"/planillero",
         element: <Planillero/>
+      },
+      {
+        icon: <UserCircleIcon {...icon} />,
+        name: "Jugador Destacado",
+        path: "/destacado",
+        element: <JugadorDestacado />,
       },
       {
         icon:<InformationCircleIcon {...icon }/>,
@@ -88,8 +91,7 @@ const icon = {
         element: <SignUp />,
       },
     ],
-  },
-];
+  }]
 export  const routeCampeonato=[
   {
     title: "campeonato pages",
@@ -102,6 +104,24 @@ export  const routeCampeonato=[
         element: <Participante/>
       },
       {
+      
+        name: "resultadosIntercentros",
+        path: "/resultadosIntercentros/:id",
+        element: <ResultadosIntercentros/>
+      },
+      {
+      
+        name: "cronogramaIntercentros",
+        path: "/cronogramaIntercentros/:id",
+        element: <CronogramasIntercentros/>
+      },
+      {
+      
+        name: "participanteIntercentros",
+        path: "/participanteIntercentros/:id",
+        element: <ParticipantesIntercentros/>
+      },
+      {
         icon: <InformationCircleIcon {...icon}/>,
         name: "cronograma",
         path: "/cronograma",
@@ -109,6 +129,5 @@ export  const routeCampeonato=[
       },
       
     ],
-  },
-];
+  }]
 
