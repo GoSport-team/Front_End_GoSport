@@ -1,12 +1,13 @@
 import axios from 'axios'
-import React ,{useEffect, useState}from 'react'
-
+import React ,{useEffect, useState, useCallback}from 'react'
+import { SortearMejorPerdedor } from './sortearMejorPerdedor'
 export const MejorPerdedor = ({equipo1, equipo2, setBotonAgregar, idfase, idVs}) => {
  // console.log(idfase)
   const [equiposPerdedores, setEquiposPerdedores]= useState([])
   const [controlers, setControllers]= useState()
   const[equipoRamdon, setEquipoRamdon]=useState()
-const [controler , setController]= useState()
+const [controler , setController]= useState(false)
+const[modalSortearEquipos, setSortearEquipos]=useState()
     useEffect(()=>{
       const EquiposGanadores=async()=>{
         try{
@@ -18,18 +19,18 @@ const [controler , setController]= useState()
         }
           }
           EquiposGanadores()
-    },[idfase])
+    },[])
    console.log(equiposPerdedores)
-    useEffect(() => {
-        if (equipo2.imgLogo === "No tiene asignado equipo ") {
-          setBotonAgregar(false);
-        }
-      });
+
+    useEffect(()=>{
+  if (equipo2.imgLogo === "No tiene asignado equipo ") {
+  setBotonAgregar(false);
+}
+},[equipo2])
       //console.log(equiposPerdedores)
-      useEffect(()=>{
-const ramdonPerdedores=async()=>{
+   
+const ramdonPerdedores=async(equiposPerdedores)=>{
   try{
-    setControllers(true)
     const response= await axios.post('http://localhost:3001/vs/mejorPerdedor',{equiposPerdedores:equiposPerdedores})
     console.log(response.data[0])
     setEquipoRamdon(response.data[0])
@@ -37,22 +38,14 @@ const ramdonPerdedores=async()=>{
     console.log(error)
   }
 }
-ramdonPerdedores()
-},[equiposPerdedores])
 
-  const actualizarVs= async()=>{
-    const informacions={
-      informacion:{
-        team2:equipoRamdon
-      }
-    }
-   
-    //console.log(informacions)
-const response= await axios.patch(`http://localhost:3001/vs/${idVs}`,{
-equipo2:informacions
-})
-console.log(response.data)
-  }
+const modalSortearEquipo=()=>{
+  ramdonPerdedores(equiposPerdedores)
+  setSortearEquipos(true)
+
+}
+
+ 
 console.log(equipoRamdon)
   return (
     <div className='flex flex-col gap-4 '>
@@ -72,10 +65,11 @@ console.log(equipoRamdon)
 <h1 >No tiene equipo asignado</h1>
             )
         }
-        <button onClick={actualizarVs}   className="px-4 py-2 bg-gray-500 text-white rounded-md"> Sortear</button>
+        <button onClick={modalSortearEquipo}   className="px-4 py-2 bg-gray-500 text-white rounded-md"> Sortear</button>
    
      
     </div>
+<SortearMejorPerdedor setSortearEquipos={setSortearEquipos} idVs={idVs} equipoRamdon={equipoRamdon} equiposPerdedores={equiposPerdedores} modalSortearEquipos={modalSortearEquipos}/>
   </div>
   )
 }

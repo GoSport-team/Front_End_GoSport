@@ -28,7 +28,8 @@ export default function Cronograma() {
     const [faseActiva, setFasesActiva]= useState()
     const [oks, setOks]= useState(true)
     const [controlador, setControlador]= useState()
-    const [controlerDatosvss, setControlerDatosvss]= useState()
+    const [controlerDatosvss, setControlerDatosvss]= useState(true)
+    const[controlerFase, setControlerFase]= useState()
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -49,7 +50,6 @@ export default function Cronograma() {
     useEffect(()=>{
       const GetDatosVs = async()=>{
         try{
-          setControlerDatosvss(true)
           const Vs= await axios.get('http://localhost:3001/vs',{
             headers:{
               IdFase:IdFasee
@@ -64,7 +64,7 @@ export default function Cronograma() {
         }
       }
       GetDatosVs();
-    },[controlerDatosvss])
+    },[datosVss])
     //console.log(datosVss)
     const hanlde = (estado,idVs)=>{
       setConfirmarCambios(estado)

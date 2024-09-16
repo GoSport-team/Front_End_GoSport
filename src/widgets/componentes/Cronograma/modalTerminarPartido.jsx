@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 
- export const TerminarPartidoModal = ({ isOpen, onClose, agregarResultado ,setModalOpenOk}) => {
+
+ export const TerminarPartidoModal = ({ isOpen, onClose, agregarResultado ,setModalOpenOk,setBoton}) => {
     const agregar=()=>{
+      setBoton(false)
         agregarResultado()
         setModalOpenOk(false)
     

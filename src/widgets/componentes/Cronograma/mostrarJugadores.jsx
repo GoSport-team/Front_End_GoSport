@@ -6,7 +6,8 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import Penales from './penales';
 Modal.setAppElement('#root');
-export const MostrarJugadores = ({ datosVss, setModalIsOpen, modalIsOpen, closeModal, equipo1, equipo2, showPlayersTable2, showPlayers, togglePlayerRows, togglePlayerRowsTable2, setBotonVer }) => {
+export const MostrarJugadores = ({ datosVss, setModalIsOpen, modalIsOpen, closeModal, equipo1, equipo2, showPlayersTable2, showPlayers, togglePlayerRows, togglePlayerRowsTable2, setBotonVer ,setBotonAgregar}) => {
+    const idCampeonato= localStorage.getItem('ID')
     const [countGol1, setCountGol1] = useState(0)
     const [countGol2, setCountGol2] = useState(0)
     const [amarilla1, setAmarilla1] = useState(0)
@@ -24,6 +25,7 @@ export const MostrarJugadores = ({ datosVss, setModalIsOpen, modalIsOpen, closeM
     const [perdedor, setPerdedor] = useState([])
     const [isModalOpenOk, setModalOpenOk] = useState(false);
     const [isMyModalOpen, setMyModalIsOpen] = useState(false);
+const[boton, setBoton]=useState()
 
     useEffect(() => {
         if (countGol1 < countGol2) {
@@ -80,8 +82,10 @@ export const MostrarJugadores = ({ datosVss, setModalIsOpen, modalIsOpen, closeM
             },
             IdVs: datosVss._id,
             IdFase: datosVss.IdFase,
-            estadoPartido: false
+            estadoPartido: false,
+            idCampeonato:idCampeonato
         })
+        setBotonAgregar(false)
     }
     const botonPublicar = () => {
         guardarResultado()
@@ -468,7 +472,7 @@ export const MostrarJugadores = ({ datosVss, setModalIsOpen, modalIsOpen, closeM
                         onClose={() => setModalOpenOk(false)}
                         agregarResultado={botonPublicar}
                         setModalOpenOk={setModalOpenOk}
-
+                        setBoton={setBoton}
                     />
                 </div>
             </Modal>

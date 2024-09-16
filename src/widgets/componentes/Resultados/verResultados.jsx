@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 Modal.setAppElement('#root');
 export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
   const [resultado, setResultado] = useState();
+  const [controler, setControler]=useState()
   const modales = () => {
     setModalVer(false);
   };

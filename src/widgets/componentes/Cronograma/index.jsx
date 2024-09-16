@@ -37,8 +37,12 @@ const [controladorResult, setControladorResult]= useState()
 const {par2, setPar}= usePar()
 const [equipoPerdedores, setEquiposPerdedores]= useState([])
 const [controlerVs, setControllerVs]= useState()
-const [controlerDatosvss, setControlerDatosvss]= useState()
+const [controlerDatosvss, setControlerDatosvss]= useState(false)
 const idfase= datosVss.IdFase
+useEffect(()=>{
+  setEquipo1(datosVss.equipo1.informacion.team1.Equipo)
+  setEquipo2(datosVss.equipo2.informacion.team2.Equipo)
+},[datosVss])
 console.log(idfase)
   const openModalVerPlanillero = () => {
     setVerPlanillero(true);
@@ -75,13 +79,12 @@ console.log(error)
     useEffect(()=>{
         const resultados=async()=>{
           try{
-
+            setControladorResult(true)
             const response= await axios.get('http://localhost:3001/resultados',{
                 headers: {
                     idfase:idfase
                 }
             })
-            setControladorResult(true)
             setResultado(response.data)
           }catch(error){
             console.log(error)
@@ -151,8 +154,13 @@ const handleClick=()=>{
   useEffect(() => {
     const resultados = async () => {
       try {
-        setControladorResult(true)
+        setControlerDatosvss(true)
+        if(equipo2.nombreEquipo==='no tiene asignado equipo' ){
+          setBotonAgregar(false)
+          setBotonVer(false)
+        }else{
         const response = await axios.get(`http://localhost:3001/resultados/${idVs}`);
+        console.log(response.data)
         if(response.data){
           setBotonVer(true)
           setBotonAgregar(false)
@@ -160,17 +168,15 @@ const handleClick=()=>{
            setBotonAgregar(true)
            setBotonVer(false)
         }
+      }
       } catch (error) {
         console.log(error);
       }
     };
     resultados()
-  }, [controladorResult])
+  },[idVs])
   //console.log(datosVss)
-useEffect(()=>{
-  setEquipo1(datosVss.equipo1.informacion.team1.Equipo)
-  setEquipo2(datosVss.equipo2.informacion.team2.Equipo)
-},[datosVss])
+
 //console.log(equipo2)
   useEffect(() => {
     const fetchFechaHora = async () => {
@@ -445,6 +451,7 @@ modalVer={modalVer}
   showPlayersTable2={showPlayersTable2} 
   togglePlayerRowsTable2={togglePlayerRowsTable2} 
   setBotonVer={setBotonVer}
+  setBotonAgregar={setBotonAgregar}
 />
 
    <BuscarPlanillero
