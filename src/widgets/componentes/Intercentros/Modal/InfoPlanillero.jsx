@@ -31,9 +31,9 @@ export const VerPlanilleroModal = ({ isOpen, closeModal, idPlanillero }) => {
             </div>
             <div className="p-4 space-y-4">
               {/* Mostrar foto del planillero */}
-              <div className="flex justify-center">
+              {/* <div className="flex justify-center">
                 <img src={planillero.url_foto} alt="Foto del Planillero" className="rounded-full w-32 h-32 object-cover" />
-              </div>
+              </div> */}
               
               <p><strong>Nombre:</strong> {planillero.nombres}</p>
               <p><strong>Correo:</strong> {planillero.correo}</p>

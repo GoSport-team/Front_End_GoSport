@@ -21,7 +21,7 @@ export const CronogramasIntercentros=()=> {
                 });
                 setVsEquipos(response.data);
                 setLoading(false);
-        
+                console.log(vsEquipos)
                 const vsLength = response.data.filter((item) => item.estado === true);
                 if (vsLength.length === 3) {
                   setTimeout(() => {
@@ -59,6 +59,7 @@ export const CronogramasIntercentros=()=> {
             {vsEquipos && vsEquipos.map((vs, index)=>(
             <CardVs  key={index} vs={vs} cambiosRealizados={infoActualizada}   />
              ))}
+
          </div>
 
         </div>

@@ -8,6 +8,7 @@ export const BuscarPlanillero = ({ isOpen, onPlanilleroSeleccionado, closeModal 
     const [indentificacion, setIndentificacion] = useState("");
     const [planillero, setPlanillero] = useState(null);
     const [loading, setLoading] = useState(false)
+    const [noEncontrado, setNoEncontrado] = useState(false)
   
     useEffect(() => {
       setModal(isOpen);
@@ -15,12 +16,19 @@ export const BuscarPlanillero = ({ isOpen, onPlanilleroSeleccionado, closeModal 
   
     const buscarPlanillero = async (identificacion) => {
         setLoading(true)
+        setNoEncontrado(false)
       try {
         const response = await axios.get(`http://localhost:3001/usuarios/identificacion/${identificacion}`);
-        setPlanillero(response.data);
+       
         console.log(`Datos planillerp`)
+        if (response.data) {
+            setPlanillero(response.data);
+          } else {
+            setNoEncontrado(true); 
+          }
       } catch (error) {
         console.error("Error al buscar planillero", error);
+        setNoEncontrado(true)
       }
       finally{
         setLoading(false)
@@ -72,15 +80,22 @@ export const BuscarPlanillero = ({ isOpen, onPlanilleroSeleccionado, closeModal 
                               <span class="sr-only">Close modal</span>
                           </button>
                       </div>
-                      {
-                        loading ? (
-                            <div className="flex justify-center items-center h-72">
-                            <Spinner className='h-12 w-12 text-blue-500' />
-                            </div>
-                        ):(
-                            planillero && (
-                                <>
-                                <Typography className="text-center text-xl font-semibold">Datos de planillero</Typography>
+                      {loading ? (
+                  <div className="flex justify-center items-center h-72">
+                    <Spinner className="h-12 w-12 text-blue-500" />
+                  </div>
+                ) : noEncontrado ? (
+                  <div className="p-4 text-center md:p-5 space-y-4">
+                    <Typography className="text-base leading-relaxed text-black">
+                      No se encontró ningún planillero con esa identificación.
+                    </Typography>
+                  </div>
+                ) : (
+                  planillero && (
+                    <>
+                      <Typography className="text-center text-xl font-semibold">
+                        Datos de planillero
+                      </Typography>
                                     <div class="p-4 text-center md:p-5 space-y-4">
                                         <Typography class="text-base leading-relaxed text-black ">
                                             Nombre: {planillero.nombres}
@@ -90,6 +105,9 @@ export const BuscarPlanillero = ({ isOpen, onPlanilleroSeleccionado, closeModal 
                                         </Typography>
                                         <Typography class="text-base leading-relaxed text-black ">
                                             Identificacion:  {planillero.identificacion}
+                                        </Typography>
+                                        <Typography class="text-base leading-relaxed text-black ">
+                                            Telefono:  {planillero.telefono}
                                         </Typography>
                                     </div>
                                     <div class="flex items-center justify-end p-4 md:p-5 border-t border-gray-200 rounded-b ">
