@@ -158,7 +158,7 @@ export function Fotos() {
       )}
       
       <div className="w-full max-w-8xl">
-        <Typography variant="h6" color="blue-gray" className="text-2xl mb-6">
+        <Typography variant="h6" color="blue-gray" className="text-3xl mb-10 text-center">
           Crea o elimina artículos de noticias desde aquí.
         </Typography>
         {!loading && (

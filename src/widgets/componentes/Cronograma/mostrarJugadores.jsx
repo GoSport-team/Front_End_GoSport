@@ -90,7 +90,9 @@ const[boton, setBoton]=useState()
     const botonPublicar = () => {
         guardarResultado()
         actualizarFase()
-        enviarIdsJugadoresDestacados();
+        if (jugadorDestacado.length > 0) {
+            enviarIdsJugadoresDestacados();
+        }
         setBotonVer(true)
         setModalIsOpen(false)
     }

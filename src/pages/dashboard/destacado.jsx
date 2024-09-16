@@ -42,13 +42,13 @@ export function JugadorDestacado() {
 
     return (
         <div className="flex flex-col min-h-screen p-4">
-            <Typography variant="h6" color="blue-gray" className="text-3xl mb-6 text-center">
+            <Typography variant="h6" color="blue-gray" className="text-3xl mb-10 text-center">
                 Jugadores Destacados
             </Typography>
 
             {Object.keys(jugadoresDestacados).length > 0 ? (
                 Object.keys(jugadoresDestacados).map((campeonato, index) => (
-                    <div key={index} className="mb-8">
+                    <div key={index} className="mb-3">
                         <h2 className="text-2xl font-semibold mb-6 text-gray-700 border-b-2 border-gray-300 pb-2 mt-8">
                             Campeonato: {campeonato}
                         </h2>
@@ -69,7 +69,7 @@ export function JugadorDestacado() {
                                                     <strong>Correo:</strong> {jugador.correo}
                                                 </p>
                                                 <p className="text-gray-600 mb-2">
-                                                    <strong>Identificación:</strong> {jugador.Identificación}
+                                                    <strong>Identificación:</strong> {jugador.identificacion}
                                                 </p>
                                                 {infoVisible[playerKey] && (
                                                     <div className="mt-4 p-4 bg-gray-100 rounded-lg shadow-md">

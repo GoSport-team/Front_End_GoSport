@@ -67,7 +67,7 @@ export default function Planillero() {
     return (
         <>
             <div>
-                <Typography variant="h6" color="blue-gray" className="mb-2 text-2xl">
+                <Typography variant="h6" color="blue-gray" className="text-3xl mb-10 text-center">
                     Aquí puedes agregar un usuario para que dirija un partido.
                 </Typography>
 
@@ -109,7 +109,7 @@ export default function Planillero() {
                                 </td>
                                 <td className="px-6 py-4 flex gap-x-5">
                                     <img  className='w-10 cursor-pointer object-cover'
-                                    onClick={() => handleModalActualizar(usuario.correo)} 
+                                        onClick={() => handleModalActualizar(usuario._id)} 
                                     src="\public\img\Pruebas\avatar-de-usuario (1).png" alt="img" />
 
                                     <img className='w-10 cursor-pointer object-cover opacity-90'

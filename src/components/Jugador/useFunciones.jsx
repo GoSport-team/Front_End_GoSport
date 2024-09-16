@@ -6,7 +6,7 @@ export const eliminarJugador = async (indice, jugadores, user) => {
       await Swal.fire({
         title: "Este jugador no se puede borrar porque es el capitán",
         confirmButtonText: "OK",
-        confirmButtonColor: "#12aed1cd",
+          confirmButtonColor: "#9e9e9e",
       });
       return jugadores;
     }
@@ -119,7 +119,7 @@ export  const searchJugador = async (idenfiticacion, jugadores) => {
                         title: "Jugador guardado correctamente",
                         icon: "success",
                         confirmButtonText: "OK",
-                        confirmButtonColor: "#0837C0",
+                        confirmButtonColor: "#12aed1cd",
                     });
                 }
             });

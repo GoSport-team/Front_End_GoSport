@@ -30,7 +30,7 @@ import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/solid";
 export function Home() {
   return (
     <div className="">
-      <Typography variant="h6" color="blue-gray" className="text-2xl mb-6">
+      <Typography variant="h6" color="blue-gray" className="text-3xl mb-10 text-center">
         En esta sección encontrarás toda la información estadística de los campeonatos.
       </Typography>
 
