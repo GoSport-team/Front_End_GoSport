@@ -10,17 +10,16 @@ const [controler , setController]= useState()
     useEffect(()=>{
       const EquiposGanadores=async()=>{
         try{
-          setController(true)
           const response= await axios.get(`http://localhost:3001/fase/${idfase}`)
-         // console.log(response.data.equiposGanadores)
+         console.log(response.data.equiposPerdedores)
           setEquiposPerdedores(response.data.equiposPerdedores)
         }catch(error){
     console.log(error)
         }
           }
           EquiposGanadores()
-    },[controler])
-   // console.log(equiposPerdedores)
+    },[idfase])
+   console.log(equiposPerdedores)
     useEffect(() => {
         if (equipo2.imgLogo === "No tiene asignado equipo ") {
           setBotonAgregar(false);

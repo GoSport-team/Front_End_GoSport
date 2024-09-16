@@ -13,6 +13,7 @@ import { VerPlanillero } from '../Planillero/verPlanillero';
 import { MejorPerdedor } from './mejorPerdedor';
 import { usePar } from '@/context/parContext';
 export default function CronogramaDesing({  patchFechaHora, guardarEdicion, datosVss, vs, oks}) {
+
 const idVs = datosVss._id
 const [equipo1, setEquipo1]= useState([])
 const IdCampeonato = localStorage.getItem('ID');
@@ -36,7 +37,9 @@ const [controladorResult, setControladorResult]= useState()
 const {par2, setPar}= usePar()
 const [equipoPerdedores, setEquiposPerdedores]= useState([])
 const [controlerVs, setControllerVs]= useState()
-  const idfase= datosVss.IdFase
+const [controlerDatosvss, setControlerDatosvss]= useState()
+const idfase= datosVss.IdFase
+console.log(idfase)
   const openModalVerPlanillero = () => {
     setVerPlanillero(true);
   };
