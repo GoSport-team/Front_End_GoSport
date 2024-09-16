@@ -19,7 +19,7 @@ const[modalSortearEquipos, setSortearEquipos]=useState()
         }
           }
           EquiposGanadores()
-    },[])
+    },[equiposPerdedores])
    console.log(equiposPerdedores)
 
     useEffect(()=>{

@@ -38,6 +38,17 @@ const {par2, setPar}= usePar()
 const [equipoPerdedores, setEquiposPerdedores]= useState([])
 const [controlerVs, setControllerVs]= useState()
 const [controlerDatosvss, setControlerDatosvss]= useState(false)
+const [resultados, setResultados] = useState();
+
+  const resultadoss = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3001/resultados/${idVs}`);
+      setResultados(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
 const idfase= datosVss.IdFase
 useEffect(()=>{
   setEquipo1(datosVss.equipo1.informacion.team1.Equipo)
@@ -218,6 +229,7 @@ const handleClick=()=>{
   };
   const openModalVer = () => {
     setModalVer(true);
+    resultadoss()
   };
   const closeModal = () => {
     setModalIsOpen(false);
@@ -436,7 +448,7 @@ const handleClick=()=>{
 modalVer={modalVer}
  setBotonVer={setBotonVer}
  setModalVer={setModalVer}
- idVs={idVs}
+resultado={resultados}
 />
 
 <MostrarJugadores 
