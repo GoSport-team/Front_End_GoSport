@@ -29,8 +29,10 @@ export function Tables() {
     const fetchTasks = async () => {
       try {
         const response = await axios.get('http://localhost:3001/campeonato');
+        
           setTasks(response.data);
           setControlador(true)
+          
       } catch (error) {
         console.error('Error fetching tasks:', error);
       }
@@ -68,7 +70,7 @@ export function Tables() {
     }
   return (
     <>
-      <div className="mb-8 flex flex-col">
+      <div className="mb-8 flex flex-col ">
         
         <Typography variant="h6" color="blue-gray" className="text-2xl mb-6">
           Visualiza, crea y administra todos los campeonatos desde aquí.

@@ -16,6 +16,9 @@ import Cronograma from "./pages/dashboard/cronograma";
 import { Salir } from "./pages/dashboard/salir";
 import Planillero from "./widgets/componentes/Planillero";
 import { FaRegNewspaper } from "react-icons/fa";
+import { ParticipantesIntercentros } from "./pages/dashboard/participantesIntercentros";
+import { CronogramasIntercentros} from "./pages/dashboard/CronogramaIntercentros";
+import {ResultadosIntercentros} from "./pages/dashboard/resultadosIntercentros";
 const icon = {
   className: "w-5 h-5 text-inherit",
 };
@@ -99,6 +102,24 @@ export  const routeCampeonato=[
         name: "participante",
         path: "/participante",
         element: <Participante/>
+      },
+      {
+      
+        name: "resultadosIntercentros",
+        path: "/resultadosIntercentros/:id",
+        element: <ResultadosIntercentros/>
+      },
+      {
+      
+        name: "cronogramaIntercentros",
+        path: "/cronogramaIntercentros/:id",
+        element: <CronogramasIntercentros/>
+      },
+      {
+      
+        name: "participanteIntercentros",
+        path: "/participanteIntercentros/:id",
+        element: <ParticipantesIntercentros/>
       },
       {
         icon: <InformationCircleIcon {...icon}/>,

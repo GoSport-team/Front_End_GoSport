@@ -50,7 +50,7 @@ export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
                           {resultado.equipo1.goles.jugadorGoleador?.map((jugadorG, index) => (
                             <tr key={index}>
                               <td className="px-4 py-2">Goleador:</td>
-                              <td className="px-4 py-2">{jugadorG.nombreJugador}</td>
+                              <td className="px-4 py-2">{jugadorG.nombres}</td>
                             </tr>
                           ))}
                           <tr>
@@ -60,7 +60,7 @@ export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
                           {resultado.equipo1.tarjetasAmarillas?.map((jugadorG, index) => (
                             <tr key={index}>
                               <td className="px-4 py-2">Jugador con Amarilla:</td>
-                              <td className="px-4 py-2">{jugadorG.nombreJugador} </td>
+                              <td className="px-4 py-2">{jugadorG.nombres} </td>
                             </tr>
                           ))}
                           <tr>
@@ -70,7 +70,7 @@ export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
                           {resultado.equipo1.tarjetasRojas?.map((jugadorG, index) => (
                             <tr key={index}>
                               <td className="px-4 py-2">Jugador con Roja:</td>
-                              <td className="px-4 py-2">{jugadorG.nombreJugador} (Dorsal: {jugadorG.dorsal})</td>
+                              <td className="px-4 py-2">{jugadorG.nombres} (Dorsal: {jugadorG.dorsal})</td>
                             </tr>
                           ))}
                         </tbody>
@@ -87,7 +87,7 @@ export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
                           {resultado.equipo2.goles.jugadorGoleador?.map((jugadorG, index) => (
                             <tr key={index}>
                               <td className="px-4 py-2">Goleador:</td>
-                              <td className="px-4 py-2">{jugadorG.nombreJugador} (Dorsal: {jugadorG.dorsal})</td>
+                              <td className="px-4 py-2">{jugadorG.nombres} (Dorsal: {jugadorG.dorsal})</td>
                             </tr>
                           ))}
                           <tr>
@@ -97,7 +97,7 @@ export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
                           {resultado.equipo2.tarjetasAmarillas?.map((jugadorG, index) => (
                             <tr key={index}>
                               <td className="px-4 py-2">Jugador con Amarilla:</td>
-                              <td className="px-4 py-2">{jugadorG.nombreJugador} (Dorsal: {jugadorG.dorsal})</td>
+                              <td className="px-4 py-2">{jugadorG.nombres} (Dorsal: {jugadorG.dorsal})</td>
                             </tr>
                           ))}
                           <tr>
@@ -107,7 +107,7 @@ export const VersusPage = ({ setModalVer, idVs, modalVer }) => {
                           {resultado.equipo2.tarjetasRojas?.map((jugadorG, index) => (
                             <tr key={index}>
                               <td className="px-4 py-2">Jugador con Roja:</td>
-                              <td className="px-4 py-2">{jugadorG.nombreJugador} (Dorsal: {jugadorG.dorsal})</td>
+                              <td className="px-4 py-2">{jugadorG.nombres} (Dorsal: {jugadorG.dorsal})</td>
                             </tr>
                           ))}
                         </tbody>
