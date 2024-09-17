@@ -5,8 +5,7 @@ import { Link } from "react-router-dom";
 import Participantes from '@/widgets/componentes/Participantes/index';
 import { ModalInscribirCampeonato } from '@/widgets/componentes/campeonato/modalInscribirCampeonato';
 import { EliminarEquipo } from "@/widgets/componentes/Participantes/eliminarEquipo";
-import { par } from "@/services/par.js";
-import { usePar } from "@/context/parContext";
+
 export const Participante = () => {
   const IdCampeonato = localStorage.getItem('ID');
   const [equipoInscripto, setEquipoInscripto] = useState([]);
@@ -26,11 +25,7 @@ const [botonEliminar, setBotonEliminar]= useState()
 const [botonAgregar, setBotonAgregar]= useState()
 const [estadoCam, setEstadoCam]=useState('Ejecucion')
 const [controlador, setControlador]= useState()
-const{par2, setPar}=usePar()
-useEffect(()=>{
-  const pares = par(equipoInscripto.length)
-setPar(pares)
-},[equipoInscripto])
+
 
 useEffect(()=>{
 const botonSorteo= async()=>{

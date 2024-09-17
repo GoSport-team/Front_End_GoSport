@@ -6,6 +6,5 @@ export * from "@/pages/dashboard/cronograma";
 export * from "@/pages/dashboard/participantes";
 export * from "@/pages/dashboard/salir";
 export * from "@/pages/dashboard/resultadosIntercentros";
-
 export * from "@/pages/dashboard/participantesIntercentros";
 

@@ -30,23 +30,6 @@ export default function Cronograma() {
     const [controlador, setControlador]= useState()
     const [controlerDatosvss, setControlerDatosvss]= useState(true)
     const[controlerFase, setControlerFase]= useState()
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const { data } = await axios.get('http://localhost:3001/fase/fase',{
-            headers: {
-              id:IdCampeonato
-            },
-          });
-          setFasesInactivas(data.faseInactiva)
-         setFasesActiva(data.faseActiva)
-        } catch (error) {
-          console.log(error);
-        }
-      };
-      fetchData();
-    }, [datosVss]);
-   // console.log(faseActiva)
     useEffect(()=>{
       const GetDatosVs = async()=>{
         try{
@@ -65,6 +48,25 @@ export default function Cronograma() {
       }
       GetDatosVs();
     },[datosVss])
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+         
+          const { data } = await axios.get('http://localhost:3001/fase/fase',{
+            headers: {
+              id:IdCampeonato
+            },
+          });
+          setFasesInactivas(data.faseInactiva)
+         setFasesActiva(data.faseActiva)
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      fetchData();
+    }, [datosVss]);
+    
+   // console.log(faseActiva)
     //console.log(datosVss)
     const hanlde = (estado,idVs)=>{
       setConfirmarCambios(estado)

@@ -8,11 +8,11 @@ import { DatosEquiposInscripcion } from "./components/Jugador/InscribirEquipo/Da
 import { VerEquipo } from "./components/Jugador/VerEquipo/VerEquipo";
 import { PerfilJugador } from "./components/Jugador/PerfilJugador/perfilJugador";
 import { CrearPlanillero } from "./widgets/componentes/Planillero/CrearPlanillero";
-
+import { AgregarProvider } from "./context/parContext";
 function App() {
   return (
     
-  
+  <AgregarProvider>
     <Routes>
       <Route path="/" element={<Landing />} />
       <Route path="/dashboard/*" element={<Dashboard />} />
@@ -33,6 +33,7 @@ function App() {
       />
       <Route path="/planillero/agregar" element={<CrearPlanillero/>}/>
     </Routes>
+    </AgregarProvider>
    
   );
 }

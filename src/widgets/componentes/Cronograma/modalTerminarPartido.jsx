@@ -1,8 +1,19 @@
 import React, { useState } from "react";
+import axios from 'axios'
 
-
- export const TerminarPartidoModal = ({ isOpen, onClose, agregarResultado ,setModalOpenOk,setBoton}) => {
+ export const TerminarPartidoModal = ({ isOpen, onClose, agregarResultado ,setModalOpenOk,setBoton, idVs}) => {
+const actualizar=async()=>{
+  try{
+    const response = await axios.patch(`http://localhost:3001/vs/${idVs}`,{
+      estado:false
+    })
+    console.log(response)
+  }catch(error){
+    console.log(error)
+  }
+}
     const agregar=()=>{
+      actualizar()
       setBoton(false)
         agregarResultado()
         setModalOpenOk(false)

@@ -61,7 +61,22 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
         }
     
       }
+      const actuEstado= async()=>{
+        try{
+          const response = await axios.patch(`http://localhost:3001/inscripcionEquipos/estado/${equipo._id}`,{
+            estado:true
+          })
+          console.log(response)
+        }catch(error){
+          console.log(error)
+        }
+      }
+
       console.log(equipo)
+      const handleSubmit=()=>{
+        inscribirEquipo()
+        actuEstado()
+      }
   return (
     <>
      {isLoading && (
@@ -103,7 +118,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
                 <p><strong>Contacto Dos:</strong> {equipo.contactoDos}</p>
                 <p><strong>Jornada:</strong> {equipo.jornada} </p>
               <button
-                   onClick={inscribirEquipo}
+                   onClick={handleSubmit}
                  class="select-none mt-3 rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               >
                 Agregar

@@ -25,6 +25,8 @@ export const MostrarJugadores = ({ datosVss, setModalIsOpen, modalIsOpen, closeM
     const [perdedor, setPerdedor] = useState([])
     const [isModalOpenOk, setModalOpenOk] = useState(false);
     const [isMyModalOpen, setMyModalIsOpen] = useState(false);
+    const [penal, setPenal]=useState(false)
+    const[numeroTiros, setNumeroTiros]= useState()
 const[boton, setBoton]=useState()
 
     useEffect(() => {
@@ -36,7 +38,6 @@ const[boton, setBoton]=useState()
             setPerdedor(equipo2)
         }
     }, [countGol1, countGol2])
-
     const actualizarFase = async () => {
         if (ganador && perdedor) {
             const ganadores = {
@@ -58,7 +59,16 @@ const[boton, setBoton]=useState()
         }
 
     }
-
+    const actuEstado= async()=>{
+        try{
+          const response = await axios.patch(`http://localhost:3001/inscripcionEquipos/estado/${perdedor._id}`,{
+            estado:false
+          })
+          console.log(response)
+        }catch(error){
+          console.log(error)
+        }
+      }
 
     const guardarResultado = async () => {
         const response = await axios.post('http://localhost:3001/resultados', {
@@ -90,6 +100,7 @@ const[boton, setBoton]=useState()
     const botonPublicar = () => {
         guardarResultado()
         actualizarFase()
+        actuEstado()
         enviarIdsJugadoresDestacados();
         setBotonVer(true)
         setModalIsOpen(false)
@@ -344,7 +355,7 @@ const[boton, setBoton]=useState()
                                     <button onClick={() => setMyModalIsOpen(true)}
                                     >Penales</button>
                                 </div>
-                                <Penales setMyModalIsOpen={setMyModalIsOpen} isOpen={isMyModalOpen} />
+                                <Penales setMyModalIsOpen={setMyModalIsOpen} isOpen={isMyModalOpen} equipo1={equipo1} equipo2={equipo2} setPenal={setPenal} setNumeroTiros={setNumeroTiros} />
                             </div>
 
                             <div className="flex flex-col w-1/2">
@@ -473,6 +484,7 @@ const[boton, setBoton]=useState()
                         agregarResultado={botonPublicar}
                         setModalOpenOk={setModalOpenOk}
                         setBoton={setBoton}
+                        idVs={datosVss._id}
                     />
                 </div>
             </Modal>

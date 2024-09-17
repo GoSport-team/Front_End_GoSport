@@ -11,7 +11,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { BuscarPlanillero } from '../Planillero/BuscarPlanillero';  
 import { VerPlanillero } from '../Planillero/verPlanillero';
 import { MejorPerdedor } from './mejorPerdedor';
-import { usePar } from '@/context/parContext';
+import { SortearMejorPerdedor } from '@/services/sortearMejorPerdedor';
 export default function CronogramaDesing({  patchFechaHora, guardarEdicion, datosVss, vs, oks}) {
 
 const idVs = datosVss._id
@@ -20,7 +20,7 @@ const IdCampeonato = localStorage.getItem('ID');
 const[modalVer, setModalVer]=useState()
 const[botonVer, setBotonVer]=useState()
   const [equipo2, setEquipo2] = useState([])
-  const [botonAgregar ,setBotonAgregar]= useState();
+  const [botonAgregar ,setBotonAgregar]= useState()
   const [resultado, setResultado]= useState([])
   const [estadoFase, setEStadoFase] = useState(true);
   const [nombreFase, setNombreFase] = useState();
@@ -34,12 +34,41 @@ const[cambioFase2, setCambioFase2]= useState()
 const[EquipoGanador, setEquipoGanador]= useState()
 const [modalVerPlanillero, setVerPlanillero]=useState()
 const [controladorResult, setControladorResult]= useState()
-const {par2, setPar}= usePar()
 const [equipoPerdedores, setEquiposPerdedores]= useState([])
 const [controlerVs, setControllerVs]= useState()
 const [controlerDatosvss, setControlerDatosvss]= useState(false)
 const [resultados, setResultados] = useState();
+const [sorteoMejorPerdedor, setMejorPerdedor]= useState()
+const [idPlanilleros, setIdPlanilleros]= useState()
+const [planillero, setPlanillero]= useState()
+useEffect(()=>{
+  const vs=async()=>{
+  try{
+  const response = await axios.get(`http://localhost:3001/vs/${idVs}`)
+  console.log('idplanillero ',response.data.idPlanillero)
+  setIdPlanilleros(response.data.idPlanillero)
+  }catch(error){
+      console.log(error)
+  }
+  }
+  vs()
+      },[idVs])
+      useEffect(()=>{
+        if(idPlanillero){
+        const obtenerPlanilero=async()=>{
+            try{
+                const response = await axios.get(`http://localhost:3001/usuarios/identificacion/${idPlanillero}`);
+                console.log(response.data)
+setPlanillero(response.data)
+            }catch(error){
+                console.log(error)
+            }
+        }
+        obtenerPlanilero()
+    }
 
+    },[idPlanillero])
+ 
   const resultadoss = async () => {
     try {
       const response = await axios.get(`http://localhost:3001/resultados/${idVs}`);
@@ -105,17 +134,28 @@ console.log(error)
         }
         resultados()
     },[controladorResult])
+
   useEffect(()=>{
   setCambioFase2(cambioFase(vs,resultado))
    setEquipoGanador(ganador(resultado, vs))
-  },[resultado]) 
+   setMejorPerdedor(SortearMejorPerdedor(vs, resultado))
+  },[resultado, vs]) 
   
      useEffect(() => {
       const equiGan=async()=>{
-        
           if (EquipoGanador) {
             await EquiposGanadores();
         setMostrarGanador(true)
+      
+            try{
+            const response=  await axios.patch(`http://localhost:3001/campeonato/${IdCampeonato}`,
+                {estadoCampeonato: 'Finalizacion'}
+               );
+              console.log(response)
+            }catch(error){
+              console.log(error)
+            }
+          
           } else {
            setMostrarGanador(false)
           }
@@ -204,6 +244,7 @@ const handleClick=()=>{
 
     fetchFechaHora();
   }, [controlerVs]);
+  
 ///console.log(equipoGanadores)
 
   const handleConfirmarCmabios = () => {
@@ -271,7 +312,7 @@ const handleClick=()=>{
       
     {equipo2.nombreEquipo==='no tiene asignado equipo'?(
       <>
-   <MejorPerdedor equipo1={equipo1} equipo2={equipo2} setBotonAgregar={setBotonAgregar} idfase={idfase} idVs={idVs}/>
+   <MejorPerdedor equipo1={equipo1} equipo2={equipo2} setBotonAgregar={setBotonAgregar} idfase={idfase} idVs={idVs} sorteoMejorPerdedor={sorteoMejorPerdedor}/>
 
     <div className='w-full md:w-1/2 flex flex-col justify-between mt-6 md:mt-0  ' >
       <div>
@@ -477,7 +518,7 @@ resultado={resultados}
  <VerPlanillero
  modalIsOpen={modalVerPlanillero}
  closeModal={closeModalPlanillero}
- idVs={idVs}
+ planillero={planillero}
  />
    )}
   

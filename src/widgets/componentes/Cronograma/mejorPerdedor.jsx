@@ -1,13 +1,14 @@
 import axios from 'axios'
 import React ,{useEffect, useState, useCallback}from 'react'
 import { SortearMejorPerdedor } from './sortearMejorPerdedor'
-export const MejorPerdedor = ({equipo1, equipo2, setBotonAgregar, idfase, idVs}) => {
+export const MejorPerdedor = ({equipo1, equipo2, setBotonAgregar, idfase, idVs, sorteoMejorPerdedor}) => {
  // console.log(idfase)
   const [equiposPerdedores, setEquiposPerdedores]= useState([])
   const [controlers, setControllers]= useState()
   const[equipoRamdon, setEquipoRamdon]=useState()
 const [controler , setController]= useState(false)
 const[modalSortearEquipos, setSortearEquipos]=useState()
+const [agregar,setAgregar]= useState()
     useEffect(()=>{
       const EquiposGanadores=async()=>{
         try{
@@ -25,6 +26,8 @@ const[modalSortearEquipos, setSortearEquipos]=useState()
     useEffect(()=>{
   if (equipo2.imgLogo === "No tiene asignado equipo ") {
   setBotonAgregar(false);
+}else{
+  setBotonAgregar(true)
 }
 },[equipo2])
       //console.log(equiposPerdedores)
@@ -45,7 +48,7 @@ const modalSortearEquipo=()=>{
 
 }
 
- 
+ setBotonAgregar(agregar)
 console.log(equipoRamdon)
   return (
     <div className='flex flex-col gap-4 '>
@@ -64,12 +67,14 @@ console.log(equipoRamdon)
             equipo2.imgLogo === "No tiene asignado equipo "&&(
 <h1 >No tiene equipo asignado</h1>
             )
-        }
+        }{sorteoMejorPerdedor&&(
+
         <button onClick={modalSortearEquipo}   className="px-4 py-2 bg-gray-500 text-white rounded-md"> Sortear</button>
+        )}
    
      
     </div>
-<SortearMejorPerdedor setSortearEquipos={setSortearEquipos} idVs={idVs} equipoRamdon={equipoRamdon} equiposPerdedores={equiposPerdedores} modalSortearEquipos={modalSortearEquipos}/>
+<SortearMejorPerdedor setSortearEquipos={setSortearEquipos} idVs={idVs} equipoRamdon={equipoRamdon} equiposPerdedores={equiposPerdedores} modalSortearEquipos={modalSortearEquipos} setAgregar={setAgregar}/>
   </div>
   )
 }

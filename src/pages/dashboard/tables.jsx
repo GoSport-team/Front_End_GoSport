@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Creado } from "@/widgets/componentes/campeonato/estadosCampeonato/creado";
 import { Inscripto } from "@/widgets/componentes/campeonato/estadosCampeonato/inscripto";
 import { Ejecucion } from "@/widgets/componentes/campeonato/estadosCampeonato/ejecucion";
-
+import { Finalizacion } from '@/widgets/componentes/campeonato/estadosCampeonato/finalizado';
 import {
   Typography,
 
@@ -127,6 +127,11 @@ export function Tables() {
               tasks={task}
               setControlador={setControlador}
               controlador={controlador} />
+              <Finalizacion
+              tasks={task}
+              setControlador={setControlador}
+              controlador={controlador}
+              />
           
             </td>
           </tr>
