@@ -22,6 +22,19 @@ export const ResultadosIntercentros = () => {
 
   const [posicionesGuardadas, setPosicionesGuardadas] = useState(false);
 
+   useEffect(()=>{
+   const obtenerVs = async ()=>{
+       const response = await axios.get('http://localhost:3001/vsInter',{
+           headers:{
+               idCampeonato: id
+           }
+       })
+       setEquipos(response.data)
+       
+       setVsEquipos(response.data)
+   }
+   obtenerVs()
+  },[modal])
 
   useEffect(() => {
     const obtenerGanadorYActualizarEstado = async () => {
@@ -45,7 +58,8 @@ export const ResultadosIntercentros = () => {
               idCampeonato: id,
             },
           });
-  
+          localStorage.removeItem('sorteoRealizado');
+          sessionStorage.removeItem('sorteoRealizado');
           // Determinar el equipo ganador
           const equipo = obtenerGanadorFinal(responsePosiciones.data);
           setEquipoGanador(equipo);
@@ -134,21 +148,10 @@ useEffect(() => {
   //   }, 700);
   // 
   };
-  const actualizarPartidos = async () => {
-    try {
-      const response = await axios.get('http://localhost:3001/vsInter', {
-        headers: {
-          idCampeonato: id,
-        },
-      });
-      setVsEquipos(response.data);
-    } catch (error) {
-      console.error("Error al actualizar los partidos:", error);
-    }
-  };
+  
   const cerrarModal = () => {
     setModal(false);
-    actualizarPartidos();
+  
   };
 
   const cerrarModalPosiciones = () => {
@@ -172,12 +175,12 @@ useEffect(() => {
 
   return (
     <>
-    {
+    {/* {
       loading?(
         <div className="flex justify-center items-center h-72">
         <Spinner className="h-12 w-12 text-blue-500" />
       </div>
-      ):(
+      ):( */}
         <div className='w-full h-full  bg-white p-4 rounded-lg '>
         <button
           onClick={() => setModalPosiciones(true)}
@@ -241,13 +244,13 @@ useEffect(() => {
     </div>
   )}
             <PosicionesIntercentros isOpen={modalPosiciones} close={cerrarModalPosiciones} id={id} />
-          <AgregarResultados modal={modal} idCampeonato={id} idVs={idVs} closeModal={cerrarModal} equipos={equipos} actualizarPartido={actualizarPartidos}/>
+          <AgregarResultados modal={modal} idCampeonato={id} idVs={idVs} closeModal={cerrarModal} equipos={equipos}/>
           <MirarResultados idVs={idVsResult} isOpen={modalMirarResultados} onClose={cerrarModalResultados} />
         </section>
       </div>
 
-      )
-    }
+    {/* //   )
+    // } */}
         </>
   );
 };
