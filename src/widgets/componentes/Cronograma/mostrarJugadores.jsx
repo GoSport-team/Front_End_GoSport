@@ -93,7 +93,8 @@ const[boton, setBoton]=useState()
             IdVs: datosVss._id,
             IdFase: datosVss.IdFase,
             estadoPartido: false,
-            idCampeonato:idCampeonato
+            idCampeonato:idCampeonato,
+            
         })
         setBotonAgregar(false)
     }
@@ -108,7 +109,7 @@ const[boton, setBoton]=useState()
         setBotonVer(true)
         setModalIsOpen(false)
     }
-
+    // FUNCIONES DE YESI
     const gol1 = (jugador) => {
         if (countGol1 >= 0) {
             setCountGol1(countGol1 + 1)
@@ -136,6 +137,8 @@ const[boton, setBoton]=useState()
             setCountGol2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
         }
     }
+
+    
     const countAmarilla1 = (jugador) => {
         if (amarilla1 >= 0) {
             setJugadorAmarilla1((prevJugador) => [...prevJugador, jugador])
@@ -231,7 +234,7 @@ const[boton, setBoton]=useState()
                 className="flex justify-center items-center h-screen w-auto"
                 overlayClassName="fixed inset-0 bg-black bg-opacity-50"
             >
-                <div className="rounded-lg shadow-lg overflow-hidden flex flex-col min-w-[50vw] max-w-[70vw] min-h-[50vh] max-h-[100vh] bg-white p-3 ml-[10vw]"> {/* Agregué la clase ml-[10vw] */}
+                <div className="rounded-lg shadow-lg  overflow-hidden flex flex-col min-w-[50vw] max-w-[70vw] min-h-[50vh] max-h-[100vh] bg-white p-3 ml-[10vw]"> {/* Agregué la clase ml-[10vw] */}
                     <div className='flex justify-end'>
                         <button
                             className="text-gray-600 hover:text-gray-900 text-2xl font-bold w-10 h-10 flex items-center justify-center rounded-full bg-gray-200"

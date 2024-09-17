@@ -2,7 +2,7 @@ import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { AgregarResultado } from '../../../../utils/Intercentros/AgregarResultado'
 
-export const AgregarResultados = ({ modal, idVs ,idCampeonato, closeModal, equipos}) => {
+export const AgregarResultados = ({ modal, idVs ,idCampeonato, closeModal, equipos, actualizarPartido}) => {
     const [vs, setVs] = useState()
     const [goles, setGoles] = useState([])
     const [amarillas, setAmarillas] = useState([])
@@ -60,11 +60,12 @@ export const AgregarResultados = ({ modal, idVs ,idCampeonato, closeModal, equip
      AgregarResultado(vs.equipo1, vs.equipo2,goles, amarillas,rojas, idVs, idCampeonato, equipos)
 
      setTimeout(() => {
+        actualizarPartido()
          closeModal()
          setGoles([])
          setAmarillas([])
          setRojas([])
-     }, 800);
+     }, 500);
     }
 
     return (
