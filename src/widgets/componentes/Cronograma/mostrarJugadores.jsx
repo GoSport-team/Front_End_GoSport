@@ -94,7 +94,7 @@ const[boton, setBoton]=useState()
             IdFase: datosVss.IdFase,
             estadoPartido: false,
             idCampeonato:idCampeonato,
-            
+            penales: false
         })
         setBotonAgregar(false)
     }
@@ -110,83 +110,239 @@ const[boton, setBoton]=useState()
         setModalIsOpen(false)
     }
     // FUNCIONES DE YESI
-    const gol1 = (jugador) => {
-        if (countGol1 >= 0) {
-            setCountGol1(countGol1 + 1)
-            setJugadorGol1((prevJugador) => [...prevJugador, jugador])
-        }
+    // const gol1 = (jugador) => {
+    //     if (countGol1 >= 0) {
+    //         setCountGol1(countGol1 + 1)
+    //         setJugadorGol1((prevJugador) => [...prevJugador, jugador])
+    //     }
 
-    }
+    // }
+
+    // const gol2 = (jugador) => {
+    //     if (countGol2 >= 0) {
+    //         setCountGol2(countGol2 + 1)
+    //         setJugadorGol2((prevJugador) => [...prevJugador, jugador])
+    //     }
+    // }
+    // const menosGol1 = (jugador) => {
+    //     if (jugadorGol1.includes(jugador)) {
+    //         setJugadorGol1((prevJugadores) => prevJugadores.filter(j => j !== jugador));
+    //         setCountGol1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    //     }
+    // }
+
+    // const menosGol2 = (jugador) => {
+    //     if (jugadorGol2.includes(jugador)) {
+    //         setJugadorGol2((prevJugadores) => prevJugadores.filter(j => j !== jugador));
+    //         setCountGol2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    //     }
+    // }
+    // const countAmarilla1 = (jugador) => {
+    //     if (amarilla1 >= 0) {
+    //         setJugadorAmarilla1((prevJugador) => [...prevJugador, jugador])
+    //         setAmarilla1(amarilla1 + 1)
+    //     }
+    // }
+    // const countAmarilla2 = (jugador) => {
+    //     if (amarilla2 >= 0) {
+    //         setJugadorAmarilla2((prevJugador) => [...prevJugador, jugador])
+    //         setAmarilla2(amarilla2 + 1)
+    //     }
+    // }
+    // const menosAmarilla1 = (jugador) => {
+    //     if (jugadorAmarilla1.includes(jugador)) {
+    //         setJugadorAmarilla1((prevJugadores) => prevJugadores.filter(j => j !== jugador));
+    //         setAmarilla1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    //     }
+    // }
+    // const menosAmarilla2 = (jugador) => {
+    //     if (jugadorAmarilla2.includes(jugador)) {
+    //         setJugadorAmarilla2((prevJugadores) => prevJugadores.filter(j => j !== jugador));
+    //         setAmarilla2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    //     }
+    // }
+    // const countRoja1 = (jugador) => {
+    //     if (roja1 >= 0) {
+    //         setJugadorRoja1((prevJugador) => [...prevJugador, jugador])
+    //         setRoja1(roja1 + 1)
+    //     }
+    // }
+    // const countRoja2 = (jugador) => {
+    //     if (roja2 >= 0) {
+    //         setJugadorRoja2((prevJugador) => [...prevJugador, jugador])
+    //         setRoja2(roja2 + 1)
+    //     }
+    // }
+    // const menosRoja1 = (jugador) => {
+    //     if (jugadorRoja1.includes(jugador)) {
+    //         setJugadorRoja1((prevJugadores) => prevJugadores.filter(j => j !== jugador));
+    //         setRoja1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    //     }
+    // }
+    // const menosRoja2 = (jugador) => {
+    //     if (jugadorRoja2.includes(jugador)) {
+    //         setJugadorRoja2((prevJugadores) => prevJugadores.filter(j => j !== jugador));
+    //         setRoja2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    //     }
+    // }
+
+    //Nuevas funciones 
+    const gol1 = (jugador) => {
+        
+        setJugadorGol1((prevJugador) => {
+            const jugadorExistente = prevJugador.find(j => j._id === jugador._id);
+            if (jugadorExistente) {
+                return prevJugador.map(j => 
+                    j._id === jugador._id ? { ...j, totalGoles: j.totalGoles + 1 } : j
+                );
+            } else {
+                return [...prevJugador, { ...jugador, totalGoles: 1 }];
+            }
+        });
+        setCountGol1(countGol1 + 1);
+    };
 
     const gol2 = (jugador) => {
-        if (countGol2 >= 0) {
-            setCountGol2(countGol2 + 1)
-            setJugadorGol2((prevJugador) => [...prevJugador, jugador])
-        }
-    }
+        setJugadorGol2((prevJugador) => {
+            const jugadorExistente = prevJugador.find(j => j._id === jugador._id);
+            if (jugadorExistente) {
+                return prevJugador.map(j => 
+                    j._id === jugador._id ? { ...j, totalGoles: j.totalGoles + 1 } : j
+                );
+            } else {
+                return [...prevJugador, { ...jugador, totalGoles: 1 }];
+            }
+        });
+        setCountGol2(countGol2 + 1);
+    };
+
     const menosGol1 = (jugador) => {
-        if (jugadorGol1.includes(jugador)) {
-            setJugadorGol1((prevJugadores) => prevJugadores.filter(j => j !== jugador));
-            setCountGol1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-        }
-    }
+        setJugadorGol1((prevJugadores) => {
+            const jugadorExistente = prevJugadores.find(j => j._id === jugador._id);
+            if (jugadorExistente && jugadorExistente.totalGoles > 1) {
+                return prevJugadores.map(j => 
+                    j._id === jugador._id ? { ...j, totalGoles: j.totalGoles - 1 } : j
+                );
+            } else {
+                return prevJugadores.filter(j => j._id !== jugador._id);
+            }
+        });
+        setCountGol1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    };
 
     const menosGol2 = (jugador) => {
-        if (jugadorGol2.includes(jugador)) {
-            setJugadorGol2((prevJugadores) => prevJugadores.filter(j => j !== jugador));
-            setCountGol2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-        }
+        setJugadorGol2((prevJugadores) => {
+            const jugadorExistente = prevJugadores.find(j => j._id === jugador._id);
+            if (jugadorExistente && jugadorExistente.totalGoles > 1) {
+                return prevJugadores.map(j => 
+                    j._id === jugador._id ? { ...j, totalGoles: j.totalGoles - 1 } : j
+                );
+            } else {
+                return prevJugadores.filter(j => j._id !== jugador._id);
+            }
+        });
+        setCountGol2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    };
+// Función para contar amarillas en equipo 1 (máximo 2 por jugador)
+const countAmarilla1 = (jugador) => {
+    const jugadorExistente = jugadorAmarilla1.find(j => j._id === jugador._id);
+    
+    if (!jugadorExistente) {
+        // Si el jugador no tiene tarjetas, añadimos la primera tarjeta
+        setJugadorAmarilla1((prevJugador) => [...prevJugador, { ...jugador, amarillas: 1 }]);
+        setAmarilla1(amarilla1 + 1);
+    } else if (jugadorExistente.amarillas < 2) {
+        // Si el jugador tiene menos de 2 tarjetas, sumamos una
+        setJugadorAmarilla1((prevJugador) => 
+            prevJugador.map(j => j._id === jugador._id ? { ...j, amarillas: j.amarillas + 1 } : j)
+        );
+        setAmarilla1(amarilla1 + 1);
     }
+};
+
+// Función para contar amarillas en equipo 2 (máximo 2 por jugador)
+const countAmarilla2 = (jugador) => {
+    const jugadorExistente = jugadorAmarilla2.find(j => j._id === jugador._id);
+    
+    if (!jugadorExistente) {
+        setJugadorAmarilla2((prevJugador) => [...prevJugador, { ...jugador, amarillas: 1 }]);
+        setAmarilla2(amarilla2 + 1);
+    } else if (jugadorExistente.amarillas < 2) {
+        setJugadorAmarilla2((prevJugador) => 
+            prevJugador.map(j => j._id === jugador._id ? { ...j, amarillas: j.amarillas + 1 } : j)
+        );
+        setAmarilla2(amarilla2 + 1);
+    }
+};
+
+// Función para restar amarillas en equipo 1
+const menosAmarilla1 = (jugador) => {
+    const jugadorExistente = jugadorAmarilla1.find(j => j._id === jugador._id);
+
+    if (jugadorExistente && jugadorExistente.amarillas > 0) {
+        if (jugadorExistente.amarillas === 1) {
+            // Si tiene 1 tarjeta, lo removemos del array
+            setJugadorAmarilla1((prevJugadores) => prevJugadores.filter(j => j._id !== jugador._id));
+        } else {
+            // Si tiene más de una tarjeta, restamos una
+            setJugadorAmarilla1((prevJugadores) => 
+                prevJugadores.map(j => j._id === jugador._id ? { ...j, amarillas: j.TotalTarjetasAmarillas - 1 } : j)
+            );
+        }
+        setAmarilla1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    }
+};
+
+// Función para restar amarillas en equipo 2
+const menosAmarilla2 = (jugador) => {
+    const jugadorExistente = jugadorAmarilla2.find(j => j._id === jugador._id);
+
+    if (jugadorExistente && jugadorExistente.amarillas > 0) {
+        if (jugadorExistente.amarillas === 1) {
+            setJugadorAmarilla2((prevJugadores) => prevJugadores.filter(j => j._id !== jugador._id));
+        } else {
+            setJugadorAmarilla2((prevJugadores) => 
+                prevJugadores.map(j => j._id === jugador._id ? { ...j, amarillas: j.totalTarjetasAmarillas - 1 } : j)
+            );
+        }
+        setAmarilla2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    }
+};
+
+// Función para contar rojas en equipo 1 (máximo 1 por jugador)
+const countRoja1 = (jugador) => {
+    if (!jugadorRoja1.find(j => j._id === jugador._id)) {
+        setJugadorRoja1((prevJugador) => [...prevJugador, jugador]);
+        setRoja1(roja1 + 1);
+    }
+};
+
+// Función para contar rojas en equipo 2 (máximo 1 por jugador)
+const countRoja2 = (jugador) => {
+    if (!jugadorRoja2.find(j => j._id === jugador._id)) {
+        setJugadorRoja2((prevJugador) => [...prevJugador, jugador]);
+        setRoja2(roja2 + 1);
+    }
+};
+
+// Función para restar rojas en equipo 1
+const menosRoja1 = (jugador) => {
+    if (jugadorRoja1.find(j => j._id === jugador._id)) {
+        setJugadorRoja1((prevJugadores) => prevJugadores.filter(j => j._id !== jugador._id));
+        setRoja1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    }
+};
+
+// Función para restar rojas en equipo 2
+const menosRoja2 = (jugador) => {
+    if (jugadorRoja2.find(j => j._id === jugador._id)) {
+        setJugadorRoja2((prevJugadores) => prevJugadores.filter(j => j._id !== jugador._id));
+        setRoja2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
+    }
+};
 
     
-    const countAmarilla1 = (jugador) => {
-        if (amarilla1 >= 0) {
-            setJugadorAmarilla1((prevJugador) => [...prevJugador, jugador])
-            setAmarilla1(amarilla1 + 1)
-        }
-    }
-    const countAmarilla2 = (jugador) => {
-        if (amarilla2 >= 0) {
-            setJugadorAmarilla2((prevJugador) => [...prevJugador, jugador])
-            setAmarilla2(amarilla2 + 1)
-        }
-    }
-    const menosAmarilla1 = (jugador) => {
-        if (jugadorAmarilla1.includes(jugador)) {
-            setJugadorAmarilla1((prevJugadores) => prevJugadores.filter(j => j !== jugador));
-            setAmarilla1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-        }
-    }
-    const menosAmarilla2 = (jugador) => {
-        if (jugadorAmarilla2.includes(jugador)) {
-            setJugadorAmarilla2((prevJugadores) => prevJugadores.filter(j => j !== jugador));
-            setAmarilla2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-        }
-    }
-    const countRoja1 = (jugador) => {
-        if (roja1 >= 0) {
-            setJugadorRoja1((prevJugador) => [...prevJugador, jugador])
-            setRoja1(roja1 + 1)
-        }
-    }
-    const countRoja2 = (jugador) => {
-        if (roja2 >= 0) {
-            setJugadorRoja2((prevJugador) => [...prevJugador, jugador])
-            setRoja2(roja2 + 1)
-        }
-    }
-    const menosRoja1 = (jugador) => {
-        if (jugadorRoja1.includes(jugador)) {
-            setJugadorRoja1((prevJugadores) => prevJugadores.filter(j => j !== jugador));
-            setRoja1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-        }
-    }
-    const menosRoja2 = (jugador) => {
-        if (jugadorRoja2.includes(jugador)) {
-            setJugadorRoja2((prevJugadores) => prevJugadores.filter(j => j !== jugador));
-            setRoja2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-        }
-    }
+    
     const jugadorDes = (jugador) => {
         setJugadorDestacado((prevJugador) => [...prevJugador, jugador])
 
