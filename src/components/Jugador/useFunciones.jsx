@@ -1,36 +1,42 @@
 import axios from 'axios';
 import Swal from 'sweetalert2'
 
-export const eliminarJugador=(indice, jugadores, user)=> {
-    if(jugadores[indice].nombres == user.nombres){
-      return  Swal.fire({
-        title: "Este jugador no se puede borrar por que es el capitan",
+export const eliminarJugador = async (indice, jugadores, user) => {
+    if (jugadores[indice].nombres === user.nombres) {
+      await Swal.fire({
+        title: "Este jugador no se puede borrar porque es el capitán",
         confirmButtonText: "OK",
-          confirmButtonColor: "#12aed1cd",
+          confirmButtonColor: "#9e9e9e",
       });
+      return jugadores;
     }
+  
     if (jugadores && jugadores.length > indice) {
-      Swal.fire({
+      const result = await Swal.fire({
         title: "Deseas eliminar este jugador",
         showCancelButton: true,
         confirmButtonText: "Guardar",
-          confirmButtonColor: "#12aed1cd",
+        confirmButtonColor: "#12aed1cd",
         cancelButtonColor: "#9e9e9e",
-        text: `Nombre ${jugadores[indice].nombres} \n `,
-      }).then((result) => {
-          if (result.isConfirmed) {
-            Swal.fire({
-              title:"Jugador borrado correctamente",
-              icon:"success",
-              confirmButtonText: "OK",
-        confirmButtonColor: "#0837C0",
-            });
-          jugadores.splice(indice, 1);
-        }
-    });
-    return jugadores
+        text: `Nombre: ${jugadores[indice].nombres}`,
+      });
+  
+      if (result.isConfirmed) {
+        await Swal.fire({
+          title: "Jugador borrado correctamente",
+          icon: "success",
+          confirmButtonText: "OK",
+          confirmButtonColor: "#0837C0",
+        });
+  
+        const nuevosJugadores = jugadores.filter((_, i) => i !== indice);
+        return nuevosJugadores; 
+      }
     }
-  }
+  
+    return jugadores; 
+  };
+  
 
 
 
@@ -43,7 +49,6 @@ export  const searchJugador = async (idenfiticacion, jugadores) => {
                 idJugador: response.data._id
             }
         })
-        console.log(responseValidador.data.equipo)
         if (responseValidador.data.msg == "Jugador ya existe en un equipo") {
             Swal.fire({
                 icon: "error",
@@ -114,7 +119,7 @@ export  const searchJugador = async (idenfiticacion, jugadores) => {
                         title: "Jugador guardado correctamente",
                         icon: "success",
                         confirmButtonText: "OK",
-                        confirmButtonColor: "#0837C0",
+                        confirmButtonColor: "#12aed1cd",
                     });
                 }
             });

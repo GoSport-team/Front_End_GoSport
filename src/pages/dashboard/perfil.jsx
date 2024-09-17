@@ -188,6 +188,7 @@ try {
     const data = response.json();
     console.log(data)
     if (!usuarioId.public_id) {
+      console.log(usuarioId.public_id)
       notify('Nay foto por eliminar');
       }else{
         await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
@@ -295,7 +296,7 @@ notify('No hay cambios para actualizar.');
 
   return (
     <>
-      <Typography variant="h6" color="blue-gray" className="text-2xl mb-6">
+      <Typography variant="h6" color="blue-gray" className="text-3xl mb-10 text-center">
         Revisa y actualiza los detalles de tu cuenta en esta sección.
         
       </Typography>

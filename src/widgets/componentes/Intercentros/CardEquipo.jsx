@@ -1,29 +1,40 @@
 import React from 'react'
 import { Typography } from '@material-tailwind/react';
 
-export const CardEquipo = ({equipo, }) => {
+export const CardEquipo = ({equipo,eliminarEquipo }) => {
   return (
-    <article className="relative w-full p-6 rounded-xl bg-white border border-gray-200 shadow-lg transition-shadow hover:shadow-2xl">
-    <div className="flex flex-col items-center gap-4">
-    <p className="text-lg flex justify-center text-gray-700">
-       <img src={equipo.imgLogo} alt="" className='w-36 ' />
-      </p>
-      <Typography className="flex gap-2 text-xl font-semibold text-black">
-        <Typography className="text-lg">Nombre Equipo:</Typography> {equipo.nombreEquipo}
-      </Typography>
+    <article className="relative w-full pt-4 pr-4 pl-4 rounded-xl flex flex-col bg-white border border-gray-200 shadow-lg transition-shadow hover:shadow-2xl">
+    <div className="flex justify-center mb-4">
+      <img src={equipo.imgLogo} alt="" className="w-36" />
+    </div>
+    
+    <div className="flex w-full flex-col gap-3">
+      <div className="flex w-full">
+        <Typography className="text-lg w-1/2 text-right pr-4">Nombre Equipo:</Typography>
+        <Typography className="text-xl font-medium text-black w-1/2 break-words">{equipo.nombreEquipo }</Typography>
+      </div>
       
-      <Typography className="flex gap-2 text-xl font-semibold text-black">
-        <Typography className="text-lg">Nombre capitan:</Typography> {equipo.nombreCapitan}
-      </Typography>
+      {/* Fila Nombre Capitán */}
+      <div className="flex">
+        <Typography className="text-lg  w-1/2 text-right pr-4">Nombre Capitán:</Typography>
+        <Typography className="text-xl font-medium text-black w-1/2 break-words">{equipo.nombreCapitan}</Typography>
+      </div>
       
-      <Typography className="flex gap-2 text-xl font-semibold text-black">
-        <Typography className="text-lg">Contacto</Typography> {equipo.contactoUno}
-      </Typography>
-     
-      <Typography className="flex gap-2 text-xl font-semibold text-black">
-        <Typography className="text-lg">Contacto dos:</Typography> {equipo.contactoDos}
-      </Typography>
-  
+      {/* Fila Contacto Uno */}
+      <div className="flex">
+        <Typography className="text-lg  w-1/2 text-right pr-4">Contacto Uno:</Typography>
+        <Typography className="text-xl font-medium text-black w-1/2 break-words">{equipo.contactoUno }</Typography>
+      </div>
+
+      {/* Fila Contacto Dos */}
+      <div className="flex">
+        <Typography className="text-lg  w-1/2 text-right pr-4">Contacto Dos:</Typography>
+        <Typography className="text-xl font-medium text-black w-1/2 break-words">{equipo.contactoDos}</Typography>
+      </div>
+    </div>
+    
+    <div className="flex justify-end mt-6 ">
+      <img onClick={()=>eliminarEquipo(equipo._id)} src="../../../../public/img/intercentros/borrar (1).png" className="w-10 cursor-pointer" />
     </div>
   </article>
   )

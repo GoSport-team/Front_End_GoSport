@@ -102,6 +102,9 @@ const[boton, setBoton]=useState()
         actualizarFase()
         actuEstado()
         enviarIdsJugadoresDestacados();
+        if (jugadorDestacado.length > 0) {
+            enviarIdsJugadoresDestacados();
+        }
         setBotonVer(true)
         setModalIsOpen(false)
     }

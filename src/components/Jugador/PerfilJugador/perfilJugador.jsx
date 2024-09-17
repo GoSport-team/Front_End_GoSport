@@ -108,8 +108,8 @@ export const PerfilJugador = () => {
       } else {
         console.error('No se recibió URL de la imagen');
       }
-
-      // Actualizar la URL de la imagen en la base de datos
+      console.log(data.public_id)
+    
       await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
         url_foto: data.url,
         public_id: data.public_id
@@ -175,27 +175,27 @@ export const PerfilJugador = () => {
   // Funcion DELETE
   const handleDelete = async () => {
     try {
-
+      setLoading(true)
       const response = await fetch(`http://localhost:3001/usuarios/${UserID}/eli`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Jugadors ${token}`
+          'Authorization': `Bearer ${token}`
         }
       });
-
       const data = response.json();
       console.log(data)
-      if (!usuarioId.public_id) {
+       if (!usuarioId.public_id) {
         notify('Nay foto por eliminar');
       } else {
         await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
           url_foto: '',
           public_id: null
         });
-
+       
+        setLoading(true)
         setImagen('/sinfoto.png');
-        // Notificar al usuario
         notify("Imagen eliminada exitosamente");
+       
       }
     } catch (error) {
       console.error('Error eliminando la imagen:', error);
@@ -290,6 +290,7 @@ export const PerfilJugador = () => {
 
   return (
     <>
+    <ToastContainer/>
       <div className="flex flex-col items-center justify-center min-h-screen ">
         {loading ? (
           <div className="flex justify-center items-center h-72">

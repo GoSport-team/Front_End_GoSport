@@ -149,7 +149,7 @@ const handleSubmit = async () => {
             ))}
           </div>
         ) : (
-          <p className="text-red-600 text-4xl font-bold text-center">
+          <p className="text-black text-4xl font-bold text-center opacity-75">
             No hay equipos inscritos
           </p>
         )}{
