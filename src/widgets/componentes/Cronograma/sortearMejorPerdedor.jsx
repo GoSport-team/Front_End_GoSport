@@ -1,8 +1,11 @@
 import axios from 'axios'
 import React from 'react'
+import { UseAgregar } from '@/context/parContext'
 import { Card, Dialog } from '@material-tailwind/react'
-export const SortearMejorPerdedor = ({setSortearEquipos, idVs, equipoRamdon,equiposPerdedores, modalSortearEquipos}) => {
-    console.log(equiposPerdedores)
+export const SortearMejorPerdedor = ({setSortearEquipos, idVs, equipoRamdon,equiposPerdedores, modalSortearEquipos, setAgregar}) => {
+  console.log('ramdon ',equipoRamdon)
+  const {setBotonAgregar}=UseAgregar()
+  console.log(equiposPerdedores)
     const actualizarVs= async()=>{
         const informacions={
           informacion:{
@@ -16,7 +19,19 @@ export const SortearMejorPerdedor = ({setSortearEquipos, idVs, equipoRamdon,equi
     })
     console.log(response.data)
       }
+      const actuEstado= async()=>{
+        try{
+          const response = await axios.patch(`http://localhost:3001/inscripcionEquipos/estado/${equipoRamdon.Equipo._id}`,{
+            estado:true
+          })
+          console.log(response)
+        }catch(error){
+          console.log(error)
+        }
+      }
       const actu=()=>{
+        setAgregar(true)
+        actuEstado()
         actualizarVs()
         setSortearEquipos(false)
       } 
@@ -43,9 +58,15 @@ export const SortearMejorPerdedor = ({setSortearEquipos, idVs, equipoRamdon,equi
 
   <button
   onClick={actu}
-    className="mt-6 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+              class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
   >
     Sortear
+  </button>
+  <button
+  onClick={()=>setSortearEquipos(false)}
+    className="mt-6 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+  >
+    Cancelar
   </button>
 </div>
 </Dialog>

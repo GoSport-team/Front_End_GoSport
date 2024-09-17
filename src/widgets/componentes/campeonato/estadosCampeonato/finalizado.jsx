@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 
-export const Ejecucion = ({ tasks, setControlador, controlador }) => {
+export const Finalizacion = ({ tasks, setControlador, controlador }) => {
   const [ejecucion, setEjecucion] = useState(false);
   const [fase, setFase] = useState(null);
 
@@ -29,7 +29,7 @@ console.log(fase)
   }, [tasks, setControlador]);
 
   useEffect(() => {
-    if (tasks && tasks.estadoCampeonato === 'Ejecucion'  ) {
+    if (tasks && tasks.estadoCampeonato === 'Finalizacion' ) {
       setEjecucion(true);
     } else {
       setEjecucion(false);
@@ -60,7 +60,7 @@ console.log(fase)
             className="w-44 select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
           >
             <Link to={tasks.tipoCampeonato === 'Intercentros' ? `/campe/cronogramaIntercentros/${tasks._id}` : "/campe/cronograma"}>
-              Agregar Resultados
+              Ver Resultados
             </Link>
           </button>
         </div>

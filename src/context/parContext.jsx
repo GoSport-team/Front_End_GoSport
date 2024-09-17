@@ -1,15 +1,15 @@
 import React, { createContext, useContext, useState } from 'react';
-const ParContext = createContext();
+const AgregarContext = createContext();
 
 // Crear un proveedor del contexto
-export const ParProvider = ({ children }) => {
-  const [par2, setPar] = useState(false);
+export const AgregarProvider = ({ children }) => {
+  const [botonAgregar, setBotonAgregar] = useState();
 
   return (
-    <ParContext.Provider value={{ par2, setPar }}>
+    <AgregarContext.Provider value={{ botonAgregar, setBotonAgregar }}>
       {children}
-    </ParContext.Provider>
+    </AgregarContext.Provider>
   );
 };
 
-export const usePar = () => useContext(ParContext);
+export const UseAgregar= () => useContext(AgregarContext);
