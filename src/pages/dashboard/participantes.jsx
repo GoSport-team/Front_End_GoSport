@@ -92,6 +92,7 @@ const handleSubmit = async () => {
       const dataVs = {
         equipos: equipoInscripto,
         IdFase: idFase,
+        idCampeonato: idC
       };
       console.log("datos vs", dataVs)
       localStorage.setItem('IdFase', idFase);
