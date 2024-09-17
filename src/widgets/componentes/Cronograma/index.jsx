@@ -205,7 +205,8 @@ const handleClick=()=>{
     fetchFechaHora();
   }, [controlerVs]);
 ///console.log(equipoGanadores)
-
+  const idCampeonato = localStorage.getItem('ID')
+  console.log(`Id Campeonato en Cronogramasss ${idCampeonato}`)
   const handleConfirmarCmabios = () => {
     guardarEdicion(true, idVs);
     patchFechaHora({ fecha, hora })

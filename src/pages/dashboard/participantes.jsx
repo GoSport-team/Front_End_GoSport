@@ -91,12 +91,14 @@ const handleSubmit = async () => {
       localStorage.setItem('estadoFase', estadoFase);
       const fase = await axios.post('http://localhost:3001/fase', { estado: estadoFase, nombre: nombreFase, idCampeonato: IdCampeonato });
       const idFase = fase.data._id;
-
+      const idC = localStorage.getItem('ID')
+      console.log("idCma", idC)
       setIdFase(idFase);
       const dataVs = {
         equipos: equipoInscripto,
-        IdFase: idFase
+        IdFase: idFase,
       };
+      console.log("datos vs", dataVs)
       localStorage.setItem('IdFase', idFase);
       localStorage.setItem('nombreFase', nombreFase)
       const equiposSorteados = await axios.post('http://localhost:3001/vs', { dataVs });
