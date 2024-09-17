@@ -2,18 +2,20 @@ import React, { useState, useRef } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+
 
 const RecuperarContrasena = () => {
-  const [step, setStep] = useState(1);  // Controla la etapa actual
+  const [step, setStep] = useState(1);
   const [email, setEmail] = useState('');
   const [codigo, setCodigo] = useState(new Array(6).fill(""));
   const [nuevaContrasena, setNuevaContrasena] = useState('');
   const [loading, setLoading] = useState(false);
-  
-  // Referencias a los campos de entrada del código de verificación
+  const navigate = useNavigate();
+
+
   const inputsRef = useRef([]);
 
-  // Función para manejar el envío del email
   const handleEnviarCorreo = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -21,7 +23,7 @@ const RecuperarContrasena = () => {
       const response = await axios.post('http://localhost:3001/auth/solicitar-codigo', { correo: email });
       if (response.data.message === 'Código de verificación enviado por correo.') {
         toast.success('Correo enviado exitosamente.');
-        setStep(2); // Avanza al paso de verificación
+        setStep(2);
       } else {
         toast.error('Error al enviar el correo.');
       }
@@ -33,24 +35,22 @@ const RecuperarContrasena = () => {
     }
   };
 
-  // Función para manejar la verificación del código
   const handleVerificarCodigo = async (e) => {
     e.preventDefault();
     setLoading(true);
-  
-    const verificationCode = codigo.join(""); // Une el array de códigos
-  
+
+    const verificationCode = codigo.join("");
+
     try {
       const response = await axios.post('http://localhost:3001/auth/verificar-codigo', {
         correo: email,
         codigo: verificationCode,
       });
-  
+
       if (response.data.message === 'Código verificado correctamente') {
         toast.success('Código verificado exitosamente.');
-        setStep(3); // Avanza al paso de crear nueva contraseña
+        setStep(3);
       } else {
-        // Mostrar mensaje de error si el código no es válido
         toast.error(response.data.message || 'Error inesperado al verificar el código.');
       }
     } catch (error) {
@@ -60,8 +60,8 @@ const RecuperarContrasena = () => {
       setLoading(false);
     }
   };
-  
-  // Función para manejar el cambio de contraseña
+
+
   const handleCambiarContrasena = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -74,8 +74,11 @@ const RecuperarContrasena = () => {
       });
 
       if (response.data.message === 'Contraseña actualizada correctamente') {
-        toast.success('Contraseña cambiada exitosamente.');
-        setStep(1); // Regresa al paso inicial o a una página de inicio de sesión
+        toast.success('Contraseña cambiada exitosamente', { autoClose: 1800 });
+        setStep(1);
+        setTimeout(() => {
+          navigate('/auth/sign-in');
+        }, 1000);
       } else {
         toast.error('Error al cambiar la contraseña.');
       }
@@ -87,19 +90,17 @@ const RecuperarContrasena = () => {
     }
   };
 
-  // Función para manejar el cambio en los campos de código de verificación
   const handleCodeChange = (e, index) => {
     const { value } = e.target;
     const newCodigo = [...codigo];
-    if (/^\d*$/.test(value)) { // Solo permite números
-      newCodigo[index] = value.slice(-1); // Asegura que solo se ingrese un carácter
+    if (/^\d*$/.test(value)) {
+      newCodigo[index] = value.slice(-1);
       setCodigo(newCodigo);
-      
-      // Mueve el foco al siguiente campo si el valor es válido
+
       if (value && index < 5) {
         inputsRef.current[index + 1]?.focus();
       }
-      // Vuelve al campo anterior si el valor está vacío
+
       if (!value && index > 0) {
         inputsRef.current[index - 1]?.focus();
       }
