@@ -5,6 +5,7 @@ import { TerminarPartidoModal } from './modalTerminarPartido'
 import Modal from 'react-modal';
 import axios from 'axios';
 import Penales from './penales';
+import { useAccordion } from '@material-tailwind/react';
 Modal.setAppElement('#root');
 export const MostrarJugadores = ({ datosVss, setModalIsOpen, modalIsOpen, closeModal, equipo1, equipo2, showPlayersTable2, showPlayers, togglePlayerRows, togglePlayerRowsTable2, setBotonVer ,setBotonAgregar}) => {
     const idCampeonato= localStorage.getItem('ID')
@@ -27,6 +28,8 @@ export const MostrarJugadores = ({ datosVss, setModalIsOpen, modalIsOpen, closeM
     const [isMyModalOpen, setMyModalIsOpen] = useState(false);
     const [penal, setPenal]=useState(false)
     const[numeroTiros, setNumeroTiros]= useState()
+    const[resultPenalesEquipo1, setResultPenalesEquipo1]= useState([])
+    const [resultPenalesEquipo2, setResultPenalesEquipo2]=useState([])
 const[boton, setBoton]=useState()
 
     useEffect(() => {
@@ -79,7 +82,8 @@ const[boton, setBoton]=useState()
                 goles: {
                     marcador: countGol1,
                     jugadorGoleador: jugadorGol1
-                }
+                },
+                penales:resultPenalesEquipo1
             },
             equipo2: {
                 Equipo2: equipo2,
@@ -88,13 +92,15 @@ const[boton, setBoton]=useState()
                 goles: {
                     marcador: countGol2,
                     jugadorGoleador: jugadorGol2
-                }
+                },
+                penales:resultPenalesEquipo2
             },
             IdVs: datosVss._id,
             IdFase: datosVss.IdFase,
             estadoPartido: false,
             idCampeonato:idCampeonato,
-            penales: false
+            penales: penal,
+            numeroTiros:numeroTiros
         })
         setBotonAgregar(false)
     }
@@ -379,7 +385,10 @@ const menosRoja2 = (jugador) => {
             console.error("Error al procesar los jugadores destacados:", error);
         }
     };
-
+    useEffect(()=>{
+        console.log(resultPenalesEquipo1)
+        console.log(resultPenalesEquipo2)
+    },[resultPenalesEquipo1, resultPenalesEquipo2])
 
 
     return (
@@ -517,7 +526,7 @@ const menosRoja2 = (jugador) => {
                                     <button onClick={() => setMyModalIsOpen(true)}
                                     >Penales</button>
                                 </div>
-                                <Penales setMyModalIsOpen={setMyModalIsOpen} isOpen={isMyModalOpen} equipo1={equipo1} equipo2={equipo2} setPenal={setPenal} setNumeroTiros={setNumeroTiros} />
+                                <Penales setMyModalIsOpen={setMyModalIsOpen} isOpen={isMyModalOpen} equipo1={equipo1} equipo2={equipo2} setPenal={setPenal} setNumeroTiros={setNumeroTiros} setResultPenalesEquipo1={setResultPenalesEquipo1} setResultPenalesEquipo2={setResultPenalesEquipo2} />
                             </div>
 
                             <div className="flex flex-col w-1/2">

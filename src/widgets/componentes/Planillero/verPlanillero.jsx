@@ -10,7 +10,7 @@ export const VerPlanillero = ({modalIsOpen, closeModal, planillero}) => {
    
  
    
-    console.log(planillero)
+    //console.log(planillero)
   return (
     <Modal isOpen={modalIsOpen} onRequestClose={closeModal} className="flex justify-center items-center h-screen w-auto ml-36" overlayClassName="fixed inset-0 bg-black bg-opacity-50">
   

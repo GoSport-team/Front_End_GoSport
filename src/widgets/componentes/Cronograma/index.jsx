@@ -45,7 +45,7 @@ useEffect(()=>{
   const vs=async()=>{
   try{
   const response = await axios.get(`http://localhost:3001/vs/${idVs}`)
-  console.log('idplanillero ',response.data.idPlanillero)
+  //console.log('idplanillero ',response.data.idPlanillero)
   setIdPlanilleros(response.data.idPlanillero)
   }catch(error){
       console.log(error)
@@ -83,7 +83,7 @@ useEffect(()=>{
   setEquipo1(datosVss.equipo1.informacion.team1.Equipo)
   setEquipo2(datosVss.equipo2.informacion.team2.Equipo)
 },[datosVss])
-console.log(idfase)
+//console.log(idfase)
   const openModalVerPlanillero = () => {
     setVerPlanillero(true);
   };
@@ -183,9 +183,9 @@ console.log(error)
           localStorage.setItem('nombreFase', nombreFase)
          
           const dataVs = {
-            equipos:equipoGanadores
-              ,
-            IdFase: idFase
+            equipos:equipoGanadores,
+            IdFase: idFase,
+            idCampeonato: IdCampeonato
           };
           //console.log(dataVs)
           const equiposSorteados = await axios.post('http://localhost:3001/vs', { dataVs });
@@ -247,7 +247,7 @@ const handleClick=()=>{
   
 ///console.log(equipoGanadores)
   const idCampeonato = localStorage.getItem('ID')
-  console.log(`Id Campeonato en Cronogramasss ${idCampeonato}`)
+ // console.log(`Id Campeonato en Cronogramasss ${idCampeonato}`)
   const handleConfirmarCmabios = () => {
     guardarEdicion(true, idVs);
     patchFechaHora({ fecha, hora })

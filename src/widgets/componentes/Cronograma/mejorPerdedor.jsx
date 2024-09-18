@@ -13,7 +13,7 @@ const [agregar,setAgregar]= useState()
       const EquiposGanadores=async()=>{
         try{
           const response= await axios.get(`http://localhost:3001/fase/${idfase}`)
-         console.log(response.data.equiposPerdedores)
+         //console.log(response.data.equiposPerdedores)
           setEquiposPerdedores(response.data.equiposPerdedores)
         }catch(error){
     console.log(error)
@@ -21,7 +21,7 @@ const [agregar,setAgregar]= useState()
           }
           EquiposGanadores()
     },[equiposPerdedores])
-   console.log(equiposPerdedores)
+   //console.log(equiposPerdedores)
 
     useEffect(()=>{
   if (equipo2.imgLogo === "No tiene asignado equipo ") {
@@ -49,7 +49,7 @@ const modalSortearEquipo=()=>{
 }
 
  setBotonAgregar(agregar)
-console.log(equipoRamdon)
+//console.log(equipoRamdon)
   return (
     <div className='flex flex-col gap-4 '>
     <div className='flex items-center'>

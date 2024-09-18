@@ -3,9 +3,9 @@ import React from 'react'
 import { UseAgregar } from '@/context/parContext'
 import { Card, Dialog } from '@material-tailwind/react'
 export const SortearMejorPerdedor = ({setSortearEquipos, idVs, equipoRamdon,equiposPerdedores, modalSortearEquipos, setAgregar}) => {
-  console.log('ramdon ',equipoRamdon)
+  //console.log('ramdon ',equipoRamdon)
   const {setBotonAgregar}=UseAgregar()
-  console.log(equiposPerdedores)
+  //console.log(equiposPerdedores)
     const actualizarVs= async()=>{
         const informacions={
           informacion:{
@@ -17,7 +17,7 @@ export const SortearMejorPerdedor = ({setSortearEquipos, idVs, equipoRamdon,equi
     const response= await axios.patch(`http://localhost:3001/vs/${idVs}`,{
     equipo2:informacions
     })
-    console.log(response.data)
+    //console.log(response.data)
       }
       const actuEstado= async()=>{
         try{

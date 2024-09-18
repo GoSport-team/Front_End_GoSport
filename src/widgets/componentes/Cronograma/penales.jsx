@@ -1,47 +1,81 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Checkbox } from '@material-tailwind/react';
-export default function Penales({ isOpen, setMyModalIsOpen , equipo1, equipo2, setPenal, setNumeroTiros}) {
-    console.log('equipo1 ',equipo1)
-    console.log('equipo2 ',equipo2)
+export default function Penales({ isOpen, setMyModalIsOpen , equipo1, equipo2, setPenal, setNumeroTiros,setResultPenalesEquipo1,setResultPenalesEquipo2 }) {
+
     if (!isOpen) return null;
     const [countGol1, setCountGol1] = useState(0);
     const [countGol2, setCountGol2] = useState(0);
     const [isModalOpen, setIsModalOpen] = useState(true);
+const [result1, setResult1]=useState([])
+const [result2, setResult2]=useState([])
     const [NumeroTiros, setNumeroTiro]= useState(3)
     const totalTiros = () => {
         setNumeroTiro(prevCount => prevCount + 1);
     };
 
-    const goal = (e) => {
+    const goal = (e,jugador) => {
         if (e.target.checked) {
+            const resul={jugador:jugador, acierto:true}
           setCountGol1(prevCount => prevCount + 1);
+          setResult1(prevResult=> [...prevResult, resul] )
         } else {
             setCountGol1(prevCount => (prevCount > 0 ? prevCount - 1 : 0));
+            setResult1(prevResult => 
+                prevResult.filter(result => result.jugador._id !== jugador._id)
+            );
         }
       };
-    
-  
-    const goal2 = () => {
+    const menosGol=(e,jugador)=>{
         if (e.target.checked) {
+            const resul={jugador:jugador, acierto:false}
+          setResult1(prevResult=> [...prevResult, resul] )
+        } else{
+            setResult1(prevResult => 
+                prevResult.filter(result => result.jugador._id !== jugador._id)
+            );
+        }
+    }
+  
+    const goal2 = (e, jugador) => {
+        if (e.target.checked) {
+            const resul={jugador:jugador, acierto:true}
             setCountGol2(prevCount => prevCount + 1);
+            setResult2(prevResult=> [...prevResult, resul] ) 
           } else {
             setCountGol2(prevCount => (prevCount >0 ? prevCount- 1:0));
+            setResult2(prevResult => 
+                prevResult.filter(result => result.jugador._id !== jugador._id)
+            );
           }
     };
- 
+    const menosGol2=(e,jugador)=>{
+        if (e.target.checked) {
+            const resul={jugador:jugador, acierto:false}
+          setResult2(prevResult=> [...prevResult, resul] )
+        } else{
+            setResult2(prevResult => 
+                prevResult.filter(result => result.jugador._id !== jugador._id)
+            );
+        }
+    }
 
    
 const GuardarResult=()=>{
     setPenal(true)
 setNumeroTiros(NumeroTiros)
+setResultPenalesEquipo1(result1)
+setResultPenalesEquipo2(result2)
     setMyModalIsOpen(false)
 }
-
+useEffect(()=>{
+    console.log(result1)
+console.log(result2)
+},[result1,result2])
     return (
         <div className='min-w-max '>
             <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50 ml-40 min-w-max h-[80vh] ">
-                <div className="bg-white p-6 rounded-lg shadow-lg min-w-max h-[80vh] ">
+                <div className="bg-white p-6 rounded-lg shadow-lg min-w-max  ">
                     <div className='flex justify-end'>
                         <button
                             className="text-gray-600 hover:text-gray-900 text-2xl font-bold w-10 h-10 flex items-center justify-center rounded-full bg-gray-200"
@@ -54,7 +88,7 @@ setNumeroTiros(NumeroTiros)
                     <h2 className="text-xl font-bold mb-4">Penales</h2>
                     <div className='flex justify-around'>
                   
-                        <div className='flex flex-col w-[30vw]  '>
+                        <div className='flex flex-col w-[30vw] h-96 '>
                             <div className='flex content-center justify-center'> 
                                 <div className='flex flex-col  items-center'>
                             <h2 className="text-lg font-bold mb-4">Número Tiros </h2>
@@ -70,7 +104,7 @@ setNumeroTiros(NumeroTiros)
                             </div>
                                 <div className='grid place-content-center'>
                                     <div>
-                                        <img className="object-contain w-32 drop-shadow-lg"
+                                        <img className="object-contain w-32 h-32 drop-shadow-lg"
                                             src={equipo1.imgLogo} alt="Logo" />
                                     </div>
                                     <div className='flex justify-center content-center'>
@@ -113,11 +147,11 @@ setNumeroTiros(NumeroTiros)
                                                     {jugador.dorsal}
                                                 </th>
                                                 <th className="px-6 py-4 flex justify-center">
-   <Checkbox   onClick={goal}/>
+   <Checkbox  onChange={(e)=>goal(e,jugador)}/>
     </th>
 
     <th className="px-6 py-4  justify-center">
-   <Checkbox />
+   <Checkbox onChange={(e)=>menosGol(e,jugador)}/>
   </th>
                                             </tr>
                                             ))
@@ -130,11 +164,11 @@ setNumeroTiros(NumeroTiros)
                         <div>
                             VS
                         </div>
-                        <div className='flex flex-col w-[30vw]'>
+                        <div className='flex flex-col w-[30vw] h-96'>
                             <div className='flex content-center justify-center'>
                                 <div className='grid place-content-center'>
                                     <div>
-                                        <img className="object-contain w-32 drop-shadow-lg"
+                                        <img className="object-contain w-36 h-32 drop-shadow-lg"
                                             src={equipo2.imgLogo} alt="Logo" />
                                     </div>
                                     <div className='flex justify-center content-center'>
@@ -177,11 +211,11 @@ setNumeroTiros(NumeroTiros)
                                                     {jugador.dorsal}
                                                 </th>
                                                 <th className="px-6 py-4 flex justify-center">
-   <Checkbox   onClick={goal2}/>
+   <Checkbox   onChange={(e)=>goal2(e,jugador)}/>
     </th>
 
     <th className="px-6 py-4  justify-center">
-   <Checkbox />
+   <Checkbox onChange={(e)=>menosGol2(e,jugador)}/>
   </th>
                                             </tr>
                                             ))
