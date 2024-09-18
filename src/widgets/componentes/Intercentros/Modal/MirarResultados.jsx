@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+const URL_API = import.meta.env.VITE_API_URL
 
 export const MirarResultados = ({idVs ,isOpen, onClose }) => {
 
@@ -7,7 +8,7 @@ export const MirarResultados = ({idVs ,isOpen, onClose }) => {
     useEffect(()=>{
         const resultadosVS = async()=>{
             try {
-                const response = await axios.get(`http://localhost:3001/resultadosInterCentros/${idVs}`);
+                const response = await axios.get(`${URL_API}/resultadosInterCentros/${idVs}`);
                 setEquipos(response.data);
               } catch (error) {
                 console.error('Error fetching data:', error);

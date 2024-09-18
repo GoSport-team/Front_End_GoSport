@@ -11,7 +11,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
     const searchEquipo = async ()=>{
       if(!validacion){
         try {
-          const response = await axios.get(`http://localhost:3001/inscripcionEquipos/${idEquipo}`)
+          const response = await axios.get(`https://back-end-gosport.onrender.com/inscripcionEquipos/${idEquipo}`)
           if(response.data == "EQUIPO NO ENCONTRADO"){
             Swal.fire({
               icon: "error",
@@ -37,7 +37,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
       }
       useEffect(() => {
         const validarInscripcion = async () => {
-          const responseValidador = await axios.get(`http://localhost:3001/equipoInscripto/validarInscripcionestado`, {
+          const responseValidador = await axios.get(`https://back-end-gosport.onrender.com/equipoInscripto/validarInscripcionestado`, {
             headers: {
               cedulaJugador: idEquipo
             }
@@ -57,7 +57,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
       const inscribirEquipo = async ()=>{
         try {  
           setIsLoading(true) 
-          const response = await axios.post(`http://localhost:3001/equipoInscripto`,{
+          const response = await axios.post(`https://back-end-gosport.onrender.com//equipoInscripto`,{
             Equipo:equipo,
             idCampeonato:idCampeonato
           })
@@ -84,7 +84,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
       }
       const actuEstado= async()=>{
         try{
-          const response = await axios.patch(`http://localhost:3001/inscripcionEquipos/estado/${equipo._id}`,{
+          const response = await axios.patch(`https://back-end-gosport.onrender.com/inscripcionEquipos/estado/${equipo._id}`,{
             estado:true
           })
           console.log(response)

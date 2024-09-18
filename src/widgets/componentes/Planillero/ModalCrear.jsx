@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const URL_API = import.meta.env.VITE_API_URL
 
 Modal.setAppElement('#root');
 
@@ -55,7 +56,7 @@ export default function ModalCrear({ openPlan, onRequestClose, onUsuarioCreado }
         };
 
         try {
-            const response = await axios.post('http://localhost:3001/usuarios/', formData);
+            const response = await axios.post(`${URL_API}/usuarios/`, formData);
             console.log('Planillero registrado exitosamente', response.data);
             onUsuarioCreado();
             toast.success('Registrado exitosamente');

@@ -3,6 +3,7 @@ import { BuscarPlanillero } from './Modal/BuscarPlanillero'
 import axios from 'axios'
 import { VerPlanilleroModal } from './Modal/InfoPlanillero'
 import { Typography, Spinner } from '@material-tailwind/react';
+const URL_API = import.meta.env.VITE_API_URL
 
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; 
@@ -57,7 +58,7 @@ export const CardVs = ({ vs, cambiosRealizados }) => {
     }
     const estado = true;
     try {
-      const response = await axios.patch(`http://localhost:3001/vsInter/${id}`, {
+      const response = await axios.patch(`${URL_API}/vsInter/${id}`, {
         hora,
         fecha,
         idPlanillero,

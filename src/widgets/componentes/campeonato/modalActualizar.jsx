@@ -28,7 +28,7 @@ const UpdateCampeonatoModal = ({ isOpen, onClose, campeonato, onUpdate, setContr
     useEffect(() => {
         const fetchModalidades = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/modalidad`);
+                const response = await axios.get(`https://back-end-gosport.onrender.com/modalidad`);
                 setModalidades(response.data);
             } catch (error) {
                 console.log(error);
@@ -40,7 +40,7 @@ const UpdateCampeonatoModal = ({ isOpen, onClose, campeonato, onUpdate, setContr
     useEffect(() => {
         const fetchSedes = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/sede`);
+                const response = await axios.get(`https://back-end-gosport.onrender.com/sede`);
                 setSedes(response.data);
             } catch (error) {
                 console.log(error);
@@ -52,7 +52,7 @@ const UpdateCampeonatoModal = ({ isOpen, onClose, campeonato, onUpdate, setContr
     useEffect(() => {
         const fetchDisciplinas = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/disciplina`);
+                const response = await axios.get(`https://back-end-gosport.onrender.com/disciplina`);
                 setDisciplinas(response.data);
             } catch (error) {
                 console.log(error);
@@ -90,7 +90,7 @@ const UpdateCampeonatoModal = ({ isOpen, onClose, campeonato, onUpdate, setContr
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.patch(`http://localhost:3001/campeonato/${onUpdate}`, formData);
+            await axios.patch(`https://back-end-gosport.onrender.com/campeonato/${onUpdate}`, formData);
             toast.success('Campeonato actualizado exitosamente');
             onClose();
             setControlador(true)

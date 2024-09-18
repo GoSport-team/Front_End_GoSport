@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { AgregarResultado } from '../../../../utils/Intercentros/AgregarResultado'
+const URL_API = import.meta.env.VITE_API_URL
 
 export const AgregarResultados = ({ modal, idVs ,idCampeonato, closeModal, equipos}) => {
     const [vs, setVs] = useState()
@@ -10,7 +11,7 @@ export const AgregarResultados = ({ modal, idVs ,idCampeonato, closeModal, equip
     useEffect(() => {
         const obtenerVs = async () => {
             if(idVs){
-                const response = await axios.get(`http://localhost:3001/vsInter/${idVs}`)
+                const response = await axios.get(`${URL_API}/vsInter/${idVs}`)
                 setVs(response.data)
             }
         }

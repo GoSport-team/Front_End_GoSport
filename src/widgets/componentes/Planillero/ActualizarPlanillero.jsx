@@ -4,7 +4,10 @@ import Modal from 'react-modal';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+
 Modal.setAppElement('#root');
+
+const URL_API = import.meta.env.VITE_API_URL
 
 export const ActualizarPlanillero = ({ id, isOpen, onClose }) => {
     const [nombres, setNombres] = useState('');
@@ -20,7 +23,7 @@ export const ActualizarPlanillero = ({ id, isOpen, onClose }) => {
         if (id !== undefined) {
             const fetchPlanillero = async () => {
                 try {
-                    const response = await axios.get(`http://localhost:3001/usuarios/id/${id}`);
+                    const response = await axios.get(`${URL_API}/usuarios/id/${id}`);
                     const data = response.data;
                     setPlanillero(data);
                     setNombres(data.nombres || '');
@@ -66,7 +69,7 @@ export const ActualizarPlanillero = ({ id, isOpen, onClose }) => {
         }
 
         try {
-            await axios.patch(`http://localhost:3001/usuarios/${id}`, datosAEnviar);
+            await axios.patch(`${URL_API}/usuarios/${id}`, datosAEnviar);
             toast.success('Planillero actualizado correctamente', { autoClose: 1000 });
             setIsSubmitting(false);
             setTimeout(() => onClose(), 5000);

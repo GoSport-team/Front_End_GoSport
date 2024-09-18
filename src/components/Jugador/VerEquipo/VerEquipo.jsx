@@ -5,6 +5,8 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import { eliminarJugador, searchJugador } from '../useFunciones'
+const URL_API = import.meta.env.VITE_API_URL
+
 export const VerEquipo = () => {
     const { cedula } = useParams()
     const [equipo, setEquipo] = useState(null)
@@ -35,7 +37,7 @@ export const VerEquipo = () => {
     useEffect(()=>{
         const getEquipoParticipante =async()=>{
             if(user._id){
-                const responseValidador = await axios.get(`http://localhost:3001/equipoInscripto/validarJugador`,{
+                const responseValidador = await axios.get(`${URL_API}/validarJugador`,{
                     headers:{
                         idJugador: user._id
                     }
@@ -48,7 +50,7 @@ export const VerEquipo = () => {
     },[])
     useEffect(() => {
         const validarInscripcion = async () => {
-            const responseValidador = await axios.get(`http://localhost:3001/equipoInscripto/validarInscripcion`, {
+            const responseValidador = await axios.get(`${URL_API}/validarInscripcion`, {
                 headers: {
                     cedulaJugador: cedula
                 }
@@ -62,7 +64,7 @@ export const VerEquipo = () => {
 
     useEffect(() => {
         const obtenerUser = async () => {
-            const response = await axios.get('http://localhost:3001/usuarios/perfil', {
+            const response = await axios.get(`${URL_API}/usuarios/perfil`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -74,7 +76,7 @@ export const VerEquipo = () => {
 
     useEffect(() => {
         const obtnenerEquipo = async () => {
-            const response = await axios.get(`http://localhost:3001/inscripcionEquipos/${cedula}`)
+            const response = await axios.get(`${URL_API}/inscripcionEquipos/${cedula}`)
             if (response.data == 'EQUIPO NO ENCONTRADO') {
                 return setEquipo(null)
             }
@@ -104,7 +106,7 @@ export const VerEquipo = () => {
                 if (result.isConfirmed) {
                     const formData = new FormData();
                     formData.append("file", image.file)
-                    const response = await axios.patch(`http://localhost:3001/inscripcionEquipos/${equipo._id}/${equipo.idLogo}`, formData)
+                    const response = await axios.patch(`${URL_API}/inscripcionEquipos/${equipo._id}/${equipo.idLogo}`, formData)
                     if (response.data.message) {
                         Swal.fire({
                             icon: "success",
@@ -199,7 +201,7 @@ export const VerEquipo = () => {
       
         if (result.isConfirmed) {
           try {
-            const response = await axios.patch(`http://localhost:3001/inscripcionEquipos/completo/${equipo._id}`, datosAEnviar);
+            const response = await axios.patch(`${URL_API}/inscripcionEquipos/completo/${equipo._id}`, datosAEnviar);
             console.log(response.data)
             await Swal.fire({
               title: "Equipo actualizado correctamente",
