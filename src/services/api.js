@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const URL_API = import.meta.env.VITE_API_URL
 const api = axios.create({
-  baseURL: baseURL,
+  baseURL: URL_API,
   headers: {
     "Content-Type": "application/json",
   },
