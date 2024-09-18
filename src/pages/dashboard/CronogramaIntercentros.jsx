@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { CardVs } from '../../widgets/componentes/Intercentros/CardVs'
 import { Typography, Spinner } from '@material-tailwind/react';
-
+const URL_API = import.meta.env.VITE_API_URL
 export const CronogramasIntercentros=()=> {
     const {id} = useParams()
     const [vsEquipos, setVsEquipos] = useState([])
@@ -14,7 +14,7 @@ export const CronogramasIntercentros=()=> {
         setLoading(true)
         const obtenerVs = async ()=>{
             try {
-                const response = await axios.get('http://localhost:3001/vsInter', {
+                const response = await axios.get(`${URL_API}/vsInter`, {
                   headers: {
                     idCampeonato: id,
                   },

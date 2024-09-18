@@ -1,9 +1,9 @@
 import axios from 'axios'
 
 export const SorteoEquiposInter =async (data) => {
-    const response = await axios.post(`http://localhost:3001/vsInter`,{data})
+    const response = await axios.post(`https://back-end-gosport.onrender.com/vsInter`,{data})
     console.log(response)
-    const actualizarEstadoCam = await axios.patch(`http://localhost:3001/campeonato/${data.idCampeonato}`,{    
+    const actualizarEstadoCam = await axios.patch(`https://back-end-gosport.onrender.com/campeonato/${data.idCampeonato}`,{    
 estadoCampeonato:"Ejecucion"
     })
     if( actualizarEstadoCam.data){

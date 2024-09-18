@@ -8,11 +8,12 @@ export const MejorPerdedor = ({equipo1, equipo2, setBotonAgregar, idfase, idVs, 
   const[equipoRamdon, setEquipoRamdon]=useState()
 const [controler , setController]= useState(false)
 const[modalSortearEquipos, setSortearEquipos]=useState()
+const URL_API = import.meta.env.VITE_API_URL
 const [agregar,setAgregar]= useState()
     useEffect(()=>{
       const EquiposGanadores=async()=>{
         try{
-          const response= await axios.get(`http://localhost:3001/fase/${idfase}`)
+          const response= await axios.get(`${URL_API}/fase/${idfase}`)
          //console.log(response.data.equiposPerdedores)
           setEquiposPerdedores(response.data.equiposPerdedores)
         }catch(error){
@@ -34,7 +35,7 @@ const [agregar,setAgregar]= useState()
    
 const ramdonPerdedores=async(equiposPerdedores)=>{
   try{
-    const response= await axios.post('http://localhost:3001/vs/mejorPerdedor',{equiposPerdedores:equiposPerdedores})
+    const response= await axios.post(`${URL_API}/vs/mejorPerdedor`,{equiposPerdedores:equiposPerdedores})
     console.log(response.data[0])
     setEquipoRamdon(response.data[0])
   }catch(error){

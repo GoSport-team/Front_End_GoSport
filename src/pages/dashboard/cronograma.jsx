@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { ConfirmarGuardar  } from "@/widgets/componentes/Cronograma/ConfirmarGuardar";
 
+const URL_API = import.meta.env.VITE_API_URL
 
 export default function Cronograma() {
   const [datosVss, setDatosVs]= useState([]);
@@ -33,7 +34,7 @@ export default function Cronograma() {
     useEffect(()=>{
       const GetDatosVs = async()=>{
         try{
-          const Vs= await axios.get('http://localhost:3001/vs',{
+          const Vs= await axios.get(`${URL_API}/vs`,{
             headers:{
               IdFase:IdFasee
             }
@@ -52,7 +53,7 @@ export default function Cronograma() {
       const fetchData = async () => {
         try {
          
-          const { data } = await axios.get('http://localhost:3001/fase/fase',{
+          const { data } = await axios.get(`${URL_API}/fase/fase`,{
             headers: {
               id:IdCampeonato
             },

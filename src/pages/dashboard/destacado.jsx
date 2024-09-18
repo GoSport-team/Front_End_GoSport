@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Typography, Button } from "@material-tailwind/react";
+const URL_API = import.meta.env.VITE_API_URL
 
 export function JugadorDestacado() {
     const [jugadoresDestacados, setJugadoresDestacados] = useState([]);
@@ -8,7 +9,7 @@ export function JugadorDestacado() {
 
     const obtenerJugadoresDestacados = async () => {
         try {
-            const response = await axios.get('http://localhost:3001/jugadorDestacado');
+            const response = await axios.get(`${URL_API}/jugadorDestacado`);
             const dataAgrupada = agruparPorCampeonato(response.data);
             setJugadoresDestacados(dataAgrupada);
             console.log('Jugadores Destacados:', response.data);

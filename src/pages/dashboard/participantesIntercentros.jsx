@@ -6,7 +6,7 @@ import { SorteoEquiposInter } from '../../utils/Intercentros/SorteoEquiposInter'
 import { Typography, Spinner } from '@material-tailwind/react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+const URL_API = import.meta.env.VITE_API_URL
 export const ParticipantesIntercentros = () => {
   const notify = (message) => toast(message);
   const { id } = useParams();
@@ -30,7 +30,7 @@ export const ParticipantesIntercentros = () => {
   const fetchEquiposInscritos = async () => {
     setLoading(true);
     try {
-      const response = await axios.get('http://localhost:3001/equipoInscripto', {
+      const response = await axios.get(`${URL_API}/equipoInscripto`, {
         headers: { id },
       });
       console.log('Respuesta del backend (equiposInscritos):', response.data);
@@ -45,10 +45,10 @@ export const ParticipantesIntercentros = () => {
   const eliminarEquipo = async (idEquipo) => {
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:3001/equipoInscripto/idEquipo/${idEquipo}`);
+      await axios.delete(`${URL_API}/equipoInscripto/idEquipo/${idEquipo}`);
       notify('Eliminado correctamente');
       // Update the equiposInscritos list after deletion
-      const updatedEquiposResponse = await axios.get('http://localhost:3001/equipoInscripto', {
+      const updatedEquiposResponse = await axios.get(`${URL_API}/equipoInscripto`, {
         headers: { id },
       });
       setEquiposInscritos((prev) => prev.filter((e) => e.Equipo._id !== idEquipo));
@@ -62,7 +62,7 @@ export const ParticipantesIntercentros = () => {
   const searchEquipo = async (cedula) => {
     setLoading(true);
     try {
-      const response = await axios.get(`http://localhost:3001/inscripcionEquipos/${cedula}`);
+      const response = await axios.get(`${URL_API}/inscripcionEquipos/${cedula}`);
       console.log('Respuesta al buscar equipo:', response.data);
       if (response.data === 'EQUIPO NO ENCONTRADO') {
         notify('Equipo no encontrado');
@@ -70,7 +70,7 @@ export const ParticipantesIntercentros = () => {
         notify('Equipo encontrado correctamente');
         const equipo = response.data.equipo;
         if (!equiposInscritos.some((e) => e.Equipo._id === equipo._id)) {
-          await axios.post('http://localhost:3001/equipoInscripto', {
+          await axios.post(`${URL_API}/equipoInscripto`, {
             Equipo: equipo,
             idCampeonato: id,
           });

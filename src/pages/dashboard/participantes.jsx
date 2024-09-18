@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Participantes from '@/widgets/componentes/Participantes/index';
 import { ModalInscribirCampeonato } from '@/widgets/componentes/campeonato/modalInscribirCampeonato';
 import { EliminarEquipo } from "@/widgets/componentes/Participantes/eliminarEquipo";
-
+const URL_API = import.meta.env.VITE_API_URL
 export const Participante = () => {
   const IdCampeonato = localStorage.getItem('ID');
   const [equipoInscripto, setEquipoInscripto] = useState([]);
@@ -29,7 +29,7 @@ const [controlador, setControlador]= useState()
 
 useEffect(()=>{
 const botonSorteo= async()=>{
-  const response = await axios.get('http://localhost:3001/fase',{
+  const response = await axios.get(`${URL_API}/fase`,{
     headers:{
      id:IdCampeonato,
     }
@@ -54,7 +54,7 @@ botonSorteo()
 
 const handleSubmit = async () => {
   try {
-      await axios.patch(`http://localhost:3001/campeonato/${IdCampeonato}`,
+      await axios.patch(`${URL_API}/campeonato/${IdCampeonato}`,
         {estadoCampeonato: estadoCam}
        );
   } catch (error) {
@@ -65,7 +65,7 @@ const handleSubmit = async () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const { data } = await axios.get('http://localhost:3001/equipoInscripto', {
+        const { data } = await axios.get(`${URL_API}/equipoInscripto`, {
           headers: {
             id: IdCampeonato,
           },
@@ -84,7 +84,7 @@ const handleSubmit = async () => {
   const sortearEquipos = async () => {
     try {
       localStorage.setItem('estadoFase', estadoFase);
-      const fase = await axios.post('http://localhost:3001/fase', { estado: estadoFase, nombre: nombreFase, idCampeonato: IdCampeonato });
+      const fase = await axios.post(`${URL_API}/fase`, { estado: estadoFase, nombre: nombreFase, idCampeonato: IdCampeonato });
       const idFase = fase.data._id;
       setIdFase(idFase);
       const dataVs = {
@@ -95,7 +95,7 @@ const handleSubmit = async () => {
       console.log("datos vs", dataVs)
       localStorage.setItem('IdFase', idFase);
       localStorage.setItem('nombreFase', nombreFase)
-      const equiposSorteados = await axios.post('http://localhost:3001/vs', { dataVs });
+      const equiposSorteados = await axios.post(`${URL_API}/vs`, { dataVs });
       console.log(equiposSorteados)
       if (equiposSorteados.data) {
         setIsLoading(true);

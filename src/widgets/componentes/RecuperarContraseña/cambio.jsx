@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+const URL_API = import.meta.env.VITE_API_URL
 export default function CambioContraseña({ isOpen, onClose }) {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -15,7 +15,7 @@ export default function CambioContraseña({ isOpen, onClose }) {
 
         try {
         
-            await axios.post('http://localhost:3001/auth/verificar-codigo', { password });
+            await axios.post(`${URL_API}/auth/verificar-codigo`, { password });
 
             console.log('Nueva contraseña:', password);
 

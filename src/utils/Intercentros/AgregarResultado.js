@@ -6,7 +6,7 @@ export const AgregarResultado = async(equipo1, equipo2, goles, amarillas, rojas,
 
     
     //patch al vs 
-    const responsePatch = await axios.patch(`http://localhost:3001/vsInter/${idVs}`,{
+    const responsePatch = await axios.patch(`https://back-end-gosport.onrender.com/vsInter/${idVs}`,{
         estado:false
     })
     
@@ -20,7 +20,7 @@ export const AgregarResultado = async(equipo1, equipo2, goles, amarillas, rojas,
     //vereficar ganador
     const resultado = calcularPuntos(golesE1, golesE2)
 
-    const response = await axios.post('http://localhost:3001/resultadosInterCentros',{
+    const response = await axios.post('https://back-end-gosport.onrender.com/resultadosInterCentros',{
         equipo1:{
             equipo1,
             golesE1,

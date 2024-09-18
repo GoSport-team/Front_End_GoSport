@@ -7,6 +7,7 @@ import axios from 'axios';
 import Penales from './penales';
 import { useAccordion } from '@material-tailwind/react';
 Modal.setAppElement('#root');
+const URL_API = import.meta.env.VITE_API_URL
 export const MostrarJugadores = ({ datosVss, setModalIsOpen, modalIsOpen, closeModal, equipo1, equipo2, showPlayersTable2, showPlayers, togglePlayerRows, togglePlayerRowsTable2, setBotonVer ,setBotonAgregar}) => {
     const idCampeonato= localStorage.getItem('ID')
     const [countGol1, setCountGol1] = useState(0)
@@ -52,7 +53,7 @@ const[boton, setBoton]=useState()
                 Equipo: perdedor
             }
             try {
-                const patchFase = await axios.patch(`http://localhost:3001/fase/${datosVss.IdFase}`, {
+                const patchFase = await axios.patch(`${URL_API}/fase/${datosVss.IdFase}`, {
                     equiposGanadores: ganadores,
                     equiposPerdedores: perdedores
                 })
@@ -66,7 +67,7 @@ const[boton, setBoton]=useState()
     }
     const actuEstado= async()=>{
         try{
-          const response = await axios.patch(`http://localhost:3001/inscripcionEquipos/estado/${perdedor._id}`,{
+          const response = await axios.patch(`${URL_API}/inscripcionEquipos/estado/${perdedor._id}`,{
             estado:false
           })
           console.log(response)
@@ -76,7 +77,7 @@ const[boton, setBoton]=useState()
       }
 
     const guardarResultado = async () => {
-        const response = await axios.post('http://localhost:3001/resultados', {
+        const response = await axios.post(`${URL_API}/resultados`, {
             equipo1: {
                 Equipo1: equipo1,
                 tarjetasAmarillas: jugadorAmarilla1,
@@ -367,18 +368,18 @@ const menosRoja2 = (jugador) => {
         try {
             const idsJugadoresDestacados = jugadorDestacado.map(jugador => jugador._id);
             const detallesPromesas = idsJugadoresDestacados.map(id =>
-                axios.get(`http://localhost:3001/usuarios/id/${id}`)
+                axios.get(`${URL_API}/usuarios/id/${id}`)
             );
             const detallesRespuestas = await Promise.all(detallesPromesas);
             const detallesJugadores = detallesRespuestas.map(respuesta => respuesta.data);
             const idCam = localStorage.getItem('ID')
 
-            const campeonatoRespuesta = await axios.get(`http://localhost:3001/campeonato/${idCam}`);
+            const campeonatoRespuesta = await axios.get(`${URL_API}/campeonato/${idCam}`);
             const nombreCampeonato = campeonatoRespuesta.data.nombreCampeonato; // Solo obtenemos el nombre
 
             console.log(idCam)
 
-            await axios.post('http://localhost:3001/jugadorDestacado', {
+            await axios.post(`${URL_API}/jugadorDestacado`, {
                 jugadorDestacado: detallesJugadores,
                 Campeonato: nombreCampeonato
             });

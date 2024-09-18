@@ -13,7 +13,7 @@ import { VerPlanillero } from '../Planillero/verPlanillero';
 import { MejorPerdedor } from './mejorPerdedor';
 import { SortearMejorPerdedor } from '@/services/sortearMejorPerdedor';
 export default function CronogramaDesing({  patchFechaHora, guardarEdicion, datosVss, vs, oks}) {
-
+  const URL_API = import.meta.env.VITE_API_URL
 const idVs = datosVss._id
 const [equipo1, setEquipo1]= useState([])
 const IdCampeonato = localStorage.getItem('ID');
@@ -45,7 +45,7 @@ const [agregarHora, setAgregarHora]=useState('Agregar Horario')
 useEffect(()=>{
   const vs=async()=>{
   try{
-  const response = await axios.get(`http://localhost:3001/vs/${idVs}`)
+  const response = await axios.get(`${URL_API}/vs/${idVs}`)
   //console.log('idplanillero ',response.data.idPlanillero)
   setIdPlanilleros(response.data.idPlanillero)
   }catch(error){
@@ -58,7 +58,7 @@ useEffect(()=>{
         if(idPlanillero){
         const obtenerPlanilero=async()=>{
             try{
-                const response = await axios.get(`http://localhost:3001/usuarios/identificacion/${idPlanillero}`);
+                const response = await axios.get(`${URL_API}/usuarios/identificacion/${idPlanillero}`);
                 console.log(response.data)
 setPlanillero(response.data)
             }catch(error){
@@ -72,7 +72,7 @@ setPlanillero(response.data)
  
   const resultadoss = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/resultados/${idVs}`);
+      const response = await axios.get(`${URL_API}/resultados/${idVs}`);
       setResultados(response.data);
     } catch (error) {
       console.log(error);
@@ -93,7 +93,7 @@ useEffect(()=>{
   };
   const EquiposGanadores=async()=>{
     try{
-      const response= await axios.get(`http://localhost:3001/fase/${idfase}`)
+      const response= await axios.get(`${URL_API}/fase/${idfase}`)
       //console.log(response.data.equiposGanadores)
       setNombreFase(response.data.nombre + 1)
       setEquiposGanadores(response.data.equiposGanadores)
@@ -105,7 +105,7 @@ console.log(error)
       }
       const actualizarFase=async()=>{
         try{
-            const patchFase= await axios.patch(`http://localhost:3001/fase/estado/${idfase}`,{
+            const patchFase= await axios.patch(`${URL_API}/fase/estado/${idfase}`,{
               estado:false
             })
             console.log('fase finalizada')
@@ -121,7 +121,7 @@ console.log(error)
         const resultados=async()=>{
           try{
             setControladorResult(true)
-            const response= await axios.get('http://localhost:3001/resultados',{
+            const response= await axios.get(`${URL_API}/resultados`,{
                 headers: {
                     idfase:idfase
                 }
@@ -149,7 +149,7 @@ console.log(error)
         setMostrarGanador(true)
       
             try{
-            const response=  await axios.patch(`http://localhost:3001/campeonato/${IdCampeonato}`,
+            const response=  await axios.patch(`${URL_API}/campeonato/${IdCampeonato}`,
                 {estadoCampeonato: 'Finalizacion'}
                );
               console.log(response)
@@ -177,7 +177,7 @@ console.log(error)
 
       const sortearEquipos = async (equipoGanadores) => {
         try {
-          const fase = await axios.post('http://localhost:3001/fase', { estado: estadoFase, nombre: nombreFase, idCampeonato: IdCampeonato });
+          const fase = await axios.post(`${URL_API}/fase`, { estado: estadoFase, nombre: nombreFase, idCampeonato: IdCampeonato });
           const idFase = fase.data._id;
           console.log(idFase + ' fase creada')
           localStorage.setItem('IdFase', idFase);
@@ -189,7 +189,7 @@ console.log(error)
             idCampeonato: IdCampeonato
           };
           //console.log(dataVs)
-          const equiposSorteados = await axios.post('http://localhost:3001/vs', { dataVs });
+          const equiposSorteados = await axios.post(`${URL_API}/vs`, { dataVs });
           console.log(equiposSorteados)
         } catch (error) {
           console.log(error);
@@ -211,7 +211,7 @@ const handleClick=()=>{
           setBotonAgregar(false)
           setBotonVer(false)
         }else{
-        const response = await axios.get(`http://localhost:3001/resultados/${idVs}`);
+        const response = await axios.get(`${URL_API}/resultados/${idVs}`);
         console.log(response.data)
         if(response.data){
           setBotonVer(true)
@@ -234,7 +234,7 @@ const handleClick=()=>{
     const fetchFechaHora = async () => {
       try {
         setControllerVs(true)
-        const response = await axios.get(`http://localhost:3001/vs/${idVs}`);
+        const response = await axios.get(`${URL_API}/vs/${idVs}`);
         const { fecha, hora } = response.data;
         setFecha(fecha || '');
         setHora(hora || '');
