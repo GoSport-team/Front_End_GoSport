@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Checkbox } from '@material-tailwind/react';
-export default function Penales({ isOpen, setMyModalIsOpen , equipo1, equipo2, setPenal, setNumeroTiros,setResultPenalesEquipo1,setResultPenalesEquipo2 }) {
+export default function Penales({ isOpen, setMyModalIsOpen , equipo1, equipo2, setPenal, setNumeroTiros,setResultPenalesEquipo1,setResultPenalesEquipo2,setMarcadorPena1,setMarcadorPena2 }) {
 
     if (!isOpen) return null;
     const [countGol1, setCountGol1] = useState(0);
@@ -66,6 +66,8 @@ const GuardarResult=()=>{
 setNumeroTiros(NumeroTiros)
 setResultPenalesEquipo1(result1)
 setResultPenalesEquipo2(result2)
+setMarcadorPena1(countGol1)
+setMarcadorPena2(countGol2)
     setMyModalIsOpen(false)
 }
 useEffect(()=>{

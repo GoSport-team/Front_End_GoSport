@@ -28,19 +28,21 @@ export const MostrarJugadores = ({ datosVss, setModalIsOpen, modalIsOpen, closeM
     const [isMyModalOpen, setMyModalIsOpen] = useState(false);
     const [penal, setPenal]=useState(false)
     const[numeroTiros, setNumeroTiros]= useState()
+    const [marcadorPenal1, setMarcadorPena1]=useState()
+    const [marcadorPenal2, setMarcadorPena2]=useState()
     const[resultPenalesEquipo1, setResultPenalesEquipo1]= useState([])
     const [resultPenalesEquipo2, setResultPenalesEquipo2]=useState([])
 const[boton, setBoton]=useState()
 
     useEffect(() => {
-        if (countGol1 < countGol2) {
+        if (countGol1 < countGol2 || marcadorPenal1< marcadorPenal2) {
             setGanador(equipo2)
             setPerdedor(equipo1)
-        } else if (countGol2 < countGol1) {
+        } else if (countGol2 < countGol1 || marcadorPenal2 < marcadorPenal1) {
             setGanador(equipo1)
             setPerdedor(equipo2)
         }
-    }, [countGol1, countGol2])
+    }, [countGol1, countGol2, marcadorPenal1, marcadorPenal2])
     const actualizarFase = async () => {
         if (ganador && perdedor) {
             const ganadores = {
@@ -526,7 +528,7 @@ const menosRoja2 = (jugador) => {
                                     <button onClick={() => setMyModalIsOpen(true)}
                                     >Penales</button>
                                 </div>
-                                <Penales setMyModalIsOpen={setMyModalIsOpen} isOpen={isMyModalOpen} equipo1={equipo1} equipo2={equipo2} setPenal={setPenal} setNumeroTiros={setNumeroTiros} setResultPenalesEquipo1={setResultPenalesEquipo1} setResultPenalesEquipo2={setResultPenalesEquipo2} />
+                                <Penales setMyModalIsOpen={setMyModalIsOpen} isOpen={isMyModalOpen} equipo1={equipo1} equipo2={equipo2} setPenal={setPenal} setNumeroTiros={setNumeroTiros} setResultPenalesEquipo1={setResultPenalesEquipo1} setResultPenalesEquipo2={setResultPenalesEquipo2} setMarcadorPena1={setMarcadorPena1} setMarcadorPena2={setMarcadorPena2}/>
                             </div>
 
                             <div className="flex flex-col w-1/2">

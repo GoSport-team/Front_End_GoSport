@@ -1,13 +1,15 @@
 
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Swal from "sweetalert2";
 export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, setControlador}) => {
     const [idEquipo, setIdEquipo]=useState('')
     const [equipo, setEquipo]= useState()
     const [isLoading, setIsLoading] = useState(false); 
+    const [validacion, setValidacion]= useState()
     const idCampeonato = localStorage.getItem('ID')
     const searchEquipo = async ()=>{
+      if(!validacion){
         try {
           const response = await axios.get(`http://localhost:3001/inscripcionEquipos/${idEquipo}`)
           if(response.data == "EQUIPO NO ENCONTRADO"){
@@ -31,8 +33,27 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
         finally{
           setIsLoading(false)
         }
-       
       }
+      }
+      useEffect(() => {
+        const validarInscripcion = async () => {
+          const responseValidador = await axios.get(`http://localhost:3001/equipoInscripto/validarInscripcionestado`, {
+            headers: {
+              cedulaJugador: idEquipo
+            }
+          })
+    if(responseValidador.data.msg=== "Equipo ya esta Inscrito en un campeonato"){
+      setValidacion(true)
+      setEquipo(false)
+    }else{
+      setValidacion(false)
+    }
+         console.log(responseValidador)
+    
+        }
+    
+        validarInscripcion()
+      }, [idEquipo])
       const inscribirEquipo = async ()=>{
         try {  
           setIsLoading(true) 
@@ -84,8 +105,14 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
           <div className="text-white">Cargando Inscripción...</div>
         </div>
       )}
+     
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
           <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+        {
+        validacion&&(
+          <h3 className="text-lg font-bold mb-4">El equipo ya pertenece a un campeonato</h3> 
+        )
+      }
             <h3 className="text-lg font-bold mb-4">Ingrese el número de cédula del capitán</h3>
             <input
             onChange={e=>setIdEquipo(e.target.value)}
