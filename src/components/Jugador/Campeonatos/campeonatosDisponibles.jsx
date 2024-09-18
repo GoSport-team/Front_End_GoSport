@@ -7,13 +7,15 @@ import axios from 'axios'
 import Cookies from 'js-cookie'
 import './main.css'
 
+const URL_API = import.meta.env.VITE_API_URL
+
 export default function CampeonatosDisponibles() {
   const [user, setUser] = useState()
   const token = Cookies.get('token')
   const [equipo, setEquipo] = useState(null)
   useEffect(() => {
     const obtenerUser = async () => {
-      const response = await axios.get('http://localhost:3001/usuarios/perfil', {
+      const response = await axios.get(`${URL_API}/usuarios/perfil`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -27,7 +29,7 @@ export default function CampeonatosDisponibles() {
     const obtnenerEquipo = async () => {
       if (user) {
         console.log(user)
-        const response = await axios.get(`http://localhost:3001/equipoInscripto/cedula/${user.identificacion}`)
+        const response = await axios.get(`${URL_API}/${user.identificacion}`)
         console.log(response)
         if (response.data.msg) {
           return setEquipo(null)

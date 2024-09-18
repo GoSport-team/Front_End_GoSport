@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
+const URL_API = import.meta.env.VITE_API_URL
 
 Modal.setAppElement('#root');
 
@@ -15,7 +16,7 @@ export const BuscarPlanillero = ({ closeModal, modalIsOpen, idVs,setIdPlanillero
         if(identificacion){
             setLoading(true);
             try {
-                const response = await axios.get(`http://localhost:3001/usuarios/planillero/${identificacion}`);
+                const response = await axios.get(`${URL_API}/usuarios/planillero/${identificacion}`);
                 // console.log(response.data)
                 if(response.data){
                     setPlanillero(response.data[0]);
@@ -43,7 +44,7 @@ export const BuscarPlanillero = ({ closeModal, modalIsOpen, idVs,setIdPlanillero
         try {
             setLoading(true);
             if(identificacion){
-              await axios.patch(`http://localhost:3001/vs/${idVs}`, { idPlanillero: identificacion });
+              await axios.patch(`${URL_API}/vs/${idVs}`, { idPlanillero: identificacion });
             }
             closeModal()
             setControlador(true)
@@ -57,7 +58,7 @@ export const BuscarPlanillero = ({ closeModal, modalIsOpen, idVs,setIdPlanillero
     useEffect(() => {
         const fetchPlanillero = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/vs/${idVs}`);
+                const response = await axios.get(`${URL_API}/vs/${idVs}`);
                 console.log(response.data.idPlanillero)
                 setIdPlanillero(response.data.idPlanillero)
                 if(response.data.idPlanillero){

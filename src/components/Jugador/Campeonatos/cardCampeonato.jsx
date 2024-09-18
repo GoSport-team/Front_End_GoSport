@@ -3,13 +3,15 @@ import Cookies from "js-cookie";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+const URL_API = import.meta.env.VITE_API_URL
+
 export default function CardCampeonato({ cedula }) {
   const [campeonatos, setCampenatos] = useState(null)
   const [validarInscripcion, setValidarInscripcion] = useState()
   const [data, setData] = useState()
   useEffect(() => {
     const obtenerCampeonatos = async () => {
-      const response = await axios.get('http://localhost:3001/campeonato')
+      const response = await axios.get(`${URL_API}/campeonato`)
       if (response == undefined) {
         setCampenatos(null)
       } else {
@@ -23,7 +25,7 @@ export default function CardCampeonato({ cedula }) {
 
   useEffect(() => {
     const validarInscripcion = async () => {
-      const responseValidador = await axios.get(`http://localhost:3001/equipoInscripto/validarInscripcion`, {
+      const responseValidador = await axios.get(`${URL_API}/equipoInscripto/validarInscripcion`, {
         headers: {
           cedulaJugador: cedula
         }

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Swal from 'sweetalert2'
+const URL_API = import.meta.env.VITE_API_URL
 
 export const eliminarJugador = async (indice, jugadores, user) => {
     if (jugadores[indice].nombres === user.nombres) {
@@ -42,9 +43,9 @@ export const eliminarJugador = async (indice, jugadores, user) => {
 
 export  const searchJugador = async (idenfiticacion, jugadores) => {
     try {
-        const response = await axios.get(`http://localhost:3001/usuarios/identificacion/${idenfiticacion}`)
+        const response = await axios.get(`${URL_API}/usuarios/identificacion/${idenfiticacion}`)
         
-        const responseValidador = await axios.get(`http://localhost:3001/equipoInscripto/validarJugador`,{
+        const responseValidador = await axios.get(`${URL_API}/equipoInscripto/validarJugador`,{
             headers:{
                 idJugador: response.data._id
             }

@@ -4,6 +4,8 @@ import Swal from "sweetalert2";
 import Cookies from "js-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { eliminarJugador, searchJugador } from "../useFunciones";
+const URL_API = import.meta.env.VITE_API_URL
+
 export const DatosEquipos = () => {
   const [image, setImage] = useState()
   const [estadoImg, setEstadoImg] = useState()
@@ -28,7 +30,7 @@ export const DatosEquipos = () => {
   }
   useEffect(() => {
     const obtenerUser = async () => {
-      const response = await axios.get('http://localhost:3001/usuarios/perfil', {
+      const response = await axios.get(`${URL_API}/usuarios/perfil`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -42,7 +44,7 @@ export const DatosEquipos = () => {
     const obtnenerEquipo = async () => {
       if (user) {
         console.log(user.identificacion)
-        const response = await axios.get(`http://localhost:3001/inscripcionEquipos/${user.identificacion}`)
+        const response = await axios.get(`${URL_API}/inscripcionEquipos/${user.identificacion}`)
         console.log(response.data)
         if (response.data == "EQUIPO NO ENCONTRADO") {
           return setEquipo(null)
@@ -66,10 +68,10 @@ export const DatosEquipos = () => {
     } else {
       const formData = new FormData();
       formData.append("file", file)
-      const respuestaa = await axios.post(`http://localhost:3001/inscripcionEquipos/${user._id}/logoEquipo`, formData)
+      const respuestaa = await axios.post(`${URL_API}/inscripcionEquipos/${user._id}/logoEquipo`, formData)
 
       setEstadoImg(respuestaa.data.url)
-      const response = await axios.post('http://localhost:3001/inscripcionEquipos', {
+      const response = await axios.post(`${URL_API}/inscripcionEquipos`, {
         nombreEquipo: nombreEquipo,
         nombreCapitan: user.nombres,
         contactoUno: user.telefono,

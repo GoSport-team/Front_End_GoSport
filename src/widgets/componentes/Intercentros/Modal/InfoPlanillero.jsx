@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+const URL_API = import.meta.env.VITE_API_URL
 
 export const VerPlanilleroModal = ({ isOpen, closeModal, idPlanillero }) => {
   const [planillero, setPlanillero] = useState(null);
@@ -13,7 +14,7 @@ export const VerPlanilleroModal = ({ isOpen, closeModal, idPlanillero }) => {
 
   const obtenerPlanillero = async (id) => {
     try {
-      const response = await axios.get(`http://localhost:3001/usuarios/id/${id}`);
+      const response = await axios.get(`${URL_API}/usuarios/id/${id}`);
       setPlanillero(response.data);
       console.log(planillero)
     } catch (error) {

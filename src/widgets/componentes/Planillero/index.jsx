@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ActualizarPlanillero } from './ActualizarPlanillero';
 import Swal from 'sweetalert2';
+const URL_API = import.meta.env.VITE_API_URL
 import {
 
     Typography,
@@ -18,7 +19,7 @@ export default function Planillero() {
     const [openModal, setOpenModal] = useState(false)
     const [id, setId] = useState()
     const fetchUsuarios = () => {
-        axios.get('http://localhost:3001/usuarios/')
+        axios.get(`${URL_API}/usuarios/`)
             .then(response => {
                 const usuariosFiltrados = response.data.filter(user => user.rol.toLowerCase() === 'planillero');
                 setUsuarios(usuariosFiltrados);
@@ -46,7 +47,7 @@ export default function Planillero() {
         }).then(async (result) => {
 
             if (result.isConfirmed) {
-                const response = await axios.delete(`http://localhost:3001/usuarios/${id}`)
+                const response = await axios.delete(`${URL_API}/usuarios/${id}`)
                 console.log(response.data)
                 if (response.data) {
                     Swal.fire("Eliminado", "", "success");

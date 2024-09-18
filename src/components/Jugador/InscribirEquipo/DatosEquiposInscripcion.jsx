@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate, useParams } from "react-router-dom";
+const URL_API = import.meta.env.VITE_API_URL
+
 export const DatosEquiposInscripcion = () => {
 
   const { id, cedula } = useParams()
@@ -12,7 +14,7 @@ export const DatosEquiposInscripcion = () => {
   useEffect(() => {
     const searchEquipo = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/inscripcionEquipos/${cedula}`)
+        const response = await axios.get(`${URL_API}/inscripcionEquipos/${cedula}`)
         console.log(response)
         if (response.data == "EQUIPO NO ENCONTRADO") {
           Swal.fire({
@@ -45,14 +47,14 @@ export const DatosEquiposInscripcion = () => {
   const inscribirEquipo = async () => {
     try {
 
-      const validarRegistroEquipo = await axios.get(`http://localhost:3001/equipoInscripto/cedula/${id}`, {
+      const validarRegistroEquipo = await axios.get(`${URL_API}/equipoInscripto/cedula/${id}`, {
         headers: {
           cedulaJugador: cedula
         }
       })
 
       if (validarRegistroEquipo.data.msg == "Equipo no inscrito") {
-        const response = await axios.post(`http://localhost:3001/equipoInscripto`, {
+        const response = await axios.post(`${URL_API}/equipoInscripto`, {
           Equipo: equipo,
           idCampeonato: id
         })

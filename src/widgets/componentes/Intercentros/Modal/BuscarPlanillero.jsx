@@ -1,6 +1,7 @@
 import { Typography , Spinner} from "@material-tailwind/react";
 import axios from "axios";
 import { useState, useEffect } from "react";
+const URL_API = import.meta.env.VITE_API_URL
 
 
 export const BuscarPlanillero = ({ isOpen, onPlanilleroSeleccionado, closeModal }) => {
@@ -18,7 +19,7 @@ export const BuscarPlanillero = ({ isOpen, onPlanilleroSeleccionado, closeModal 
         setLoading(true)
         setNoEncontrado(false)
       try {
-        const response = await axios.get(`http://localhost:3001/usuarios/identificacion/${identificacion}`);
+        const response = await axios.get(`h${URL_API}/identificacion/${identificacion}`);
        
         console.log(`Datos planillerp`)
         if (response.data) {

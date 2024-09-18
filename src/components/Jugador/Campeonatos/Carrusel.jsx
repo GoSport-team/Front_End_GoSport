@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import './styleCarrusel.css'
 import axios from "axios";
+const URL_API = import.meta.env.VITE_API_URL
 export const Carrusel = () => {
   const [photo, setPhoto] = useState([])
 
   useEffect(() => {
     const obtenerImg = async () => {
-      const response = await axios.get('http://localhost:3001/photo')
+      const response = await axios.get(`${URL_API}/photo`)
       setPhoto(response.data)
     }
 

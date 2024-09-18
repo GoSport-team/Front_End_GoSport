@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Spinner } from '@material-tailwind/react'; 
+const URL_API = import.meta.env.VITE_API_URL
+
 export const PosicionesIntercentros = ({isOpen, close, id}) => {
     const [equipos, setEquipos] = useState();
     const[loading, setLoading] = useState(true)
@@ -8,7 +10,7 @@ export const PosicionesIntercentros = ({isOpen, close, id}) => {
         const obtenerPosiciones=async()=>{
           setLoading(true); 
           try {
-            const responsePosiciones = await axios.get('http://localhost:3001/posicionesIntercentros', {
+            const responsePosiciones = await axios.get(`${URL_API}/posicionesIntercentros`, {
               headers: {
                 idCampeonato: id
               }

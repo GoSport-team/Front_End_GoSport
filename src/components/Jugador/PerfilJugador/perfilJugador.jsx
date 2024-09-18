@@ -30,7 +30,7 @@ export const PerfilJugador = () => {
     const Obtener = async () => {
 
       try {
-        const response = await axios.get('http://localhost:3001/usuarios/perfil', {
+        const response = await axios.get('https://back-end-gosport.onrender.com/usuarios/perfil', {
           headers: {
             Authorization: `Jugadors ${token}`
           }
@@ -91,7 +91,7 @@ export const PerfilJugador = () => {
     setLoading(true);
     try {
       // Enviar la solicitud POST para subir la imagen
-      const respuesta = await fetch(`http://localhost:3001/usuarios/${UserID}/foto`, {
+      const respuesta = await fetch(`https://back-end-gosport.onrender.com/usuarios/${UserID}/foto`, {
         method: 'POST',
         body: formData
       });
@@ -110,7 +110,7 @@ export const PerfilJugador = () => {
       }
       console.log(data.public_id)
     
-      await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
+      await axios.put(`https://back-end-gosport.onrender.com/usuarios/${UserID}`, {
         url_foto: data.url,
         public_id: data.public_id
       });
@@ -140,7 +140,7 @@ export const PerfilJugador = () => {
     formData.append('file', file);
     setLoading(true)
     try {
-      const respuesta = await fetch(`http://localhost:3001/usuarios/${UserID}/pati`, {
+      const respuesta = await fetch(`https://back-end-gosport.onrender.com/usuarios/${UserID}/pati`, {
         method: 'PATCH',
         body: formData
       });
@@ -155,7 +155,7 @@ export const PerfilJugador = () => {
       }
 
       // Guarda la URL en la base de datos
-      await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
+      await axios.put(`https://back-end-gosport.onrender.com/usuarios/${UserID}`, {
         url_foto: data.url,
         public_id: data.public_id,
       });
@@ -176,7 +176,7 @@ export const PerfilJugador = () => {
   const handleDelete = async () => {
     try {
       setLoading(true)
-      const response = await fetch(`http://localhost:3001/usuarios/${UserID}/eli`, {
+      const response = await fetch(`https://back-end-gosport.onrender.com/usuarios/${UserID}/eli`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -187,7 +187,7 @@ export const PerfilJugador = () => {
        if (!usuarioId.public_id) {
         notify('Nay foto por eliminar');
       } else {
-        await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
+        await axios.put(`https://back-end-gosport.onrender.com/usuarios/${UserID}`, {
           url_foto: '',
           public_id: null
         });
@@ -277,7 +277,7 @@ export const PerfilJugador = () => {
     //Actualzar en la DB
     if (Object.keys(updatedFields).length > 0) {
       try {
-        await axios.patch(`http://localhost:3001/usuarios/${UserID}`, updatedFields);
+        await axios.patch(`https://back-end-gosport.onrender.com/usuarios/${UserID}`, updatedFields);
         alert('Usuario Actualizado');
         window.location.reload();
       } catch (error) {

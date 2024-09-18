@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+const URL_API = import.meta.env.VITE_API_URL
 
 export const EliminarEquipo = ({ showConfirmModal, id, setShowConfirmModalEliminar ,setIsLoadingPar, setControlador}) => {
 
@@ -9,7 +10,7 @@ export const EliminarEquipo = ({ showConfirmModal, id, setShowConfirmModalElimin
   const eliminarEquipo = async () => {
     try {
       setIsLoadingPar(true)
-      const response = await axios.delete(`http://localhost:3001/equipoInscripto/${id}`);
+      const response = await axios.delete(`${URL_API}/equipoInscripto/${id}`);
       console.log(response)
       setControlador(true)
       if (response.data.acknowledged) {
