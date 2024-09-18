@@ -286,7 +286,7 @@ const menosAmarilla1 = (jugador) => {
         } else {
             // Si tiene más de una tarjeta, restamos una
             setJugadorAmarilla1((prevJugadores) => 
-                prevJugadores.map(j => j._id === jugador._id ? { ...j, amarillas: j.TotalTarjetasAmarillas - 1 } : j)
+                prevJugadores.map(j => j._id === jugador._id ? { ...j, amarillas: j.amarillas - 1 } : j)
             );
         }
         setAmarilla1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
@@ -302,7 +302,7 @@ const menosAmarilla2 = (jugador) => {
             setJugadorAmarilla2((prevJugadores) => prevJugadores.filter(j => j._id !== jugador._id));
         } else {
             setJugadorAmarilla2((prevJugadores) => 
-                prevJugadores.map(j => j._id === jugador._id ? { ...j, amarillas: j.totalTarjetasAmarillas - 1 } : j)
+                prevJugadores.map(j => j._id === jugador._id ? { ...j, amarillas: j.amarillas - 1 } : j)
             );
         }
         setAmarilla2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
