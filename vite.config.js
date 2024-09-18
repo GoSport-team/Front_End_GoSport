@@ -6,4 +6,7 @@ export default defineConfig({
   resolve: {
     alias: [{ find: "@", replacement: "/src" }],
   },
+  esbuild: {
+    target: 'es2022'
+  }
 });

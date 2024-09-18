@@ -8,14 +8,30 @@ import { FaUsers } from "react-icons/fa";
 import { cantidadCampeonatos, numeroEquipos, numeroInscritos } from "./dataGraficas";
 
 
-const resultadoEquipos =await numeroEquipos()
-console.log(resultadoEquipos)
-const equipos = resultadoEquipos.reduce((suma,valor)=>suma+valor,0)
-console.log(equipos)
-const resultadoIntegrantes = await numeroInscritos()
-console.log(resultadoIntegrantes)
-const participantes = resultadoIntegrantes.reduce((suma,valor)=> suma+valor,0)
-const resultadoCampeonatos = await cantidadCampeonatos()
+async function obtenerDatos() {
+  try {
+    // Obteniendo los datos de los equipos
+    const resultadoEquipos = await numeroEquipos();
+    console.log(resultadoEquipos);
+
+    // Calculando la suma de los equipos
+    const equipos = resultadoEquipos.reduce((suma, valor) => suma + valor, 0);
+    console.log(equipos);
+
+    // Obteniendo los datos de los integrantes
+    const resultadoIntegrantes = await numeroInscritos();
+    console.log(resultadoIntegrantes);
+
+    // Calculando la suma de los participantes
+    const participantes = resultadoIntegrantes.reduce((suma, valor) => suma + valor, 0);
+    console.log(participantes);
+  } catch (error) {
+    console.error('Error al obtener datos:', error);
+  }
+}
+
+obtenerDatos();
+
 export const statisticsCardsData = [
   {
     color: "gray",
