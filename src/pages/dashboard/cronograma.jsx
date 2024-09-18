@@ -29,7 +29,7 @@ export default function Cronograma() {
     const [oks, setOks]= useState(true)
     const [controlador, setControlador]= useState()
     const [controlerDatosvss, setControlerDatosvss]= useState(true)
-    const[controlerFase, setControlerFase]= useState()
+    const[guardar, setGuardar]= useState()
     useEffect(()=>{
       const GetDatosVs = async()=>{
         try{
@@ -121,6 +121,7 @@ export default function Cronograma() {
                oks={oks}
                setControlador={setControlador}
                controlador={controlador}
+               guardar={guardar}
                ></CronogramaDesing>
 
              </div>
@@ -132,6 +133,7 @@ export default function Cronograma() {
            {
                confirmarCambios && (
                  <ConfirmarGuardar
+                 setGuardar={setGuardar}
                  confirmarCambios={setConfirmarCambios}
                  idVs={IdVs}
                  cerrarModal={setConfirmarCambios}

@@ -41,6 +41,7 @@ const [resultados, setResultados] = useState();
 const [sorteoMejorPerdedor, setMejorPerdedor]= useState()
 const [idPlanilleros, setIdPlanilleros]= useState()
 const [planillero, setPlanillero]= useState()
+const [agregarHora, setAgregarHora]=useState('Agregar Horario')
 useEffect(()=>{
   const vs=async()=>{
   try{
@@ -241,9 +242,8 @@ const handleClick=()=>{
         console.error("Error al obtener fecha y hora:", error);
       }
     };
-
     fetchFechaHora();
-  }, [controlerVs]);
+  },[idVs]);
   
 ///console.log(equipoGanadores)
   const idCampeonato = localStorage.getItem('ID')
@@ -438,14 +438,15 @@ const handleClick=()=>{
           </>
         )}
       
-      
-       {botonAgregar&&( <button
+      {!botonVer&&(
+      <button
           onClick={handleConfirmarCmabios} 
           class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
         >
-          Editar Horario
+    {agregarHora}
         </button>
         )}
+        
       </div>
 
       </div>

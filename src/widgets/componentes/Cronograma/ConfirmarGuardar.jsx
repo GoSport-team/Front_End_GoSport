@@ -5,7 +5,7 @@ import {
   } from "@material-tailwind/react";
   import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';     
-export const ConfirmarGuardar = ({ confirmarCambios, cerrarModal, idVs, fecha, hora, setControlador }) => {
+export const ConfirmarGuardar = ({ confirmarCambios, cerrarModal, idVs, fecha, hora, setControlador , setGuardar}) => {
     const notify = (message)=> toast(message);
     const [loading, setLoading]= useState(false)
   const editarFechasHoras = async () => {
@@ -34,10 +34,12 @@ setControlador(false)
 
   const handleConfirmar = () => {
     editarFechasHoras();
+    setGuardar(true)
   };
 
   const handleCerrarModal = () => {
     cerrarModal(false);
+    setGuardar(false)
   };
 
   return (
