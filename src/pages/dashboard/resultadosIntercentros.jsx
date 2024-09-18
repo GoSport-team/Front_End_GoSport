@@ -8,6 +8,7 @@ import { obtenerGanadorFinal } from "../../utils/Intercentros/equipoGanador";
 import axios from "axios";
 import {   Spinner } from '@material-tailwind/react';
 import { CardGanador } from "../../widgets/componentes/Intercentros/CardGanador";
+const URL_API = import.meta.env.VITE_API_URL
 export const ResultadosIntercentros = () => {
   const [vsEquipos,   setVsEquipos] = useState([]);
   const [modal, setModal] = useState(false);
@@ -24,7 +25,7 @@ export const ResultadosIntercentros = () => {
 
    useEffect(()=>{
    const obtenerVs = async ()=>{
-       const response = await axios.get('http://localhost:3001/vsInter',{
+       const response = await axios.get(`${URL_API}/vsInter`,{
            headers:{
                idCampeonato: id
            }
@@ -42,7 +43,7 @@ export const ResultadosIntercentros = () => {
             setLoading(true)
 
         // 1. Verificar cuántos resultados ya han sido registrados en la base de datos para este campeonato
-        const responseResultados = await axios.get('http://localhost:3001/resultadosIntercentros', {
+        const responseResultados = await axios.get(`${URL_API}/resultadosIntercentros}`, {
           headers: {
             idCampeonato: id,
           },
@@ -53,7 +54,7 @@ export const ResultadosIntercentros = () => {
           console.log('Ya se han jugado todos los partidos. Procediendo a obtener posiciones.');
   
           // 3. Obtener posiciones para determinar el equipo ganador
-          const responsePosiciones = await axios.get('http://localhost:3001/posicionesIntercentros', {
+          const responsePosiciones = await axios.get(`${URL_API}/posicionesIntercentros`, {
             headers: {
               idCampeonato: id,
             },
@@ -66,7 +67,7 @@ export const ResultadosIntercentros = () => {
           console.log("Equipo Ganador:", equipo);
   
           // 4. Actualizar el estado del campeonato a "Finalizado"
-          await axios.patch(`http://localhost:3001/campeonato/${id}`, {
+          await axios.patch(`${URL_API}/campeonato/${id}`, {
             estadoCampeonato: "Finalizado",
           });
           console.log('Estado del campeonato actualizado a "Finalizado"');
@@ -90,7 +91,7 @@ const obtenerYGuardarDatos = async () => {
     setLoading(true);
 
     // 1. Obtener los equipos
-    const response = await axios.get('http://localhost:3001/vsInter', {
+    const response = await axios.get(`${URL_API}/vsInter`, {
       headers: {
         idCampeonato: id,
       },
@@ -99,7 +100,7 @@ const obtenerYGuardarDatos = async () => {
     setVsEquipos(response.data);
 
     // 2. Verificar si las posiciones ya se han guardado
-    const responsePosiciones = await axios.get('http://localhost:3001/posicionesIntercentros', {
+    const responsePosiciones = await axios.get(`${URL_API}/posicionesIntercentros`, {
       headers: {
         idCampeonato: id,
       },
@@ -112,7 +113,7 @@ const obtenerYGuardarDatos = async () => {
 
       await Promise.all(
         equiposUnicos.map(async (equipo) => {
-          return await axios.post('http://localhost:3001/posicionesIntercentros', {
+          return await axios.post(`${URL_API}/posicionesIntercentros`, {
             equipo: equipo,
             idCampeonato: id,
             pts: 0,

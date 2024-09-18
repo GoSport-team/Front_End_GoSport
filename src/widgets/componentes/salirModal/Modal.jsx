@@ -6,12 +6,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';   
 import Cookies from 'js-cookie';
 import  axios  from "axios";
-
+const URL_API = import.meta.env.VITE_API_URL
 const ModalSalir = ({ isOpen, onClose }) => {
  const notify = (message)=> toast(message);
  const navifate = useNavigate()
   const handleOk= async ()=>{
-    await axios.post('http://localhost:3001/auth/cerarSesion')
+    await axios.post(`${URL_API}/auth/cerarSesion`)
     navifate("/");
     Cookies.set('token', '')
     notify("Sesión cerrada exitosamente.");

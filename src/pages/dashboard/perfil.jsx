@@ -19,7 +19,7 @@ import { useForm, Controller } from "react-hook-form";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';       
 import axios from "axios";
-
+const URL_API = import.meta.env.VITE_API_URL
 
 export const Profile= () =>{
   const token = Cookies.get('token')
@@ -30,7 +30,7 @@ export const Profile= () =>{
     const Obtener = async () => {
   
       try {
-        const response = await axios.get('http://localhost:3001/usuarios/perfil', {
+        const response = await axios.get(`${URL_API}/usuarios/perfil`, {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -92,7 +92,7 @@ const savePost = async () => {
   setLoading(true);
   try {
     // Enviar la solicitud POST para subir la imagen
-    const respuesta = await fetch(`http://localhost:3001/usuarios/${UserID}/foto`, {
+    const respuesta = await fetch(`${URL_API}/usuarios/${UserID}/foto`, {
       method: 'POST',
       body: formData
     });
@@ -113,7 +113,7 @@ const savePost = async () => {
     console.log(data.publicId)
 
 
-    await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
+    await axios.put(`${URL_API}/usuarios/${UserID}`, {
       url_foto: data.url,
       public_id: data.public_id
     });
@@ -140,7 +140,7 @@ formData.append('file', file);
 //formData.append("public_id", localStorage.getItem('public_id'));
 setLoading(true)
 try{
-  const respuesta = await fetch(`http://localhost:3001/usuarios/${UserID}/pati`, {
+  const respuesta = await fetch(`${URL_API}/usuarios/${UserID}/pati`, {
     method: 'PATCH',
     body: formData
 });
@@ -157,7 +157,7 @@ if (data.url) {
 }
 
 // Guarda la URL en la base de datos
-await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
+await axios.put(`${URL_API}/usuarios/${UserID}`, {
     url_foto: data.url,
     public_id: data.public_id
 });
@@ -178,7 +178,7 @@ finally{
 const handleDelete = async () => {
 try {
 
-  const response = await fetch(`http://localhost:3001/usuarios/${UserID}/eli`,{
+  const response = await fetch(`${URL_API}/usuarios/${UserID}/eli`,{
     method:'DELETE',
     headers: {
       'Authorization': `Bearer ${token}`
@@ -191,7 +191,7 @@ try {
       console.log(usuarioId.public_id)
       notify('Nay foto por eliminar');
       }else{
-        await axios.put(`http://localhost:3001/usuarios/${UserID}`, {
+        await axios.put(`${URL_API}/usuarios/${UserID}`, {
           url_foto: '',
           public_id: null
         });
@@ -283,7 +283,7 @@ return;
 if (Object.keys(updatedFields).length > 0) {
 
 try {
-await axios.patch(`http://localhost:3001/usuarios/${UserID}`, updatedFields);
+await axios.patch(`${URL_API}/usuarios/${UserID}`, updatedFields);
 notify('Usuario Actualizado');
 window.location.reload();
 } catch (error) {

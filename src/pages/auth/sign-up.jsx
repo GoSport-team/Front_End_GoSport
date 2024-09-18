@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { registroUser } from "../../services/api";
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import axios from "axios";
-
+const URL_API = import.meta.env.VITE_API_URL
 export function SignUp() {
 
   const [setContrasena , setSetContrasena] = useState(false)
@@ -26,7 +26,7 @@ export function SignUp() {
   useEffect(() => {
     const fetchPrograma = async () => {
         try {
-            const response = await axios.get(`http://localhost:3001/programa`);
+            const response = await axios.get(`${URL_API}/programa`);
             setPrograma(response.data);
             console.log('Programas', response.data);
             

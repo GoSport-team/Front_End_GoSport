@@ -2,6 +2,7 @@ import axios from 'axios'
 import React from 'react'
 import { UseAgregar } from '@/context/parContext'
 import { Card, Dialog } from '@material-tailwind/react'
+const URL_API = import.meta.env.VITE_API_URL
 export const SortearMejorPerdedor = ({setSortearEquipos, idVs, equipoRamdon,equiposPerdedores, modalSortearEquipos, setAgregar}) => {
   //console.log('ramdon ',equipoRamdon)
   const {setBotonAgregar}=UseAgregar()
@@ -14,14 +15,14 @@ export const SortearMejorPerdedor = ({setSortearEquipos, idVs, equipoRamdon,equi
         }
        
         //console.log(informacions)
-    const response= await axios.patch(`http://localhost:3001/vs/${idVs}`,{
+    const response= await axios.patch(`${URL_API}/vs/${idVs}`,{
     equipo2:informacions
     })
     //console.log(response.data)
       }
       const actuEstado= async()=>{
         try{
-          const response = await axios.patch(`http://localhost:3001/inscripcionEquipos/estado/${equipoRamdon.Equipo._id}`,{
+          const response = await axios.patch(`${URL_API}/inscripcionEquipos/estado/${equipoRamdon.Equipo._id}`,{
             estado:true
           })
           console.log(response)

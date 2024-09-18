@@ -3,8 +3,8 @@ import Cookies from "js-cookie";
 import {  toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const baseURL = "http://localhost:3001";
 
+const URL_API = import.meta.env.VITE_API_URL
 const api = axios.create({
   baseURL: baseURL,
   headers: {
@@ -44,7 +44,7 @@ export const loginUser = async (correo, contrasena) => {
   }
 
   try {
-    const response = await api.post('/auth/login', {
+    const response = await api.post(`${URL_API}/auth/login`, {
       correo: correo,
       contrasena: contrasena,
     });
@@ -84,7 +84,7 @@ export const registroUser = async ({
 
   try {
     
-    const response = await api.post("/auth/register", {
+    const response = await api.post(`${URL_API}/auth/register`, {
       correo,
       contrasena,
       nombres,

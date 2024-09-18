@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import axios from 'axios'
-
+const URL_API = import.meta.env.VITE_API_URL
  export const TerminarPartidoModal = ({ isOpen, onClose, agregarResultado ,setModalOpenOk,setBoton, idVs}) => {
 const actualizar=async()=>{
   try{
-    const response = await axios.patch(`http://localhost:3001/vs/${idVs}`,{
+    const response = await axios.patch(`${URL_API}/vs/${idVs}`,{
       estado:false
     })
     console.log(response)

@@ -10,6 +10,8 @@ import {
  
 } from "@material-tailwind/react";
 
+const URL_API = import.meta.env.VITE_API_URL
+
 export function Fotos() {
   const [loading, setLoading] = useState(true);
   const [photos, setPhotos] = useState([]);
@@ -28,7 +30,7 @@ export function Fotos() {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:3001/photo')
+    fetch(`${URL_API}/photo`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Error al obtener las fotos');
@@ -54,7 +56,7 @@ export function Fotos() {
 
   const handleConfirmDelete = () => {
     setLoading(true);
-    fetch(`http://localhost:3001/photo/${photoToDelete}`, {
+    fetch(`${URL_API}/photo/${photoToDelete}`, {
       method: 'DELETE',
     })
       .then(response => {
@@ -123,7 +125,7 @@ export function Fotos() {
 
     setLoading(true);
 
-    fetch('http://localhost:3001/photo', {
+    fetch(`${URL_API}/photo`, {
       method: 'POST',
       body: data
     })

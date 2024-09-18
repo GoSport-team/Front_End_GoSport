@@ -15,6 +15,7 @@ import {
   Typography,
 
 } from "@material-tailwind/react";
+const URL_API = import.meta.env.VITE_API_URL
 export function Tables() {
   const [tasks, setTasks] = useState([]);
   const [selectedCampeonato, setSelectedCampeonato] = useState(null);
@@ -28,7 +29,7 @@ export function Tables() {
   useEffect(() => {
     const fetchTasks = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/campeonato');
+        const response = await axios.get(`${URL_API}/campeonato`);
         
           setTasks(response.data);
           setControlador(true)
@@ -43,7 +44,7 @@ export function Tables() {
  
     const deleteTasks = async () => {
       try {
-        const response = await axios.delete(`http://localhost:3001/campeonato/${selectedCampeonato}`);
+        const response = await axios.delete(`${URL_API}/campeonato/${selectedCampeonato}`);
         console.log(response)
         setIsModalOpen(false);
         setControlador(true)

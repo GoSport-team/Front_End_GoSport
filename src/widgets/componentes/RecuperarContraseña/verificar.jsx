@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+const URL_API = import.meta.env.VITE_API_URL
 export default function VerificarCodigo({ isOpen, onClose, onVerified, email }) {
     if (!isOpen) return null;
 
@@ -28,7 +28,7 @@ export default function VerificarCodigo({ isOpen, onClose, onVerified, email }) 
         const verificationCode = otp.join("");
 
         try {
-            const response = await axios.post('http://localhost:3001/auth/verificar-codigo', {
+            const response = await axios.post(`${URL_API}/auth/verificar-codigo`, {
                 correo: email,
                 codigo: verificationCode,
             });

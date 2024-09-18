@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-
+const URL_API = import.meta.env.VITE_API_URL
 
 const CreateCampeonato = () => {
     const [nombreDisciplinas, setNombreDisciplinas] = useState('');
@@ -29,7 +29,7 @@ const CreateCampeonato = () => {
     useEffect(() => {
         const fetchModalidades = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/modalidad`);
+                const response = await axios.get(`${URL_API}/modalidad`);
                 setModalidad(response.data);
             } catch (error) {
                 console.log(error);
@@ -41,7 +41,7 @@ const CreateCampeonato = () => {
     useEffect(() => {
         const fetchSedes = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/sede`);
+                const response = await axios.get(`${URL_API}/sede`);
                 setSedes(response.data);
             } catch (error) {
                 console.log(error);
@@ -52,7 +52,7 @@ const CreateCampeonato = () => {
     useEffect(() => {
         const fetchDisciplinas = async () => {
             try {
-                const response = await axios.get(`http://localhost:3001/disciplina`);
+                const response = await axios.get(`${URL_API}/disciplina`);
                 setDisciplinas(response.data);
             } catch (error) {
                 console.log(error);
@@ -82,7 +82,7 @@ const CreateCampeonato = () => {
             nombre,
         }
         try {
-            const response = await axios.post('http://localhost:3001/campeonato/', campeonatoData);
+            const response = await axios.post(`${URL_API}/campeonato/`, campeonatoData);
             // const reponseFase = await axios.post('http://localhost:3001/fase/',faseData)
             console.log('Respuesta del servidor:', response.data);
             // console.log('Respuesta: ', reponseFase.data)

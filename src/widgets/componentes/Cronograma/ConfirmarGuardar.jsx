@@ -5,6 +5,8 @@ import {
   } from "@material-tailwind/react";
   import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';     
+const URL_API = import.meta.env.VITE_API_URL;
+
 export const ConfirmarGuardar = ({ confirmarCambios, cerrarModal, idVs, fecha, hora, setControlador , setGuardar}) => {
     const notify = (message)=> toast(message);
     const [loading, setLoading]= useState(false)
@@ -18,7 +20,7 @@ export const ConfirmarGuardar = ({ confirmarCambios, cerrarModal, idVs, fecha, h
     }else{
         try {
         setLoading(true);
-          const patch = await axios.patch(`http://localhost:3001/vs/${idVs}`, { fecha, hora });
+          const patch = await axios.patch(`${URL_API}/vs/${idVs}`, { fecha, hora });
           setControlador(true)
           confirmarCambios(false)
           setHorario(true)

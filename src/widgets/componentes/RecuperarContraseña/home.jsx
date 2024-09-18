@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
-
+const URL_API = import.meta.env.VITE_API_URL
 
 const RecuperarContrasena = () => {
   const [step, setStep] = useState(1);
@@ -20,7 +20,7 @@ const RecuperarContrasena = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await axios.post('http://localhost:3001/auth/solicitar-codigo', { correo: email });
+      const response = await axios.post(`${URL_API}/auth/solicitar-codigo`, { correo: email });
       if (response.data.message === 'Código de verificación enviado por correo.') {
         toast.success('Correo enviado exitosamente.');
         setStep(2);
@@ -42,7 +42,7 @@ const RecuperarContrasena = () => {
     const verificationCode = codigo.join("");
 
     try {
-      const response = await axios.post('http://localhost:3001/auth/verificar-codigo', {
+      const response = await axios.post(`${URL_API}/auth/verificar-codigo`, {
         correo: email,
         codigo: verificationCode,
       });
@@ -67,7 +67,7 @@ const RecuperarContrasena = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:3001/auth/cambio', {
+      const response = await axios.post(`${URL_API}/auth/cambio`, {
         correo: email,
         nuevaContrasena,
         codigo: codigo.join(""),
