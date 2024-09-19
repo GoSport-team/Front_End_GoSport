@@ -1,12 +1,13 @@
 import axios from "axios"
 import { calcularPuntos } from "./CalcularPuntos"
 import { actualizarPosiciones } from "./actualizarPosiciones"
+const URL_API = import.meta.env.VITE_API_URL
 
 export const AgregarResultado = async(equipo1, equipo2, goles, amarillas, rojas,idVs, idCampeonato, equipos)=>{
 
     
     //patch al vs 
-    const responsePatch = await axios.patch(`https://back-end-gosport.onrender.com/vsInter/${idVs}`,{
+    const responsePatch = await axios.patch(`${URL_API}/vsInter/${idVs}`,{
         estado:false
     })
     
@@ -20,7 +21,7 @@ export const AgregarResultado = async(equipo1, equipo2, goles, amarillas, rojas,
     //vereficar ganador
     const resultado = calcularPuntos(golesE1, golesE2)
 
-    const response = await axios.post('https://back-end-gosport.onrender.com/resultadosInterCentros',{
+    const response = await axios.post(`${URL_API}/resultadosInterCentros`,{
         equipo1:{
             equipo1,
             golesE1,

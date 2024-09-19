@@ -2,6 +2,7 @@
 import axios from 'axios'
 import React, { useState, useEffect } from 'react'
 import Swal from "sweetalert2";
+const URL_API = import.meta.env.VITE_API_URL
 export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, setControlador}) => {
     const [idEquipo, setIdEquipo]=useState('')
     const [equipo, setEquipo]= useState()
@@ -11,7 +12,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
     const searchEquipo = async ()=>{
       if(!validacion){
         try {
-          const response = await axios.get(`https://back-end-gosport.onrender.com/inscripcionEquipos/${idEquipo}`)
+          const response = await axios.get(`${URL_API}/inscripcionEquipos/${idEquipo}`)
           if(response.data == "EQUIPO NO ENCONTRADO"){
             Swal.fire({
               icon: "error",
@@ -37,7 +38,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
       }
       useEffect(() => {
         const validarInscripcion = async () => {
-          const responseValidador = await axios.get(`https://back-end-gosport.onrender.com/equipoInscripto/validarInscripcionestado`, {
+          const responseValidador = await axios.get(`${URL_API}/equipoInscripto/validarInscripcionestado`, {
             headers: {
               cedulaJugador: idEquipo
             }
@@ -57,7 +58,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
       const inscribirEquipo = async ()=>{
         try {  
           setIsLoading(true) 
-          const response = await axios.post(`https://back-end-gosport.onrender.com//equipoInscripto`,{
+          const response = await axios.post(`${URL_API}/equipoInscripto`,{
             Equipo:equipo,
             idCampeonato:idCampeonato
           })
@@ -84,7 +85,7 @@ export const ModalInscribirCampeonato = ({setAgregarEquipo, onAgregarEquipo, set
       }
       const actuEstado= async()=>{
         try{
-          const response = await axios.patch(`https://back-end-gosport.onrender.com/inscripcionEquipos/estado/${equipo._id}`,{
+          const response = await axios.patch(`${URL_API}/inscripcionEquipos/estado/${equipo._id}`,{
             estado:true
           })
           console.log(response)

@@ -7,30 +7,34 @@ import {
 import { FaUsers } from "react-icons/fa";
 import { cantidadCampeonatos, numeroEquipos, numeroInscritos } from "./dataGraficas";
 
+//se convierten los datos a array ya que con el codigo anterior no funcionaba por la funcion, reduce, ya que esta solo funciona en arrays
 
-async function obtenerDatos() {
-  try {
-    // Obteniendo los datos de los equipos
-    const resultadoEquipos = await numeroEquipos();
-    console.log(resultadoEquipos);
+//codigo anterior
+/* const resultadoEquipos =await numeroEquipos()
+console.log(resultadoEquipos)
+const equipos = resultadoEquipos.reduce((suma,valor)=>suma+valor,0)
+console.log(equipos)
+const resultadoIntegrantes = await numeroInscritos()
+console.log(resultadoIntegrantes)
+const participantes = resultadoIntegrantes.reduce((suma,valor)=> suma+valor,0)
+const resultadoCampeonatos = await cantidadCampeonatos() */
 
-    // Calculando la suma de los equipos
-    const equipos = resultadoEquipos.reduce((suma, valor) => suma + valor, 0);
-    console.log(equipos);
+const resultadoEquipos = await numeroEquipos();
+console.log("resultadoEquipos:", resultadoEquipos);
 
-    // Obteniendo los datos de los integrantes
-    const resultadoIntegrantes = await numeroInscritos();
-    console.log(resultadoIntegrantes);
+const equipos = Array.isArray(resultadoEquipos)
+  ? resultadoEquipos.reduce((suma, valor) => suma + valor, 0)
+  : 0;
+console.log("Total de equipos:", equipos);
 
-    // Calculando la suma de los participantes
-    const participantes = resultadoIntegrantes.reduce((suma, valor) => suma + valor, 0);
-    console.log(participantes);
-  } catch (error) {
-    console.error('Error al obtener datos:', error);
-  }
-}
+const resultadoIntegrantes = await numeroInscritos();
+console.log("resultadoIntegrantes:", resultadoIntegrantes);
 
-obtenerDatos();
+const participantes = Array.isArray(resultadoIntegrantes)
+  ? resultadoIntegrantes.reduce((suma, valor) => suma + valor, 0)
+  : 0;
+
+const resultadoCampeonatos = await cantidadCampeonatos();
 
 export const statisticsCardsData = [
   {
@@ -41,7 +45,7 @@ export const statisticsCardsData = [
     footer: {
       color: "text-green-500",
       value: equipos,
-      label: "Equipos inscritos en los 5 campeonatos con más equipos ",
+      label: "Equipos inscritos en los 5 campeonatos con más equipos",
     },
   },
   {
@@ -59,10 +63,10 @@ export const statisticsCardsData = [
     color: "gray",
     icon: ChartBarIcon,
     title: "Campeonato interfichas",
-    value: resultadoCampeonatos.interfichas,
+    value: resultadoCampeonatos.interfichas || 0,
     footer: {
       color: "text-green-500",
-      value: resultadoCampeonatos.interfichas,
+      value: resultadoCampeonatos.interfichas || 0,
       label: "campeonatos interfichas en total se han creado",
     },
   },
@@ -70,10 +74,10 @@ export const statisticsCardsData = [
     color: "gray",
     icon: ChartBarIcon,
     title: "Campeonato intercentros",
-    value: resultadoCampeonatos.intercentros,
+    value: resultadoCampeonatos.intercentros || 0,
     footer: {
       color: "text-green-500",
-      value: resultadoCampeonatos.intercentros,
+      value: resultadoCampeonatos.intercentros || 0,
       label: "campeonatos intercentros en total se han creado",
     },
   },
@@ -81,10 +85,10 @@ export const statisticsCardsData = [
     color: "gray",
     icon: ChartBarIcon,
     title: "Campeonato recreativos",
-    value: resultadoCampeonatos.recreativos,
+    value: resultadoCampeonatos.recreativos || 0, // Verificación en caso de que recreativos no esté definido
     footer: {
       color: "text-green-500",
-      value: resultadoCampeonatos.recreativos,
+      value: resultadoCampeonatos.recreativos || 0,
       label: "campeonatos recreativos en total se han creado",
     },
   },

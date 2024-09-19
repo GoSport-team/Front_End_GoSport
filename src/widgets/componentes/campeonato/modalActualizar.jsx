@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+const URL_API = import.meta.env.VITE_API_URL
 
 Modal.setAppElement('#root');
 
@@ -28,7 +29,7 @@ const UpdateCampeonatoModal = ({ isOpen, onClose, campeonato, onUpdate, setContr
     useEffect(() => {
         const fetchModalidades = async () => {
             try {
-                const response = await axios.get(`https://back-end-gosport.onrender.com/modalidad`);
+                const response = await axios.get(`${URL_API}/modalidad`);
                 setModalidades(response.data);
             } catch (error) {
                 console.log(error);
@@ -40,7 +41,7 @@ const UpdateCampeonatoModal = ({ isOpen, onClose, campeonato, onUpdate, setContr
     useEffect(() => {
         const fetchSedes = async () => {
             try {
-                const response = await axios.get(`https://back-end-gosport.onrender.com/sede`);
+                const response = await axios.get(`${URL_API}/sede`);
                 setSedes(response.data);
             } catch (error) {
                 console.log(error);
@@ -52,7 +53,7 @@ const UpdateCampeonatoModal = ({ isOpen, onClose, campeonato, onUpdate, setContr
     useEffect(() => {
         const fetchDisciplinas = async () => {
             try {
-                const response = await axios.get(`https://back-end-gosport.onrender.com/disciplina`);
+                const response = await axios.get(`${URL_API}/disciplina`);
                 setDisciplinas(response.data);
             } catch (error) {
                 console.log(error);
@@ -90,7 +91,7 @@ const UpdateCampeonatoModal = ({ isOpen, onClose, campeonato, onUpdate, setContr
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.patch(`https://back-end-gosport.onrender.com/campeonato/${onUpdate}`, formData);
+            await axios.patch(`${URL_API}/campeonato/${onUpdate}`, formData);
             toast.success('Campeonato actualizado exitosamente');
             onClose();
             setControlador(true)

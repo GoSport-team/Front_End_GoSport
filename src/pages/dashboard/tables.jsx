@@ -59,7 +59,7 @@ export function Tables() {
 
     const viewCampeonato=async(id)=>{
       try{
-  const response = await axios.get(`http://localhost:3001/campeonato/${id}`);
+  const response = await axios.get(`${URL_API}/campeonato/${id}`);
   console.log(response.data)
    setCampeonato(response.data)
    setControlador(true)
