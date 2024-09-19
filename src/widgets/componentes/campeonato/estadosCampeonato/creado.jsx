@@ -2,7 +2,7 @@ import React,{useEffect, useState} from 'react'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+const URL_API = import.meta.env.VITE_API_URL
 export const Creado = ({ tasks, viewCampeonato, setModalView, setIdUpdate, setModalUpdate, setSelectedCampeonato, setIsModalOpen , setControlador}) => {
   const [estado, setEstado]= useState('Inscripcion')
   const[creado, setCreado]= useState()
@@ -14,7 +14,7 @@ export const Creado = ({ tasks, viewCampeonato, setModalView, setIdUpdate, setMo
 const handleSubmit = async (e) => {
   e.preventDefault();
   try {
-      await axios.patch(`http://localhost:3001/campeonato/${tasks._id}`,
+      await axios.patch(`${URL_API}/campeonato/${tasks._id}`,
         {estadoCampeonato: estado}
        );
       toast.success('Campeonato actualizado exitosamente');

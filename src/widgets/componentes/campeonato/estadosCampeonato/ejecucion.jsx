@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
+const URL_API = import.meta.env.VITE_API_URL
 
 export const Ejecucion = ({ tasks, setControlador, controlador }) => {
   const [ejecucion, setEjecucion] = useState(false);
@@ -10,7 +11,7 @@ export const Ejecucion = ({ tasks, setControlador, controlador }) => {
     const fetchData = async () => {
       setControlador(true); 
       try {
-        const { data } = await axios.get('http://localhost:3001/fase/fase', {
+        const { data } = await axios.get(`${URL_API}/fase/fase`, {
           headers: {
             id: tasks._id
           },
