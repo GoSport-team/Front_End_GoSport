@@ -10,4 +10,7 @@ export default defineConfig({
     outDir: 'dist',
     target: 'esnext',
   },
+  server: {
+    historyApiFallback: true, 
+  },
 });
