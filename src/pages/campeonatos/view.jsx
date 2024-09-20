@@ -157,14 +157,22 @@ const CreateCampeonato = () => {
                         </div>
                         <div className="w-1/2">
                             <label className="block text-gray-800">Tamaño equipo</label>
-                            <input
+                            <select
                                 required
-                                placeholder="Numero participantes"
-                                type="number"
                                 value={tamanoEquipos}
                                 onChange={(e) => setTamanoEquipos(e.target.value)}
                                 className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
-                            />
+                            >
+                            <option value="" disabled>Seleccione el número de participantes</option>
+                                {[...Array(9)].map((_, i) => {
+                                const value = i + 4;
+                                return (
+                            <option key={value} value={value}>
+                            {value}
+                            </option>
+                            );
+                            })}
+                </select>
                         </div>
                     </div>
 
@@ -251,6 +259,7 @@ const CreateCampeonato = () => {
                                 required
                                 placeholder="Inicio inscripción"
                                 type="date"
+                                min={minDate}
                                 value={inicioInscripcion}
                                 onChange={(e) => setInicioInscripcion(e.target.value)}
                                 className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
@@ -262,6 +271,7 @@ const CreateCampeonato = () => {
                                 required
                                 placeholder="Fin de inscripción"
                                 type="date"
+                                min={minDate}
                                 value={finInscripcion}
                                 onChange={(e) => setFinInscripcion(e.target.value)}
                                 className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
