@@ -15,7 +15,8 @@ export const DatosEquiposInscripcion = () => {
     const searchEquipo = async () => {
       try {
         const response = await axios.get(`${URL_API}/inscripcionEquipos/${cedula}`)
-        console.log(response)
+        console.log('Data Team'+ response.data);
+        console.log(equipo); // Esto mostrará el objeto completo en la consola
         if (response.data == "EQUIPO NO ENCONTRADO") {
           Swal.fire({
             icon: "error",
@@ -26,11 +27,12 @@ export const DatosEquiposInscripcion = () => {
           Swal.fire({
             icon: "success",
             title: "Equipo Encontrado",
-            text: `Nombre ${response.data.nombreEquipo}`,
+            text: `Nombre ${response.data.equipo.nombreEquipo}`,
             confirmButtonText: "OK",
             confirmButtonColor: "#12aed1cd",
           })
-          setEquipo(response.data)
+          setEquipo(response.data.equipo)
+          console.log('Datos del equipo Dios' + response.data)
         }
       } catch (error) {
         console.log(error)
@@ -43,7 +45,7 @@ export const DatosEquiposInscripcion = () => {
     }
 
     searchEquipo()
-  }, [])
+  }, [cedula])
   const inscribirEquipo = async () => {
     try {
 
@@ -98,7 +100,7 @@ export const DatosEquiposInscripcion = () => {
 
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
-                  <label className="text-gray-700 font-medium" htmlFor="name">Equipo</label>
+                  <label className="text-gray-700 font-medium" htmlFor="name">Nombre</label>
                   <input
                     className="h-10 rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     type="text"
@@ -113,7 +115,7 @@ export const DatosEquiposInscripcion = () => {
                     className="h-10 rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value={equipo.nombreCapitan}
                     placeholder="Nombre del capitán"
-                    
+
                   />
                 </div>
 
@@ -123,7 +125,7 @@ export const DatosEquiposInscripcion = () => {
                     className="h-10 rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value={equipo.contactoUno}
                     type="text"
-                    
+
                   />
                 </div>
 
@@ -155,28 +157,29 @@ export const DatosEquiposInscripcion = () => {
 
           : <h1></h1>}
 
-      
+
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mt-6">
           <thead class="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
-              <tr>
-                <th  scope="col" class="px-6 py-3">N°</th>
-                <th  scope="col" class="px-6 py-3">Nombre </th>
-                <th  scope="col" class="px-6 py-3">Ficha </th>
-                <th  scope="col" class="px-6 py-3">N° Dorsal </th>
-              </tr>
-            </thead>
+            <tr>
+              <th scope="col" class="px-6 py-3">N°</th>
+              <th scope="col" class="px-6 py-3">Nombre </th>
+              <th scope="col" class="px-6 py-3">Ficha </th>
+              <th scope="col" class="px-6 py-3">N° Dorsal </th>
+            </tr>
+          </thead>
           <tbody>
-              {equipo && equipo.participantes.map((equipo, indice) => (
-                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{indice + 1}</td>
-                  <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{equipo.nombres}</td>
-                  <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{equipo.ficha}</td>
-                  <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{equipo.dorsal}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        
+            {equipo?.participantes && Array.isArray(equipo.participantes) && equipo.participantes.map((equipo, indice) => (
+              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={indice}>
+                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{indice + 1}</td>
+                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{equipo.nombres}</td>
+                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{equipo.ficha}</td>
+                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{equipo.dorsal}</td>
+              </tr>
+            ))}
+          </tbody>
+
+        </table>
+
       </form>
       <div class="w-[60vw] flex justify-start mt-10 ButtonPlanillaIns">
         <button

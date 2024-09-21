@@ -36,6 +36,7 @@ export const DatosEquipos = () => {
         }
       })
       setUser(response.data)
+      console.log('Profile'+response.data)
     }
     obtenerUser()
   }, [])
@@ -57,6 +58,21 @@ export const DatosEquipos = () => {
 
   const submit = async (e) => {
     e.preventDefault()
+
+
+  let jugadoresActuales = [...jugadores];
+
+  const isUserInJugadores = jugadoresActuales.some(jugador => jugador._id === user._id);
+
+  if (!isUserInJugadores) {
+    jugadoresActuales.push({
+      _id: user._id,
+      nombres: user.nombres,
+      ficha: user.ficha,
+      dorsal: 1 
+    });
+  }
+
 
     if (jugadores.length < 4) {
       Swal.fire({
@@ -81,7 +97,7 @@ export const DatosEquipos = () => {
         imgLogo: respuestaa.data.url,
         idLogo: respuestaa.data.public_id,
         estado: true,
-        participantes: jugadores
+        participantes: jugadoresActuales
       })
 
       setMensaje(response.data.msg)
@@ -118,99 +134,6 @@ export const DatosEquipos = () => {
   }
 
   return (
-    //     <div className="flex justify-center ">
-    //       {equipo ?
-    //       <div className="">
-    //       <h1 className="mt-20 text-3xl font-bold bg-red-400 p-5 text-white rounded-lg">Ya tienes creado un equipo no puedes crear mas</h1>
-    //      <Link to={'/jugador/dashboard'}>
-    //       <button className="bg-black text-white mt-5 h-14  w-full rounded-lg text-2xl">Atras</button>
-    //      </Link>
-    //       </div>
-    //       :
-
-    //       <form action="" onSubmit={submit}>
-    //         <div className="bg-gray-200 mt-20 rounded-lg p-5">
-    //           <h2 className="text-xl font-bold ml-5">Planilla Inscripcion Equipo</h2>
-    //           <div className="flex items-center gap-5  mt-6">
-    //             <label className="" htmlFor="name">
-    //               Equipo
-    //             </label>
-    //             <input className="mr-6 h-9 rounded-lg w-96" type="text" onChange={e => setNombreEquipo(e.target.value)} placeholder="Nombre del equipo" />
-    //           </div>
-    //           <div className="flex items-center gap-3  mt-6">
-    //             <label className="mt-4-label" htmlFor="address">
-    //               Capitan
-    //             </label>
-    //             <input className=" h-9 rounded-lg w-96" id="address" value={user && user.nombres} placeholder="Nombre del capitan" />
-    //           </div>
-    //           <div className="flex gap-16 mt-5 items-center">
-    //             <div className="flex  items-center  gap-5">
-    //               <label className="text-black " htmlFor="city">
-    //                 Contacto
-    //               </label>
-    //               <input
-    //                 placeholder="Principal"
-    //                 className="mr-6 h-9 rounded-lg w-72 text-center"
-    //                 id="city"
-    //                 type="text"
-    //                 value={user && user.telefono}
-    //               />
-    //             </div>
-    //             <div className="">
-    //               <label className="text-black" htmlFor="state">
-    //               </label>
-    //               <input
-    //                 placeholder="Secundario"
-    //                 className="mr-6 h-9 rounded-lg w-72 text-center"
-    //                 id="state"
-    //                 type="text"
-    //                 onChange={e => setContactoDos(e.target.value)}
-    //               />
-    //             </div>
-    //             <div class="card">
-    //               <img className="absolute w-44 h-44 top-20" src={image} alt="Logo Del Equipo" />
-    //               <input type="file" onChange={handleImage} className="inpuntImg" />
-    //             </div>
-    //           </div>
-    //         </div>
-    //         <div className="bg-gray-200 mt-10 p-5 rounded-xl">
-    //           <div className='flex justify-center items-center'>
-    //             <label className="font-bold text-2xl mr-5">Busca tus compañeros</label>
-    //             <input type="search" className="h-10 w-80 rounded-md text-center" onChange={e => setJugador(e.target.value)} placeholder='Busca por su numero de cedula' />
-    //             <button className='mt-2.5 px-12 py-5 text-xs uppercase tracking-wider font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none ml-[70px] hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5'
-    //              type="button"
-    //              onClick={() => buscarJugador(jugador)} >Buscar</button>
-    //           </div>
-    //           <table className="w-full border-separate mt-8">
-    //             <thead>
-    //               <tr>
-    //                 <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">N°</th>
-    //                 <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">Nombre </th>
-    //                 <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">Ficha </th>
-    //                 <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border th3">N° Dorsal </th>
-    //                 <th className="bg-[rgb(18,174,209)] text-white rounded-md h-10 border-black border">Eliminar</th>
-    //               </tr>
-    //             </thead>
-    //             <tbody>
-    //               {jugadores && jugadores.map((jugador, indice) => (
-    //                 <tr className="border-separate text-center text-lg font-medium" key={indice}>
-    //                   <td className="border rounded-md p-1 bg-white "
-    //                  >{indice + 1}</td>
-    //                   <td className=" border rounded-md p-1 bg-white">{jugador.nombreJugador}</td>
-    //                   <td className=" border rounded-md p-1 bg-white">{jugador.ficha}</td>
-    //                   <td className=" border rounded-md p-1 bg-white">{jugador.dorsal}</td>
-    //                   <td  onClick={()=>eliminarJug(indice)} className=" hover:cursor-pointer border rounded-md p-1 bg-white flex items-center justify-center"><img className="" src="/public/img/carrusel/eliminar.svg" alt="" /></td>
-    //                 </tr>
-    //               ))}
-    //             </tbody>
-    //           </table>
-    //         </div>
-    //         <div class="ButtonPlanillaIns">
-    //           <button className="mt-2.5 px-12 py-5 text-xs uppercase tracking-wider font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-md transition-all duration-300 ease-in-out cursor-pointer outline-none ml-[70px] hover:bg-[#61d6f7df] hover:shadow-lg hover:shadow-[#a3d7e1c6] hover:text-black hover:-translate-y-1.5 active:translate-y-0.5" type="submit"> Inscribir </button>
-    //         </div>
-    //       </form>
-    // }
-    //     </div>
 
     <div className="flex items-center bg-white flex-col w-[100vw]">
       {equipo ?
