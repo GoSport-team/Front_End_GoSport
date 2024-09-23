@@ -141,13 +141,8 @@ useEffect(() => {
   const abrirModal = (id) => {
     setModal(true);
     setidVs(id);
-  //   setLoadingImage(true); // Activar el estado de carga cuando se abre el modal
-
-  //   // Simula un pequeño retraso antes de mostrar la nueva imagen
-  //   setTimeout(() => {
-  //     setLoadingImage(false);
-  //   }, 700);
-  // 
+    console.log(idVs)
+ 
   };
   
   const cerrarModal = () => {
