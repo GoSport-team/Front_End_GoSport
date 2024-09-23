@@ -473,29 +473,29 @@ const menosRoja2 = (jugador) => {
                                                         <td className="px-6 py-4">
                                                             <td onClick={() => gol1(jugador)}>
 
-                                                                <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
+                                                                <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104668/flcacldysv8mraxgbiwl.png" alt="" className="w-6 h-6" />
                                                             </td>
                                                             <td onClick={() => menosGol1(jugador)}>
-                                                                <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
+                                                                <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104856/shl2ddvat0lpzfjyngxh.png" alt="" className="w-6 h-6" />
                                                             </td>
                                                         </td>
 
                                                         <td className="px-6 py-4">
                                                             <td onClick={() => countAmarilla1(jugador)}>
 
-                                                                <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
+                                                                <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104668/flcacldysv8mraxgbiwl.png" alt="" className="w-6 h-6" />
                                                             </td>
                                                             <td onClick={() => menosAmarilla1(jugador)}>
-                                                                <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
+                                                                <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104856/shl2ddvat0lpzfjyngxh.png" alt="" className="w-6 h-6" />
                                                             </td>
                                                         </td>
                                                         <td className="px-6 py-4">
                                                             <td onClick={() => countRoja1(jugador)}>
 
-                                                                <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
+                                                                <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104668/flcacldysv8mraxgbiwl.png" alt="" className="w-6 h-6" />
                                                             </td>
                                                             <td onClick={() => menosRoja1(jugador)}>
-                                                                <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
+                                                                <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104856/shl2ddvat0lpzfjyngxh.png" alt="" className="w-6 h-6" />
                                                             </td>
                                                         </td>
                                                         <td className="px-6 py-4">
@@ -589,28 +589,28 @@ const menosRoja2 = (jugador) => {
                                                         <td className="px-6 py-4">
                                                             <td onClick={() => gol2(jugador)}>
 
-                                                                <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
+                                                                <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104668/flcacldysv8mraxgbiwl.png" alt="" className="w-6 h-6" />
                                                             </td>
                                                             <td onClick={() => menosGol2(jugador)}>
-                                                                <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
+                                                                <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104856/shl2ddvat0lpzfjyngxh.png" alt="" className="w-6 h-6" />
                                                             </td>
                                                         </td>
                                                         <td className="px-6 py-4">
                                                             <td onClick={() => countAmarilla2(jugador)}>
 
-                                                                <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
+                                                                <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104668/flcacldysv8mraxgbiwl.png" alt="" className="w-6 h-6" />
                                                             </td>
                                                             <td onClick={() => menosAmarilla2(jugador)}>
-                                                                <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
+                                                                <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104856/shl2ddvat0lpzfjyngxh.png" alt="" className="w-6 h-6" />
                                                             </td>
                                                         </td>
                                                         <td className="px-6 py-4">
                                                             <td onClick={() => countRoja2(jugador)}>
 
-                                                                <img src="/public/img/cronograma/mas(1).png" alt="" className="w-6 h-6" />
+                                                                <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104668/flcacldysv8mraxgbiwl.png" alt="" className="w-6 h-6" />
                                                             </td>
                                                             <td onClick={() => menosRoja2(jugador)}>
-                                                                <img src="/public/img/cronograma/signo-menos(1).png" alt="" className="w-6 h-6" />
+                                                                <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104856/shl2ddvat0lpzfjyngxh.png" alt="" className="w-6 h-6" />
                                                             </td>
                                                         </td>
                                                         <td className="px-6 py-4">
