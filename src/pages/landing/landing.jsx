@@ -189,7 +189,8 @@ export default function Landing() {
               <div className=" w-[50vw] text-center">
                 <img
                   className="rounded-lg w-[30vw] object-cover"
-                  src="/public/img/BienesApren/TeamAp.jpg"
+                  src='/public/img/BienesApren/TeamAp.jpg'
+                  // src="/public/img/BienesApren/TeamAp.jpg"
                   alt=""
                 />
               </div>
