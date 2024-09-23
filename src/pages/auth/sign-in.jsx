@@ -147,7 +147,7 @@ export const SignIn = () => {
         ) : (
           <div className='flex justify-center items-center'>
             <img className='object-cover bounce-animation'
-              src="\public\img\logoGos.png" alt="Logo"
+              src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727105277/ifn8qjflp4vgjbq5xlao.png " alt="Logo"
             />
           </div>
         )}
