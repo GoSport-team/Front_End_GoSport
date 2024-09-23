@@ -222,10 +222,10 @@ useEffect(() => {
   loading ? (
     <Spinner className="h-10 w-10 text-blue-500" />
   ) : (
-    <img onClick={() => abrirModal(vs._id)} src="/public/img/intercentros/planilla.png" alt="" className="w-10 h-10 cursor-pointer" />
+    <img onClick={() => abrirModal(vs._id)} src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727107139/zdup3co6la9lfdf8lerg.png" alt="" className="w-10 h-10 cursor-pointer" />
   )
 ) : (
-  <img onClick={() => resultadosModal(vs._id)} src="/public/img/intercentros/cumplimiento.png" alt="" className="w-10 h-10 cursor-pointer" />
+  <img onClick={() => resultadosModal(vs._id)} src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727107244/xtukvmzibk0rign4drlh.png" alt="" className="w-10 h-10 cursor-pointer" />
 )}
         </tr>
       ))}
