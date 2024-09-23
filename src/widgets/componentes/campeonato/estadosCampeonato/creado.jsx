@@ -39,7 +39,7 @@ const handleSubmit = async (e) => {
               <tr key={tasks._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white flex flex-row gap-x-4">
                   <img
-                    src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727106938/txevxhtclh1jqr7loprf.png"
+                    src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727106963/zhbrf5bbz3yecncnpmey.png"
                     alt="Ver"
                     className="w-7 object-contain"
                     onClick={() => {
@@ -58,7 +58,7 @@ const handleSubmit = async (e) => {
                     }}
                   />
                   <img
-                    src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727106963/zhbrf5bbz3yecncnpmey.png"
+                    src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727106985/tpnuue1pwtn7ypcxwsce.png"
                     alt="Eliminar"
                     className="w-7 object-contain"
                     onClick={() => {
