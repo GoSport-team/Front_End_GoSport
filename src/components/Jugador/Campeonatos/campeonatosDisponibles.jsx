@@ -52,7 +52,7 @@ export default function CampeonatosDisponibles() {
                 <div class="group flex flex-col justify-start items-start gap-2 w-[50vw] h-[35vh] duration-500 relative rounded-lg p-4 bg-gray-100 hover:-translate-y-2 hover:shadow-xl shadow-gray-300">
                   <div class="absolute duration-700 shadow-md group-hover:-translate-y-4 group-hover:-translate-x-4 -bottom-10 -right-10 w-[30vh] h-1/2 rounded-lg bg-gray-200"
                     alt="image here">
-                    <img src="\public\img\carrusel\cr7.jpg" alt="" className='w-[30vh] h-[19vh] object-cover rounded-xl opacity-90 absolute                                                    '/>
+                    <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727129004/spcvvm0yshwbhflwldqm.jpg" alt="" className='w-[30vh] h-[19vh] object-cover rounded-xl opacity-90 absolute                                                    '/>
                   </div>
 
                   <div class="">
@@ -75,7 +75,7 @@ export default function CampeonatosDisponibles() {
               <div className='w-[35vw] flex justify-end mt-9'>
                 <div class="relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
                   <div class="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
-                    <img src="\public\img\carrusel\fubol-sala-futsal.jpg" alt="img" className='object-cover w-full h-full' />
+                    <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727129114/kcku9vu2xgzbk1d3luyz.jpg" alt="img" className='object-cover w-full h-full' />
                   </div>
                   <div class="p-6">
                     <h5 class="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">

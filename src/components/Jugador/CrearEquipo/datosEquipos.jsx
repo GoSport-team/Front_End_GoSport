@@ -265,7 +265,7 @@ export const DatosEquipos = () => {
                       onClick={() => eliminarJug(indice)}
                       className="py-3 px-4 text-center cursor-pointer hover:bg-gray-200 rounded-lg"
                     >
-                      <img className="w-6 h-6 mx-auto" src="/public/img/carrusel/eliminar.svg" alt="Eliminar" />
+                      <img className="w-6 h-6 mx-auto" src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727129677/v8somqq37uuq9cb2ju5c.png" alt="Eliminar" />
                     </td>
                   </tr>
                 ))}

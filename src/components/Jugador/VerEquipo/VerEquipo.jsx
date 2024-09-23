@@ -355,7 +355,7 @@ export const VerEquipo = () => {
                                                 className="py-2 px-4 border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
                                                 onClick={() => eliminarJug(index)}
                                             >
-                                                <img className="w-6 h-6 mx-auto" src="/public/img/carrusel/eliminar.svg" alt="Eliminar" />
+                                                <img className="w-6 h-6 mx-auto" src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727129677/v8somqq37uuq9cb2ju5c.png" alt="Eliminar" />
                                             </td>
                                         ) : ''}
                                     </tr>
