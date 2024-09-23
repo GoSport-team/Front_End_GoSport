@@ -24,7 +24,7 @@ export default function Landing() {
           <div class="flex flex-wrap items-center mx-auto h-[10vh] w-[91vw]">
             <div class="flex items-center">
               <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="\public\img\logoGos.png" class="h-24 object-contain" alt="Flowbite Logo" />
+                <img src="\dist/img/logoGos.png" class="h-24 object-contain" alt="Flowbite Logo" />
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">GoSport</span>
               </a>
             </div>
