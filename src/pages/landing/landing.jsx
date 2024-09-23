@@ -24,7 +24,7 @@ export default function Landing() {
           <div class="flex flex-wrap items-center mx-auto h-[10vh] w-[91vw]">
             <div class="flex items-center">
               <a href="https://flowbite.com/" class="flex items-center space-x-3 rtl:space-x-reverse">
-                <img src="\dist/img/logoGos.png" class="h-24 object-contain" alt="Flowbite Logo" />
+                <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727105277/ifn8qjflp4vgjbq5xlao.png" class="h-24 object-contain" alt="Flowbite Logo" />
                 <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">GoSport</span>
               </a>
             </div>
@@ -61,7 +61,7 @@ export default function Landing() {
 
         <div class="flex flex-col justify-center items-center">
           <div className="relative">
-            <img src="/dist/img/landing/imgplayer.jpg" className="h-[96vh] object-cover w-screen" />
+            <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727105183/kbcmiuy3cowbre7dqvhx.png" className="h-[96vh] object-cover w-screen" />
             <div className="ml-[4vw]  absolute inset-0 flex flex-col w-[90vw] sm:w-[60vw] md:w-[40vw] lg:w-[20vw] justify-end pb-16 md:pb-32">
               {/* <p className="text-xl  mb-4 text-justify flex justify-center items-center tracking-wider w-[90%] sm:w-[80%] md:w-[60%] lg:w-[33rem] text-[1.2rem] sm:text-[1.4rem] md:text-[1.6rem] lg:text-[1.9rem] font-sans  sm:leading-[1.6] md:leading-[1.7] ml-4 sm:ml-[2rem] md:ml-[3rem] tracking-[0.5px] sm:tracking-[0.75px] md:tracking-[1px] text-black">
                 Crea campeonatos inolvidables. ¡Dale vida a la competencia y eleva el espíritu deportivo! ¿Estás listo para ser parte de la experiencia?
@@ -86,7 +86,7 @@ export default function Landing() {
 
           <div className=" w-[45vw] h-full flex justify-center items-center rounded-xl drop-shadow-xl" data-aos="fade-right" >
             <img className="AnimacionImagenOrganizadores w-3/4"
-              src="/dist/img/landing/video.png" alt="img" />
+              src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727105183/kbcmiuy3cowbre7dqvhx.png" alt="img" />
 
           </div>
 
@@ -99,7 +99,7 @@ export default function Landing() {
               <div className="flex flex-row mb-5 pb-5">
                 <div className="w-[10vw]">
                   <img data-aos="zoom-in-down" className='w-[6vw] object-cover'
-                    src="/dist/img/landing/administracion.png" alt="img" />
+                    src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727105131/ufc9cqmsgi7ermpjssmi.png" alt="img" />
                 </div>
                 <div className=" flex flex-col flex-wrap">
                   <p className="text-2xl font-medium tracking-wide mb-2 text-shadow">Facilidad de creación</p>
@@ -109,7 +109,7 @@ export default function Landing() {
               <div className=" flex flex-row flex-wrap mb-5 pb-5 ">
                 <div className="w-[10vw]">
                   <img data-aos="zoom-in-down" className='w-[6vw] object-cover'
-                    src="/dist/img/landing/bingo.png" alt="img" />
+                    src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727105014/bxehhv3ihw4a3hsscjrl.png" alt="img" />
                 </div>
                 <div className="w-3/5 flex flex-col flex-wrap">
                   <p className="text-2xl font-medium tracking-wide mb-2 text-shadow">Sorteo automático de equipos</p>
@@ -119,7 +119,7 @@ export default function Landing() {
               <div className="flex flex-row flex-wrap items-center mb-5 pb-5 w-full">
                 <div className="w-[10vw]">
                   <img data-aos="zoom-in-down" className='w-[6vw] object-cover '
-                    src="/dist/img/landing/project.png" alt="img" />
+                    src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727105005/mcz8ancofl3rppvx0zvl.png" alt="img" />
                 </div>
                 <div className="w-3/5 flex flex-col flex-wrap">
                   <p className="text-2xl font-medium  tracking-wide mb-2 text-shadow">Cronogramas personalizados</p>
@@ -145,7 +145,7 @@ export default function Landing() {
                   <p className="text-shadow-black text-lg pr-1.5 tracking-wider">Descubre una variedad de torneos emocionantes y elige aquellos que despierten tu espiritu competitivo</p>
                 </div>
                 <div className="w-2/5 flex justify-center items-center">
-                  <img data-aos="zoom-in-down" className='w-1/3 rounded-lg' src="/public/img/landing/imagenCampeonato.jpg" alt="img" />
+                  <img data-aos="zoom-in-down" className='w-1/3 rounded-lg' src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104943/iuscn47iqrxnb2qdcj6y.jpg" alt="img" />
                 </div>
               </div>
               <div className="flex flex-row items-center mb-5 pb-5 w-full mt-6">
@@ -154,7 +154,7 @@ export default function Landing() {
                   <p className="text-shadow-black text-lg pr-1.5 tracking-wider">Unete a la competicion en cuestion de segundos.Inscríbete fácilmente en los torneos que te emocionan</p>
                 </div>
                 <div className="w-2/5 flex justify-center items-center">
-                  <img data-aos="zoom-in-down" className='w-1/3 rounded-lg' src="/public/img/landing/Incripcion.jpg" alt="img" />
+                  <img data-aos="zoom-in-down" className='w-1/3 rounded-lg' src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104886/ewmocrl9j5g0ddzikiye.jpg" alt="img" />
                 </div>
               </div>
               <div className="flex flex-row items-center mb-5 pb-5 w-full mt-6">
@@ -163,13 +163,13 @@ export default function Landing() {
                   <p className="text-shadow-black text-lg pr-1.5 tracking-wider">Vive momentos inolvidables desde jugadas asomborsas hasta victorias gloriosas. Cada campeonato tiene su propia historia,¡Tu eres la estrella!</p>
                 </div>
                 <div className="w-2/5 flex justify-center items-center">
-                  <img data-aos="zoom-in-down" className='w-1/3 rounded-lg' src="/public/img/landing/vive.jpg" alt="img" />
+                  <img data-aos="zoom-in-down" className='w-1/3 rounded-lg' src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104667/ewcnhcpvmxwtdqe3suwt.jpg" alt="img" />
                 </div>
               </div>
             </section>
 
             <div className="w-full flex justify-center items-center">
-              <img className="AnimacionImagenOrganizadores w-[25vw] rounded-lg" data-aos="fade-left" src="/public/img/landing/cr7.png" alt="img" />
+              <img className="AnimacionImagenOrganizadores w-[25vw] rounded-lg" data-aos="fade-left" src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727104735/trdw9lqm4n1bfolijj3f.png" alt="img" />
 
             </div>
           </div>
@@ -190,9 +190,6 @@ export default function Landing() {
                 <img
                   className="rounded-lg w-[30vw] object-cover"
                   src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727065176/q9riwa6qrykvnevem6gh.jpg"
-                  // src="/dist/img/BienesApren/TeamAp.jpg"
-                  // src='/public/img/BienesApren/TeamAp.jpg'
-                  // src="/public/img/BienesApren/TeamAp.jpg"
                   alt=""
                 />
               </div>
@@ -223,7 +220,7 @@ export default function Landing() {
                 </p>
               </div>
               <div className="w-[50vw] text-center flex justify-center items-center">
-                <img src="/public/img/BienesApren/soccer.jpg" className=' w-[30vw] object-cover' alt="" />
+                <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727065176/diw3gcgenhabaxt9ztjx.webp" className=' w-[30vw] object-cover' alt="" />
               </div>
             </div>
           </div>
