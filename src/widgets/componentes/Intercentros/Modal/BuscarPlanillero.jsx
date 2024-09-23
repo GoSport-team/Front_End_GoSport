@@ -19,7 +19,7 @@ export const BuscarPlanillero = ({ isOpen, onPlanilleroSeleccionado, closeModal 
         setLoading(true)
         setNoEncontrado(false)
       try {
-        const response = await axios.get(`${URL_API}/identificacion/${identificacion}`);
+        const response = await axios.get(`${URL_API}/usuarios/identificacion/${identificacion}`);
        
         console.log(`Datos planillerp`)
         if (response.data) {

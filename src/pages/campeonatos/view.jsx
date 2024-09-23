@@ -23,9 +23,14 @@ const CreateCampeonato = () => {
     const [disciplinas, setDisciplinas] = useState([]);
     const estado = true;
     const nombre = 'Fase 1'
+    const [minDate, setMinDate] = useState('');
 
     const notify = (message) => toast(message);
-
+    useEffect(() => {
+        const today = new Date().toISOString().split('T')[0];
+        setMinDate(today)
+    }, []);
+    
     useEffect(() => {
         const fetchModalidades = async () => {
             try {
@@ -152,14 +157,22 @@ const CreateCampeonato = () => {
                         </div>
                         <div className="w-1/2">
                             <label className="block text-gray-800">Tamaño equipo</label>
-                            <input
+                            <select
                                 required
-                                placeholder="Numero participantes"
-                                type="number"
                                 value={tamanoEquipos}
                                 onChange={(e) => setTamanoEquipos(e.target.value)}
                                 className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
-                            />
+                            >
+                            <option value="" disabled>Seleccione el número de participantes</option>
+                                {[...Array(9)].map((_, i) => {
+                                const value = i + 4;
+                                return (
+                            <option key={value} value={value}>
+                            {value}
+                            </option>
+                            );
+                            })}
+                </select>
                         </div>
                     </div>
 
@@ -170,6 +183,7 @@ const CreateCampeonato = () => {
                                 required
                                 placeholder="Fecha de inicio"
                                 type="date"
+                                min={minDate}
                                 value={fechaInicio}
                                 onChange={(e) => setFechaInicio(e.target.value)}
                                 className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
@@ -181,6 +195,7 @@ const CreateCampeonato = () => {
                                 required
                                 placeholder="Fecha de fin"
                                 type="date"
+                                min={minDate}
                                 value={fechaFin}
                                 onChange={(e) => setFechaFin(e.target.value)}
                                 className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
@@ -244,6 +259,7 @@ const CreateCampeonato = () => {
                                 required
                                 placeholder="Inicio inscripción"
                                 type="date"
+                                min={minDate}
                                 value={inicioInscripcion}
                                 onChange={(e) => setInicioInscripcion(e.target.value)}
                                 className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"
@@ -255,6 +271,7 @@ const CreateCampeonato = () => {
                                 required
                                 placeholder="Fin de inscripción"
                                 type="date"
+                                min={minDate}
                                 value={finInscripcion}
                                 onChange={(e) => setFinInscripcion(e.target.value)}
                                 className="w-full mt-1 p-2 border border-gray-500 rounded focus:outline-none focus:ring focus:ring-blue-200"

@@ -72,10 +72,10 @@ export function Configurator() {
       <div className="flex items-start justify-between px-6 pt-8 pb-6">
         <div>
           <Typography variant="h5" color="blue-gray">
-            ! Aqui podras modificar el estilo de nuestra App !
+            !Aquí podrás modificar el estilo de nuestra App !
           </Typography>
           <Typography className="font-normal text-blue-gray-600">
-            Escoga nuestras opciones.
+            Selecciona nuestras opciones.
           </Typography>
         </div>
         <IconButton
@@ -107,10 +107,10 @@ export function Configurator() {
         </div>
         <div className="mb-12">
           <Typography variant="h6" color="blue-gray">
-            Colores de navegacion
+            Colores de navegación
           </Typography>
           <Typography variant="small" color="gray">
-           Tenemos 3 opciones para ti, escoge tu favorito!
+           Tenemos 3 opciones para tí, elige tu favorito!
           </Typography>
           <div className="mt-3 flex items-center gap-2">
             <Button

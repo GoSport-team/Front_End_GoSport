@@ -8,5 +8,10 @@ export default defineConfig({
   },
   build: {
     outDir: 'dist',
+    target: 'esnext',
   },
+  server: {
+    historyApiFallback: true, 
+  },
+  base: '/',
 });

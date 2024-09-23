@@ -180,7 +180,7 @@ export const VerEquipo = () => {
     }
 
     const actualizarEquipo = async () => {
-        const datosAEnviar = {};
+        const datosAEnviar = equipo;
         if (nombreEquipo !== equipo.nombreEquipo && nombreEquipo !== undefined) {
           datosAEnviar.nombreEquipo = nombreEquipo;
         }
