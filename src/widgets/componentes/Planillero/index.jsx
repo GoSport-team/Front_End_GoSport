@@ -111,11 +111,11 @@ export default function Planillero() {
                                 <td className="px-6 py-4 flex gap-x-5">
                                     <img  className='w-10 cursor-pointer object-cover'
                                         onClick={() => handleModalActualizar(usuario._id)} 
-                                    src="\public\img\Pruebas\avatar-de-usuario (1).png" alt="img" />
+                                    src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727106679/q2l2tn5i3amjwyp6x2fz.png" alt="img" />
 
                                     <img className='w-10 cursor-pointer object-cover opacity-90'
                                         onClick={() => eliminarPlanillero(usuario._id, usuario.nombres)}
-                                    src="\public\img\Pruebas\borrar-usuario (1).png" alt="img" />
+                                    src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727106707/ptb2fbw5s5a6d850n0cr.png" alt="img" />
                                 </td>
                             </tr>
                         ))}

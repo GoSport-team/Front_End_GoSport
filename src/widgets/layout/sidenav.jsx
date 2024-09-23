@@ -28,7 +28,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
         className={`relative`}
       >
         <div className="py-2 px-8 text-center flex justify-center items-center">
-          <img src="\public\img\logoGos.png" alt="Logo" 
+          <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727105277/ifn8qjflp4vgjbq5xlao.png " alt="Logo" 
             className="object-cover w-24"
           />
           <Typography
