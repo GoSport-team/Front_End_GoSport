@@ -60,6 +60,7 @@ export const loginUser = async (correo, contrasena) => {
         throw new Error('Ingrese usuario y contraseña');
       } else {
         notify('Error al iniciar sesión. Por favor, inténtelo de nuevo.');
+        console.log("RUTA ", URL_API)
         throw new Error(error.response.data.message || 'Error al iniciar sesión');
       }
     } else {
