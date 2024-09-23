@@ -34,7 +34,7 @@ export const CardEquipo = ({equipo,eliminarEquipo }) => {
     </div>
     
     <div className="flex justify-end mt-6 ">
-      <img onClick={()=>eliminarEquipo(equipo._id)} src="../../../../public/img/intercentros/borrar (1).png" className="w-10 cursor-pointer" />
+      <img onClick={()=>eliminarEquipo(equipo._id)} src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727129677/v8somqq37uuq9cb2ju5c.png" className="w-10 cursor-pointer" />
     </div>
   </article>
   )
