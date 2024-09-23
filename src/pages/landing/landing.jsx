@@ -61,7 +61,7 @@ export default function Landing() {
 
         <div class="flex flex-col justify-center items-center">
           <div className="relative">
-            <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727105183/kbcmiuy3cowbre7dqvhx.png" className="h-[96vh] object-cover w-screen" />
+            <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727105838/een3o7wqwp67ttgauqbw.jpg" className="h-[96vh] object-cover w-screen" />
             <div className="ml-[4vw]  absolute inset-0 flex flex-col w-[90vw] sm:w-[60vw] md:w-[40vw] lg:w-[20vw] justify-end pb-16 md:pb-32">
               {/* <p className="text-xl  mb-4 text-justify flex justify-center items-center tracking-wider w-[90%] sm:w-[80%] md:w-[60%] lg:w-[33rem] text-[1.2rem] sm:text-[1.4rem] md:text-[1.6rem] lg:text-[1.9rem] font-sans  sm:leading-[1.6] md:leading-[1.7] ml-4 sm:ml-[2rem] md:ml-[3rem] tracking-[0.5px] sm:tracking-[0.75px] md:tracking-[1px] text-black">
                 Crea campeonatos inolvidables. ¡Dale vida a la competencia y eleva el espíritu deportivo! ¿Estás listo para ser parte de la experiencia?
