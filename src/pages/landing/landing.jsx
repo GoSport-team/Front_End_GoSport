@@ -189,10 +189,11 @@ export default function Landing() {
               <div className=" w-[50vw] text-center">
                 <img
                   className="rounded-lg w-[30vw] object-cover"
-                  src="/dist/img/BienesApren/TeamAp.jpg"
+                  src=""
+                  // src="/dist/img/BienesApren/TeamAp.jpg"
                   // src='/public/img/BienesApren/TeamAp.jpg'
                   // src="/public/img/BienesApren/TeamAp.jpg"
-                  alt=""
+                  alt="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727065176/q9riwa6qrykvnevem6gh.jpg"
                 />
               </div>
 
