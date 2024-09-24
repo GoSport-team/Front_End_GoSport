@@ -21,7 +21,7 @@ export const ParticipantesIntercentros = () => {
   useEffect(() => {
     // Check if the sorteo was already done
     if (sessionStorage.getItem('sorteoRealizado') === 'true') {
-      navigate(`/campe/cronogramaIntercentros/${id}`);
+      navigate(`/campe/cronogramaIntercentros/${id}`, { replace: true });
     } else {
       fetchEquiposInscritos();
     }
@@ -42,15 +42,16 @@ export const ParticipantesIntercentros = () => {
     }
   };
 
-  const eliminarEquipo = async (idEquipo) => {
+  const  eliminarEquipo = async (idEquipo) => {
     setLoading(true);
     try {
       await axios.delete(`${URL_API}/equipoInscripto/idEquipo/${idEquipo}`);
-      notify('Eliminado correctamente');
-      // Update the equiposInscritos list after deletion
-      const updatedEquiposResponse = await axios.get(`${URL_API}/equipoInscripto`, {
-        headers: { id },
+
+      await axios.patch(`${URL_API}/inscripcionEquipos/estado/${idEquipo}`, {
+        estado: false,
       });
+      notify('Eliminado correctamente');
+   
       setEquiposInscritos((prev) => prev.filter((e) => e.Equipo._id !== idEquipo));
     } catch (error) {
       console.log(error);
@@ -59,31 +60,49 @@ export const ParticipantesIntercentros = () => {
     }
   };
 
-  const searchEquipo = async (cedula) => {
+  const searchEquipo = async (cedula,) => {
     setLoading(true);
     try {
-      const response = await axios.get(`${URL_API}/inscripcionEquipos/${cedula}`);
-      console.log('Respuesta al buscar equipo:', response.data);
-      if (response.data === 'EQUIPO NO ENCONTRADO') {
-        notify('Equipo no encontrado');
-      } else {
-        notify('Equipo encontrado correctamente');
-        const equipo = response.data.equipo;
-        if (!equiposInscritos.some((e) => e.Equipo._id === equipo._id)) {
-          await axios.post(`${URL_API}/equipoInscripto`, {
-            Equipo: equipo,
-            idCampeonato: id,
-          });
-          setEquiposInscritos((prev) => [...prev, { Equipo: equipo }]);
-        } else {
-          notify('El equipo ya está inscrito.');
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+      const responseValidador = await axios.get(`${URL_API}/equipoInscripto/validarInscripcionestado`, {
+        headers: {
+          cedulaJugador: cedula
+        },
+      });
+        console.log("Validacion: ", responseValidador)
+    if (responseValidador.data.msg === "Equipo ya esta Inscrito en un campeonato") {
+      notify('El equipo ya está inscrito en otro campeonato.');
+      return;
     }
+    const response = await axios.get(`${URL_API}/inscripcionEquipos/${cedula}`);
+    console.log('Respuesta al buscar equipo:', response.data);
+
+    if (response.data === 'EQUIPO NO ENCONTRADO') {
+      notify('Equipo no encontrado');
+    } else {
+      notify('Equipo encontrado correctamente');
+      const equipo = response.data.equipo;
+
+    
+      if (!equiposInscritos.some((e) => e.Equipo._id === equipo._id)) {
+        await axios.patch(`${URL_API}/inscripcionEquipos/estado/${equipo._id}`, {
+          estado: true,
+        });
+        console.log('Estado del equipo actualizado a inscrito.');
+
+        await axios.post(`${URL_API}/equipoInscripto`, {
+          Equipo: equipo,
+          idCampeonato: id,
+        });
+        setEquiposInscritos((prev) => [...prev, { Equipo: equipo }]);
+      } else {
+        notify('El equipo ya está inscrito en este campeonato.');
+      }
+    }
+  } catch (error) {
+    console.log(error);
+  } finally {
+    setLoading(false);
+  }
   };
 
   useEffect(() => {

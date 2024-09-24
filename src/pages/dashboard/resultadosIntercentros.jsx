@@ -8,7 +8,9 @@ import { obtenerGanadorFinal } from "../../utils/Intercentros/equipoGanador";
 import axios from "axios";
 import {   Spinner } from '@material-tailwind/react';
 import { CardGanador } from "../../widgets/componentes/Intercentros/CardGanador";
+
 const URL_API = import.meta.env.VITE_API_URL
+
 export const ResultadosIntercentros = () => {
   const [vsEquipos,   setVsEquipos] = useState([]);
   const [modal, setModal] = useState(false);
@@ -43,7 +45,7 @@ export const ResultadosIntercentros = () => {
             setLoading(true)
 
         // 1. Verificar cuántos resultados ya han sido registrados en la base de datos para este campeonato
-        const responseResultados = await axios.get(`${URL_API}/resultadosIntercentros}`, {
+        const responseResultados = await axios.get(`${URL_API}/resultadosIntercentros`, {
           headers: {
             idCampeonato: id,
           },

@@ -131,7 +131,7 @@ export function Tables() {
               <Finalizacion
               tasks={task}
               setControlador={setControlador}
-              controlador={controlador}
+              //controlador={controlador}
               />
           
             </td>

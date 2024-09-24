@@ -22,9 +22,11 @@ export const CronogramasIntercentros=()=> {
                 setVsEquipos(response.data);
                 setLoading(false);
                 console.log(vsEquipos)
+              
                 const vsLength = response.data.filter((item) => item.estado === true);
                 if (vsLength.length === 3) {
                   setTimeout(() => {
+                    sessionStorage.setItem('sorteoRealizado', 'true');
                     navigate(`/campe/resultadosIntercentros/${id}`);
                   }, 700);
                 }
