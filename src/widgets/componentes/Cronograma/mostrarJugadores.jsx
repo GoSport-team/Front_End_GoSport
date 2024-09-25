@@ -111,10 +111,10 @@ const[boton, setBoton]=useState()
         guardarResultado()
         actualizarFase()
         actuEstado()
-        enviarIdsJugadoresDestacados();
-        if (jugadorDestacado.length > 0) {
-            enviarIdsJugadoresDestacados();
-        }
+        // //enviarIdsJugadoresDestacados();
+        // if (jugadorDestacado.length > 0) {
+        //     enviarIdsJugadoresDestacados();
+        // }
         setBotonVer(true)
         setModalIsOpen(false)
     }
@@ -364,30 +364,30 @@ const menosRoja2 = (jugador) => {
     }
 
     // Función para enviar los jugadores destacados
-    const enviarIdsJugadoresDestacados = async () => {
-        try {
-            const idsJugadoresDestacados = jugadorDestacado.map(jugador => jugador._id);
-            const detallesPromesas = idsJugadoresDestacados.map(id =>
-                axios.get(`${URL_API}/usuarios/id/${id}`)
-            );
-            const detallesRespuestas = await Promise.all(detallesPromesas);
-            const detallesJugadores = detallesRespuestas.map(respuesta => respuesta.data);
-            const idCam = localStorage.getItem('ID')
+    // const enviarIdsJugadoresDestacados = async () => {
+    //     try {
+    //         const idsJugadoresDestacados = jugadorDestacado.map(jugador => jugador._id);
+    //         const detallesPromesas = idsJugadoresDestacados.map(id =>
+    //             axios.get(`${URL_API}/usuarios/id/${id}`)
+    //         );
+    //         const detallesRespuestas = await Promise.all(detallesPromesas);
+    //         const detallesJugadores = detallesRespuestas.map(respuesta => respuesta.data);
+    //         const idCam = localStorage.getItem('ID')
 
-            const campeonatoRespuesta = await axios.get(`${URL_API}/campeonato/${idCam}`);
-            const nombreCampeonato = campeonatoRespuesta.data.nombreCampeonato; // Solo obtenemos el nombre
+    //         const campeonatoRespuesta = await axios.get(`${URL_API}/campeonato/${idCam}`);
+    //         const nombreCampeonato = campeonatoRespuesta.data.nombreCampeonato; // Solo obtenemos el nombre
 
-            console.log(idCam)
+    //         console.log(idCam)
 
-            await axios.post(`${URL_API}/jugadorDestacado`, {
-                jugadorDestacado: detallesJugadores,
-                Campeonato: nombreCampeonato
-            });
-            console.log('Detalles de jugadores guardados exitosamente');
-        } catch (error) {
-            console.error("Error al procesar los jugadores destacados:", error);
-        }
-    };
+    //         await axios.post(`${URL_API}/jugadorDestacado`, {
+    //             jugadorDestacado: detallesJugadores,
+    //             Campeonato: nombreCampeonato
+    //         });
+    //         console.log('Detalles de jugadores guardados exitosamente');
+    //     } catch (error) {
+    //         console.error("Error al procesar los jugadores destacados:", error);
+    //     }
+    // };
     useEffect(()=>{
         console.log(resultPenalesEquipo1)
         console.log(resultPenalesEquipo2)
