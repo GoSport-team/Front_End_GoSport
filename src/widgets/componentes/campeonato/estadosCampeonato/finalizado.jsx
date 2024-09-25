@@ -32,7 +32,7 @@ export const Finalizacion = ({ tasks, setControlador }) => {
   }, [tasks]);
 
   useEffect(() => {
-    if (tasks && tasks.estadoCampeonato === 'Finalizacion' || tasks.tipoCampeonato === 'Intercentros' ) {
+    if (tasks && tasks.estadoCampeonato === 'Finalizacion' && tasks.tipoCampeonato === 'Intercentros' ) {
       setEjecucion(true);
     } else {
       setEjecucion(false);
