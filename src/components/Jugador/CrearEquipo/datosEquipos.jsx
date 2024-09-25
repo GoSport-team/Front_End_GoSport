@@ -105,7 +105,7 @@ export const DatosEquipos = () => {
         icon: "success",
         title: response.data.msg,
         confirmButtonText: "OK",
-        confirmButtonColor: "#0837C0",
+        confirmButtonColor: "#12aed1cd",
       })
 
       setTimeout(() => {

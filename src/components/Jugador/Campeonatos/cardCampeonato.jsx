@@ -11,18 +11,31 @@ export default function CardCampeonato({ cedula }) {
   const [data, setData] = useState()
   useEffect(() => {
     const obtenerCampeonatos = async () => {
-      const response = await axios.get(`${URL_API}/campeonato`)
-      if (response == undefined) {
-        setCampenatos(null)
-      } else {
-        const campeonatosFiltradosCreado = response.data.filter(campeonato => campeonato.estadoCampeonato !== 'Creado' && campeonato.estadoCampeonato !== 'Ejecucion');
-        setCampenatos(campeonatosFiltradosCreado)
+      try {
+        const response = await axios.get(`${URL_API}/campeonato`);
+        // console.log("Datos completos de campeonatos:", JSON.stringify(response.data, null, 2));
+  
+        if (response.data) {
+          const campeonatosFiltrados = response.data.filter(campeonato => 
+            (campeonato.tipoCampeonato === 'Interfichas' || campeonato.tipoCampeonato === 'Recreativos') &&
+            campeonato.estadoCampeonato !== 'Creado' &&
+            campeonato.estadoCampeonato !== 'Ejecucion'
+          );
+  
+          // console.log('Campeonatos Filtrados:', JSON.stringify(campeonatosFiltrados, null, 2)); 
+          setCampenatos(campeonatosFiltrados);
+        } else {
+          setCampenatos(null);
+        }
+      } catch (error) {
+        console.error('Error al obtener campeonatos:', error);
+        setCampenatos(null);
       }
-    }
-    obtenerCampeonatos()
-  }, [])
-
-
+    };
+    obtenerCampeonatos();
+  }, []);
+  
+  
   useEffect(() => {
     const validarInscripcion = async () => {
       const responseValidador = await axios.get(`${URL_API}/equipoInscripto/validarInscripcion`, {
@@ -43,7 +56,7 @@ export default function CardCampeonato({ cedula }) {
       title: "Estado Inscrito",
       text: `Ya te encuentras Registrado a un campeonato, espera a que inicie y podras ver el avance del campeonato en la App Movil GoSport`,
       confirmButtonText: "OK",
-      confirmButtonColor: "#04ff00",
+      confirmButtonColor: "#12aed1cd",
       timer: 5000,
       showClass: {
         popup: `
