@@ -27,7 +27,7 @@ export const eliminarJugador = async (indice, jugadores, user) => {
           title: "Jugador borrado correctamente",
           icon: "success",
           confirmButtonText: "OK",
-          confirmButtonColor: "#0837C0",
+          confirmButtonColor: "#12aed1cd",
         });
   
         const nuevosJugadores = jugadores.filter((_, i) => i !== indice);

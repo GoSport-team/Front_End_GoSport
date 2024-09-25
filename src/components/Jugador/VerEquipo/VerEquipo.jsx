@@ -100,8 +100,8 @@ export const VerEquipo = () => {
                 showCancelButton: true,
                 confirmButtonText: "Si",
                 cancelButtonText: "No",
-                confirmButtonColor: "#04ff00",
-                cancelButtonColor: "#d33",
+                confirmButtonColor: "#12aed1cd",
+                cancelButtonColor: "#9e9e9e",
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     const formData = new FormData();
@@ -194,9 +194,9 @@ export const VerEquipo = () => {
           title: "Seguro que deseas actualizar el equipo",
           icon: "question",
           showCancelButton: true,
-          confirmButtonText: "Save",
-          confirmButtonColor: "#04ff00",
-          cancelButtonColor: "#d33",
+          confirmButtonText: "Guardar",
+          confirmButtonColor: "#12aed1cd",
+          cancelButtonColor: "#9e9e9e",
         });
       
         if (result.isConfirmed) {
@@ -207,7 +207,7 @@ export const VerEquipo = () => {
               title: "Equipo actualizado correctamente",
               icon: "success",
               confirmButtonText: "OK",
-              confirmButtonColor: "#0837C0",
+              confirmButtonColor: "#12aed1cd",
             });
       
             setEquipo(response.data);
