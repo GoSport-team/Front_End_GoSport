@@ -103,7 +103,7 @@ const[boton, setBoton]=useState()
             estadoPartido: false,
             idCampeonato:idCampeonato,
             penales: penal,
-            numeroTiros:numeroTiros
+            numeroTiros:numeroTiros,
         })
         setBotonAgregar(false)
     }
@@ -118,82 +118,6 @@ const[boton, setBoton]=useState()
         setBotonVer(true)
         setModalIsOpen(false)
     }
-    // FUNCIONES DE YESI
-    // const gol1 = (jugador) => {
-    //     if (countGol1 >= 0) {
-    //         setCountGol1(countGol1 + 1)
-    //         setJugadorGol1((prevJugador) => [...prevJugador, jugador])
-    //     }
-
-    // }
-
-    // const gol2 = (jugador) => {
-    //     if (countGol2 >= 0) {
-    //         setCountGol2(countGol2 + 1)
-    //         setJugadorGol2((prevJugador) => [...prevJugador, jugador])
-    //     }
-    // }
-    // const menosGol1 = (jugador) => {
-    //     if (jugadorGol1.includes(jugador)) {
-    //         setJugadorGol1((prevJugadores) => prevJugadores.filter(j => j !== jugador));
-    //         setCountGol1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-    //     }
-    // }
-
-    // const menosGol2 = (jugador) => {
-    //     if (jugadorGol2.includes(jugador)) {
-    //         setJugadorGol2((prevJugadores) => prevJugadores.filter(j => j !== jugador));
-    //         setCountGol2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-    //     }
-    // }
-    // const countAmarilla1 = (jugador) => {
-    //     if (amarilla1 >= 0) {
-    //         setJugadorAmarilla1((prevJugador) => [...prevJugador, jugador])
-    //         setAmarilla1(amarilla1 + 1)
-    //     }
-    // }
-    // const countAmarilla2 = (jugador) => {
-    //     if (amarilla2 >= 0) {
-    //         setJugadorAmarilla2((prevJugador) => [...prevJugador, jugador])
-    //         setAmarilla2(amarilla2 + 1)
-    //     }
-    // }
-    // const menosAmarilla1 = (jugador) => {
-    //     if (jugadorAmarilla1.includes(jugador)) {
-    //         setJugadorAmarilla1((prevJugadores) => prevJugadores.filter(j => j !== jugador));
-    //         setAmarilla1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-    //     }
-    // }
-    // const menosAmarilla2 = (jugador) => {
-    //     if (jugadorAmarilla2.includes(jugador)) {
-    //         setJugadorAmarilla2((prevJugadores) => prevJugadores.filter(j => j !== jugador));
-    //         setAmarilla2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-    //     }
-    // }
-    // const countRoja1 = (jugador) => {
-    //     if (roja1 >= 0) {
-    //         setJugadorRoja1((prevJugador) => [...prevJugador, jugador])
-    //         setRoja1(roja1 + 1)
-    //     }
-    // }
-    // const countRoja2 = (jugador) => {
-    //     if (roja2 >= 0) {
-    //         setJugadorRoja2((prevJugador) => [...prevJugador, jugador])
-    //         setRoja2(roja2 + 1)
-    //     }
-    // }
-    // const menosRoja1 = (jugador) => {
-    //     if (jugadorRoja1.includes(jugador)) {
-    //         setJugadorRoja1((prevJugadores) => prevJugadores.filter(j => j !== jugador));
-    //         setRoja1((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-    //     }
-    // }
-    // const menosRoja2 = (jugador) => {
-    //     if (jugadorRoja2.includes(jugador)) {
-    //         setJugadorRoja2((prevJugadores) => prevJugadores.filter(j => j !== jugador));
-    //         setRoja2((prevCount) => (prevCount > 0 ? prevCount - 1 : 0));
-    //     }
-    // }
 
     //Nuevas funciones 
     const gol1 = (jugador) => {
@@ -660,7 +584,7 @@ const menosRoja2 = (jugador) => {
                         setBoton={setBoton}
                         idVs={datosVss._id}
                     />
-                </div>
+                </div> 
             </Modal>
         </>
     )
