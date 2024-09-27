@@ -96,7 +96,7 @@ export const DatosEquipos = () => {
         cedula: user.identificacion,
         imgLogo: respuestaa.data.url,
         idLogo: respuestaa.data.public_id,
-        estado: true,
+        estado: false,
         participantes: jugadoresActuales
       })
 

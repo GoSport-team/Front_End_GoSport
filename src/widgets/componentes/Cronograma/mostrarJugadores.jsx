@@ -6,6 +6,8 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import Penales from './penales';
 import { useAccordion } from '@material-tailwind/react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 Modal.setAppElement('#root');
 const URL_API = import.meta.env.VITE_API_URL
 export const MostrarJugadores = ({ datosVss, setModalIsOpen, modalIsOpen, closeModal, equipo1, equipo2, showPlayersTable2, showPlayers, togglePlayerRows, togglePlayerRowsTable2, setBotonVer ,setBotonAgregar}) => {
@@ -22,7 +24,8 @@ export const MostrarJugadores = ({ datosVss, setModalIsOpen, modalIsOpen, closeM
     const [jugadorAmarilla2, setJugadorAmarilla2] = useState([])
     const [jugadorRoja1, setJugadorRoja1] = useState([])
     const [jugadorRoja2, setJugadorRoja2] = useState([])
-    const [jugadorDestacado, setJugadorDestacado] = useState([])
+    const [jugadorDestacado, setJugadorDestacado] = useState([]);
+    const [jugadoresSeleccionados, setJugadoresSeleccionados] = useState(new Set());
     const [ganador, setGanador] = useState([])
     const [perdedor, setPerdedor] = useState([])
     const [isModalOpenOk, setModalOpenOk] = useState(false);
@@ -350,12 +353,6 @@ const menosRoja2 = (jugador) => {
     }
 };
 
-    
-    
-    const jugadorDes = (jugador) => {
-        setJugadorDestacado((prevJugador) => [...prevJugador, jugador])
-
-    }
     const menosJugadorDes = (jugador) => {
         if (jugadorDestacado.includes(jugador)) {
             setJugadorDestacado((prevJugadores) => prevJugadores.filter(j => j !== jugador));
@@ -363,31 +360,31 @@ const menosRoja2 = (jugador) => {
         }
     }
 
-    // Función para enviar los jugadores destacados
-    // const enviarIdsJugadoresDestacados = async () => {
-    //     try {
-    //         const idsJugadoresDestacados = jugadorDestacado.map(jugador => jugador._id);
-    //         const detallesPromesas = idsJugadoresDestacados.map(id =>
-    //             axios.get(`${URL_API}/usuarios/id/${id}`)
-    //         );
-    //         const detallesRespuestas = await Promise.all(detallesPromesas);
-    //         const detallesJugadores = detallesRespuestas.map(respuesta => respuesta.data);
-    //         const idCam = localStorage.getItem('ID')
+  const enviarIdJugadorDestacado = async (jugadorId) => {
+    try {
+      const response = await axios.post(`${URL_API}/jugadorDestacado`, {
+        jugadorDestacado: [jugadorId] 
+      });
+      //console.log('ID de jugador guardado exitosamente:', jugadorId);
+      toast.success("Jugador destacado enviado correctamente");
+    } catch (error) {
+      //console.error("Error al procesar el jugador destacado:", error.response ? error.response.data : error);
+      toast.warning("Error al procesar el jugador destacado");
+      toast.info("O ya está seleccionado como destacado.");
+    }
+  };
 
-    //         const campeonatoRespuesta = await axios.get(`${URL_API}/campeonato/${idCam}`);
-    //         const nombreCampeonato = campeonatoRespuesta.data.nombreCampeonato; // Solo obtenemos el nombre
-
-    //         console.log(idCam)
-
-    //         await axios.post(`${URL_API}/jugadorDestacado`, {
-    //             jugadorDestacado: detallesJugadores,
-    //             Campeonato: nombreCampeonato
-    //         });
-    //         console.log('Detalles de jugadores guardados exitosamente');
-    //     } catch (error) {
-    //         console.error("Error al procesar los jugadores destacados:", error);
-    //     }
-    // };
+  const manejarSeleccionJugador = (jugador) => {
+    const nuevoSeleccionados = new Set(jugadoresSeleccionados);
+    if (nuevoSeleccionados.has(jugador._id)) {
+      toast.info(`El jugador ${jugador.nombres} ya está seleccionado como destacado`);
+    } else {
+      nuevoSeleccionados.add(jugador._id);
+      enviarIdJugadorDestacado(jugador._id); 
+    }
+    setJugadoresSeleccionados(nuevoSeleccionados);
+  };
+    
     useEffect(()=>{
         console.log(resultPenalesEquipo1)
         console.log(resultPenalesEquipo2)
@@ -499,8 +496,10 @@ const menosRoja2 = (jugador) => {
                                                             </td>
                                                         </td>
                                                         <td className="px-6 py-4">
-                                                            <input onClick={() => jugadorDes(jugador)}
-                                                                type="checkbox"/>
+                                                           <div key={jugador._id} onClick={() => manejarSeleccionJugador(jugador)}
+                                                               className={`w-6 h-6 flex items-center justify-center rounded-full cursor-pointer m-2 transition duration-300 
+                                                              ${jugadoresSeleccionados.has(jugador._id) ? 'bg-green-500' : 'bg-gray-300'}`}>
+                                                          </div>
                                                         </td>
                                                     </tr>
                                                 ))}
@@ -614,10 +613,11 @@ const menosRoja2 = (jugador) => {
                                                             </td>
                                                         </td>
                                                         <td className="px-6 py-4">
-                                                            <input onClick={() => jugadorDes(jugador)}
-                                                                type="checkbox" name="" id="" />
-                                                        </td>
-                                                    </tr>
+                                                           <div key={jugador._id} onClick={() => manejarSeleccionJugador(jugador)}
+                                                               className={`w-6 h-6 flex items-center justify-center rounded-full cursor-pointer m-2 transition duration-300 
+                                                              ${jugadoresSeleccionados.has(jugador._id) ? 'bg-green-500' : 'bg-gray-300'}`}>
+                                                          </div>
+                                                        </td>                          </tr>
                                                 )) : (
                                                     <p className="text-red-500 font-bold text-center">No tiene equipo asignado</p>
                                                 )}
@@ -661,6 +661,7 @@ const menosRoja2 = (jugador) => {
                         idVs={datosVss._id}
                     />
                 </div>
+                <ToastContainer/>
             </Modal>
         </>
     )
