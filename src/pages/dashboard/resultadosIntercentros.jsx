@@ -70,9 +70,11 @@ export const ResultadosIntercentros = () => {
   
           // 4. Actualizar el estado del campeonato a "Finalizado"
           await axios.patch(`${URL_API}/campeonato/${id}`, {
-            estadoCampeonato: "Finalizado",
+            estadoCampeonato: "Finalizacion",
           });
+
           console.log('Estado del campeonato actualizado a "Finalizado"');
+          
         } else {
           console.log('Aún no se han jugado todos los partidos.');
         }
