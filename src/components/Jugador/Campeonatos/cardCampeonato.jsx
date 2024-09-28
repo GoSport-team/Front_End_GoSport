@@ -17,10 +17,11 @@ export default function CardCampeonato({ cedula }) {
   
         if (response.data) {
           const campeonatosFiltrados = response.data.filter(campeonato => 
-            (campeonato.tipoCampeonato === 'Interfichas' || campeonato.tipoCampeonato === 'Recreativos') &&
-            campeonato.estadoCampeonato !== 'Creado' &&
-            campeonato.estadoCampeonato !== 'Ejecucion'
-          );
+            (campeonato.tipoCampeonato === 'Interfichas' && campeonato.estadoCampeonato !== 'Finalizacion') || 
+            (campeonato.tipoCampeonato === 'Recreativos' && 
+             (campeonato.estadoCampeonato === 'Ejecucion' || campeonato.estadoCampeonato !== 'Finalizacion')) &&
+            campeonato.estadoCampeonato !== 'Creado'
+        );           
   
           // console.log('Campeonatos Filtrados:', JSON.stringify(campeonatosFiltrados, null, 2)); 
           setCampenatos(campeonatosFiltrados);
@@ -74,7 +75,35 @@ export default function CardCampeonato({ cedula }) {
       }
     });
   }
-
+  const mensaje = () => {
+    Swal.fire({
+      text: "Puedes ver los resultados de este campeonato en la aplicación móvil GoSport.",
+      imageUrl: 'https://mandalacases.com/cdn/shop/articles/las-mejores-apps-de-futbol.png?v=1645760808&width=1500', 
+      imageWidth: 345, 
+      imageHeight: 300, 
+      imageAlt: 'Celular mostrando la app GoSport',
+      confirmButtonText: "OK",
+      confirmButtonColor: "#9e9e9e",
+      timer: 7000, 
+      showClass: {
+        popup: `
+          animate__animated
+          animate__bounceIn
+          animate__faster
+        `
+      },
+      hideClass: {
+        popup: `
+          animate__animated
+          animate__bounceOut
+          animate__faster
+        `
+      }
+    });
+  };
+  
+  
+  
   console.log(data)
 
   return (
@@ -105,11 +134,12 @@ export default function CardCampeonato({ cedula }) {
 
                 <div className="flex gap-4 mt-4">
                   {campeonato.estadoCampeonato === 'Ejecucion' ? (
-                    <Link to={`/jugador/dashboard/derrotero/${campeonato._id}`}>
-                      <button className="px-6 py-3 text-sm font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-lg transition-all hover:bg-blue-600 hover:shadow-xl focus:opacity-90 focus:shadow-none active:opacity-80 active:shadow-none disabled:pointer-events-none disabled:opacity-50">
-                        Ver Derrotero
-                      </button>
-                    </Link>
+                    <button
+                    onClick={() => mensaje()}
+                    className="px-6 py-3 text-sm font-medium text-white bg-[#12aed1cd] border-none rounded-lg shadow-lg transition-all hover:bg-blue-600 hover:shadow-xl focus:opacity-90 focus:shadow-none active:opacity-80 active:shadow-none disabled:pointer-events-none disabled:opacity-50">
+                    Seguir Campeonato
+                  </button>
+                  
                   ) : validarInscripcion === 'Equipo ya esta Inscrito en un campeonato' ? (
                     <button
                       onClick={() => mensajeInscrito()}
