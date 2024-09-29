@@ -31,24 +31,25 @@ export default function Cronograma() {
     const [controlador, setControlador]= useState()
     const [controlerDatosvss, setControlerDatosvss]= useState(true)
     const[guardar, setGuardar]= useState()
+    const [loading, setLoading]=useState(false)
     useEffect(()=>{
       const GetDatosVs = async()=>{
         try{
+          setLoading(true)
           const Vs= await axios.get(`${URL_API}/vs`,{
             headers:{
               IdFase:IdFasee
             }
           });
           setDatosVs(Vs.data)
-          setIsLoading(true)
         }catch(error){
           console.log(error)
         }finally{
-          setIsLoading(false)
+          setLoading(false)
         }
       }
       GetDatosVs();
-    },[datosVss])
+    },[])
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -85,11 +86,7 @@ export default function Cronograma() {
   return (
     <>
     {/* //CRONOGRAMA */}
-    {isLoading && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50 z-50">
-          <div className="text-white">Cargando...</div>
-        </div>
-      )}
+   
     <div className='w-full h-full'>
     <div className='flex flex-row space-x-4 '>
   {
@@ -109,6 +106,9 @@ export default function Cronograma() {
     )
   }
       </div>
+      {loading && (
+        <Spinner/>
+      )}
 
      <Card className='w-auto h-auto flex justify-center items-center p-2'>
            <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-7">

@@ -141,7 +141,7 @@ export const SignIn = () => {
         {!showLogo ? (
           <div className='flex justify-center items-center'>
             <img className="thunder-image flex h-screen"
-              src="\img\landing\3d.png" alt="img"
+              src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727573189/swpa4f1kuchgsig7q7kz.png" alt="img"
             />
           </div>
         ) : (
