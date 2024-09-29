@@ -23,7 +23,7 @@ export const Ejecucion = ({ tasks }) => {
       } 
     };
     fetchData();
-  });
+  },[tasks]);
 //console.log(fase)
   useEffect(() => {
     if (tasks && tasks.estadoCampeonato === 'Ejecucion'  ) {
@@ -38,11 +38,7 @@ console.log(fase)
       localStorage.setItem('ID', tasks._id);
     }else {
         localStorage.setItem('ID', tasks._id);
-      }
-      if (fase.length > 0) {
         localStorage.setItem('IdFase', fase._id);
-      } else {
-        console.log("Fase no disponible todavía");
       }
     
   };
@@ -51,7 +47,7 @@ console.log(fase)
     <>
       {ejecucion && (
         <div>
-            <Link to={tasks.tipoCampeonato === 'Intercentros' ? `/campe/cronogramaIntercentros/${tasks._id}` : "/campe/cronograma"}  
+            <Link to={tasks.tipoCampeonato === 'Intercentros' ? `/campe/cronogramaIntercentros/${tasks._id}` : `/campe/cronograma`}  
             onClick={handleClick}
             className="w-44 select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
 

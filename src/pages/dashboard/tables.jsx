@@ -25,6 +25,7 @@ export function Tables() {
     const [modalUpdate, setModalUpdate]= useState(false)
     const[campeonato, setCampeonato]= useState([])
    const [controlador, setControlador]= useState()
+   const [controladorCampeonato,setControladorCampeonato]=useState()
     const [loading, setLoading]=useState()
     const [loading2, setLoading2]=useState()
     const [fase, setFase]= useState()
@@ -32,17 +33,19 @@ export function Tables() {
     const fetchTasks = async () => {
       try {
 setLoading(true)
+setControladorCampeonato(true)
         const response = await axios.get(`${URL_API}/campeonato`);
           setTasks(response.data);  
       } catch (error) {
         console.error('Error fetching tasks:', error);
       }finally{
         setLoading(false)
+        setControladorCampeonato(false)
       }
     };
     fetchTasks();
 
-  },[tasks]);
+  },[controladorCampeonato]);
  
     const deleteTasks = async () => {
       try {
