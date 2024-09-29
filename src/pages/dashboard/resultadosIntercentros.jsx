@@ -8,7 +8,9 @@ import { obtenerGanadorFinal } from "../../utils/Intercentros/equipoGanador";
 import axios from "axios";
 import {   Spinner } from '@material-tailwind/react';
 import { CardGanador } from "../../widgets/componentes/Intercentros/CardGanador";
+
 const URL_API = import.meta.env.VITE_API_URL
+
 export const ResultadosIntercentros = () => {
   const [vsEquipos,   setVsEquipos] = useState([]);
   const [modal, setModal] = useState(false);
@@ -43,7 +45,7 @@ export const ResultadosIntercentros = () => {
             setLoading(true)
 
         // 1. Verificar cuántos resultados ya han sido registrados en la base de datos para este campeonato
-        const responseResultados = await axios.get(`${URL_API}/resultadosIntercentros}`, {
+        const responseResultados = await axios.get(`${URL_API}/resultadosIntercentros`, {
           headers: {
             idCampeonato: id,
           },
@@ -68,9 +70,11 @@ export const ResultadosIntercentros = () => {
   
           // 4. Actualizar el estado del campeonato a "Finalizado"
           await axios.patch(`${URL_API}/campeonato/${id}`, {
-            estadoCampeonato: "Finalizado",
+            estadoCampeonato: "Finalizacion",
           });
+
           console.log('Estado del campeonato actualizado a "Finalizado"');
+          
         } else {
           console.log('Aún no se han jugado todos los partidos.');
         }
@@ -141,13 +145,8 @@ useEffect(() => {
   const abrirModal = (id) => {
     setModal(true);
     setidVs(id);
-  //   setLoadingImage(true); // Activar el estado de carga cuando se abre el modal
-
-  //   // Simula un pequeño retraso antes de mostrar la nueva imagen
-  //   setTimeout(() => {
-  //     setLoadingImage(false);
-  //   }, 700);
-  // 
+    console.log(idVs)
+ 
   };
   
   const cerrarModal = () => {
@@ -227,10 +226,10 @@ useEffect(() => {
   loading ? (
     <Spinner className="h-10 w-10 text-blue-500" />
   ) : (
-    <img onClick={() => abrirModal(vs._id)} src="/public/img/intercentros/planilla.png" alt="" className="w-10 h-10 cursor-pointer" />
+    <img onClick={() => abrirModal(vs._id)} src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727107139/zdup3co6la9lfdf8lerg.png" alt="" className="w-10 h-10 cursor-pointer" />
   )
 ) : (
-  <img onClick={() => resultadosModal(vs._id)} src="/public/img/intercentros/cumplimiento.png" alt="" className="w-10 h-10 cursor-pointer" />
+  <img onClick={() => resultadosModal(vs._id)} src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727107244/xtukvmzibk0rign4drlh.png" alt="" className="w-10 h-10 cursor-pointer" />
 )}
         </tr>
       ))}

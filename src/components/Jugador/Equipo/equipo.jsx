@@ -89,7 +89,7 @@ export const TeamJugador = () => {
                                                     <td className="px-6 py-4">{participante.ficha}</td>
                                                     <td className="px-6 py-4">
                                                         <div className="flex items-center justify-center relative">
-                                                            <img src="\public\img\camiseta.png" alt="Camiseta" className="w-9 object-contain" />
+                                                            <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727129984/idcuwc1lrin3tluwnrhc.png" alt="Camiseta" className="w-9 object-contain" />
                                                             <span className="absolute text-black font-bold text">{participante.dorsal}</span>
                                                         </div>
                                                     </td>

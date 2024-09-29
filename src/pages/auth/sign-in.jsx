@@ -141,13 +141,13 @@ export const SignIn = () => {
         {!showLogo ? (
           <div className='flex justify-center items-center'>
             <img className="thunder-image flex h-screen"
-              src="\img\landing\3d.png" alt="img"
+              src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727573189/swpa4f1kuchgsig7q7kz.png" alt="img"
             />
           </div>
         ) : (
           <div className='flex justify-center items-center'>
             <img className='object-cover bounce-animation'
-              src="\public\img\logoGos.png" alt="Logo"
+              src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727105277/ifn8qjflp4vgjbq5xlao.png" alt="Logo"
             />
           </div>
         )}

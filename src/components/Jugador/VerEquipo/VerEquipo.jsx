@@ -100,8 +100,8 @@ export const VerEquipo = () => {
                 showCancelButton: true,
                 confirmButtonText: "Si",
                 cancelButtonText: "No",
-                confirmButtonColor: "#04ff00",
-                cancelButtonColor: "#d33",
+                confirmButtonColor: "#12aed1cd",
+                cancelButtonColor: "#9e9e9e",
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     const formData = new FormData();
@@ -194,9 +194,9 @@ export const VerEquipo = () => {
           title: "Seguro que deseas actualizar el equipo",
           icon: "question",
           showCancelButton: true,
-          confirmButtonText: "Save",
-          confirmButtonColor: "#04ff00",
-          cancelButtonColor: "#d33",
+          confirmButtonText: "Guardar",
+          confirmButtonColor: "#12aed1cd",
+          cancelButtonColor: "#9e9e9e",
         });
       
         if (result.isConfirmed) {
@@ -207,7 +207,7 @@ export const VerEquipo = () => {
               title: "Equipo actualizado correctamente",
               icon: "success",
               confirmButtonText: "OK",
-              confirmButtonColor: "#0837C0",
+              confirmButtonColor: "#12aed1cd",
             });
       
             setEquipo(response.data);
@@ -355,7 +355,7 @@ export const VerEquipo = () => {
                                                 className="py-2 px-4 border-b border-gray-200 hover:bg-gray-100 cursor-pointer"
                                                 onClick={() => eliminarJug(index)}
                                             >
-                                                <img className="w-6 h-6 mx-auto" src="/public/img/carrusel/eliminar.svg" alt="Eliminar" />
+                                                <img className="w-6 h-6 mx-auto" src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727129677/v8somqq37uuq9cb2ju5c.png" alt="Eliminar" />
                                             </td>
                                         ) : ''}
                                     </tr>

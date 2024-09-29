@@ -100,7 +100,7 @@ const handleSelectChange = (e) => {
     <section className="ml-2 mr-2flex-row flex justify-center items-center h-screen">
         <div className="w-2/5 h-screen">
           <img
-            src="/public/img/up3.jpg"
+            src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727106326/erskvq1m7spaugmpzhcz.jpg"
             className="rounded-3xl object-cover w-full h-screen"
             />
         </div>

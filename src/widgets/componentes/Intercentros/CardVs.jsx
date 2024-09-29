@@ -29,7 +29,7 @@ export const CardVs = ({ vs, cambiosRealizados }) => {
           nombre: vs.planilleroNombre || "",
           idPlanillero: vs.idPlanillero,
         });
-        setGuardarExitoso(true); // If the planillero exists, changes have been saved before
+        setGuardarExitoso(true);
       }
       setLoading(false);
     }
@@ -47,9 +47,6 @@ export const CardVs = ({ vs, cambiosRealizados }) => {
 
   const guardarCronograma = async (id) => {
     const { idPlanillero } = nombrePlanillero;
-    if (!idPlanillero) {
-      return notify("Escoge un planillero");
-    }
     if (!hora) {
       return notify("Ingrese hora de juego");
     }
@@ -61,7 +58,7 @@ export const CardVs = ({ vs, cambiosRealizados }) => {
       const response = await axios.patch(`${URL_API}/vsInter/${id}`, {
         hora,
         fecha,
-        idPlanillero,
+        idPlanillero: idPlanillero || null,
         estado,
       });
       cambiosRealizados(true);

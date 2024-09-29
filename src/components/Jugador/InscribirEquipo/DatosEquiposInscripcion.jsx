@@ -86,9 +86,11 @@ export const DatosEquiposInscripcion = () => {
         confirmButtonColor: "#12aed1cd",
       })
     }
-
-
   }
+
+  useEffect(() => {
+    localStorage.setItem('idCampeonato', id);
+  }, [id]);
 
   return (
     <div className="flex items-center bg-white flex-col w-[100vw]">

@@ -21,7 +21,7 @@ export const NavBarJugador = ({ cedula }) => {
   return (
     <nav className="flex items-center justify-between p-4 text-black relative">
       <img className="w-24 h-20 md:w-32 md:h-28"
-        src="/public/img/logoGos.png"
+        src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727105277/ifn8qjflp4vgjbq5xlao.png "
         alt="Logo"
       />
       <div className="hidden md:flex space-x-6 text-lg font-bold text-black pr-10">

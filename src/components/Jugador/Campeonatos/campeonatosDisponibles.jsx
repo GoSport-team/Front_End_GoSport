@@ -10,35 +10,50 @@ import './main.css'
 const URL_API = import.meta.env.VITE_API_URL
 
 export default function CampeonatosDisponibles() {
-  const [user, setUser] = useState()
-  const token = Cookies.get('token')
-  const [equipo, setEquipo] = useState(null)
+  const [user, setUser] = useState();
+  const [equipo, setEquipo] = useState(null);
+  const [tieneEquipo, setTieneEquipo] = useState(false); // Estado para verificar si tiene equipo
+  const token = Cookies.get('token');
+
   useEffect(() => {
     const obtenerUser = async () => {
       const response = await axios.get(`${URL_API}/usuarios/perfil`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
-      })
-      setUser(response.data)
-    }
-    obtenerUser()
-  }, [])
+      });
+      setUser(response.data);
+    };
+    obtenerUser();
+  }, []);
 
   useEffect(() => {
-    const obtnenerEquipo = async () => {
+    const obtenerEquipo = async () => {
       if (user) {
-        console.log(user)
-        const response = await axios.get(`${URL_API}/${user.identificacion}`)
-        console.log(response)
-        if (response.data.msg) {
-          return setEquipo(null)
+        const userId = user._id; // Obtén el ID del jugador
+        try {
+          const equipoResponse = await axios.get(`${URL_API}/equipoInscripto/validarJugador`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              idJugador: userId,
+            }
+          });
+          console.log('Respuesta de la API para validar el equipo:', equipoResponse.data);
+          if (equipoResponse.data.equipo && equipoResponse.data.equipo.length > 0) {
+            setEquipo(equipoResponse.data.equipo[0]);
+            setTieneEquipo(true);
+          } else {
+            setEquipo(null);
+            setTieneEquipo(false);
+          }
+        } catch (error) {
+          console.error('Error al validar el equipo del jugador:', error);
+          setTieneEquipo(false); 
         }
-        setEquipo(response.data)
       }
-    }
-    obtnenerEquipo()
-  }, [user])
+    };
+    obtenerEquipo();
+  }, [user]);
 
   return (
     <>
@@ -52,7 +67,7 @@ export default function CampeonatosDisponibles() {
                 <div class="group flex flex-col justify-start items-start gap-2 w-[50vw] h-[35vh] duration-500 relative rounded-lg p-4 bg-gray-100 hover:-translate-y-2 hover:shadow-xl shadow-gray-300">
                   <div class="absolute duration-700 shadow-md group-hover:-translate-y-4 group-hover:-translate-x-4 -bottom-10 -right-10 w-[30vh] h-1/2 rounded-lg bg-gray-200"
                     alt="image here">
-                    <img src="\public\img\carrusel\cr7.jpg" alt="" className='w-[30vh] h-[19vh] object-cover rounded-xl opacity-90 absolute                                                    '/>
+                    <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727129004/spcvvm0yshwbhflwldqm.jpg" alt="" className='w-[30vh] h-[19vh] object-cover rounded-xl opacity-90 absolute                                                    ' />
                   </div>
 
                   <div class="">
@@ -67,15 +82,12 @@ export default function CampeonatosDisponibles() {
                       tu habilidad en la cancha. ¡Éxito!”
                     </p>
                   </div>
-                  {/* <button class="hover:bg-gray-300 bg-gray-200 text-gray-800 mt-6 rounded p-2 px-6">
-                    Explore
-                  </button> */}
                 </div>
               </div>
               <div className='w-[35vw] flex justify-end mt-9'>
                 <div class="relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
                   <div class="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
-                    <img src="\public\img\carrusel\fubol-sala-futsal.jpg" alt="img" className='object-cover w-full h-full' />
+                    <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727129114/kcku9vu2xgzbk1d3luyz.jpg" alt="img" className='object-cover w-full h-full' />
                   </div>
                   <div class="p-6">
                     <h5 class="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
@@ -85,12 +97,25 @@ export default function CampeonatosDisponibles() {
                       ¡Forma tu equipo de fútbol sala para participar! Si quieres competir y ser parte de un gran equipo, ¡únete a la acción!
                     </p>
                   </div>
-                  <div class="p-6 pt-0">
-                    <Link to={'/jugador/dashboard/crearequipo'}>
-                      <button data-ripple-light="true" type="button" class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
-                        Crear equipo
+                  <div className="p-6 pt-0">
+                    {tieneEquipo ? (
+                      <button
+                        disabled
+                        className='bg-gray-300 text-gray-600 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase'
+                      >
+                        Ya tienes un equipo
                       </button>
-                    </Link>
+                    ) : (
+                      <Link to={'/jugador/dashboard/crearequipo'}>
+                        <button
+                          data-ripple-light="true"
+                          type="button"
+                          className="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        >
+                          Crear equipo
+                        </button>
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>

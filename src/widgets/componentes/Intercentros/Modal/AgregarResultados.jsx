@@ -1,6 +1,8 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { AgregarResultado } from '../../../../utils/Intercentros/AgregarResultado'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const URL_API = import.meta.env.VITE_API_URL
 
 export const AgregarResultados = ({ modal, idVs ,idCampeonato, closeModal, equipos}) => {
@@ -8,6 +10,7 @@ export const AgregarResultados = ({ modal, idVs ,idCampeonato, closeModal, equip
     const [goles, setGoles] = useState([])
     const [amarillas, setAmarillas] = useState([])
     const [rojas, setRojas] = useState([])
+    const [jugadoresSeleccionados, setJugadoresSeleccionados] = useState(new Set());
     useEffect(() => {
         const obtenerVs = async () => {
             if(idVs){
@@ -69,6 +72,33 @@ export const AgregarResultados = ({ modal, idVs ,idCampeonato, closeModal, equip
      }, 500);
     }
 
+
+    const enviarIdJugadorDestacado = async (jugadorId) => {
+        try {
+            const response = await axios.post(`${URL_API}/jugadorDestacado`, {
+                jugadorDestacado: [jugadorId] 
+            });
+            toast.success("Jugador destacado enviado correctamente");
+        } catch (error) {
+            toast.warning("Error al procesar el jugador destacado");
+            toast.info("O ya está seleccionado como destacado.");
+        }
+    };
+
+    const manejarSeleccionJugador = async (jugador) => {
+        const updatedSeleccionados = new Set(jugadoresSeleccionados);
+
+        if (updatedSeleccionados.has(jugador._id)) {
+            updatedSeleccionados.delete(jugador._id);
+        } else {
+            updatedSeleccionados.add(jugador._id);
+            enviarIdJugadorDestacado(jugador._id); 
+        }
+
+        setJugadoresSeleccionados(updatedSeleccionados);
+    };
+
+
     return (
         <>
         
@@ -95,7 +125,7 @@ export const AgregarResultados = ({ modal, idVs ,idCampeonato, closeModal, equip
                                             <th className="border px-2 py-1">Goles</th>
                                             <th className="border px-2 py-1">Amarillas</th>
                                             <th className="border px-2 py-1">Rojas</th>
-
+                                            <th className="border px-2 py-1">Destacado</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -107,6 +137,18 @@ export const AgregarResultados = ({ modal, idVs ,idCampeonato, closeModal, equip
                                                     <td className="border px-2 py-1"><input type="text" className='w-16 ' onChange={(e)=>agregarGoles(integrantes, e.target.value, 'equipo1')} /></td>
                                                     <td className="border px-2 py-1"><input type="text" className='w-16 ' onChange={(e)=>agregarAmarillas(integrantes, e.target.value, 'equipo1')} /></td>
                                                     <td className="border px-2 py-1"><input type="text" className='w-16 ' onChange={(e)=>agregarRojas(integrantes, e.target.value, 'equipo1')}/></td>
+                                                    <td className="border px-2 py-1 flex justify-center">
+                                                        <div 
+                                                            onClick={() => manejarSeleccionJugador(integrantes)}
+                                                            className={`w-6 h-6 flex items-center justify-center rounded-full cursor-pointer m-2 transition duration-300 
+                                                            ${jugadoresSeleccionados.has(integrantes._id) ? 'bg-green-500' : 'bg-gray-300'}`}>
+                                                            {jugadoresSeleccionados.has(integrantes._id) && (
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" clipRule="evenodd" />
+                                                            </svg>
+                                                            )}
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
                                             </>
@@ -133,6 +175,7 @@ export const AgregarResultados = ({ modal, idVs ,idCampeonato, closeModal, equip
                                             <th className="border px-2 py-1">Goles</th>
                                             <th className="border px-2 py-1">Amarillas</th>
                                             <th className="border px-2 py-1">Rojas</th>
+                                            <th className="border px-2 py-1">Destacado</th>
 
                                         </tr>
                                     </thead>
@@ -145,6 +188,18 @@ export const AgregarResultados = ({ modal, idVs ,idCampeonato, closeModal, equip
                                                     <td className="border px-2 py-1"><input type="text" className='w-16 '  onChange={(e)=>agregarGoles(integrantes, e.target.value, 'equipo2')} /></td>
                                                     <td className="border px-2 py-1"><input type="text" className='w-16 '  onChange={(e)=>agregarAmarillas(integrantes, e.target.value, 'equipo2')}/></td>
                                                     <td className="border px-2 py-1"><input type="text" className='w-16 '  onChange={(e)=>agregarRojas(integrantes, e.target.value, 'equipo2')}/></td>
+                                                    <td className="border px-2 py-1 flex justify-center">
+                                                        <div 
+                                                            onClick={() => manejarSeleccionJugador(integrantes)}
+                                                            className={`w-6 h-6 flex items-center justify-center rounded-full cursor-pointer m-2 transition duration-300 
+                                                            ${jugadoresSeleccionados.has(integrantes._id) ? 'bg-green-500' : 'bg-gray-300'}`}>
+                                                            {jugadoresSeleccionados.has(integrantes._id) && (
+                                                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-white" viewBox="0 0 20 20" fill="currentColor">
+                                                                <path fillRule="evenodd" d="M16.707 5.293a1 1 0 00-1.414 0L8 12.586 4.707 9.293a1 1 0 00-1.414 1.414l4 4a1 1 0 001.414 0l8-8a1 1 0 000-1.414z" clipRule="evenodd" />
+                                                            </svg>
+                                                            )}
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
                                             </>
@@ -165,7 +220,7 @@ export const AgregarResultados = ({ modal, idVs ,idCampeonato, closeModal, equip
             </div>
             </div>
             )}
-
+            <ToastContainer/>
             
                    </>
     )
