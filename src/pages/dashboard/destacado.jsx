@@ -130,7 +130,7 @@ export function JugadorDestacado() {
 
                                 <Button
                                     onClick={() => eliminarJugadorDestacado(item._id)} 
-                                    className="mt-2 bg-gray-100 text-black"
+                                    className="mt-2 bg-[#12aed1cd]  text-white"
                                 >
                                     Eliminar Jugador
                                 </Button>
