@@ -39,8 +39,8 @@ setControladorCampeonato(true)
       } catch (error) {
         console.error('Error fetching tasks:', error);
       }finally{
-        setLoading(false)
         setControladorCampeonato(false)
+        setLoading(false)
       }
     };
     fetchTasks();
@@ -87,7 +87,7 @@ setControladorCampeonato(true)
         <Typography variant="h6" color="blue-gray" className="text-3xl mb-10 text-center">
           Visualiza, crea y administra todos los campeonatos desde aquí.
         </Typography>
-
+ 
     <div className="flex justify-start mb-4">
       <button class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
         <Link to="/dashboard/tables/view">Crear Campeonato</Link>
@@ -105,7 +105,7 @@ setControladorCampeonato(true)
       </tr>
     </thead>
     <tbody>
-   
+ 
       {tasks.length > 0 ? (
         tasks.map(task => (
           <tr key={task._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -151,12 +151,15 @@ setControladorCampeonato(true)
       ) : (
         
         <tr>
-          {loading2&&(
-          <Spinner/>
-              )}
           <td colSpan="4" className="text-center py-4">
-            <h1>No hay campeonatos creados</h1>
-          </td>
+    {loading ? (
+      <div className="flex justify-center items-center h-24">
+        <Spinner className="w-16 h-16" />
+      </div>
+    ) : (
+      <h1>No hay campeonatos creados</h1>
+    )}
+  </td>
         </tr>
       )}
     </tbody>

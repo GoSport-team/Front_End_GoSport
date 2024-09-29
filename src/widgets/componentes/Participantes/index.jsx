@@ -1,10 +1,12 @@
 'use client'
 
 
-export default function Participantes({ equipo, id, modal, setShowConfirmModalEliminar, setIdInscripto , botonEliminar}) {
+export default function Participantes({ equipo, id,modal, setShowConfirmModalEliminar, setIdInscripto , botonEliminar, setIdEquipo}) {
+    
     const handleEliminarClick = () => {
         setShowConfirmModalEliminar(true)
         setIdInscripto(id)
+        setIdEquipo(equipo._id)
 
     }
  

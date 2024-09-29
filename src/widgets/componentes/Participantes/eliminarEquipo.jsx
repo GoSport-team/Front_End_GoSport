@@ -4,9 +4,9 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 const URL_API = import.meta.env.VITE_API_URL
 
-export const EliminarEquipo = ({ showConfirmModal, id, setShowConfirmModalEliminar ,setIsLoadingPar, setControlador}) => {
+export const EliminarEquipo = ({ showConfirmModal, id, setShowConfirmModalEliminar ,setIsLoadingPar, setControlador,idEquipo}) => {
 
-
+console.log(id)
   const eliminarEquipo = async () => {
     try {
       setIsLoadingPar(true)
@@ -27,9 +27,21 @@ export const EliminarEquipo = ({ showConfirmModal, id, setShowConfirmModalElimin
       setControlador(false)
     }
   };
-
+  const actuEstado= async()=>{
+    try{
+      const response = await axios.patch(`${URL_API}/inscripcionEquipos/estado/${idEquipo}`,{
+        estado:false
+      })
+      console.log(response)
+    }catch(error){
+      console.log(error)
+    }
+  }
+ 
+  
   const handleConfirmEliminar = () => {
     eliminarEquipo();
+    actuEstado()
     setControlador(true)
     setShowConfirmModalEliminar(false);
   };

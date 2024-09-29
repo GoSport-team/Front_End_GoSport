@@ -25,6 +25,7 @@ const [botonEliminar, setBotonEliminar]= useState()
 const [botonAgregar, setBotonAgregar]= useState()
 const [estadoCam, setEstadoCam]=useState('Ejecucion')
 const [controlador, setControlador]= useState()
+const [idEquipo, setIdEquipo] = useState()
 
 
 useEffect(()=>{
@@ -61,6 +62,7 @@ const handleSubmit = async () => {
       console.error('Error public campeonato:', error);
   }
 };
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -145,7 +147,7 @@ const handleSubmit = async () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-0">
             {equipoInscripto.map((equipo) => (
               <div key={equipo._id} className="flex justify-center items-center z-0">
-               <Participantes equipo={equipo.Equipo} id={equipo._id} modal={() => openModal(equipo.Equipo)}  setShowConfirmModalEliminar={setShowConfirmModalEliminar} setIdInscripto={setIdInscripto} botonEliminar={botonEliminar} />
+               <Participantes equipo={equipo.Equipo} id={equipo._id} modal={() => openModal(equipo.Equipo)}  setShowConfirmModalEliminar={setShowConfirmModalEliminar} setIdInscripto={setIdInscripto} botonEliminar={botonEliminar} setIdEquipo={setIdEquipo}/>
               </div>
             ))}
           </div>
@@ -157,7 +159,7 @@ const handleSubmit = async () => {
           showConfirmModalEliminar&&(
 
             <EliminarEquipo  showConfirmModal={showConfirmModalEliminar}  id={idInscripto} setShowConfirmModalEliminar={setShowConfirmModalEliminar}
-            setIsLoadingPar={setIsLoading} setControlador={setControlador}/>
+            setIsLoadingPar={setIsLoading} setControlador={setControlador} idEquipo={idEquipo}/>
           )
         }
  {selectedEquipo && (
