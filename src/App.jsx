@@ -13,6 +13,7 @@ import InicioPassword from "./widgets/componentes/RecuperarContraseña/home";
 import TeamJugador from "./components/Jugador/Equipo/equipo";
 import ResPart from "./widgets/componentes/ParticantesResultados";
 import { EquiposCampeonatos } from "./pages/landing/InfoCampeonatos/EquiposCampeonatos";
+import { VsCampeonatos } from "./pages/landing/InfoCampeonatos/VsCampeonatos";
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
       <Route path="/contraseña" element={<InicioPassword/>} />
       <Route path="/jugador/dashboard/Jugador" element={<TeamJugador/>} />
       <Route path="/equiposcampeonato/:id" element={<EquiposCampeonatos/>} />
+      <Route path="/vscampeonato/:id" element={<VsCampeonatos/>} />
       <Route path="/part" element={<ResPart/>} />
     </Routes>
     </AgregarProvider>

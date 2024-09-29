@@ -1,44 +1,38 @@
+import { Button } from '@material-tailwind/react'
 import React from 'react'
+import { Navbar } from './NavBar'
+import { useParams } from 'react-router-dom'
 
-export default function EquiposVer() {
+export default function EquiposVer({equipo}) {
+    console.log(equipo)
+    const { id } = useParams()
     return (
-        <div className="w-[50vw] p-4">
-            <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-                <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <caption className="p-5 text-lg font-semibold text-left rtl:text-right text-gray-900 bg-white dark:text-white dark:bg-gray-800">
-                        Equipos Inscritos
-                        <p className="mt-3 text-sm font-normal text-gray-500 dark:text-gray-400">
-                            A continuación se muestra la lista de equipos inscritos. Puedes ver los detalles de cada equipo, incluyendo su imagen y nombre, para estar al tanto de los participantes.
-                        </p>
-                    </caption>
-
-                    <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" className="px-6 py-3">Nombre Equipo</th>
-                            <th scope="col" className="px-6 py-3">Logo</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Colombia
-                            </th>
-                            <td className="px-6 py-4">
-                                <img className="object-cover w-10" src="https://th.bing.com/th/id/R.1d3a429d698fba6f411fa23c3f18a821?rik=GtP2rPW4iG%2bOkQ&pid=ImgRaw&r=0" alt="img" />
-                            </td>
-                        </tr>
-                        <tr className="bg-white dark:bg-gray-800">
-                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                Brazil
-                            </th>
-                            <td className="px-6 py-4">
-                                <img className="object-cover w-10" src="https://th.bing.com/th/id/R.c2dfc3547350b7fd145986c98524b0ac?rik=Av0GNgCNWugV0g&pid=ImgRaw&r=0" alt="img" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <div className="w-full lg:w-[50vw] p-4">
+           <Navbar id={id}/>
+        {equipo && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {equipo.map((equipo, index) => (
+              <div key={index} className="p-4 bg-white rounded-lg shadow-md dark:bg-gray-800">
+                <div className="flex items-center space-x-4">
+                  <img
+                    className="object-cover w-16 h-16 rounded-full"
+                    src={equipo.Equipo.imgLogo}
+                    alt={`${equipo.Equipo.nombreEquipo} logo`}
+                  />
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                      {equipo.Equipo.nombreEquipo}
+                    </h3>
+                  </div>
+                </div>
+                <p className="mt-3 text-sm text-gray-500 dark:text-gray-400">
+                  Equipo inscrito para la competencia. Revisa más detalles de los participantes.
+                </p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      
     )
 }

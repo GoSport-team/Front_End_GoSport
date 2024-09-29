@@ -13,7 +13,6 @@ export const Campeonatos = () => {
         const obtenerCampeonatos = async () => {
           try {
             const response = await axios.get(`${URL_API}/campeonato`);
-            
               setCampeonatos(response.data);              
           } catch (error) {
             console.error('Error fetching tasks:', error);
