@@ -163,7 +163,7 @@ export default function Landing() {
       </div>
       <div class="bg-white w-full h-full flex flex-col justify-center">
         <section className="mt-2 w-[100vw] h-auto flex flex-col md:flex-row gap-5 justify-center items-center mr-16">
-          <div className="w-full md:w-[45vw] h-full flex justify-center items-center rounded-xl drop-shadow-xl hidden md:flex" data-aos="fade-right">
+          <div className="w-full md:w-[45vw] h-full flex justify-center items-center rounded-xl drop-shadow-xl md:flex" data-aos="fade-right">
             <img className="AnimacionImagenOrganizadores w-3/4" src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727105183/kbcmiuy3cowbre7dqvhx.png" alt="img" />
           </div>
           <div className="flex flex-col mb-5 pb-5 w-full md:w-[55vw] items-center md:items-start justify-center">

@@ -11,6 +11,7 @@ import { CrearPlanillero } from "./widgets/componentes/Planillero/CrearPlaniller
 import { AgregarProvider } from "./context/parContext";
 import InicioPassword from "./widgets/componentes/RecuperarContraseña/home";
 import TeamJugador from "./components/Jugador/Equipo/equipo";
+import ResPart from "./widgets/componentes/ParticantesResultados";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
       <Route path="/planillero/agregar" element={<CrearPlanillero />} />
       <Route path="/contraseña" element={<InicioPassword/>} />
       <Route path="/jugador/dashboard/Jugador" element={<TeamJugador/>} />
+      <Route path="/part" element={<ResPart/>} />
     </Routes>
     </AgregarProvider>
    

@@ -40,12 +40,15 @@ const CarouselLanding = () => {
                         </div>
 
                         <div className="w-full md:w-1/2 h-[90vh] grid place-content-center">
-                            <div className="flex flex-col md:flex-row gap-6">
-                                <Targetas />
-                                <div className="hidden md:block">
-                                    <MatchDetails />
+                            <Link to={`/part`}>
+                                <div className="flex flex-col md:flex-row gap-6">
+                                    <Targetas />
+                                    <div className="hidden md:block">
+                                        <MatchDetails />
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
+
                         </div>
                     </div>
                 </div>
