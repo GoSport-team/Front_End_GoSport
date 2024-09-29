@@ -105,6 +105,12 @@ export  const routeCampeonato=[
       },
       {
       
+        name: "participante",
+        path: "/participante",
+        element: <Participante/>
+      },
+      {
+      
         name: "resultadosIntercentros",
         path: "/resultadosIntercentros/:id",
         element: <ResultadosIntercentros/>
