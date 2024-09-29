@@ -37,7 +37,7 @@ const CarouselLanding = () => {
                 <div className="flex items-center justify-center h-[90vh] bg-white">
                     <div className="flex w-full">
                         <div className="w-1/2 h-[90vh] hidden md:grid place-content-center">
-                            <img className="object-cover w-[60vh]" src="public/img/Neymar.png" alt="img Jugador" />
+                            <img className="object-cover w-[60vh]" src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727572099/psiba7icmetwf0fqpnin.png" alt="img" />
                         </div>
 
                         <div className="w-full md:w-1/2 h-[90vh] grid place-content-center">
