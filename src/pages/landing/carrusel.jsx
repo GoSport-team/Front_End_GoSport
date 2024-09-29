@@ -5,6 +5,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { Link } from 'react-router-dom';
 import Targetas from "@/widgets/componentes/landing/Cards";
 import MatchDetails from "@/widgets/componentes/landing/lives";
+import { Campeonatos } from "./InfoCampeonatos/Campeonatos";
 
 const CarouselLanding = () => {
     const settings = {
@@ -54,16 +55,8 @@ const CarouselLanding = () => {
                 </div>
 
                 <div className="flex items-center justify-center h-[90vh] bg-white">
-                    <div className="flex flex-col md:flex-row w-full h-full">
-                        <div className="w-full md:w-1/2 h-[45vh] md:h-full grid place-content-center">
-                            <img className="object-cover w-[50vw] md:w-[25vw]" src="public/img/qr.png" alt="QR" />
-                        </div>
-                        <div className="w-full md:w-1/2 h-[45vh] md:h-full grid place-content-center">
-                            <img className="object-cover  w-[60vw] md:w-[30vw]" src="public/img/cr7.png" alt="img Jugador" />
-                        </div>
-                    </div>
+                   <Campeonatos/>
                 </div>
-
             </Slider>
         </div>
     );
