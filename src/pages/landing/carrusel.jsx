@@ -20,9 +20,9 @@ const CarouselLanding = () => {
     };
 
     return (
-        <div className="w-full h-[90vh]">
+        <div className="overflow-hidden h-[90vh] bg-white">
             <Slider {...settings}>
-                <div className="h-[90vh] w-screen bg-[url('/img/fondo3.png')] bg-cover bg-center">
+                <div className="h-[90vh] bg-[url('/img/fondo3.png')] bg-cover bg-center">
                     <div className="flex flex-col items-start justify-end h-full w-full p-10">
                         <p className="text-shadow-black text-black text-3xl w-[90%] sm:w-[80%] md:w-[60%] lg:w-[33rem] text-[1.2rem] sm:text-[1.4rem] md:text-[1.6rem] lg:text-[1.9rem] font-sans sm:leading-[1.6] md:leading-[1.7] tracking-[0.5px] sm:tracking-[0.75px] md:tracking-[1px]">
                             Crea campeonatos inolvidables. ¡Dale vida a la competencia y eleva el espíritu deportivo! ¿Estás listo para ser parte de la experiencia?
@@ -35,27 +35,29 @@ const CarouselLanding = () => {
                     </div>
                 </div>
                 <div className="flex items-center justify-center h-[90vh] bg-white">
-                    <div className="flex w-full">
-                        <div className="w-1/2 h-[90vh] hidden md:grid place-content-center">
-                            <img className="object-cover w-[60vh]" src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727572099/psiba7icmetwf0fqpnin.png" alt="img" />
+                    <div className="flex w-full h-full">
+                        <div className="w-1/2 h-full hidden md:grid place-content-center">
+                            <img className="object-cover w-full h-full" src="https://res.cloudinary.com/dbgj8dqup/image/upload/v1727633634/uploads/cy0rw5kzclhvzjyt9s7q.png" alt="img" />
                         </div>
 
-                        <div className="w-full md:w-1/2 h-[90vh] grid place-content-center">
+                        <div className="md:w-1/2 w-full h-full grid place-content-center">
                             <Link to={`/part`}>
-                                <div className="flex flex-col md:flex-row gap-6">
-                                    <Targetas />
+                                <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full">
+                                    <div className="w-full md:w-auto flex justify-center">
+                                        <Targetas />
+                                    </div>
                                     <div className="hidden md:block">
                                         <MatchDetails />
                                     </div>
                                 </div>
                             </Link>
-
                         </div>
                     </div>
                 </div>
 
+
                 <div className="flex items-center justify-center h-[90vh] bg-white">
-                   <Campeonatos/>
+                    <Campeonatos />
                 </div>
             </Slider>
         </div>
