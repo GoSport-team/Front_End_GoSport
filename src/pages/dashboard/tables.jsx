@@ -1,4 +1,4 @@
-
+import { Spinner } from "@material-tailwind/react"
 import { useState, useEffect } from 'react';
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -25,22 +25,24 @@ export function Tables() {
     const [modalUpdate, setModalUpdate]= useState(false)
     const[campeonato, setCampeonato]= useState([])
    const [controlador, setControlador]= useState()
-    
+    const [loading, setLoading]=useState()
+    const [loading2, setLoading2]=useState()
+    const [fase, setFase]= useState()
   useEffect(() => {
     const fetchTasks = async () => {
       try {
+setLoading(true)
         const response = await axios.get(`${URL_API}/campeonato`);
-        
-          setTasks(response.data);
-          setControlador(true)
-          
+          setTasks(response.data);  
       } catch (error) {
         console.error('Error fetching tasks:', error);
+      }finally{
+        setLoading(false)
       }
     };
     fetchTasks();
 
-  });
+  },[tasks]);
  
     const deleteTasks = async () => {
       try {
@@ -59,6 +61,7 @@ export function Tables() {
 
     const viewCampeonato=async(id)=>{
       try{
+        setLoading2(true)
   const response = await axios.get(`${URL_API}/campeonato/${id}`);
   console.log(response.data)
    setCampeonato(response.data)
@@ -66,11 +69,16 @@ export function Tables() {
     }catch(error){
   console.error('Error fetching tasks:', error);
   toast.error('Error al abrir el campeonato. Inténtalo de nuevo.');
+      }finally{
+        setLoading2(false)
       }
 
     }
+    
+    //console.log("idFase "+fase)
   return (
     <>
+  
       <div className="mb-8 flex flex-col ">
         
         <Typography variant="h6" color="blue-gray" className="text-3xl mb-10 text-center">
@@ -94,6 +102,7 @@ export function Tables() {
       </tr>
     </thead>
     <tbody>
+   
       {tasks.length > 0 ? (
         tasks.map(task => (
           <tr key={task._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -126,8 +135,7 @@ export function Tables() {
               />
               <Ejecucion
               tasks={task}
-              setControlador={setControlador}
-              controlador={controlador} />
+               />
               <Finalizacion
               tasks={task}
               setControlador={setControlador}
@@ -138,7 +146,11 @@ export function Tables() {
           </tr>
         ))
       ) : (
+        
         <tr>
+          {loading2&&(
+          <Spinner/>
+              )}
           <td colSpan="4" className="text-center py-4">
             <h1>No hay campeonatos creados</h1>
           </td>
