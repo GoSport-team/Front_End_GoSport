@@ -11,7 +11,6 @@ export const AgregarResultado = async(equipo1, equipo2, goles, amarillas, rojas,
         estado:false
     })
     
-    
     const golesE1 = goles.filter(item=> item.equipo == 'equipo1')
     const amarillasE1 = amarillas.filter((item)=> item.equipo == 'equipo1')
     const rojasE1 = rojas.filter((item)=> item.equipo == 'equipo1')
@@ -20,7 +19,7 @@ export const AgregarResultado = async(equipo1, equipo2, goles, amarillas, rojas,
     const rojasE2 = rojas.filter((item)=> item.equipo == 'equipo2')
     //vereficar ganador
     const resultado = calcularPuntos(golesE1, golesE2)
-
+    
     const response = await axios.post(`${URL_API}/resultadosInterCentros`,{
         equipo1:{
             equipo1,

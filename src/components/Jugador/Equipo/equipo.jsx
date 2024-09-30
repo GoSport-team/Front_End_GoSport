@@ -54,19 +54,33 @@ export const TeamJugador = () => {
         <>
             <ToastContainer />
             <div className="flex justify-center items-center min-h-screen bg-gray-100 p-6">
-                <div className="bg-white rounded-lg shadow-lg p-8 w-[80vw]">
+                <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-[80vw]">
                     {equipo ? (
-                        <div className="flex flex-row justify-between">
+                        <div className="flex flex-col md:flex-row justify-between">
                             {/* Información del equipo */}
                             <div className="flex-1 flex flex-col items-center mb-6 text-start">
-                                <img src={equipo.imgLogo} alt={equipo.nombreEquipo} className="w-32 h-32 rounded-full shadow-md mb-4" />
+                                <img
+                                    src={equipo.imgLogo}
+                                    alt={equipo.nombreEquipo}
+                                    className="w-32 h-32 rounded-full shadow-md mb-4"
+                                />
                                 <h2 className="text-3xl font-bold text-gray-800">{equipo.nombreEquipo}</h2>
                                 <div className="mt-4 space-y-2">
-                                    <p className="text-lg text-gray-600"><strong>Capitán:</strong> {equipo.nombreCapitan}</p>
-                                    <p className="text-lg text-gray-600"><strong>Cédula:</strong> {equipo.cedula}</p>
-                                    <p className="text-lg text-gray-600"><strong>Contacto 1:</strong> {equipo.contactoUno}</p>
-                                    <p className="text-lg text-gray-600"><strong>Contacto 2:</strong> {equipo.contactoDos}</p>
-                                    <p className="text-lg text-gray-600"><strong>Estado:</strong> {equipo.estado ? 'Activo' : 'Inactivo'}</p>
+                                    <p className="text-lg text-gray-600">
+                                        <strong>Capitán:</strong> {equipo.nombreCapitan}
+                                    </p>
+                                    <p className="text-lg text-gray-600">
+                                        <strong>Cédula:</strong> {equipo.cedula}
+                                    </p>
+                                    <p className="text-lg text-gray-600">
+                                        <strong>Contacto 1:</strong> {equipo.contactoUno}
+                                    </p>
+                                    <p className="text-lg text-gray-600">
+                                        <strong>Contacto 2:</strong> {equipo.contactoDos}
+                                    </p>
+                                    <p className="text-lg text-gray-600">
+                                        <strong>Estado:</strong> {equipo.estado ? 'Activo' : 'Inactivo'}
+                                    </p>
                                 </div>
                             </div>
 
@@ -77,20 +91,28 @@ export const TeamJugador = () => {
                                     <table className="w-full text-sm text-left text-gray-500">
                                         <thead className="text-xs text-gray-700 uppercase bg-gray-100">
                                             <tr>
-                                                <th scope="col" className="px-6 py-3 rounded-s-lg">Nombre</th>
-                                                <th scope="col" className="px-6 py-3">Ficha</th>
-                                                <th scope="col" className="px-6 py-3">Dorsal</th>
+                                                <th scope="col" className="px-4 py-3 rounded-s-lg">Nombre</th>
+                                                <th scope="col" className="px-4 py-3">Ficha</th>
+                                                <th scope="col" className="px-4 py-3">Dorsal</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {equipo.participantes.map(participante => (
                                                 <tr key={participante._id} className="bg-white hover:bg-gray-100">
-                                                    <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">{participante.nombres}</th>
-                                                    <td className="px-6 py-4">{participante.ficha}</td>
-                                                    <td className="px-6 py-4">
+                                                    <th scope="row" className="px-4 py-4 font-medium text-gray-900 whitespace-nowrap">
+                                                        {participante.nombres}
+                                                    </th>
+                                                    <td className="px-4 py-4">{participante.ficha}</td>
+                                                    <td className="px-4 py-4">
                                                         <div className="flex items-center justify-center relative">
-                                                            <img src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727129984/idcuwc1lrin3tluwnrhc.png" alt="Camiseta" className="w-9 object-contain" />
-                                                            <span className="absolute text-black font-bold text">{participante.dorsal}</span>
+                                                            <img
+                                                                src="https://res.cloudinary.com/dwpi4aubh/image/upload/v1727129984/idcuwc1lrin3tluwnrhc.png"
+                                                                alt="Camiseta"
+                                                                className="w-9 object-contain"
+                                                            />
+                                                            <span className="absolute text-black font-bold">
+                                                                {participante.dorsal}
+                                                            </span>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -101,11 +123,15 @@ export const TeamJugador = () => {
                             </div>
                         </div>
                     ) : (
-                        <div className="flex  justify-center items-center gap-7">
+                        <div className="flex flex-col justify-center items-center gap-7 text-center">
                             <p>No Tienes equipo. Crea Uno</p>
                             <div>
                                 <Link to={'/jugador/dashboard/crearequipo'}>
-                                    <button data-ripple-light="true" type="button" class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                                    <button
+                                        data-ripple-light="true"
+                                        type="button"
+                                        className="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center font-sans text-xs font-bold uppercase text-white shadow-md transition-all hover:shadow-lg focus:opacity-85 active:opacity-85 disabled:pointer-events-none disabled:opacity-50"
+                                    >
                                         Crear equipo
                                     </button>
                                 </Link>
@@ -114,6 +140,7 @@ export const TeamJugador = () => {
                     )}
                 </div>
             </div>
+
         </>
     );
 };
