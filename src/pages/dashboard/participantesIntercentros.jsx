@@ -112,6 +112,31 @@ export const ParticipantesIntercentros = () => {
       setSorteo(false);
     }
   }, [equiposInscritos]);
+  
+  const fetchInterfichasByYear = async (year) => {
+    try {
+      const response = await axios.get(`${URL_API}/campeonatos/interfichas/${year}`);
+      console.log('Campeonatos interfichas:', response.data);
+
+      if (response.data.length > 0) {
+        const campeonatosConGanadores = response.data.filter(
+          (campeonato) => campeonato.ganador // Filtra campeonatos que tienen un ganador
+        );
+
+        if (campeonatosConGanadores.length > 0) {
+          // Maneja los campeonatos con ganadores
+          notify('Se encontraron campeonatos con ganadores.');
+        } else {
+          notify('No hay ganadores para los campeonatos de interfichas este año.');
+        }
+      } else {
+        notify('No se encontraron campeonatos de interfichas para este año.');
+      }
+    } catch (error) {
+      console.log('Error al obtener campeonatos interfichas:', error);
+    }
+  };
+
 
   const sorteoIntercentros = async () => {
     if (equiposInscritos.length >= 3) {
@@ -139,9 +164,17 @@ export const ParticipantesIntercentros = () => {
 
   return (
     <div className='bg-white rounded-xl w-full h-screen m-3 flex flex-col justify-center items-center'>
+     
       <ToastContainer />
       <Typography className='m-4 text-center font-bold text-2xl'>Buscar equipo</Typography>
+     
       <article className='w-full flex flex-col justify-center items-center'>
+      <button
+      type="button"
+      className="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2"
+      onClick={() => fetchInterfichasByYear(new Date().getFullYear())}>
+         Obtener Campeonatos Interfichas
+         </button>
         {loading ? (
           <div className="flex justify-center items-center h-72">
             <Spinner className='h-12 w-12 text-blue-500' />
@@ -151,7 +184,8 @@ export const ParticipantesIntercentros = () => {
             {sorteo ? (
               ''
             ) : equipos.length < 3 && equiposInscritos.length < 3 ? (
-              <form className="w-full mt-5">
+              <form className="w-full mt-5 flex flex-col justify-center items-center">
+          
                 <div className='w-full flex justify-center items-center'>
                   <label htmlFor="buscar_equipo" className="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
                   <div className="relative w-2/4">

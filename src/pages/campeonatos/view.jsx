@@ -82,6 +82,7 @@ const CreateCampeonato = () => {
             finInscripcion,
             añoCreacion,
         };
+        localStorage.setItem("Añocampeonato",añoCreacion)
         const faseData = {
             estado,
             nombre,
