@@ -41,23 +41,31 @@ const CarouselLanding = () => {
                         </div>
 
                         <div className="md:w-1/2 w-full h-full grid place-content-center">
-                            <Link to={`/part`}>
-                                <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full">
-                                    <div className="w-full md:w-auto flex justify-center">
-                                        <Targetas />
-                                    </div>
-                                    <div className="hidden md:block">
-                                        <MatchDetails />
-                                    </div>
+                            <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full">
+                                <div className="w-full md:w-auto flex justify-center">
+                                    <Targetas />
                                 </div>
-                            </Link>
+                                <div className="hidden md:block">
+                                    <MatchDetails />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-
                 <div className="flex items-center justify-center h-[90vh] bg-white">
-                    <Campeonatos />
+                    <div className="flex w-full h-full">
+                        <div className="md:w-1/2 w-full h-full grid place-content-center">
+                            <h1 className="text-2xl font-bold text-blue-gray-800 mb-4 text-center border-b-2 border-blue-gray-200 pb-2">
+                                Campeonatos Disponibles
+                            </h1>
+                            <div className="flex flex-col md:flex-row gap-6 justify-center items-center w-full">
+                                <Campeonatos />
+                            </div>
+                        </div>
+                        <div className="w-1/2 h-full hidden md:grid place-content-center">
+                            <img className="object-cover w-full h-full" src="https://res.cloudinary.com/dbgj8dqup/image/upload/v1727710845/uploads/ksxubvnqlbecqzvottex.png" alt="img" />
+                        </div>
+                    </div>
                 </div>
             </Slider>
         </div>
