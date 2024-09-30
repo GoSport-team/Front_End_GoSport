@@ -13,7 +13,8 @@ export const Campeonatos = () => {
         const obtenerCampeonatos = async () => {
           try {
             const response = await axios.get(`${URL_API}/campeonato`);
-              setCampeonatos(response.data);              
+            const campeonatos = response.data.filter((cam)=> cam.tipoCampeonato !=='Intercentros')
+              setCampeonatos(campeonatos);              
           } catch (error) {
             console.error('Error fetching tasks:', error);
           }
