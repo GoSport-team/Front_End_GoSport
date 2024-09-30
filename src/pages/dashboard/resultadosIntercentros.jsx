@@ -175,12 +175,6 @@ useEffect(() => {
 
   return (
     <>
-    {/* {
-      loading?(
-        <div className="flex justify-center items-center h-72">
-        <Spinner className="h-12 w-12 text-blue-500" />
-      </div>
-      ):( */}
         <div className='w-full h-full  bg-white p-4 rounded-lg '>
         <button
           onClick={() => setModalPosiciones(true)}

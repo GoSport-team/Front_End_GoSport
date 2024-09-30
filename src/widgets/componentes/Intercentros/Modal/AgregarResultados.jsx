@@ -64,14 +64,12 @@ export const AgregarResultados = ({ modal, idVs ,idCampeonato, closeModal, equip
      AgregarResultado(vs.equipo1, vs.equipo2,goles, amarillas,rojas, idVs, idCampeonato, equipos)
 
      setTimeout(() => {
-        //actualizarPartido()
          closeModal()
          setGoles([])
          setAmarillas([])
          setRojas([])
-     }, 500);
+     }, 800);
     }
-
 
     const enviarIdJugadorDestacado = async (jugadorId) => {
         try {
