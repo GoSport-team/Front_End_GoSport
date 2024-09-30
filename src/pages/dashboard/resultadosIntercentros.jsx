@@ -22,6 +22,8 @@ export const ResultadosIntercentros = () => {
   const [loading, setLoading] = useState(true);
   const { id } = useParams();
   const [equipoGanador, setEquipoGanador] = useState(false)
+  const [yaEjecutado, setYaEjecutado] = useState(false);
+
 
   const [posicionesGuardadas, setPosicionesGuardadas] = useState(false);
 
@@ -72,9 +74,18 @@ export const ResultadosIntercentros = () => {
           await axios.patch(`${URL_API}/campeonato/${id}`, {
             estadoCampeonato: "Finalizacion",
           });
-
           console.log('Estado del campeonato actualizado a "Finalizado"');
           
+          const idsEquipos = vsEquipos.map(vs => vs.equipo1._id || vs.equipo2._id);
+          console.log(idsEquipos)
+           // Ajusta esto si la estructura de vsEquipos es diferente
+          await Promise.all(idsEquipos.map(idEquipo =>
+              axios.patch(`${URL_API}/inscripcionEquipos/estado/${idEquipo}`, {
+                  estado: false,
+              })
+          ));
+          console.log('Estado de los equipos actualizado a "false"');
+          setYaEjecutado(true);
         } else {
           console.log('Aún no se han jugado todos los partidos.');
         }
@@ -86,8 +97,10 @@ export const ResultadosIntercentros = () => {
       }
     };
   
-    obtenerGanadorYActualizarEstado();
-  }, [vsEquipos, id]);
+    if (!yaEjecutado) {
+      obtenerGanadorYActualizarEstado();
+  }
+  }, [vsEquipos, id,yaEjecutado]);
 
   
 const obtenerYGuardarDatos = async () => {
