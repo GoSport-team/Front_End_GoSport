@@ -9,6 +9,9 @@ export default function Penales({ isOpen, setMyModalIsOpen , equipo1, equipo2, s
     const [isModalOpen, setIsModalOpen] = useState(true);
 const [result1, setResult1]=useState([])
 const [result2, setResult2]=useState([])
+const [alert, setAlert]= useState()
+const [alert2, setAlert2]= useState()
+
     const [NumeroTiros, setNumeroTiro]= useState(3)
     const totalTiros = () => {
         setNumeroTiro(prevCount => prevCount + 1);
@@ -62,6 +65,14 @@ const [result2, setResult2]=useState([])
 
    
 const GuardarResult=()=>{
+    if (result1.length < NumeroTiros || result2.length < NumeroTiros) {
+     setAlert(true)
+        return; 
+    }
+    if (countGol1 === countGol2) {
+        setAlert2(true);
+        return; 
+    }
     setPenal(true)
 setNumeroTiros(NumeroTiros)
 setResultPenalesEquipo1(result1)
@@ -227,13 +238,39 @@ console.log(result2)
                             </div>
                         </div>
                     </div>
-
+                    {
+                            alert&&(
+                                <div className="flex items-center p-4 rounded-lg bg-blue-gray-100 text-light-blue-900 shadow-lg" role="alert">
+                                <span className="flex-1 font-medium">Ambos equipos deben realizar el número de tiros requerido antes de guardar.</span>
+                                <button
+                                  onClick={()=>setAlert(false)}
+                                  className="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                >
+                                  ok
+                                </button>
+                              </div>
+                            )
+                        }
+                        {
+                            alert2&&(
+                                <div className="flex items-center p-4 rounded-lg bg-blue-gray-100 text-light-blue-900 shadow-lg" role="alert">
+                                <span className="flex-1 font-medium">Lo equipos aun estan empatados.</span>
+                                <button
+                                  onClick={()=>setAlert2(false)}
+                                  className="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                >
+                                  ok
+                                </button>
+                              </div>
+                            )
+                        }
                     <div className="flex justify-end space-x-4 mt-5">
                         <button onClick={()=>GuardarResult()}
                             class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         >
                             Guardar
                         </button>
+                       
                     </div>
                 </div>
             </div>

@@ -36,6 +36,7 @@ export const MostrarJugadores = ({ datosVss, setModalIsOpen, modalIsOpen, closeM
     const [marcadorPenal2, setMarcadorPena2]=useState()
     const[resultPenalesEquipo1, setResultPenalesEquipo1]= useState([])
     const [resultPenalesEquipo2, setResultPenalesEquipo2]=useState([])
+ 
 const[boton, setBoton]=useState()
 
     useEffect(() => {
@@ -126,6 +127,7 @@ const[boton, setBoton]=useState()
     const gol1 = (jugador) => {
         
         setJugadorGol1((prevJugador) => {
+          
             const jugadorExistente = prevJugador.find(j => j._id === jugador._id);
             if (jugadorExistente) {
                 return prevJugador.map(j => 
@@ -181,33 +183,45 @@ const[boton, setBoton]=useState()
     };
 // Función para contar amarillas en equipo 1 (máximo 2 por jugador)
 const countAmarilla1 = (jugador) => {
+    if (jugadorRoja1.find(j => j._id === jugador._id)) {
+        return; // El jugador no puede recibir más tarjetas si ya tiene una roja
+    }
     const jugadorExistente = jugadorAmarilla1.find(j => j._id === jugador._id);
     
     if (!jugadorExistente) {
-        // Si el jugador no tiene tarjetas, añadimos la primera tarjeta
+        // Si el jugador no tiene tarjetas, añadimos la primera tarjeta amarilla
         setJugadorAmarilla1((prevJugador) => [...prevJugador, { ...jugador, amarillas: 1 }]);
         setAmarilla1(amarilla1 + 1);
-    } else if (jugadorExistente.amarillas < 2) {
-        // Si el jugador tiene menos de 2 tarjetas, sumamos una
-        setJugadorAmarilla1((prevJugador) => 
-            prevJugador.map(j => j._id === jugador._id ? { ...j, amarillas: j.amarillas + 1 } : j)
+    } else if (jugadorExistente.amarillas === 1) {
+        // Si el jugador ya tiene una tarjeta amarilla, le asignamos la segunda y la convertimos en roja
+        setJugadorAmarilla1((prevJugador) =>
+            prevJugador.filter(j => j._id !== jugador._id) // Eliminamos de los jugadores con amarillas
         );
-        setAmarilla1(amarilla1 + 1);
+        setAmarilla1(amarilla1 - 1); // Restamos una amarilla ya que la segunda se convierte en roja
+        setJugadorRoja1((prevJugador) => [...prevJugador, { ...jugador, rojas: 1 }]); // Añadimos la tarjeta roja
+        setRoja1(roja1 + 1); // Sumamos 1 a las tarjetas rojas
     }
 };
 
-// Función para contar amarillas en equipo 2 (máximo 2 por jugador)
+
 const countAmarilla2 = (jugador) => {
+    if (jugadorRoja1.find(j => j._id === jugador._id)) {
+        return; // El jugador no puede recibir más tarjetas si ya tiene una roja
+    }
     const jugadorExistente = jugadorAmarilla2.find(j => j._id === jugador._id);
     
     if (!jugadorExistente) {
+        // Si el jugador no tiene tarjetas, añadimos la primera tarjeta amarilla
         setJugadorAmarilla2((prevJugador) => [...prevJugador, { ...jugador, amarillas: 1 }]);
         setAmarilla2(amarilla2 + 1);
-    } else if (jugadorExistente.amarillas < 2) {
-        setJugadorAmarilla2((prevJugador) => 
-            prevJugador.map(j => j._id === jugador._id ? { ...j, amarillas: j.amarillas + 1 } : j)
+    } else if (jugadorExistente.amarillas === 1) {
+        // Si el jugador ya tiene una tarjeta amarilla, le asignamos la segunda y la convertimos en roja
+        setJugadorAmarilla2((prevJugador) =>
+            prevJugador.filter(j => j._id !== jugador._id) // Eliminamos de los jugadores con amarillas
         );
-        setAmarilla2(amarilla2 + 1);
+        setAmarilla2(amarilla2 - 1); // Restamos una amarilla ya que la segunda se convierte en roja
+        setJugadorRoja2((prevJugador) => [...prevJugador, { ...jugador, rojas: 1 }]); // Añadimos la tarjeta roja
+        setRoja2(roja2 + 1); // Sumamos 1 a las tarjetas rojas
     }
 };
 
@@ -247,18 +261,24 @@ const menosAmarilla2 = (jugador) => {
 
 // Función para contar rojas en equipo 1 (máximo 1 por jugador)
 const countRoja1 = (jugador) => {
-    if (!jugadorRoja1.find(j => j._id === jugador._id)) {
-        setJugadorRoja1((prevJugador) => [...prevJugador, jugador]);
-        setRoja1(roja1 + 1);
+    // Verificar si el jugador ya tiene una tarjeta roja; si es así, no hacer nada
+    if (jugadorRoja1.find(j => j._id === jugador._id)) {
+        return; // El jugador no puede recibir más rojas si ya tiene una
     }
+
+    setJugadorRoja1((prevJugador) => [...prevJugador, jugador]);
+    setRoja1(roja1 + 1);
 };
 
 // Función para contar rojas en equipo 2 (máximo 1 por jugador)
 const countRoja2 = (jugador) => {
-    if (!jugadorRoja2.find(j => j._id === jugador._id)) {
-        setJugadorRoja2((prevJugador) => [...prevJugador, jugador]);
-        setRoja2(roja2 + 1);
+  
+    if (jugadorRoja2.find(j => j._id === jugador._id)) {
+        return; 
     }
+
+    setJugadorRoja2((prevJugador) => [...prevJugador, jugador]);
+    setRoja2(roja2 + 1);
 };
 
 // Función para restar rojas en equipo 1
@@ -360,10 +380,19 @@ const menosRoja2 = (jugador) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex flex-col items-center m-4 w-16">
+
+                                        {!penal?(
+                                            <div className="flex flex-col items-center m-4 w-16">
                                             <h1 className="text-xl mb-2">Goles</h1>
                                             <div className="text-6xl font-bold">{countGol1}</div>
+                                        </div> 
+                                        ):(
+                                            <div className="flex flex-col items-center m-4 w-16">
+                                            <h1 className="text-xl mb-2">Penales</h1>
+                                            <div className="text-6xl font-bold">{marcadorPenal1}</div>
                                         </div>
+                                        )}
+                                       
                                     </div>
 
 
@@ -458,10 +487,17 @@ const menosRoja2 = (jugador) => {
                             <div className="flex flex-col w-1/2">
                                 <div className='flex content-center justify-center gap-x-5'>
                                     <div className="flex flex-row items-center p-6 ">
-                                        <div className="flex flex-col items-center m-4 w-16">
+                                    {!penal?(
+                                            <div className="flex flex-col items-center m-4 w-16">
                                             <h1 className="text-xl mb-2">Goles</h1>
                                             <div className="text-6xl font-bold">{countGol2}</div>
+                                        </div> 
+                                        ):(
+                                            <div className="flex flex-col items-center m-4 w-16">
+                                            <h1 className="text-xl mb-2">Penales</h1>
+                                            <div className="text-6xl font-bold">{marcadorPenal2}</div>
                                         </div>
+                                        )}
                                         <div className="flex flex-col justify-center items-center">
                                             <div className="flex flex-col items-center">
                                                 <div className="w-10 h-10 bg-yellow-400 rounded-md flex items-center justify-center">

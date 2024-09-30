@@ -7,7 +7,6 @@ export const Ejecucion = ({ tasks }) => {
   const [ejecucion, setEjecucion] = useState(false);
   const [fase, setFase] = useState([]);
 const [controllerFase, setControllerFase]= useState()
-const previousTaskId = useRef();
 //console.log(tasks._id)
   useEffect(() => {
   
@@ -38,9 +37,7 @@ const previousTaskId = useRef();
     }
   }, [tasks]); 
   const handleClick = () => {
-    if (tasks.tipoCampeonato === 'Intercentros') {
-      localStorage.setItem('ID', tasks._id);
-    }else {
+    if (tasks._id) {
         localStorage.setItem('ID', tasks._id);
         localStorage.setItem('IdFase', fase._id);
       }

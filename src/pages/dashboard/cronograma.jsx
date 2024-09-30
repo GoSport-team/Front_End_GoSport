@@ -65,7 +65,7 @@ export default function Cronograma() {
         }
       }
       GetDatosVs();
-    },[IdFasee,datosVss])
+    },[datosVss])
   
     
    // console.log(faseActiva)
