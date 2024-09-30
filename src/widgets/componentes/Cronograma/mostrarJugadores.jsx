@@ -336,7 +336,7 @@ const menosRoja2 = (jugador) => {
         console.log(resultPenalesEquipo2)
     },[resultPenalesEquipo1, resultPenalesEquipo2])
     const finalizarPar=()=>{
-        if (countGol1 === countGol2) {
+        if (countGol1 === countGol2 && marcadorPenal1===marcadorPenal2) {
             // Open the tie modal for 6 seconds
             setIsModalOpen(true);
             setTimeout(() => {
