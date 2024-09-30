@@ -15,7 +15,7 @@ export const DatosEquiposInscripcion = () => {
     const searchEquipo = async () => {
       try {
         const response = await axios.get(`${URL_API}/inscripcionEquipos/${cedula}`)
-        console.log('Data Team'+ response.data);
+        console.log('Data Team' + response.data);
         console.log(equipo); // Esto mostrará el objeto completo en la consola
         if (response.data == "EQUIPO NO ENCONTRADO") {
           Swal.fire({
@@ -93,13 +93,12 @@ export const DatosEquiposInscripcion = () => {
   }, [id]);
 
   return (
-    <div className="flex items-center bg-white flex-col w-[100vw]">
+    <div className="flex items-center bg-white flex-col w-full">
       <form action="">
-        {equipo ?
-          <div className="bg-white mt-20 rounded-lg p-6 shadow-md w-[60vw]">
+        {equipo ? (
+          <div className="bg-white mt-20 rounded-lg p-6 shadow-md w-[90vw] md:w-[80vw] lg:w-[60vw]">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Planilla Inscripción Equipo</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
                   <label className="text-gray-700 font-medium" htmlFor="name">Nombre</label>
@@ -117,7 +116,6 @@ export const DatosEquiposInscripcion = () => {
                     className="h-10 rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value={equipo.nombreCapitan}
                     placeholder="Nombre del capitán"
-
                   />
                 </div>
 
@@ -127,7 +125,6 @@ export const DatosEquiposInscripcion = () => {
                     className="h-10 rounded-lg border border-gray-300 px-3 py-2 text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value={equipo.contactoUno}
                     type="text"
-
                   />
                 </div>
 
@@ -141,53 +138,56 @@ export const DatosEquiposInscripcion = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col items-center justify-center space-y-4 content-center">
+              <div className="flex flex-col items-center justify-center space-y-4">
                 <div className="relative w-48 grid place-content-center">
                   <img
-                    className="object-cover grid place-content-center rounded-sm"
+                    className="object-cover rounded-sm"
                     src={equipo.imgLogo}
                     alt="Logo del Equipo"
                   />
                 </div>
 
-                <label class="select-none rounded-lg  py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-black">
+                <label className="select-none rounded-lg py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-black">
                   Imagen Equipo
                 </label>
               </div>
             </div>
           </div>
+        ) : (
+          <h1></h1>
+        )}
 
-          : <h1></h1>}
-
-
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mt-6">
-          <thead class="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 mt-6">
+          <thead className="text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" class="px-6 py-3">N°</th>
-              <th scope="col" class="px-6 py-3">Nombre </th>
-              <th scope="col" class="px-6 py-3">Ficha </th>
-              <th scope="col" class="px-6 py-3">N° Dorsal </th>
+              <th scope="col" className="px-6 py-3">N°</th>
+              <th scope="col" className="px-6 py-3">Nombre</th>
+              <th scope="col" className="px-6 py-3">Ficha</th>
+              <th scope="col" className="px-6 py-3">N° Dorsal</th>
             </tr>
           </thead>
           <tbody>
             {equipo?.participantes && Array.isArray(equipo.participantes) && equipo.participantes.map((equipo, indice) => (
-              <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={indice}>
-                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{indice + 1}</td>
-                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{equipo.nombres}</td>
-                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{equipo.ficha}</td>
-                <td scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{equipo.dorsal}</td>
+              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700" key={indice}>
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{indice + 1}</td>
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{equipo.nombres}</td>
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{equipo.ficha}</td>
+                <td scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{equipo.dorsal}</td>
               </tr>
             ))}
           </tbody>
-
         </table>
-
       </form>
-      <div class="w-[60vw] flex justify-start mt-10 ButtonPlanillaIns">
+
+      <div className="w-[90vw] md:w-[80vw] lg:w-[60vw] flex justify-start mt-10 ButtonPlanillaIns">
         <button
           onClick={() => inscribirEquipo()}
-          class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"> Inscribir </button>
+          className="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+        >
+          Inscribir
+        </button>
       </div>
     </div>
+
   )
 }

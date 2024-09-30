@@ -10,7 +10,7 @@ export const Finalizacion = ({ tasks, setControlador }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setControlador(true); // Inicia el estado de carga
+      setControlador(true); 
       try {
         const { data } = await axios.get(`${URL_API}/fase/fase`, {
           headers: {
@@ -21,15 +21,14 @@ export const Finalizacion = ({ tasks, setControlador }) => {
       } catch (error) {
         console.error(error);
       } finally {
-        setControlador(false); // Finaliza el estado de carga
+        setControlador(false); 
       }
     };
 
-    if (tasks && tasks._id) {
-      fetchData(); // Solo se ejecuta si `tasks._id` existe
-    }
-    // Removemos `setControlador` de las dependencias
-  }, [tasks]);
+      fetchData(); 
+    
+    
+  }, [tasks,fase]);
 
   useEffect(() => {
     if (tasks && tasks.estadoCampeonato === 'Finalizacion' ) {
@@ -41,19 +40,14 @@ export const Finalizacion = ({ tasks, setControlador }) => {
   }, [tasks]);
 
   const handleClick = () => {
-    if (tasks.tipoCampeonato === 'Intercentros') {
+    if (tasks._id ){
       localStorage.setItem('ID', tasks._id);
-      console.log(localStorage.getItem('ID'));
-    } else {
-      if (tasks && tasks._id && fase && fase.length > 0) {
-        localStorage.setItem('ID', tasks._id);
-        localStorage.setItem('IdFase', fase[0]._id);
-        localStorage.setItem('estadoFase', fase[0].estado);
-        localStorage.setItem('nombreFase', fase[0].nombre);
-      } else {
-        console.error('No se encontró la fase activa.');
-      }
+      localStorage.setItem('IdFase', fase[0]._id);
     }
+    
+      
+     
+    
   };
 
   return (

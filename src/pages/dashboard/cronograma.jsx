@@ -32,24 +32,7 @@ export default function Cronograma() {
     const [controlerDatosvss, setControlerDatosvss]= useState(true)
     const[guardar, setGuardar]= useState()
     const [loading, setLoading]=useState(false)
-    useEffect(()=>{
-      const GetDatosVs = async()=>{
-        try{
-          setLoading(true)
-          const Vs= await axios.get(`${URL_API}/vs`,{
-            headers:{
-              IdFase:IdFasee
-            }
-          });
-          setDatosVs(Vs.data)
-        }catch(error){
-          console.log(error)
-        }finally{
-          setLoading(false)
-        }
-      }
-      GetDatosVs();
-    },[])
+
     useEffect(() => {
       const fetchData = async () => {
         try {
@@ -67,6 +50,23 @@ export default function Cronograma() {
       };
       fetchData();
     }, [datosVss]);
+
+    useEffect(()=>{
+      const GetDatosVs = async()=>{
+        try{
+          const Vs= await axios.get(`${URL_API}/vs`,{
+            headers:{
+              IdFase:IdFasee
+            }
+          });
+          setDatosVs(Vs.data)
+        }catch(error){
+          console.log(error)
+        }
+      }
+      GetDatosVs();
+    },[datosVss])
+  
     
    // console.log(faseActiva)
     //console.log(datosVss)
@@ -106,9 +106,7 @@ export default function Cronograma() {
     )
   }
       </div>
-      {loading && (
-        <Spinner/>
-      )}
+    
 
      <Card className='w-auto h-auto flex justify-center items-center p-2'>
            <div  className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-7">

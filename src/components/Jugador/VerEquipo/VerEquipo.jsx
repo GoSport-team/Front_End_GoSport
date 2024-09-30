@@ -219,8 +219,8 @@ export const VerEquipo = () => {
         }
       };
     return (
-        <div className="flex w-screen h-screen justify-center items-center gap-8">
-            <div className="w-[45vw] h-[60vh] p-6 bg-white border border-gray-300 rounded-lg shadow-sm flex flex-col">
+        <div className="flex flex-col lg:flex-row w-screen justify-center items-center gap-8 p-4 min-h-screen bg-blue-gray- ">
+            <div className="w-full lg:w-[45vw] h-auto lg:h-[60vh] p-6 bg-white border border-gray-300 rounded-lg shadow-sm flex flex-col">
                 {equipo ? (
                     <div className="flex flex-col h-full">
                         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Planilla Inscripción Equipo</h2>
@@ -307,20 +307,20 @@ export const VerEquipo = () => {
                 )}
             </div>
 
-            <div className="w-[45vw] h-[60vh] flex flex-col  bg-blue-gray-50 rounded-xl">
-                <div className="rounded-lg shadow-sm flex flex-col w-[45vw] h-[60vh]">
+            <div className="w-full lg:w-[45vw] h-auto flex flex-col bg-blue-gray-50 rounded-xl">
+                <div className="rounded-lg shadow-sm flex flex-col w-full h-auto">
                     <div className="flex flex-col  gap-4 mt-8 px-4">
                         {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ? (
-                            <div className="flex flex-row items-center gap-4">
+                            <div className="flex flex-wrap items-center gap-4">
                                 <label className="font-semibold text-lg text-gray-800">Busca tus compañeros</label>
                                 <input
                                     type="search"
-                                    className="h-12 w-80 rounded-md border border-gray-300 text-gray-800 placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out"
+                                    className="h-12 w-full md:w-80 rounded-md border border-gray-300 text-gray-800 placeholder-gray-500 focus:ring-blue-500 focus:border-blue-500 transition duration-200 ease-in-out"
                                     onChange={(e) => setJugador(e.target.value)}
                                     placeholder="Busca por su número de cédula"
                                 />
                                 <button
-                                    class=" select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                                    class="select-none w-full md:w-auto rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                                     type="button"
                                     onClick={() => buscarJugador(jugador)}
                                 >
@@ -330,7 +330,7 @@ export const VerEquipo = () => {
                         ) : ''}
                     </div>
 
-                    <div className="w-full mt-8 px-4">
+                    <div className="w-full mt-8 px-4 overflow-x-auto">
                         <table className="w-full border-separate border-spacing-0 bg-white shadow-sm rounded-lg">
                             <thead>
                                 <tr>
@@ -365,7 +365,7 @@ export const VerEquipo = () => {
                     </div>
 
                     {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ? (
-                        <div className="px-4 mt-5 w-[10vw]">
+                        <div className="px-4 mt-5 w-[40vw] md:w-[20vw] lg:w-[10vw]">
                             {verificarActualizacion() && (
                                 <h1
                                     onClick={() => actualizarEquipo()}

@@ -36,6 +36,7 @@ export const MostrarJugadores = ({ datosVss, setModalIsOpen, modalIsOpen, closeM
     const [marcadorPenal2, setMarcadorPena2]=useState()
     const[resultPenalesEquipo1, setResultPenalesEquipo1]= useState([])
     const [resultPenalesEquipo2, setResultPenalesEquipo2]=useState([])
+ const [isModalOpen, setIsModalOpen]=useState()
 const[boton, setBoton]=useState()
 
     useEffect(() => {
@@ -80,6 +81,7 @@ const[boton, setBoton]=useState()
       }
 
     const guardarResultado = async () => {
+      
         const response = await axios.post(`${URL_API}/resultados`, {
             equipo1: {
                 Equipo1: equipo1,
@@ -109,6 +111,7 @@ const[boton, setBoton]=useState()
             numeroTiros:numeroTiros,
         })
         setBotonAgregar(false)
+    
     }
     const botonPublicar = () => {
         guardarResultado()
@@ -126,6 +129,7 @@ const[boton, setBoton]=useState()
     const gol1 = (jugador) => {
         
         setJugadorGol1((prevJugador) => {
+          
             const jugadorExistente = prevJugador.find(j => j._id === jugador._id);
             if (jugadorExistente) {
                 return prevJugador.map(j => 
@@ -181,33 +185,45 @@ const[boton, setBoton]=useState()
     };
 // Función para contar amarillas en equipo 1 (máximo 2 por jugador)
 const countAmarilla1 = (jugador) => {
+    if (jugadorRoja1.find(j => j._id === jugador._id)) {
+        return; // El jugador no puede recibir más tarjetas si ya tiene una roja
+    }
     const jugadorExistente = jugadorAmarilla1.find(j => j._id === jugador._id);
     
     if (!jugadorExistente) {
-        // Si el jugador no tiene tarjetas, añadimos la primera tarjeta
+        // Si el jugador no tiene tarjetas, añadimos la primera tarjeta amarilla
         setJugadorAmarilla1((prevJugador) => [...prevJugador, { ...jugador, amarillas: 1 }]);
         setAmarilla1(amarilla1 + 1);
-    } else if (jugadorExistente.amarillas < 2) {
-        // Si el jugador tiene menos de 2 tarjetas, sumamos una
-        setJugadorAmarilla1((prevJugador) => 
-            prevJugador.map(j => j._id === jugador._id ? { ...j, amarillas: j.amarillas + 1 } : j)
+    } else if (jugadorExistente.amarillas === 1) {
+        // Si el jugador ya tiene una tarjeta amarilla, le asignamos la segunda y la convertimos en roja
+        setJugadorAmarilla1((prevJugador) =>
+            prevJugador.filter(j => j._id !== jugador._id) // Eliminamos de los jugadores con amarillas
         );
-        setAmarilla1(amarilla1 + 1);
+        setAmarilla1(amarilla1 - 1); // Restamos una amarilla ya que la segunda se convierte en roja
+        setJugadorRoja1((prevJugador) => [...prevJugador, { ...jugador, rojas: 1 }]); // Añadimos la tarjeta roja
+        setRoja1(roja1 + 1); // Sumamos 1 a las tarjetas rojas
     }
 };
 
-// Función para contar amarillas en equipo 2 (máximo 2 por jugador)
+
 const countAmarilla2 = (jugador) => {
+    if (jugadorRoja1.find(j => j._id === jugador._id)) {
+        return; // El jugador no puede recibir más tarjetas si ya tiene una roja
+    }
     const jugadorExistente = jugadorAmarilla2.find(j => j._id === jugador._id);
     
     if (!jugadorExistente) {
+        // Si el jugador no tiene tarjetas, añadimos la primera tarjeta amarilla
         setJugadorAmarilla2((prevJugador) => [...prevJugador, { ...jugador, amarillas: 1 }]);
         setAmarilla2(amarilla2 + 1);
-    } else if (jugadorExistente.amarillas < 2) {
-        setJugadorAmarilla2((prevJugador) => 
-            prevJugador.map(j => j._id === jugador._id ? { ...j, amarillas: j.amarillas + 1 } : j)
+    } else if (jugadorExistente.amarillas === 1) {
+        // Si el jugador ya tiene una tarjeta amarilla, le asignamos la segunda y la convertimos en roja
+        setJugadorAmarilla2((prevJugador) =>
+            prevJugador.filter(j => j._id !== jugador._id) // Eliminamos de los jugadores con amarillas
         );
-        setAmarilla2(amarilla2 + 1);
+        setAmarilla2(amarilla2 - 1); // Restamos una amarilla ya que la segunda se convierte en roja
+        setJugadorRoja2((prevJugador) => [...prevJugador, { ...jugador, rojas: 1 }]); // Añadimos la tarjeta roja
+        setRoja2(roja2 + 1); // Sumamos 1 a las tarjetas rojas
     }
 };
 
@@ -247,18 +263,24 @@ const menosAmarilla2 = (jugador) => {
 
 // Función para contar rojas en equipo 1 (máximo 1 por jugador)
 const countRoja1 = (jugador) => {
-    if (!jugadorRoja1.find(j => j._id === jugador._id)) {
-        setJugadorRoja1((prevJugador) => [...prevJugador, jugador]);
-        setRoja1(roja1 + 1);
+    // Verificar si el jugador ya tiene una tarjeta roja; si es así, no hacer nada
+    if (jugadorRoja1.find(j => j._id === jugador._id)) {
+        return; // El jugador no puede recibir más rojas si ya tiene una
     }
+
+    setJugadorRoja1((prevJugador) => [...prevJugador, jugador]);
+    setRoja1(roja1 + 1);
 };
 
 // Función para contar rojas en equipo 2 (máximo 1 por jugador)
 const countRoja2 = (jugador) => {
-    if (!jugadorRoja2.find(j => j._id === jugador._id)) {
-        setJugadorRoja2((prevJugador) => [...prevJugador, jugador]);
-        setRoja2(roja2 + 1);
+  
+    if (jugadorRoja2.find(j => j._id === jugador._id)) {
+        return; 
     }
+
+    setJugadorRoja2((prevJugador) => [...prevJugador, jugador]);
+    setRoja2(roja2 + 1);
 };
 
 // Función para restar rojas en equipo 1
@@ -313,17 +335,27 @@ const menosRoja2 = (jugador) => {
         console.log(resultPenalesEquipo1)
         console.log(resultPenalesEquipo2)
     },[resultPenalesEquipo1, resultPenalesEquipo2])
-
+    const finalizarPar=()=>{
+        if (countGol1 === countGol2 && marcadorPenal1===marcadorPenal2) {
+            // Open the tie modal for 6 seconds
+            setIsModalOpen(true);
+            setTimeout(() => {
+              setIsModalOpen(false); // Close the modal after 6 seconds
+            }, 6000);
+      } else {
+    setModalOpenOk(true)
+    }
+}
 
     return (
         <>
             <Modal
                 isOpen={modalIsOpen}
                 onRequestClose={closeModal}
-                className="flex justify-center items-center h-screen w-auto"
+                className="flex justify-center items-center h-screen w-screen"
                 overlayClassName="fixed inset-0 bg-black bg-opacity-50"
             >
-                <div className="rounded-lg shadow-lg  overflow-hidden flex flex-col min-w-[50vw] max-w-[70vw] min-h-[50vh] max-h-[100vh] bg-white p-3 ml-[10vw]"> {/* Agregué la clase ml-[10vw] */}
+                <div className="rounded-lg shadow-lg  overflow-hidden flex flex-col  min-h-[50vh] max-h-[100vh] bg-white p-3 ml-[25vw] mr-12 "> {/* Agregué la clase ml-[10vw] */}
                     <div className='flex justify-end'>
                         <button
                             className="text-gray-600 hover:text-gray-900 text-2xl font-bold w-10 h-10 flex items-center justify-center rounded-full bg-gray-200"
@@ -333,7 +365,7 @@ const menosRoja2 = (jugador) => {
                         </button>
                     </div>
                     {datosVss && (
-                        <div key={datosVss._id} className="flex relative flex-row gap-x-4 min-w-[50vw] max-w-[80vw] min-h-[50vh] max-h-[100vh]">
+                        <div key={datosVss._id} className="flex relative flex-row gap-x-4 min-h-[50vh] max-h-[100vh] w-5/6">
                             <div className="flex flex-col w-1/2">
                                 <div className='flex content-center justify-center gap-x-5'>
                                     <div className='grid place-content-center'>
@@ -347,7 +379,7 @@ const menosRoja2 = (jugador) => {
                                     </div>
 
 
-                                    <div className="flex flex-row items-center p-6 ">
+                                    <div className="flex flex-row items-center p-6 w-1/2 ">
                                         <div className="flex flex-col justify-center items-center">
                                             <div className="flex flex-col items-center">
                                                 <div className="w-10 h-10 bg-yellow-400 rounded-md flex items-center justify-center">
@@ -360,10 +392,19 @@ const menosRoja2 = (jugador) => {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex flex-col items-center m-4 w-16">
+
+                                        {!penal?(
+                                            <div className="flex flex-col items-center m-4 w-16">
                                             <h1 className="text-xl mb-2">Goles</h1>
                                             <div className="text-6xl font-bold">{countGol1}</div>
+                                        </div> 
+                                        ):(
+                                            <div className="flex flex-col items-center m-4 w-16">
+                                            <h1 className="text-xl mb-2">Penales</h1>
+                                            <div className="text-6xl font-bold">{marcadorPenal1}</div>
                                         </div>
+                                        )}
+                                       
                                     </div>
 
 
@@ -371,7 +412,7 @@ const menosRoja2 = (jugador) => {
 
 
 
-                                <div className="relative overflow-x-auto mt-5">
+                                <div className="relative overflow-x-auto mt-5 ">
                                     <table className="text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                         <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                             <tr>
@@ -458,10 +499,17 @@ const menosRoja2 = (jugador) => {
                             <div className="flex flex-col w-1/2">
                                 <div className='flex content-center justify-center gap-x-5'>
                                     <div className="flex flex-row items-center p-6 ">
-                                        <div className="flex flex-col items-center m-4 w-16">
+                                    {!penal?(
+                                            <div className="flex flex-col items-center m-4 w-16">
                                             <h1 className="text-xl mb-2">Goles</h1>
                                             <div className="text-6xl font-bold">{countGol2}</div>
+                                        </div> 
+                                        ):(
+                                            <div className="flex flex-col items-center m-4 w-16">
+                                            <h1 className="text-xl mb-2">Penales</h1>
+                                            <div className="text-6xl font-bold">{marcadorPenal2}</div>
                                         </div>
+                                        )}
                                         <div className="flex flex-col justify-center items-center">
                                             <div className="flex flex-col items-center">
                                                 <div className="w-10 h-10 bg-yellow-400 rounded-md flex items-center justify-center">
@@ -564,15 +612,30 @@ const menosRoja2 = (jugador) => {
                             </div>
                         </div>
                     )}
-
+   {isModalOpen && (
+                                   <div className={`modal ${isModalOpen ? 'block' : 'hidden'} fixed inset-0 flex items-center justify-center bg-black bg-opacity-50`}>
+                                   <div className="modal-content bg-white rounded-lg shadow-lg max-w-md p-6">
+                                     <h2 className="text-xl font-bold mb-4">El partido está empatado</h2>
+                                     <p className="mb-6">Se procederá a los penales.</p>
+                                     <button
+                                       onClick={() => setMyModalIsOpen(true)}
+                                       className="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center font-sans text-sm font-bold uppercase text-white shadow-md transition-all hover:bg-[#0a88a1] hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-[#12aed1cd] focus:ring-opacity-50"
+                                     >
+                                       Penales
+                                     </button>
+                                   </div>
+                                 </div>
+                                  )}
                     <div className="flex justify-end pr-3 pb-3 mt-2">
                         <div className="flex justify-end">
 
-                            <button onClick={() => setModalOpenOk(true)}
+                            <button onClick={
+                             finalizarPar
+                            }
                                 class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
                                 Finalizar Partido
                             </button>
-
+                         
                         </div>
                     </div>
                     <TerminarPartidoModal

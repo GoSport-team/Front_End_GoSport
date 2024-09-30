@@ -1,16 +1,18 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from "react-router-dom";
 const URL_API = import.meta.env.VITE_API_URL
 
 export const Ejecucion = ({ tasks }) => {
   const [ejecucion, setEjecucion] = useState(false);
   const [fase, setFase] = useState([]);
-
+const [controllerFase, setControllerFase]= useState()
 //console.log(tasks._id)
   useEffect(() => {
+  
     const fetchData = async () => {
       try {
+        setControllerFase(true)
         const { data } = await axios.get(`${URL_API}/fase/fase`, {
           headers: {
             id: tasks._id
@@ -20,10 +22,12 @@ export const Ejecucion = ({ tasks }) => {
         setFase(data.faseActiva[0]);
       } catch (error) {
         console.log(error);
-      } 
+      } finally{
+        setControllerFase(false)
+    }
     };
     fetchData();
-  },[tasks]);
+  },[tasks, fase]);
 //console.log(fase)
   useEffect(() => {
     if (tasks && tasks.estadoCampeonato === 'Ejecucion'  ) {
@@ -32,11 +36,8 @@ export const Ejecucion = ({ tasks }) => {
       setEjecucion(false);
     }
   }, [tasks]); 
-console.log(fase)
   const handleClick = () => {
-    if (tasks.tipoCampeonato === 'Intercentros') {
-      localStorage.setItem('ID', tasks._id);
-    }else {
+    if (tasks._id) {
         localStorage.setItem('ID', tasks._id);
         localStorage.setItem('IdFase', fase._id);
       }

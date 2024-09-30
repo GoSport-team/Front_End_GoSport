@@ -42,6 +42,7 @@ const [sorteoMejorPerdedor, setMejorPerdedor]= useState()
 const [idPlanilleros, setIdPlanilleros]= useState()
 const [planillero, setPlanillero]= useState()
 const [agregarHora, setAgregarHora]=useState('Agregar Horario')
+
 useEffect(()=>{
   const vs=async()=>{
   try{
@@ -144,14 +145,23 @@ console.log(error)
   
      useEffect(() => {
       const equiGan=async()=>{
-          if (EquipoGanador) {
-            await EquiposGanadores();
+        await EquiposGanadores();
+          if (EquipoGanador&&equipoGanadores) {
         setMostrarGanador(true)
-      
+        console.log(equipoGanadores)
+       
             try{
+              const idEquipo = equipoGanadores[0]?.Equipo?._id
+              console.log(idEquipo)
             const response=  await axios.patch(`${URL_API}/campeonato/${IdCampeonato}`,
-                {estadoCampeonato: 'Finalizacion'}
+                {estadoCampeonato: 'Finalizacion',
+                  equipoGanador:equipoGanadores
+                }
                );
+               const actuEquipo = await axios.patch(`${URL_API}/inscripcionEquipos/estado/${idEquipo}`,{
+                estado:false
+              })
+              console.log(actuEquipo)
               console.log(response)
             }catch(error){
               console.log(error)
@@ -163,7 +173,7 @@ console.log(error)
 
       }
       equiGan()
-    },[resultado]);
+    },[EquipoGanador]);
     
     useEffect(() => {
       if (cambioFase2 && !EquipoGanador && oks) {
