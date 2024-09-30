@@ -135,8 +135,8 @@ export const DatosEquipos = () => {
 
   return (
 
-    <div className="flex items-center bg-white flex-col w-[100vw]">
-      {equipo ?
+    <div className="flex items-center bg-white flex-col w-full">
+      {equipo ? (
         <div className="flex items-center justify-center min-h-screen p-6 w-screen">
           <div className="bg-white shadow-2xl rounded-3xl p-8 max-w-md w-full text-center transform transition-transform duration-300 hover:scale-105">
             <h1 className="text-2xl font-bold text-gray-800 mb-6">
@@ -149,16 +149,12 @@ export const DatosEquipos = () => {
             </Link>
           </div>
         </div>
-
-
-        :
-
+      ) : (
         <form action="" onSubmit={submit}>
-          <div className="bg-white mt-20 rounded-lg p-6 shadow-md w-[60vw]">
+          <div className="bg-white mt-20 rounded-lg p-6 shadow-md w-[80vw] mx-auto">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">Planilla Inscripción Equipo</h2>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="flex flex-col gap-4">
                 <div className="flex flex-col gap-2">
                   <label className="text-gray-700 font-medium" htmlFor="name">Equipo</label>
@@ -213,7 +209,7 @@ export const DatosEquipos = () => {
                   />
                 </div>
 
-                <label class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
+                <label className="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none">
                   Subir Imagen
                   <input
                     type="file"
@@ -224,8 +220,9 @@ export const DatosEquipos = () => {
               </div>
             </div>
           </div>
-          <div className="bg-gray-100 mt-10 p-6 rounded-xl shadow-lg w-[60vw]">
-            <div className="flex flex-col  mb-6">
+
+          <div className="bg-gray-100 mt-10 p-6 rounded-xl shadow-lg w-[80vw] mx-auto">
+            <div className="flex flex-col mb-6">
               <label className="font-bold text-2xl text-gray-800 mb-4">Busca tus compañeros</label>
               <div className="flex gap-4 items-center">
                 <input
@@ -272,11 +269,15 @@ export const DatosEquipos = () => {
               </tbody>
             </table>
           </div>
-          <div class="w-[60vw] flex justify-start mt-10 ButtonPlanillaIns">
-            <button class="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="submit"> Inscribir </button>
+
+          <div className="w-[80vw] flex justify-start mt-10 ButtonPlanillaIns mx-auto">
+            <button className="select-none rounded-lg bg-[#12aed1cd] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none" type="submit">
+              Inscribir
+            </button>
           </div>
         </form>
-      }
+      )}
     </div>
+
   )
 }

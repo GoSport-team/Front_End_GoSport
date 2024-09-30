@@ -219,8 +219,8 @@ export const VerEquipo = () => {
         }
       };
     return (
-        <div className="flex w-screen h-screen justify-center items-center gap-8">
-            <div className="w-[45vw] h-[60vh] p-6 bg-white border border-gray-300 rounded-lg shadow-sm flex flex-col">
+        <div className="flex flex-col lg:flex-row w-screen justify-center items-center gap-8 p-4 min-h-screen bg-blue-gray- ">
+            <div className="w-full lg:w-[45vw] h-auto lg:h-[60vh] p-6 bg-white border border-gray-300 rounded-lg shadow-sm flex flex-col">
                 {equipo ? (
                     <div className="flex flex-col h-full">
                         <h2 className="text-2xl font-semibold text-gray-800 mb-4">Planilla Inscripción Equipo</h2>
@@ -307,8 +307,8 @@ export const VerEquipo = () => {
                 )}
             </div>
 
-            <div className="w-[45vw] h-[60vh] flex flex-col  bg-blue-gray-50 rounded-xl">
-                <div className="rounded-lg shadow-sm flex flex-col w-[45vw] h-[60vh]">
+            <div className="w-full lg:w-[45vw] h-auto flex flex-col bg-blue-gray-50 rounded-xl">
+                <div className="rounded-lg shadow-sm flex flex-col w-full h-auto">
                     <div className="flex flex-col  gap-4 mt-8 px-4">
                         {validarInscripcion !== 'Equipo ya esta Inscrito en un campeonato' ? (
                             <div className="flex flex-row items-center gap-4">
