@@ -1,6 +1,7 @@
 import React from 'react';
 
 const DeleteCampeonatoModal = ({ isOpen, onClose, onDelete, campeonatoName }) => {
+    
     if (!isOpen) return null;
 
     return (
