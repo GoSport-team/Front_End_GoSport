@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import {QRCodeSVG} from 'qrcode.react';
 import { useState } from 'react';
 export const VerQr = ({ id, open, close}) => {
-    const URL_BASE = 'https://front-end-go-sport.vercel.app/'
+    const URL_BASE = 'https://front-end-go-sport-b5r9.vercel.app'
     const [color, setColor] = useState()
     const colors = ['#00E7FA', '#12FA5C', '#FAB40F'];
     useEffect(()=>{
