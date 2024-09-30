@@ -43,7 +43,7 @@ export default function MatchList() {
             <BsBatteryFull size={18} color="white" />
           </div>
         </div>
-        <h2 className="text-2xl font-bold my-10 text-white">Premier League</h2>
+        <h2 className="text-2xl font-bold my-10 text-white">GoSport App</h2>
         <h3 className="text-white font-bold mb-2">Partidos</h3>
         <div className="space-y-6">
           {matches.map((match, index) => (
